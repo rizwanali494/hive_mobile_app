@@ -83,9 +83,9 @@ flutter:
          - asset: assets/fonts/Inter-Black.ttf
          - asset: assets/fonts/Inter-Bold.ttf
            weight: 700
-         - asset: assets/fonts/Inter-Extra-Bold.ttf
+         - asset: assets/fonts/Inter-ExtraBold.ttf
            weight: 800
-         - asset: assets/fonts/Inter-Extra-Light.ttf
+         - asset: assets/fonts/Inter-ExtraLight.ttf
            weight: 200
          - asset: assets/fonts/Inter-Light.ttf
            weight: 300
