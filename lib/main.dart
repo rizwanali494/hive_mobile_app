@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_mobile/res/app_strings.dart';
 import 'package:hive_mobile/res/app_theme.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          title: 'BCP Hive',
+          title: AppStrings.appName,
           theme: lightTheme,
           darkTheme: lightTheme,
           home: child,
