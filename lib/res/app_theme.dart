@@ -87,11 +87,6 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.lightPink,
   });
 
-
-
-
-
-
   @override
   ThemeExtension<AppTheme> lerp(
       covariant ThemeExtension<AppTheme>? other, double t) {
@@ -416,3 +411,5 @@ ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
 //     AppTheme.dark,
 //   ],
 // );
+
+AppTheme colors(context) => Theme.of(context).extension<AppTheme>()!;

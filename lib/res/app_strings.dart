@@ -2,7 +2,7 @@ class AppStrings {
   static String appName = "Hive";
   static String welcome = "Welcome";
   static String signInWithGoogle = "Sign in with Google.";
-  static String continueWithGoogle = "Continue with Google.";
+  static String continueWithGoogle = "Continue with Google";
   static String enterBackupEmail = "Enter Backup Email";
   static String email = "Email";
   static String enter = "enter";

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/res/app_strings.dart';
 import 'package:hive_mobile/res/app_theme.dart';
+import 'package:hive_mobile/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: Container(),
+      child: const SplashScreen(),
     );
   }
 }

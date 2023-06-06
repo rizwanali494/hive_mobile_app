@@ -1,4 +1,4 @@
-const _iconsPath = 'assets/icons';
+const _iconsPath = 'assets/icons/';
 
 
 class SvgIcons {
@@ -6,7 +6,8 @@ class SvgIcons {
   static const String alarm = "${_iconsPath}alarm.svg";
   static const String applied = "${_iconsPath}applied.svg";
   static const String arrowRight = "${_iconsPath}arrow_right.svg";
-  static const String hiveLogo = "assets/images/hive_logo.svg";
+  // static const String hiveLogo = "${_iconsPath}hive_logo.svg";
+  static const String hiveLogo = "${_iconsPath}hive_logo.png";
   static const String building = "${_iconsPath}building.svg";
   static const String cake = "${_iconsPath}cake.svg";
   static const String calender = "${_iconsPath}calender.svg";
