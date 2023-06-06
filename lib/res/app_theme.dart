@@ -87,6 +87,11 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.lightPink,
   });
 
+
+
+
+
+
   @override
   ThemeExtension<AppTheme> lerp(
       covariant ThemeExtension<AppTheme>? other, double t) {
@@ -273,6 +278,84 @@ class AppTheme extends ThemeExtension<AppTheme> {
     red: const Color(0xffB75F5F),
     lightPink: const Color(0xffFFBEBE),
   );
+
+  AppTheme copyWith({
+    TextStyle? inter8w400,
+    TextStyle? inter7w400,
+    TextStyle? inter9w400,
+    TextStyle? inter10w400,
+    TextStyle? inter12w400,
+    TextStyle? inter14w400,
+    TextStyle? inter15w400,
+    TextStyle? inter16w400,
+    TextStyle? inter12w500,
+    TextStyle? inter14w600,
+    TextStyle? inter16w600,
+    TextStyle? inter20w600,
+    TextStyle? inter12w700,
+    TextStyle? inter20w700,
+    TextStyle? inter28w700,
+    TextStyle? inter30w700,
+    TextStyle? inter32w700,
+    TextStyle? inter36w700,
+    TextStyle? inter40w700,
+    TextStyle? inter50w700,
+    Color? linearBlueGradientTopLeft,
+    Color? linearBlueGradientBottomRight,
+    Color? white,
+    Color? black,
+    Color? skyBlue,
+    Color? lavender,
+    Color? darkGrey,
+    Color? lightGrey,
+    Color? greyWhite,
+    Color? darkSlateGrey,
+    Color? lightCyan,
+    Color? yellowGreen,
+    Color? darkOrange,
+    Color? red,
+    Color? lightPink,
+  }) {
+    return AppTheme(
+      inter8w400: inter8w400 ?? this.inter8w400,
+      inter7w400: inter7w400 ?? this.inter7w400,
+      inter9w400: inter9w400 ?? this.inter9w400,
+      inter10w400: inter10w400 ?? this.inter10w400,
+      inter12w400: inter12w400 ?? this.inter12w400,
+      inter14w400: inter14w400 ?? this.inter14w400,
+      inter15w400: inter15w400 ?? this.inter15w400,
+      inter16w400: inter16w400 ?? this.inter16w400,
+      inter12w500: inter12w500 ?? this.inter12w500,
+      inter14w600: inter14w600 ?? this.inter14w600,
+      inter16w600: inter16w600 ?? this.inter16w600,
+      inter20w600: inter20w600 ?? this.inter20w600,
+      inter12w700: inter12w700 ?? this.inter12w700,
+      inter20w700: inter20w700 ?? this.inter20w700,
+      inter28w700: inter28w700 ?? this.inter28w700,
+      inter30w700: inter30w700 ?? this.inter30w700,
+      inter32w700: inter32w700 ?? this.inter32w700,
+      inter36w700: inter36w700 ?? this.inter36w700,
+      inter40w700: inter40w700 ?? this.inter40w700,
+      inter50w700: inter50w700 ?? this.inter50w700,
+      linearBlueGradientTopLeft:
+          linearBlueGradientTopLeft ?? this.linearBlueGradientTopLeft,
+      linearBlueGradientBottomRight:
+          linearBlueGradientBottomRight ?? this.linearBlueGradientBottomRight,
+      white: white ?? this.white,
+      black: black ?? this.black,
+      skyBlue: skyBlue ?? this.skyBlue,
+      lavender: lavender ?? this.lavender,
+      darkGrey: darkGrey ?? this.darkGrey,
+      lightGrey: lightGrey ?? this.lightGrey,
+      greyWhite: greyWhite ?? this.greyWhite,
+      darkSlateGrey: darkSlateGrey ?? this.darkSlateGrey,
+      lightCyan: lightCyan ?? this.lightCyan,
+      yellowGreen: yellowGreen ?? this.yellowGreen,
+      darkOrange: darkOrange ?? this.darkOrange,
+      red: red ?? this.red,
+      lightPink: lightPink ?? this.lightPink,
+    );
+  }
 }
 
 // light

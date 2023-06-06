@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           title: 'BCP Hive',
-
           theme: lightTheme,
           darkTheme: lightTheme,
           home: child,
