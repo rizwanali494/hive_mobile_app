@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_mobile/constants/svg_icons.dart';
 import 'package:hive_mobile/features/authentication/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/res/app_strings.dart';
@@ -51,12 +52,12 @@ class _SignInScreenState extends State<SignInScreen> {
                       colors(context).linearBlueGradientBottomRight,
                     ],
                   ),
-                  boxShadow: [
+                  boxShadow:  [
                     BoxShadow(
                         blurRadius: 50,
-                        color: Colors.white.withOpacity(0.25),
+                        color: colors(context).white.withOpacity(0.2),
                         spreadRadius: 0,
-                        offset: const Offset(0, 4),
+                        offset: Offset(0, 4),
                         blurStyle: BlurStyle.outer),
                   ],
                 ),
@@ -69,16 +70,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: colors(context).inter50w700,
                     ),
                     SizedBox(
-                      height: 22.h,
+                      height: 17.h,
                     ),
                     Text(
                       AppStrings.signInWithGoogle,
                       style: colors(context).inter12w400,
                     ),
                     SizedBox(
-                      height: 35.h,
+                      height: 60.h,
                     ),
-                    const AuthButtonWidget(),
+                    AuthButtonWidget(
+                      onTap: () async {
+                        GoogleSignIn googleSignIn = GoogleSignIn();
+                        await googleSignIn.signOut();
+                        var result = await googleSignIn.signIn();
+                        debugPrint("user id ::::::: ${result?.id}");
+                      },
+                    ),
                   ],
                 ),
               ),
