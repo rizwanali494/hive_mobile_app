@@ -34,4 +34,6 @@ class SvgIcons {
   static const String universityApplication = "${_iconsPath}university_application.svg";
   static const String user = "${_iconsPath}user.svg";
   static const String vector = "${_iconsPath}Vector.svg";
+  static const String like = "${_iconsPath}like.svg";
+  static const String dislike = "${_iconsPath}dislike.svg";
 }
