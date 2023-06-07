@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         blurRadius: 50,
                         color: colors(context).white.withOpacity(0.2),
                         spreadRadius: 0,
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                         blurStyle: BlurStyle.outer),
                   ],
                 ),
