@@ -7,10 +7,13 @@ class HomeScreenVm extends ChangeNotifier {
   ];
   int _currentIndex = 0;
 
-  Widget get currentPage => _pages[_currentIndex];
+  Widget get currentPage => _pages[_currentIndex % _pages.length];
+  int get currentIndex => _currentIndex;
 
   void setIndex(int index) {
+    debugPrint("$index");
     _currentIndex = index;
     notifyListeners();
+    debugPrint("$_currentIndex");
   }
 }

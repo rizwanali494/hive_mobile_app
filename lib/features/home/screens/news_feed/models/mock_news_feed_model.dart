@@ -9,5 +9,13 @@ class MockNewsFeedModel {
   static const disLikeCount = "7";
   static const description =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut lorem sed sem?";
-
+  static const user = (
+    name: MockNewsFeedModel.userName,
+    userImage: MockNewsFeedModel.userAvatar,
+    time: MockNewsFeedModel.time,
+    universityImage: MockNewsFeedModel.universityImage,
+    description: MockNewsFeedModel.description,
+    likeCount: MockNewsFeedModel.likeCount,
+    disLikeCount: MockNewsFeedModel.disLikeCount,
+  );
 }
