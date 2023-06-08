@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/blue_border_container.dart';
-import 'package:hive_mobile/res/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
-import '../../../../../constants/svg_icons.dart';
+import '../constants/svg_icons.dart';
 
 class NewsFeedWidget extends StatelessWidget {
   const NewsFeedWidget({
@@ -27,8 +27,8 @@ class NewsFeedWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
-              const CircleAvatar(
-                backgroundImage: NetworkImage(MockNewsFeedModel.userAvatar),
+               CircleAvatar(
+                backgroundImage: NetworkImage(_user.userAvatar),
                 radius: 25,
               ),
               12.horizontalSpace,

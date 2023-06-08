@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
-import 'package:hive_mobile/services/auth/auth_service.dart';
-import 'package:hive_mobile/services/auth/google_auth_service.dart';
+import 'package:hive_mobile/app/services/auth_service.dart';
+import 'package:hive_mobile/app/services/google_auth_service.dart';
 
 class AuthVM extends ChangeNotifier {
   Future googleSignIn(BuildContext context) async {

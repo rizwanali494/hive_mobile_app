@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive_mobile/constants/svg_icons.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
-import 'package:hive_mobile/res/app_strings.dart';
-import 'package:hive_mobile/res/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,13 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(28),
-                              color: Color(0xffCBEAF4),
+                              color: const Color(0xffCBEAF4),
                             ),
                             margin: const EdgeInsets.all(12),
                             padding: const EdgeInsets.all(12),
                             child: SvgPicture.asset(
                               icon,
-                              color: appTheme(context).skyBlue,
                               // colorFilter: ColorFilter.mode(
                               //     colors(context).skyBlue, BlendMode.color),
                             ),

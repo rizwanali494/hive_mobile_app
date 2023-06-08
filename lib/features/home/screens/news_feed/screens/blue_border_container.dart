@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/res/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class BlueBorderContainer extends StatelessWidget {
   final Widget child;

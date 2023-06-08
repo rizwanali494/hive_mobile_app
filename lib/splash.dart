@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_mobile/constants/svg_icons.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 
 class SplashScreen extends StatefulWidget {

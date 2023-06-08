@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/constants/svg_icons.dart';
-import 'package:hive_mobile/features/authentication/widgets/auth_button_widget.dart';
-import 'package:hive_mobile/res/app_strings.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/widgets/auth_button_widget.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:provider/provider.dart';
 
-import '../../../res/app_theme.dart';
+import '../../../app/resources/app_theme.dart';
 import '../view_models/auth_view_model.dart';
 
 class SignInScreen extends StatefulWidget {
