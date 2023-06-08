@@ -414,4 +414,4 @@ ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
 //   ],
 // );
 
-AppTheme colors(context) => Theme.of(context).extension<AppTheme>()!;
+AppTheme appTheme(context) => Theme.of(context).extension<AppTheme>()!;

@@ -55,14 +55,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            colors(context).linearBlueGradientTopLeft,
-                            colors(context).linearBlueGradientBottomRight,
+                            appTheme(context).linearBlueGradientTopLeft,
+                            appTheme(context).linearBlueGradientBottomRight,
                           ],
                         ),
                         boxShadow: [
                           BoxShadow(
                               blurRadius: 50,
-                              color: colors(context).white.withOpacity(0.2),
+                              color: appTheme(context).white.withOpacity(0.2),
                               spreadRadius: 0,
                               offset: const Offset(0, 4),
                               blurStyle: BlurStyle.outer),
@@ -74,8 +74,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         children: [
                           Text(
                             AppStrings.welcome,
-                            style: colors(context).inter50w700.copyWith(
-                              color: colors(context).white
+                            style: appTheme(context).inter50w700.copyWith(
+                              color: appTheme(context).white
                             ),
                           ),
                           SizedBox(
@@ -83,8 +83,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           Text(
                             AppStrings.signInWithGoogle,
-                            style: colors(context).inter12w400.copyWith(
-                                color: colors(context).white
+                            style: appTheme(context).inter12w400.copyWith(
+                                color: appTheme(context).white
                             ),
                           ),
                           SizedBox(

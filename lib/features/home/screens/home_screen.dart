@@ -48,9 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   unselectedItemColor: Colors.red,
-                  backgroundColor: colors(context).white,
-                  selectedIconTheme: IconThemeData(color: colors(context).red),
-                  selectedItemColor: colors(context).black,
+                  backgroundColor: appTheme(context).white,
+                  selectedIconTheme: IconThemeData(color: appTheme(context).red),
+                  selectedItemColor: appTheme(context).black,
                   currentIndex: provider.currentIndex,
                   onTap: (index) {
                     provider.setIndex(index);
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.all(12),
                             child: SvgPicture.asset(
                               icon,
-                              color: colors(context).skyBlue,
+                              color: appTheme(context).skyBlue,
                               // colorFilter: ColorFilter.mode(
                               //     colors(context).skyBlue, BlendMode.color),
                             ),
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
               title: Text(
                 AppStrings.newsFeed,
-                style: colors(context).inter40w700,
+                style: appTheme(context).inter40w700,
               ),
             ),
             body: provider.currentPage,

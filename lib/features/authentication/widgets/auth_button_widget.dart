@@ -23,7 +23,7 @@ class AuthButtonWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 9.h),
         margin: EdgeInsets.symmetric(horizontal: 42.w),
         decoration: BoxDecoration(
-            color: colors(context).white,
+            color: appTheme(context).white,
             borderRadius: BorderRadius.circular(30)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +34,7 @@ class AuthButtonWidget extends StatelessWidget {
             ),
             Text(
               AppStrings.continueWithGoogle,
-              style: colors(context).inter15w400.copyWith(color: Colors.black),
+              style: appTheme(context).inter15w400.copyWith(color: Colors.black),
             ),
           ],
         ),

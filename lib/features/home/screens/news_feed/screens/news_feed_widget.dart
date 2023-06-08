@@ -17,7 +17,7 @@ class NewsFeedWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
-          color: colors(context).white,
+          color: appTheme(context).white,
           borderRadius: BorderRadius.circular(25)),
       margin: EdgeInsets.symmetric(horizontal: 19.w),
       child: Column(
@@ -37,15 +37,15 @@ class NewsFeedWidget extends StatelessWidget {
                 children: [
                   Text(
                     _user.name,
-                    style: colors(context)
+                    style: appTheme(context)
                         .inter16w600
-                        .copyWith(color: colors(context).darkSlateGrey),
+                        .copyWith(color: appTheme(context).darkSlateGrey),
                   ),
                   Text(
                     _user.time,
-                    style: colors(context)
+                    style: appTheme(context)
                         .inter8w400
-                        .copyWith(color: colors(context).darkGrey),
+                        .copyWith(color: appTheme(context).darkGrey),
                   ),
                 ],
               ),
@@ -54,9 +54,9 @@ class NewsFeedWidget extends StatelessWidget {
           16.verticalSpace,
           Text(
             _user.description,
-            style: colors(context)
+            style: appTheme(context)
                 .inter16w400
-                .copyWith(color: colors(context).black),
+                .copyWith(color: appTheme(context).black),
           ),
           23.verticalSpace,
           ClipRRect(
@@ -80,9 +80,9 @@ class NewsFeedWidget extends StatelessWidget {
                     6.5.horizontalSpace,
                     Text(
                       _user.likeCount,
-                      style: colors(context)
+                      style: appTheme(context)
                           .inter12w400
-                          .copyWith(color: colors(context).skyBlue),
+                          .copyWith(color: appTheme(context).skyBlue),
                     ),
                   ],
                 ),
@@ -95,9 +95,9 @@ class NewsFeedWidget extends StatelessWidget {
                   children: [
                     Text(
                       _user.disLikeCount,
-                      style: colors(context)
+                      style: appTheme(context)
                           .inter12w400
-                          .copyWith(color: colors(context).skyBlue),
+                          .copyWith(color: appTheme(context).skyBlue),
                     ),
                     6.5.horizontalSpace,
 

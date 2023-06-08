@@ -17,7 +17,7 @@ class BlueBorderContainer extends StatelessWidget {
       width: 75.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: colors(context).skyBlue),
+        border: Border.all(color: appTheme(context).skyBlue),
       ),
       child: child,
     );
