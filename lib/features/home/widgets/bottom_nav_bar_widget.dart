@@ -19,8 +19,9 @@ class BottomNavBarWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(28),
         color: isSelected ? appTheme(context).lightBlue : null,
       ),
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(6),
+      margin: const EdgeInsets.
+      symmetric(horizontal: 5),
+      padding: const EdgeInsets.all(8),
       child: SvgPicture.asset(
         icon,
         colorFilter: ColorFilter.mode(

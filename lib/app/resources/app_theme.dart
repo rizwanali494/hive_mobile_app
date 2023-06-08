@@ -10,6 +10,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final TextStyle inter9w400;
   final TextStyle inter10w400;
   final TextStyle inter12w400;
+  final TextStyle inter12w400Underline;
   final TextStyle inter14w400;
   final TextStyle inter15w400;
   final TextStyle inter16w400;
@@ -57,6 +58,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.inter9w400,
     required this.inter10w400,
     required this.inter12w400,
+    required this.inter12w400Underline,
     required this.inter14w400,
     required this.inter15w400,
     required this.inter16w400,
@@ -103,6 +105,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter9w400: TextStyle.lerp(inter9w400, other.inter9w400, t)!,
       inter10w400: TextStyle.lerp(inter10w400, other.inter10w400, t)!,
       inter12w400: TextStyle.lerp(inter12w400, other.inter12w400, t)!,
+      inter12w400Underline:
+          TextStyle.lerp(inter12w400, other.inter12w400Underline, t)!,
       inter14w400: TextStyle.lerp(inter14w400, other.inter14w400, t)!,
       inter15w400: TextStyle.lerp(inter15w400, other.inter15w400, t)!,
       inter16w400: TextStyle.lerp(inter16w400, other.inter16w400, t)!,
@@ -172,6 +176,14 @@ class AppTheme extends ThemeExtension<AppTheme> {
       fontSize: 12.sp,
       fontWeight: FontWeight.w400,
       color: Colors.black,
+    ),
+    inter12w400Underline: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
+      decoration: TextDecoration.underline,
+      decorationColor: Colors.white,
     ),
     inter14w400: TextStyle(
       fontFamily: 'Inter',
@@ -288,6 +300,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     TextStyle? inter9w400,
     TextStyle? inter10w400,
     TextStyle? inter12w400,
+    TextStyle? inter12w400Underline,
     TextStyle? inter14w400,
     TextStyle? inter15w400,
     TextStyle? inter16w400,
@@ -327,6 +340,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter9w400: inter9w400 ?? this.inter9w400,
       inter10w400: inter10w400 ?? this.inter10w400,
       inter12w400: inter12w400 ?? this.inter12w400,
+      inter12w400Underline: inter12w400Underline ?? this.inter12w400Underline,
       inter14w400: inter14w400 ?? this.inter14w400,
       inter15w400: inter15w400 ?? this.inter15w400,
       inter16w400: inter16w400 ?? this.inter16w400,

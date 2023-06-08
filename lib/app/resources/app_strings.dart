@@ -66,5 +66,6 @@ class AppStrings {
   static String addDocument = "Add Document";
   static String scholarshipAmount = "Scholarship Amount";
   static String scholarship = "Scholarship";
+  static String clickToView = "Click to View";
 
 }

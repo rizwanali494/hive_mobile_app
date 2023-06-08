@@ -11,6 +11,7 @@ class SvgIcons {
   static const String building = "${_iconsPath}building.svg";
   static const String cake = "${_iconsPath}cake.svg";
   static const String calender = "${_iconsPath}calender.svg";
+  static const String activities = "${_iconsPath}calender.svg";
   static const String clock = "${_iconsPath}clock.svg";
   static const String edit = "${_iconsPath}edit.svg";
   static const String externalGrading = "${_iconsPath}external_grading.svg";
