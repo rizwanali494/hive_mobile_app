@@ -86,7 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Text(
                               AppStrings.clickToView,
-                              style: appTheme(context).inter12w400Underline,
+                              style: appTheme(context).inter12w400Underline.copyWith(
+                                color: appTheme(context).white
+                              ),
                             ),
                           ],
                         ),
@@ -197,6 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 AppStrings.newsFeed,
                 style: appTheme(context).inter40w700,
               ),
+
             ),
             body: provider.currentPage,
           );

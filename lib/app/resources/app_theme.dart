@@ -19,6 +19,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final TextStyle inter12w500;
 
   //w600
+  final TextStyle inter12w600;
   final TextStyle inter14w600;
   final TextStyle inter16w600;
   final TextStyle inter20w600;
@@ -50,7 +51,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color yellowGreen;
   final Color darkOrange;
   final Color red;
+  final Color platinum;
   final Color lightPink;
+  final Color smokeWhite;
 
   const AppTheme({
     required this.inter8w400,
@@ -59,6 +62,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.inter10w400,
     required this.inter12w400,
     required this.inter12w400Underline,
+    required this.inter12w600,
     required this.inter14w400,
     required this.inter15w400,
     required this.inter16w400,
@@ -91,6 +95,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.red,
     required this.lightPink,
     required this.deepSkyBlue,
+    required this.platinum,
+    required this.smokeWhite,
   });
 
   @override
@@ -105,6 +111,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter9w400: TextStyle.lerp(inter9w400, other.inter9w400, t)!,
       inter10w400: TextStyle.lerp(inter10w400, other.inter10w400, t)!,
       inter12w400: TextStyle.lerp(inter12w400, other.inter12w400, t)!,
+      inter12w600: TextStyle.lerp(inter12w600, other.inter12w600, t)!,
       inter12w400Underline:
           TextStyle.lerp(inter12w400, other.inter12w400Underline, t)!,
       inter14w400: TextStyle.lerp(inter14w400, other.inter14w400, t)!,
@@ -141,6 +148,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
       lightPink: Color.lerp(lightPink, other.lightPink, t)!,
       deepSkyBlue: Color.lerp(deepSkyBlue, other.deepSkyBlue, t)!,
       lightBlue: Color.lerp(lightBlue, other.lightBlue, t)!,
+      platinum: Color.lerp(platinum, other.platinum, t)!,
+      smokeWhite: Color.lerp(smokeWhite, other.smokeWhite, t)!,
     );
   }
 
@@ -207,6 +216,12 @@ class AppTheme extends ThemeExtension<AppTheme> {
       fontFamily: 'Inter',
       fontSize: 12.sp,
       fontWeight: FontWeight.w500,
+      color: Colors.black,
+    ),
+    inter12w600: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     inter14w600: TextStyle(
@@ -292,6 +307,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
     lightPink: const Color(0xffFFBEBE),
     deepSkyBlue: const Color(0xff08A5E0),
     lightBlue: const Color(0xffCBEAF4),
+    platinum: const Color(0xffE1E1E1),
+    smokeWhite: const Color(0xffF2F2F2),
   );
 
   AppTheme copyWith({
@@ -301,6 +318,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     TextStyle? inter10w400,
     TextStyle? inter12w400,
     TextStyle? inter12w400Underline,
+    TextStyle? inter12w600,
     TextStyle? inter14w400,
     TextStyle? inter15w400,
     TextStyle? inter16w400,
@@ -332,7 +350,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? yellowGreen,
     Color? darkOrange,
     Color? red,
+    Color? platinum,
     Color? lightPink,
+    Color? smokeWhite,
   }) {
     return AppTheme(
       inter8w400: inter8w400 ?? this.inter8w400,
@@ -340,6 +360,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter9w400: inter9w400 ?? this.inter9w400,
       inter10w400: inter10w400 ?? this.inter10w400,
       inter12w400: inter12w400 ?? this.inter12w400,
+      inter12w600: inter12w600 ?? this.inter12w600,
       inter12w400Underline: inter12w400Underline ?? this.inter12w400Underline,
       inter14w400: inter14w400 ?? this.inter14w400,
       inter15w400: inter15w400 ?? this.inter15w400,
@@ -375,6 +396,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
       lightPink: lightPink ?? this.lightPink,
       deepSkyBlue: deepSkyBlue ?? this.deepSkyBlue,
       lightBlue: lightBlue ?? this.lightBlue,
+      platinum: platinum ?? this.platinum,
+      smokeWhite: smokeWhite ?? this.smokeWhite,
     );
   }
 }

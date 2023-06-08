@@ -67,5 +67,8 @@ class AppStrings {
   static String scholarshipAmount = "Scholarship Amount";
   static String scholarship = "Scholarship";
   static String clickToView = "Click to View";
+  static String loremPorum = "Lorem ipsum dolor sit";
+  static String percent67 = "67%";
+  static String percent1 = "1%";
 
 }
