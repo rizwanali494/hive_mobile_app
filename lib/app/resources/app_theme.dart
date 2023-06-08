@@ -38,6 +38,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color white;
   final Color black;
   final Color skyBlue;
+  final Color lightBlue;
   final Color deepSkyBlue;
   final Color lavender;
   final Color darkGrey;
@@ -76,6 +77,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.white,
     required this.black,
     required this.skyBlue,
+    required this.lightBlue,
     required this.lavender,
     required this.darkGrey,
     required this.lightGrey,
@@ -134,6 +136,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       red: Color.lerp(red, other.red, t)!,
       lightPink: Color.lerp(lightPink, other.lightPink, t)!,
       deepSkyBlue: Color.lerp(deepSkyBlue, other.deepSkyBlue, t)!,
+      lightBlue: Color.lerp(lightBlue, other.lightBlue, t)!,
     );
   }
 
@@ -276,6 +279,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     red: const Color(0xffB75F5F),
     lightPink: const Color(0xffFFBEBE),
     deepSkyBlue: const Color(0xff08A5E0),
+    lightBlue: const Color(0xffCBEAF4),
   );
 
   AppTheme copyWith({
@@ -304,6 +308,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? white,
     Color? black,
     Color? skyBlue,
+    Color? lightBlue,
     Color? deepSkyBlue,
     Color? lavender,
     Color? darkGrey,
@@ -355,6 +360,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       red: red ?? this.red,
       lightPink: lightPink ?? this.lightPink,
       deepSkyBlue: deepSkyBlue ?? this.deepSkyBlue,
+      lightBlue: lightBlue ?? this.lightBlue,
     );
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/home/screens/bottom_nav_bar_widget.dart';
+import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,13 +15,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final icons = [
-      SvgIcons.homeNav,
-      SvgIcons.messageNav,
-      SvgIcons.notificationNav,
-      SvgIcons.reportNav,
-      SvgIcons.profileNav,
-    ];
     return ChangeNotifierProvider(
       create: (BuildContext context) => HomeScreenVm(),
       child: Consumer<HomeScreenVm>(
@@ -37,7 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+                    color: Colors.black38,
+                    spreadRadius: 0,
+                    blurRadius: 10,
+                  ),
                 ],
               ),
               child: ClipRRect(
@@ -47,31 +42,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  unselectedItemColor: Colors.red,
                   backgroundColor: appTheme(context).white,
-                  selectedIconTheme: IconThemeData(color: appTheme(context).red),
-                  selectedItemColor: appTheme(context).black,
                   currentIndex: provider.currentIndex,
                   onTap: (index) {
                     provider.setIndex(index);
                   },
                   items: <BottomNavigationBarItem>[
-                    for (var icon in icons)
+                    for (var icon in provider.icons)
                       BottomNavigationBarItem(
-                          icon: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28),
-                              color: const Color(0xffCBEAF4),
-                            ),
-                            margin: const EdgeInsets.all(12),
-                            padding: const EdgeInsets.all(12),
-                            child: SvgPicture.asset(
-                              icon,
-                              // colorFilter: ColorFilter.mode(
-                              //     colors(context).skyBlue, BlendMode.color),
-                            ),
-                          ),
-                          label: ""),
+                        icon: BottomNavBarWidget(
+                          icon: icon,
+                          isSelected: provider.isSelected(icon),
+                        ),
+                        label: "",
+                      ),
                   ],
                 ),
               ),
