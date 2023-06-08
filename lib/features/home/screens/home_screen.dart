@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/home/screens/bottom_nav_bar_widget.dart';
+import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:provider/provider.dart';
 
