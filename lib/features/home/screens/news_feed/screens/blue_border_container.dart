@@ -12,12 +12,13 @@ class BlueBorderContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
     return Container(
       height: 32.h,
       width: 75.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: appTheme(context).skyBlue),
+        border: Border.all(color: styles.skyBlue),
       ),
       child: child,
     );

@@ -21,6 +21,7 @@ class PollWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
     return SizedBox(
       width: double.infinity,
       child: Padding(
@@ -33,10 +34,10 @@ class PollWidget extends StatelessWidget {
                   lineHeight: 35.h,
                   percent: percentage,
                   linearStrokeCap: LinearStrokeCap.roundAll,
-                  backgroundColor: appTheme(context).smokeWhite,
+                  backgroundColor: styles.smokeWhite,
                   progressColor: isSelected
-                      ? appTheme(context).lavender
-                      : appTheme(context).platinum,
+                      ? styles.lavender
+                      : styles.platinum,
                   barRadius: const Radius.circular(36),
                   padding: EdgeInsets.zero,
                 ),
@@ -49,11 +50,11 @@ class PollWidget extends StatelessWidget {
                           value: value,
                           fillColor: MaterialStateProperty.resolveWith ((Set  states) {
                             if (states.contains(MaterialState.selected)) {
-                              return appTheme(context).deepSkyBlue;
+                              return styles.deepSkyBlue;
                             }
                             return Colors.white;
                           }),
-                          activeColor: appTheme(context).deepSkyBlue,
+                          activeColor: styles.deepSkyBlue,
                           visualDensity: const VisualDensity(
                               horizontal: VisualDensity.minimumDensity,
                               vertical: VisualDensity.minimumDensity),
@@ -64,7 +65,7 @@ class PollWidget extends StatelessWidget {
                         10.horizontalSpace,
                         Text(
                           AppStrings.loremPorum,
-                          style: appTheme(context).inter12w400,
+                          style: styles.inter12w400,
                           maxLines: 1,
                         ),
                         Expanded(
@@ -73,7 +74,7 @@ class PollWidget extends StatelessWidget {
                             child: Text(
                               "${(percentage*100).toStringAsFixed(0)}%",
                               // AppStrings.percent67,
-                              style: appTheme(context).inter12w600,
+                              style: styles.inter12w600,
                             ),
                           ),
                         ),

@@ -14,10 +14,11 @@ class BottomNavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: isSelected ? appTheme(context).lightBlue : null,
+        color: isSelected ? styles.lightBlue : null,
       ),
       margin: const EdgeInsets.
       symmetric(horizontal: 5),
@@ -26,8 +27,8 @@ class BottomNavBarWidget extends StatelessWidget {
         icon,
         colorFilter: ColorFilter.mode(
           isSelected
-              ? appTheme(context).deepSkyBlue
-              : appTheme(context).black.withOpacity(0.5),
+              ? styles.deepSkyBlue
+              : styles.black.withOpacity(0.5),
           BlendMode.srcIn,
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/widgets/news_feed_widget.dart';
+import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 
 class NewsFeedScreen extends StatefulWidget {
   const NewsFeedScreen({Key? key}) : super(key: key);

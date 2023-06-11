@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/app/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/auth_button_widget.dart';
+import 'package:hive_mobile/features/authentication/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/resources/app_theme.dart';
-import '../view_models/auth_view_model.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -18,6 +18,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
     return ChangeNotifierProvider(
       create: (BuildContext context) => AuthVM(),
       child: Consumer<AuthVM>(
@@ -55,14 +56,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            appTheme(context).linearBlueGradientTopLeft,
-                            appTheme(context).linearBlueGradientBottomRight,
+                            styles.linearBlueGradientTopLeft,
+                            styles.linearBlueGradientBottomRight,
                           ],
                         ),
                         boxShadow: [
                           BoxShadow(
                               blurRadius: 50,
-                              color: appTheme(context).white.withOpacity(0.2),
+                              color: styles.white.withOpacity(0.2),
                               spreadRadius: 0,
                               offset: const Offset(0, 4),
                               blurStyle: BlurStyle.outer),
@@ -74,8 +75,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         children: [
                           Text(
                             AppStrings.welcome,
-                            style: appTheme(context).inter50w700.copyWith(
-                              color: appTheme(context).white
+                            style: styles.inter50w700.copyWith(
+                              color: styles.white
                             ),
                           ),
                           SizedBox(
@@ -83,8 +84,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           Text(
                             AppStrings.signInWithGoogle,
-                            style: appTheme(context).inter12w400.copyWith(
-                                color: appTheme(context).white
+                            style: styles.inter12w400.copyWith(
+                                color: styles.white
                             ),
                           ),
                           SizedBox(

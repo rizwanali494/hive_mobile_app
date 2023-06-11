@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
+import 'package:hive_mobile/features/home/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      navigate();
+      navigate(context);
     });
   }
 
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: InkWell(
-          onTap: (){
+          onTap: () {
             debugPrint("tapped");
           },
           // child: SvgPicture.asset(
@@ -33,19 +34,25 @@ class _SplashScreenState extends State<SplashScreen> {
           //   width: 200,
           //   height: 300,
           // ),
-          child: Image.asset(SvgIcons.hiveLogo,width: 200,height: 200,),
+          child: Image.asset(
+            SvgIcons.hiveLogo,
+            width: 200,
+            height: 200,
+          ),
         ),
       ),
     );
   }
 
-  void navigate() {
+  void navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SignInScreen(),
-          ));
+      context.pushReplacement(HomeScreen.route);
+
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => const HomeScreen(),
+      //     ));
     });
   }
 }

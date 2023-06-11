@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hive_mobile/features/home/screens/home_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/services/auth_service.dart';
 import 'package:hive_mobile/app/services/google_auth_service.dart';
+import 'package:hive_mobile/features/home/screens/home_screen.dart';
 
 class AuthVM extends ChangeNotifier {
   Future googleSignIn(BuildContext context) async {
@@ -9,11 +10,7 @@ class AuthVM extends ChangeNotifier {
     await authService.logOut();
     String? user = await authService.logIn();
     if (context.mounted) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ));
+      context.pushReplacement(HomeScreen.route);
     }
   }
 }

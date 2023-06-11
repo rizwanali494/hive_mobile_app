@@ -4,13 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
+import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const route = '/HomeScreen';
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
     return ChangeNotifierProvider(
       create: (BuildContext context) => HomeScreenVm(),
       child: Consumer<HomeScreenVm>(
@@ -56,8 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          appTheme(context).linearBlueGradientTopLeft,
-                          appTheme(context).linearBlueGradientBottomRight,
+                         styles.linearBlueGradientTopLeft,
+                         styles.linearBlueGradientBottomRight,
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -80,15 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               _user.name,
-                              style: appTheme(context).inter16w600.copyWith(
-                                    color: appTheme(context).white,
+                              style:styles.inter16w600.copyWith(
+                                    color:styles.white,
                                   ),
                             ),
                             Text(
                               AppStrings.clickToView,
-                              style: appTheme(context).inter12w400Underline.copyWith(
-                                color: appTheme(context).white
-                              ),
+                              style:styles
+                                  .inter12w400Underline
+                                  .copyWith(color:styles.white),
                             ),
                           ],
                         ),
@@ -131,8 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                             Divider(
-                              color: appTheme(context).black.withOpacity(0.2),
+                            Divider(
+                              color:styles.black.withOpacity(0.2),
                             ),
                             10.verticalSpace,
                             Row(
@@ -141,12 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 20.horizontalSpace,
                                 Text(
                                   AppStrings.logout,
-                                  style: appTheme(context).inter15w400,
+                                  style:styles.inter15w400,
                                 ),
                               ],
                             ),
                             50.verticalSpace
-
                           ],
                         ),
                       ),
@@ -155,6 +157,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            appBar: AppBar(
+              title: Text(
+                AppStrings.newsFeed,
+                style:styles.inter40w700,
+              ),
+            ),
+            body: provider.currentPage,
             bottomNavigationBar: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -176,10 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  backgroundColor: appTheme(context).white,
+                  backgroundColor:styles.white,
                   currentIndex: provider.currentIndex,
                   onTap: (index) {
-                    provider.setIndex(index);
+                    provider.setIndex(index,context);
                   },
                   items: <BottomNavigationBarItem>[
                     for (var icon in provider.icons)
@@ -194,14 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            appBar: AppBar(
-              title: Text(
-                AppStrings.newsFeed,
-                style: appTheme(context).inter40w700,
-              ),
-
-            ),
-            body: provider.currentPage,
           );
         },
       ),

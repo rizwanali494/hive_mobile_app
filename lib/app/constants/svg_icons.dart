@@ -1,11 +1,11 @@
 const _iconsPath = 'assets/icons/';
 
-
 class SvgIcons {
   static const String addSquare = "${_iconsPath}add_square.svg";
   static const String alarm = "${_iconsPath}alarm.svg";
   static const String applied = "${_iconsPath}applied.svg";
   static const String arrowRight = "${_iconsPath}arrow_right.svg";
+
   // static const String hiveLogo = "${_iconsPath}hive_logo.svg";
   static const String hiveLogo = "${_iconsPath}hive_logo.png";
   static const String building = "${_iconsPath}building.svg";
@@ -37,4 +37,5 @@ class SvgIcons {
   static const String vector = "${_iconsPath}Vector.svg";
   static const String like = "${_iconsPath}like.svg";
   static const String dislike = "${_iconsPath}dislike.svg";
+  static const String announcement = "${_iconsPath}announcement.svg";
 }

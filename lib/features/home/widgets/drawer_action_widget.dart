@@ -15,10 +15,9 @@ class DrawerActionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: 28.h
-      ),
+      padding: EdgeInsets.only(bottom: 28.h),
       child: Row(
         children: [
           SvgPicture.asset(
@@ -27,7 +26,7 @@ class DrawerActionWidget extends StatelessWidget {
           19.horizontalSpace,
           Text(
             actionName,
-            style: appTheme(context).inter15w400,
+            style: styles.inter15w400,
           ),
         ],
       ),
