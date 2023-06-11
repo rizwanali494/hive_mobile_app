@@ -27,7 +27,7 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: HomeScreen.route,
       name: HomeScreen.route,
-      builder: (_, state) => const HomeScreen(),
+      builder: (_, state) =>  HomeScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

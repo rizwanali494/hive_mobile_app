@@ -10,16 +10,11 @@ import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static const route = '/HomeScreen';
 
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final icons = [
     SvgIcons.activities,
     SvgIcons.calender,
@@ -59,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                         styles.linearBlueGradientTopLeft,
-                         styles.linearBlueGradientBottomRight,
+                          styles.linearBlueGradientTopLeft,
+                          styles.linearBlueGradientBottomRight,
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -83,15 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               _user.name,
-                              style:styles.inter16w600.copyWith(
-                                    color:styles.white,
-                                  ),
+                              style: styles.inter16w600.copyWith(
+                                color: styles.white,
+                              ),
                             ),
                             Text(
                               AppStrings.clickToView,
-                              style:styles
-                                  .inter12w400Underline
-                                  .copyWith(color:styles.white),
+                              style: styles.inter12w400Underline.copyWith(color: styles.white),
                             ),
                           ],
                         ),
@@ -135,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Divider(
-                              color:styles.black.withOpacity(0.2),
+                              color: styles.black.withOpacity(0.2),
                             ),
                             10.verticalSpace,
                             Row(
@@ -144,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 20.horizontalSpace,
                                 Text(
                                   AppStrings.logout,
-                                  style:styles.inter15w400,
+                                  style: styles.inter15w400,
                                 ),
                               ],
                             ),
@@ -160,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
               title: Text(
                 AppStrings.newsFeed,
-                style:styles.inter40w700,
+                style: styles.inter40w700,
               ),
             ),
             body: provider.currentPage,
@@ -185,10 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  backgroundColor:styles.white,
+                  backgroundColor: styles.white,
                   currentIndex: provider.currentIndex,
                   onTap: (index) {
-                    provider.setIndex(index,context);
+                    provider.setIndex(index, context);
                   },
                   items: <BottomNavigationBarItem>[
                     for (var icon in provider.icons)

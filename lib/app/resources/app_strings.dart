@@ -76,5 +76,6 @@ class AppStrings {
   static String sportsEventIsComing = "Sports event is coming";
   static String youHaveAUnreadMessage = "You have a unread message";
   static String announcement = "Announcement!";
+  static String academicReport = "Academic Report";
 
 }
