@@ -418,7 +418,10 @@ ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
     surfaceTintColor: Colors.transparent,
     elevation: 0,
     titleTextStyle: AppTheme.light.inter20w600,
-    iconTheme: const IconThemeData(color: Color(0xff6935D3)),
+    iconTheme: const IconThemeData(
+      color: Color(0xff6935D3),
+    ),
+
     systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 
 class NewsFeedScreen extends StatefulWidget {
@@ -21,10 +22,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => Dialog(
-                    child: NewsFeedWidget(
-                        type: index.isEven ? PostType.image : PostType.poll),
-                  ),
+                  // builder: (context) => Dialog(
+                  //   child: NewsFeedWidget(
+                  //       type: index.isEven ? PostType.image : PostType.poll),
+                  // ),
+                  builder: (context) => BackUpEmailDialog(),
                 );
               },
               child: NewsFeedWidget(
