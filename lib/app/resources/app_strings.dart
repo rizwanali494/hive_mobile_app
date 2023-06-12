@@ -79,6 +79,8 @@ class AppStrings {
   static String academicReport = "Academic Report";
   static String name = "Name";
   static String date = "Date";
+  static String hobbies = "Hobbies";
   static String action = "Action";
+  static String achievementsAwards = "Achievements & Awards";
 
 }

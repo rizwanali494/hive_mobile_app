@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';
+import 'package:hive_mobile/features/profile/screens/profile_screen.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
 
 import '../../../app/constants/svg_icons.dart';
@@ -25,7 +26,8 @@ class HomeScreenVm extends ChangeNotifier {
 
   int _currentIndex = 0;
 
-  Widget get currentPage => _pages[_currentIndex % _pages.length];
+  // Widget get currentPage => _pages[_currentIndex % _pages.length];
+  Widget get currentPage => const ProfileScreen();
 
   int get currentIndex => _currentIndex;
 
