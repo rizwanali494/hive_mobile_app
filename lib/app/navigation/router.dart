@@ -1,8 +1,8 @@
-
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
+import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/splash.dart';
 
 export 'extensions.dart';
@@ -27,7 +27,12 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: HomeScreen.route,
       name: HomeScreen.route,
-      builder: (_, state) =>  HomeScreen(),
+      builder: (_, state) => HomeScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: AccountSettingScreen.route,
+      name: AccountSettingScreen.route,
+      builder: (_, state) => const AccountSettingScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

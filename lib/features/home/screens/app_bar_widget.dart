@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../view_models/home_screen_vm.dart';
 
 class AppBarWidget extends StatelessWidget {
-  final Function()? onMenuTap;
+  final Function() onMenuTap;
   final Color color;
   final String title;
   final TextStyle? titleStyle;
@@ -15,7 +15,7 @@ class AppBarWidget extends StatelessWidget {
 
   const AppBarWidget({
     super.key,
-    this.onMenuTap,
+    required this.onMenuTap,
     required this.color,
     this.titleStyle,
     this.actions = const [],
@@ -26,7 +26,6 @@ class AppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final provider = context.read<HomeScreenVm>();
 
     return Padding(
       padding: EdgeInsets.only(
@@ -36,10 +35,7 @@ class AppBarWidget extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: onMenuTap ??
-                () {
-                  provider.openDrawer();
-                },
+            onTap: onMenuTap,
             child: icon ??
                 Icon(
                   Icons.menu,

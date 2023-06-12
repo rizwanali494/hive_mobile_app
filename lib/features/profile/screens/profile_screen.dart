@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
 import 'package:hive_mobile/features/profile/screens/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/screens/profile_section_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app/resources/app_strings.dart';
 import '../../../app/resources/app_theme.dart';
+import '../../home/view_models/home_screen_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -21,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+    final provider = context.read<HomeScreenVm>();
 
     return Column(
       children: [
@@ -44,8 +48,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: styles.white,
                 title: AppStrings.profile,
                 actions: [
-                  SvgPicture.asset(SvgIcons.edit),
+                  GestureDetector(
+                      onTap: () {
+                        context.push("/AccountScreen");
+                      },
+                      child: SvgPicture.asset(SvgIcons.edit)),
                 ],
+                onMenuTap: () {
+                  provider.openDrawer();
+                },
               ),
               27.verticalSpace,
               Padding(

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 
 import '../../resources/app_theme.dart';
 
@@ -49,9 +50,8 @@ class _BackUpEmailDialogState extends State<BackUpEmailDialog> {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: AppStrings.email,
-                  hintStyle: styles.inter12w400.copyWith(
-                    color: styles.black.withOpacity(0.5)
-                  ),
+                  hintStyle: styles.inter12w400
+                      .copyWith(color: styles.black.withOpacity(0.5)),
                   isDense: true,
                 ),
               ),
@@ -62,16 +62,7 @@ class _BackUpEmailDialogState extends State<BackUpEmailDialog> {
       actions: [
         SizedBox(
           width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: styles.skyBlue,
-            ),
-            child: Text(
-              AppStrings.email,
-              style: styles.inter12w700.copyWith(color: styles.white),
-            ),
-          ),
+          child: BlueElevatedButton(text: AppStrings.email),
         ),
       ],
     );

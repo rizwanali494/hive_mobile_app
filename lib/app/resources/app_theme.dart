@@ -10,6 +10,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final TextStyle inter9w400;
   final TextStyle inter10w400;
   final TextStyle inter12w400;
+  final TextStyle inter12w400Italic;
   final TextStyle inter12w400Underline;
   final TextStyle inter14w400;
   final TextStyle inter15w400;
@@ -62,6 +63,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.inter10w400,
     required this.inter12w400,
     required this.inter12w400Underline,
+    required this.inter12w400Italic,
     required this.inter12w600,
     required this.inter14w400,
     required this.inter15w400,
@@ -111,6 +113,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter9w400: TextStyle.lerp(inter9w400, other.inter9w400, t)!,
       inter10w400: TextStyle.lerp(inter10w400, other.inter10w400, t)!,
       inter12w400: TextStyle.lerp(inter12w400, other.inter12w400, t)!,
+      inter12w400Italic:
+          TextStyle.lerp(inter12w400Italic, other.inter12w400Italic, t)!,
       inter12w600: TextStyle.lerp(inter12w600, other.inter12w600, t)!,
       inter12w400Underline:
           TextStyle.lerp(inter12w400, other.inter12w400Underline, t)!,
@@ -309,6 +313,13 @@ class AppTheme extends ThemeExtension<AppTheme> {
     lightBlue: const Color(0xffCBEAF4),
     platinum: const Color(0xffE1E1E1),
     smokeWhite: const Color(0xffF2F2F2),
+    inter12w400Italic: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.italic,
+      color: const Color(0xff464646).withOpacity(0.5),
+    ),
   );
 
   AppTheme copyWith({
@@ -318,6 +329,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     TextStyle? inter10w400,
     TextStyle? inter12w400,
     TextStyle? inter12w400Underline,
+    TextStyle? inter12w400Italic,
     TextStyle? inter12w600,
     TextStyle? inter14w400,
     TextStyle? inter15w400,
@@ -362,6 +374,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter12w400: inter12w400 ?? this.inter12w400,
       inter12w600: inter12w600 ?? this.inter12w600,
       inter12w400Underline: inter12w400Underline ?? this.inter12w400Underline,
+      inter12w400Italic: inter12w400Italic ?? this.inter12w400Italic,
       inter14w400: inter14w400 ?? this.inter14w400,
       inter15w400: inter15w400 ?? this.inter15w400,
       inter16w400: inter16w400 ?? this.inter16w400,
@@ -421,7 +434,6 @@ ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
     iconTheme: const IconThemeData(
       color: Color(0xff6935D3),
     ),
-
     systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
     ),
