@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
+
 import '../../../app/constants/svg_icons.dart';
 
 class HomeScreenVm extends ChangeNotifier {
@@ -30,11 +31,11 @@ class HomeScreenVm extends ChangeNotifier {
 
   void setIndex(int index, BuildContext context) {
     debugPrint("$index");
-    _currentIndex = index;
     if (index == 2) {
       _openBottomSheet(context);
       return;
     }
+    _currentIndex = index;
     notifyListeners();
     debugPrint("$_currentIndex");
   }
@@ -63,6 +64,4 @@ class HomeScreenVm extends ChangeNotifier {
   void closeDrawer() {
     scaffoldKey.currentState!.closeDrawer();
   }
-
-
 }
