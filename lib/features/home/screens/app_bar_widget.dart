@@ -33,14 +33,15 @@ class AppBarWidget extends StatelessWidget {
             onTap: onMenuTap,
             child: Icon(
               Icons.menu,
-              color: styles.black,
+              color: color,
               size: 40.w,
             ),
           ),
           16.5.horizontalSpace,
           Text(
             title,
-            style: titleStyle ?? styles.inter40w700,
+            style: titleStyle?.copyWith(color: color) ??
+                styles.inter40w700.copyWith(color: color),
           ),
           Expanded(
             child: Align(
