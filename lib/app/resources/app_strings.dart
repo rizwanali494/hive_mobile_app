@@ -77,5 +77,8 @@ class AppStrings {
   static String youHaveAUnreadMessage = "You have a unread message";
   static String announcement = "Announcement!";
   static String academicReport = "Academic Report";
+  static String name = "Name";
+  static String date = "Date";
+  static String action = "Action";
 
 }

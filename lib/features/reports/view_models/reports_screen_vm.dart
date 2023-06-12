@@ -22,6 +22,14 @@ class ReportsScreenVM extends ChangeNotifier {
     Record(id: '4', title: 'Record 4', description: 'Description 4'),
   ];
 
+  List<String> dropdownItems = ['Item 1', 'Item 2', 'Item 3'];
+  String selectedDropdownItem = 'Item 1';
+
+  void setSelectedDropdownItem(String item) {
+    selectedDropdownItem = item;
+    notifyListeners();
+  }
+
 }
 class Record {
   final String id;
