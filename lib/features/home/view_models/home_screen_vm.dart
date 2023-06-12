@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
 
 import '../../../app/constants/svg_icons.dart';
+import '../../../app/resources/app_theme.dart';
 
 class HomeScreenVm extends ChangeNotifier {
   final List<Widget> _pages = const [
@@ -52,5 +54,37 @@ class HomeScreenVm extends ChangeNotifier {
             child: const SingleChildScrollView(child: NotificationScreen()));
       },
     );
+  }
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+  void openDrawer() {
+    scaffoldKey.currentState!.openDrawer();
+  }
+
+  void closeDrawer() {
+    scaffoldKey.currentState!.closeDrawer();
+  }
+
+  final titles = <String>[
+    AppStrings.newsFeed,
+    AppStrings.inbox,
+    AppStrings.notifications,
+    AppStrings.reports,
+    AppStrings.profile,
+  ];
+
+  String get currentTitle {
+    return titles[currentIndex % titles.length];
+  }
+
+  TextStyle currentTitleStyle(AppTheme theme) {
+    List<TextStyle> titleStyle = [
+      theme.inter40w700,
+      theme.inter40w700,
+      theme.inter40w700,
+      theme.inter36w700,
+    ];
+    return titleStyle[currentIndex % titleStyle.length];
   }
 }

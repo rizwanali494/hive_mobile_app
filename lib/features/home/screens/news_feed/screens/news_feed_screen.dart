@@ -14,12 +14,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      showDialog(
-        context: context,
-        builder: (context) => const BackUpEmailDialog(),
-      );
-    });
   }
 
   @override

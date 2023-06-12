@@ -4,16 +4,36 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../../app/view/dialogs/backup_email_dialog.dart';
+
+class HomeScreen extends StatefulWidget {
   static const route = '/HomeScreen';
 
   HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      showDialog(
+        context: context,
+        builder: (context) => const BackUpEmailDialog(),
+      );
+    });
+  }
 
   final icons = [
     SvgIcons.activities,
@@ -39,8 +59,9 @@ class HomeScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => HomeScreenVm(),
       child: Consumer<HomeScreenVm>(
-        builder: (context, provider, child) {
+        builder: (providerContext, provider, child) {
           return Scaffold(
+            key: provider.scaffoldKey,
             drawer: Drawer(
               child: Column(
                 children: [
@@ -84,7 +105,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             Text(
                               AppStrings.clickToView,
-                              style: styles.inter12w400Underline.copyWith(color: styles.white),
+                              style: styles.inter12w400Underline
+                                  .copyWith(color: styles.white),
                             ),
                           ],
                         ),
@@ -150,13 +172,19 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            appBar: AppBar(
-              title: Text(
-                AppStrings.newsFeed,
-                style: styles.inter40w700,
-              ),
+            body: Column(
+              children: [
+                AppBarWidget(
+                  onMenuTap: () {
+                    provider.openDrawer();
+                  },
+                  color: styles.white,
+                  title: provider.currentTitle,
+                  titleStyle: provider.currentTitleStyle(styles),
+                ),
+                Expanded(child: provider.currentPage),
+              ],
             ),
-            body: provider.currentPage,
             bottomNavigationBar: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
