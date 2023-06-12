@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/resources/app_theme.dart';
+
 
 /// A bottom sheet builder that implements cupertino style divider on top of it.
 /// and requires a [body] [Widget] to build up actual widget.

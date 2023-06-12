@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../view_models/home_screen_vm.dart';
 
 class AppBarWidget extends StatelessWidget {
-  final Function() onMenuTap;
+  final Function()? onMenuTap;
   final Color color;
   final String title;
   final TextStyle? titleStyle;
   final List<Widget> actions;
+  final Widget? icon;
 
   const AppBarWidget({
     super.key,
-    required this.onMenuTap,
+    this.onMenuTap,
     required this.color,
     this.titleStyle,
     this.actions = const [],
     required this.title,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+    final provider = context.read<HomeScreenVm>();
 
     return Padding(
       padding: EdgeInsets.only(
@@ -30,12 +36,16 @@ class AppBarWidget extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: onMenuTap,
-            child: Icon(
-              Icons.menu,
-              color: color,
-              size: 40.w,
-            ),
+            onTap: onMenuTap ??
+                () {
+                  provider.openDrawer();
+                },
+            child: icon ??
+                Icon(
+                  Icons.menu,
+                  color: color,
+                  size: 40.w,
+                ),
           ),
           16.5.horizontalSpace,
           Text(

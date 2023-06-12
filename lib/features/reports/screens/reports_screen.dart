@@ -117,11 +117,11 @@ class ReportsScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
                                 Text(provider.selectedDropdownItem),
-                                Icon(Icons.arrow_drop_down),
+                                const Icon(Icons.arrow_drop_down),
                               ],
                             ),
                           ),
