@@ -12,6 +12,17 @@ class NewsFeedScreen extends StatefulWidget {
 
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      showDialog(
+        context: context,
+        builder: (context) => const BackUpEmailDialog(),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(),
@@ -22,11 +33,10 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               onTap: () {
                 showDialog(
                   context: context,
-                  // builder: (context) => Dialog(
-                  //   child: NewsFeedWidget(
-                  //       type: index.isEven ? PostType.image : PostType.poll),
-                  // ),
-                  builder: (context) => BackUpEmailDialog(),
+                  builder: (context) => Dialog(
+                    child: NewsFeedWidget(
+                        type: index.isEven ? PostType.image : PostType.poll),
+                  ),
                 );
               },
               child: NewsFeedWidget(
