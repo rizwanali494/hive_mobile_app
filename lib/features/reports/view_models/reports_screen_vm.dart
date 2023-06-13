@@ -22,10 +22,19 @@ class ReportsScreenVM extends ChangeNotifier {
     Record(id: '4', title: 'Record 4', description: 'Description 4'),
   ];
 
-   String? _selectedValue;
-  final List<String> _items = ['Option 1', 'Option 2', 'Option 3'];
+  final List<String> _items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  String? _selectedValue;
 
-  String get selectedValue => _selectedValue;
+  String? get selectedValue => _selectedValue;
   List<String> get items => _items;
 
   void setSelectedValue(String value) {
