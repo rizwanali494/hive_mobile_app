@@ -10,10 +10,29 @@ import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../../app/view/dialogs/backup_email_dialog.dart';
+
+class HomeScreen extends StatefulWidget {
   static const route = '/HomeScreen';
 
   HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      showDialog(
+        context: context,
+        builder: (context) => const BackUpEmailDialog(),
+      );
+    });
+  }
 
   final icons = [
     SvgIcons.activities,
@@ -39,8 +58,9 @@ class HomeScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => HomeScreenVm(),
       child: Consumer<HomeScreenVm>(
-        builder: (context, provider, child) {
+        builder: (providerContext, provider, child) {
           return Scaffold(
+            key: provider.scaffoldKey,
             drawer: Drawer(
               child: Column(
                 children: [
@@ -84,7 +104,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             Text(
                               AppStrings.clickToView,
-                              style: styles.inter12w400Underline.copyWith(color: styles.white),
+                              style: styles.inter12w400Underline
+                                  .copyWith(color: styles.white),
                             ),
                           ],
                         ),
@@ -148,12 +169,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            ),
-            appBar: AppBar(
-              title: Text(
-                AppStrings.newsFeed,
-                style: styles.inter40w700,
               ),
             ),
             body: provider.currentPage,

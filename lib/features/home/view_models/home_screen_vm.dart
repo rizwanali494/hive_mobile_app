@@ -31,10 +31,11 @@ class HomeScreenVm extends ChangeNotifier {
 
   void setIndex(int index, BuildContext context) {
     debugPrint("$index");
-    _currentIndex = index;
     if (index == 2) {
       _openBottomSheet(context);
+      return;
     }
+    _currentIndex = index;
     notifyListeners();
     debugPrint("$_currentIndex");
   }
@@ -52,5 +53,15 @@ class HomeScreenVm extends ChangeNotifier {
             child: const SingleChildScrollView(child: NotificationScreen()));
       },
     );
+  }
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
+  void openDrawer() {
+    scaffoldKey.currentState!.openDrawer();
+  }
+
+  void closeDrawer() {
+    scaffoldKey.currentState!.closeDrawer();
   }
 }

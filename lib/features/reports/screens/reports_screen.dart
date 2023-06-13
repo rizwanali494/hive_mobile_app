@@ -48,32 +48,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
   String? selectedValue;
 
   @override
-  void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_companies);
-    _selectedCompany = _dropdownMenuItems[0].value!;
-    super.initState();
-  }
-
-  List<DropdownMenuItem<Company>> buildDropdownMenuItems(List companies) {
-    List<DropdownMenuItem<Company>> items = [];
-    for (Company company in companies) {
-      items.add(
-        DropdownMenuItem(
-          value: company,
-          child: Text(company.name),
-        ),
-      );
-    }
-    return items;
-  }
-
-  onChangeDropdownItem(Company selectedCompany) {
-    setState(() {
-      _selectedCompany = selectedCompany;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final theme = Theme.of(context);
