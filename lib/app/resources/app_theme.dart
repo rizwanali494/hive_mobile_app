@@ -409,7 +409,7 @@ ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
   canvasColor: Colors.transparent,
   colorScheme: const ColorScheme.light(
     background: Color.fromRGBO(248, 248, 248, 1),
-    primary: Color(0xff6935D3),
+    primary: Color(0xff08A5DE),
     secondary: Color.fromRGBO(33, 33, 33, 1),
     surfaceTint: Color(0xffF6F2FD),
   ),

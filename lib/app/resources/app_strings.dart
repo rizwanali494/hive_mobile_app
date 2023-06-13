@@ -80,5 +80,6 @@ class AppStrings {
   static String name = "Name";
   static String date = "Date";
   static String action = "Action";
+  static String overAll = "OverAll";
 
 }

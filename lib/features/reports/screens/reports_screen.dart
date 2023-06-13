@@ -6,8 +6,72 @@ import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart'
 import 'package:hive_mobile/features/reports/widgets/report_list_tile.dart';
 import 'package:provider/provider.dart';
 
-class ReportsScreen extends StatelessWidget {
+class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ReportsScreen> createState() => _ReportsScreenState();
+}
+
+class Company {
+  int id;
+  String name;
+
+  Company(this.id, this.name);
+
+  static List<Company> getCompanies() {
+    return <Company>[
+      Company(1, 'Apple'),
+      Company(2, 'Google'),
+      Company(3, 'Samsung'),
+      Company(4, 'Sony'),
+      Company(5, 'LG'),
+    ];
+  }
+}
+
+class _ReportsScreenState extends State<ReportsScreen> {
+  List<Company> _companies = Company.getCompanies();
+  late List<DropdownMenuItem<Company>> _dropdownMenuItems;
+  late Company _selectedCompany;
+  String dropdownValue = 'Dog';
+  final List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  String? selectedValue;
+
+  @override
+  void initState() {
+    _dropdownMenuItems = buildDropdownMenuItems(_companies);
+    _selectedCompany = _dropdownMenuItems[0].value!;
+    super.initState();
+  }
+
+  List<DropdownMenuItem<Company>> buildDropdownMenuItems(List companies) {
+    List<DropdownMenuItem<Company>> items = [];
+    for (Company company in companies) {
+      items.add(
+        DropdownMenuItem(
+          value: company,
+          child: Text(company.name),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownItem(Company selectedCompany) {
+    setState(() {
+      _selectedCompany = selectedCompany;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,43 +153,98 @@ class ReportsScreen extends StatelessWidget {
                       ],
                     ),
                     20.verticalSpace,
-                    Container(
-                      height: 29.h,
-                      width: 99.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        border: Border.all(color: styles.darkGrey),
-                      ),
-                      child: PopupMenuButton<String>(
-                        initialValue: provider.selectedDropdownItem,
-                        itemBuilder: (BuildContext context) {
-                          return provider.dropdownItems.map((String item) {
-                            return PopupMenuItem<String>(
-                              value: item,
-                              child: ListTile(
-                                title: Text(item),
-                              ),
-                            );
-                          }).toList();
-                        },
-                        onSelected: (String value) {
-                          provider.setSelectedDropdownItem(value);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(provider.selectedDropdownItem),
-                                Icon(Icons.arrow_drop_down),
-                              ],
+                    // DropdownButtonHideUnderline(
+                    //   child: DropdownButton2(
+                    //     isExpanded: true,
+                    //     hint: Row(
+                    //       children: [
+                    //         Text(
+                    //           AppStrings.overAll,
+                    //           style: styles.inter12w400,
+                    //           overflow: TextOverflow.ellipsis,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     items: items
+                    //         .map((item) => DropdownMenuItem<String>(
+                    //               value: item,
+                    //               child: Text(
+                    //                 item,
+                    //                 style: styles.inter12w400,
+                    //                 overflow: TextOverflow.ellipsis,
+                    //               ),
+                    //             ))
+                    //         .toList(),
+                    //     value: selectedValue,
+                    //     onChanged: (value) {
+                    //       setState(() {
+                    //         selectedValue = value as String;
+                    //       });
+                    //     },
+                    //     buttonStyleData: ButtonStyleData(
+                    //       height: 29.h,
+                    //       width: 99.w,
+                    //       padding: EdgeInsets.only(left: 13.w, right: 14.w),
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(14),
+                    //         border: Border.all(
+                    //           color: styles.black,
+                    //         ),
+                    //         color: styles.smokeWhite,
+                    //       ),
+                    //       elevation: 0,
+                    //     ),
+                    //     iconStyleData: IconStyleData(
+                    //       icon: const Icon(
+                    //         Icons.keyboard_arrow_down_sharp,
+                    //       ),
+                    //       iconSize: 14,
+                    //       iconEnabledColor: styles.black,
+                    //       iconDisabledColor: styles.black,
+                    //     ),
+                    //     dropdownStyleData: DropdownStyleData(
+                    //       maxHeight: 200,
+                    //       width: 200,
+                    //       padding: null,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(14),
+                    //         color: styles.smokeWhite,
+                    //       ),
+                    //       elevation: 8,
+                    //       offset: const Offset(-20, 0),
+                    //       scrollbarTheme: ScrollbarThemeData(
+                    //         radius: const Radius.circular(40),
+                    //         thickness: MaterialStateProperty.all<double>(6),
+                    //         thumbVisibility: MaterialStateProperty.all<bool>(true),
+                    //       ),
+                    //     ),
+                    //     menuItemStyleData: const MenuItemStyleData(
+                    //       height: 40,
+                    //       padding: EdgeInsets.only(left: 14, right: 14),
+                    //     ),
+                    //   ),
+                    // ),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        hint: Row(
+                          children: [
+                            Text(
+                              'Select an option',
+                              style: TextStyle(fontSize: 16),
                             ),
-                          ),
+                          ],
                         ),
+                        items: provider.items
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                ))
+                            .toList(),
+                        value: provider.selectedValue,
+                        onChanged: (value) {
+                          provider.setSelectedValue(value!);
+                        },
                       ),
                     ),
                     23.verticalSpace,
