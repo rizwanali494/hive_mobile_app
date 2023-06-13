@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 
-import '../../../app/resources/app_theme.dart';
+import '../../resources/app_theme.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final String hintText;

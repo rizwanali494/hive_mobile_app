@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/features/profile/screens/blue_text_widget.dart';
+import 'package:hive_mobile/app/view/widgets/blue_text_widget.dart';
 
 import '../../../app/resources/app_theme.dart';
 

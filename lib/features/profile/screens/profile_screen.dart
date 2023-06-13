@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
-import 'package:hive_mobile/features/profile/screens/basic_info_widget.dart';
-import 'package:hive_mobile/features/profile/screens/profile_section_widget.dart';
+import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
+import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/resources/app_strings.dart';
