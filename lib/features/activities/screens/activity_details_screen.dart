@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/activities/models/activity_model.dart';
 
@@ -45,9 +46,14 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          Icons.arrow_back_ios,
-                          color: styles.white,
+                        GestureDetector(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: styles.white,
+                          ),
                         ),
                         20.horizontalSpace,
                         Column(
@@ -119,7 +125,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                     iconPath: SvgIcons.userBlue,
                   ),
                   ActivityDetailWidget(
-                    title: "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
+                    title:
+                        "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
                     iconPath: SvgIcons.archiveTick,
                   ),
                   12.verticalSpace,
@@ -132,9 +139,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 27.h
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 27.h),
                     child: Row(
                       children: [
                         ActivityStatusWidget(
