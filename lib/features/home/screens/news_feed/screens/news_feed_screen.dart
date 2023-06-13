@@ -4,6 +4,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../app/enums/post_type_enum.dart';
 import '../../../../../app/resources/app_theme.dart';
 import '../../../view_models/home_screen_vm.dart';
 import '../../app_bar_widget.dart';
