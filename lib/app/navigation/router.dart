@@ -6,6 +6,7 @@ import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart
 import 'package:hive_mobile/splash.dart';
 
 import '../../features/activities/screens/activities_screen.dart';
+import '../../features/activities/screens/activity_details_screen.dart';
 
 export 'extensions.dart';
 
@@ -40,6 +41,11 @@ final goRouter = GoRouter(
       path: ActivitiesScreen.route,
       name: ActivitiesScreen.route,
       builder: (_, state) => const ActivitiesScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: ActivityDetailScreen.route,
+      name: ActivityDetailScreen.route,
+      builder: (_, state) => const ActivityDetailScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

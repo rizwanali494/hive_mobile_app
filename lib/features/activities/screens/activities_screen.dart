@@ -42,7 +42,7 @@ class ActivitiesScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-
+                        context.push("/ActivityDetailScreen");
                       },
                       child: ActivityWidget(
                         type: index.isEven ? PostType.image : PostType.poll,
