@@ -86,5 +86,7 @@ class AppStrings {
   static String editBios = "Edit Bios";
   static String editHobbies = "Edit Hobbies";
   static String saveChanges = "Save Changes";
+  static String eventBy = "Event by";
+  static String peopleGoing = "are going";
 
 }

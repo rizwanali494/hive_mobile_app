@@ -35,10 +35,13 @@ class SvgIcons {
   static const String universityApplication =
       "${_iconsPath}university_application.svg";
   static const String user = "${_iconsPath}user.svg";
-  static const String vector = "${_iconsPath}calender_border.svg";
+  static const String userBlue = "${_iconsPath}user_blue.svg";
+  static const String calenderBorder = "${_iconsPath}calender_border.svg";
   static const String like = "${_iconsPath}like.svg";
   static const String dislike = "${_iconsPath}dislike.svg";
   static const String announcement = "${_iconsPath}announcement.svg";
   static const String emailLogo = "${_iconsPath}email_logo.svg";
   static const String profile = "${_iconsPath}profile.svg";
+  static const String campusLocation = "${_iconsPath}campus_location.svg";
+  static const String archiveTick = "${_iconsPath}archive_tick.svg";
 }
