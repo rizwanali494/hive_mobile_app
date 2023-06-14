@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_mobile/app/view/widgets/custom_drop_down.dart';
 
 class ReportsScreenVM extends ChangeNotifier {
 
@@ -11,7 +12,6 @@ class ReportsScreenVM extends ChangeNotifier {
     notifyListeners();
   }
 
-
   List<Record> tab1Records = [
     Record(id: '1', title: 'Record 1', description: 'Description 1'),
     Record(id: '2', title: 'Record 2', description: 'Description 2'),
@@ -22,14 +22,25 @@ class ReportsScreenVM extends ChangeNotifier {
     Record(id: '4', title: 'Record 4', description: 'Description 4'),
   ];
 
-  List<String> dropdownItems = ['Item 1', 'Item 2', 'Item 3'];
-  String selectedDropdownItem = 'Item 1';
+  final List<String> _items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  String? _selectedValue;
 
-  void setSelectedDropdownItem(String item) {
-    selectedDropdownItem = item;
+  String? get selectedValue => _selectedValue;
+  List<String> get items => _items;
+
+  void setSelectedValue(String value) {
+    _selectedValue = value;
     notifyListeners();
   }
-
 }
 class Record {
   final String id;

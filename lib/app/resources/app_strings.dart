@@ -79,12 +79,7 @@ class AppStrings {
   static String academicReport = "Academic Report";
   static String name = "Name";
   static String date = "Date";
-  static String hobbies = "Hobbies";
   static String action = "Action";
-  static String achievementsAwards = "Achievements & Awards";
-  static String editProfilePicture = "Edit Profile Picture";
-  static String editBios = "Edit Bios";
-  static String editHobbies = "Edit Hobbies";
-  static String saveChanges = "Save Changes";
+  static String overAll = "OverAll";
 
 }
