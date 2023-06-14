@@ -26,9 +26,10 @@ class AppBarWidget extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 20.h,
-          left: 19.w,
-          right: 20.w),
+        top: MediaQuery.of(context).padding.top + 20.h,
+        left: 12.w,
+        // right: 20.w,
+      ),
       child: Row(
         children: [
           GestureDetector(
@@ -40,7 +41,7 @@ class AppBarWidget extends StatelessWidget {
                   size: 40.w,
                 ),
           ),
-          16.5.horizontalSpace,
+          9.5.horizontalSpace,
           Text(
             title,
             style: titleStyle?.copyWith(color: color) ??

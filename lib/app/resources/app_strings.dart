@@ -31,7 +31,7 @@ class AppStrings {
   static String attending = "Attending";
   static String maybe = "Maybe";
   static String undecided = "Undecided";
-  static String comment = "Comment";
+  static String comment = "Comments";
   static String newRequest = "New Request";
   static String addExternalGrade = "Add External Grades";
   static String reportView = "Report View";
@@ -72,7 +72,8 @@ class AppStrings {
   static String percent1 = "1%";
   static String youHaveANewMessage = "You have a new message";
   static String time = "2:45PM";
-  static String aPollStartedClickToParticipate = "A poll started. Click to participate";
+  static String aPollStartedClickToParticipate =
+      "A poll started. Click to participate";
   static String sportsEventIsComing = "Sports event is coming";
   static String youHaveAUnreadMessage = "You have a unread message";
   static String announcement = "Announcement!";
@@ -89,4 +90,8 @@ class AppStrings {
   static String overAll = "OverAll";
   static String eventBy = "Event by";
   static String peopleGoing = "are going";
+  static String addApplication = "Add Application";
+  static String acceptedApplication = "Accepted Applications";
+  static String universityName = "University Name";
+
 }

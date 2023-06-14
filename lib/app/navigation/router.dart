@@ -7,6 +7,7 @@ import 'package:hive_mobile/splash.dart';
 
 import '../../features/activities/screens/activities_screen.dart';
 import '../../features/activities/screens/activity_details_screen.dart';
+import '../../features/university_application/screens/university_application_screen.dart';
 
 export 'extensions.dart';
 
@@ -46,6 +47,11 @@ final goRouter = GoRouter(
       path: ActivityDetailScreen.route,
       name: ActivityDetailScreen.route,
       builder: (_, state) => const ActivityDetailScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: UniversityApplicationScreen.route,
+      name: UniversityApplicationScreen.route,
+      builder: (_, state) => const UniversityApplicationScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',
