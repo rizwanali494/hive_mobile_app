@@ -30,6 +30,7 @@ class ReportsScreen extends StatelessWidget {
                   color: styles.black,
                   title: AppStrings.reports,
                   titleStyle: styles.inter40w700,
+                  onMenuTap: () {},
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 19.w),
@@ -112,13 +113,13 @@ class ReportsScreen extends StatelessWidget {
                       ),
                       items: provider.items
                           .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: styles.inter12w400,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ))
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: styles.inter12w400,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
                           .toList(),
                       value: provider.selectedValue,
                       onChanged: (value) {

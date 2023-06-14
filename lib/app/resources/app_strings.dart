@@ -81,5 +81,9 @@ class AppStrings {
   static String date = "Date";
   static String action = "Action";
   static String overAll = "OverAll";
-
+  static String hobbies = "Hobbies";
+  static String achievementsAwards = "Achievements & Awards";
+  static String editProfilePicture = "Edit Profile Picture";
+  static String editHobbies = "Edit Hobbies";
+  static String saveChanges = "Save Changes";
 }
