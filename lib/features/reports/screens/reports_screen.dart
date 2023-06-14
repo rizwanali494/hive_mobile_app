@@ -221,26 +221,33 @@ class ReportsScreen extends StatelessWidget {
   Widget _buildRecordsList(List<Record> records, BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 19.w),
       itemCount: records.length,
       itemBuilder: (context, index) {
         final record = records[index];
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: ReportListTile(
-            onTap: () {},
-            date: '14-3-2023',
-            title: AppStrings.academicReport,
-            trailing: Container(
-              height: 21.h,
-              width: 21.w,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: styles.yellowGreen),
-              child: Icon(
-                Icons.arrow_downward_sharp,
-                size: 15,
-                color: styles.white,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 19.w),
+                child: ReportListTile(
+                  onTap: () {},
+                  date: '14-3-2023',
+                  title: AppStrings.academicReport,
+                  trailing: Container(
+                    height: 21.h,
+                    width: 21.w,
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: styles.yellowGreen),
+                    child: Icon(
+                      Icons.arrow_downward_sharp,
+                      size: 15,
+                      color: styles.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              const Divider(color: Colors.black45),
+            ],
           ),
         );
       },
