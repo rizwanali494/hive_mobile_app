@@ -10,7 +10,7 @@ class HomeScreenVm extends ChangeNotifier {
   final List<Widget> _pages = const [
     NewsFeedScreen(),
     ReportsScreen(),
-    ProfileScreen()
+    ProfileScreen(),
   ];
 
   bool isSelected(String icon) {
@@ -28,7 +28,6 @@ class HomeScreenVm extends ChangeNotifier {
   int _currentIndex = 0;
 
   Widget get currentPage => _pages[_currentIndex % _pages.length];
-  // Widget get currentPage => const ProfileScreen();
 
   int get currentIndex => _currentIndex;
 
