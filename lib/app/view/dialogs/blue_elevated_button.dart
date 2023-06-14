@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../resources/app_theme.dart';
 
@@ -17,9 +18,17 @@ class BlueElevatedButton extends StatelessWidget {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return ElevatedButton(
-      onPressed: onTap??(){},
+      onPressed: onTap ?? () {},
       style: ElevatedButton.styleFrom(
         backgroundColor: styles.skyBlue,
+        minimumSize: const Size(
+          0,
+          0,
+        ),
+        padding: EdgeInsetsDirectional.symmetric(
+          vertical: 8.h,
+          horizontal: 52.w,
+        ),
       ),
       child: Text(
         text,

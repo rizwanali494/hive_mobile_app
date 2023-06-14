@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/application_status_enum.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
-import 'package:hive_mobile/features/university_application/screens/application_status_widget.dart';
+import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 import '../../../app/resources/app_theme.dart';
 
@@ -85,7 +85,7 @@ class ApplicationInfoWidget extends StatelessWidget {
             ),
           ],
         ),
-        10.verticalSpace,
+        5.verticalSpace,
         Divider(
           color: styles.black.withOpacity(0.2),
         ),

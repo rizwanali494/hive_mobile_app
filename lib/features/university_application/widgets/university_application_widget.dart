@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/features/university_application/screens/application_info_widget.dart';
+import 'package:hive_mobile/features/university_application/widgets/application_info_widget.dart';
 
 import '../../../app/enums/application_status_enum.dart';
 import '../../../app/resources/app_theme.dart';

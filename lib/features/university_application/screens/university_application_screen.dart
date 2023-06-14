@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
-import 'package:hive_mobile/features/university_application/screens/university_application_widget.dart';
+import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
 
 import '../../../app/enums/application_status_enum.dart';
 import '../../../app/resources/app_theme.dart';
