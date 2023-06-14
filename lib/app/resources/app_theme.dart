@@ -56,6 +56,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color platinum;
   final Color lightPink;
   final Color smokeWhite;
+  final Color whiteSmoke;
 
   const AppTheme({
     required this.inter8w400,
@@ -101,6 +102,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.platinum,
     required this.smokeWhite,
     required this.paleWhite,
+    required this.whiteSmoke,
   });
 
   @override
@@ -157,6 +159,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       platinum: Color.lerp(platinum, other.platinum, t)!,
       smokeWhite: Color.lerp(smokeWhite, other.smokeWhite, t)!,
       paleWhite: Color.lerp(paleWhite, other.paleWhite, t)!,
+      whiteSmoke: Color.lerp(whiteSmoke, other.whiteSmoke, t)!,
     );
   }
 
@@ -317,6 +320,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     platinum: const Color(0xffE1E1E1),
     smokeWhite: const Color(0xffF2F2F2),
     paleWhite: const Color(0xffE9FAB9),
+    whiteSmoke: const Color(0xffEEEEEE),
     inter12w400Italic: TextStyle(
       fontFamily: 'Inter',
       fontSize: 12.sp,
@@ -370,6 +374,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? lightPink,
     Color? smokeWhite,
     Color? paleWhite,
+    Color? whiteSmoke,
   }) {
     return AppTheme(
       inter8w400: inter8w400 ?? this.inter8w400,
@@ -417,6 +422,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       platinum: platinum ?? this.platinum,
       smokeWhite: smokeWhite ?? this.smokeWhite,
       paleWhite: paleWhite ?? this.paleWhite,
+      whiteSmoke: whiteSmoke ?? this.whiteSmoke,
     );
   }
 }

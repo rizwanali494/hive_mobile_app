@@ -59,6 +59,7 @@ class AppStrings {
   static String institute = "Degree";
   static String grade = "Grade";
   static String document = "Document";
+  static String documentName = "Document Name";
   static String delete = "Delete";
   static String selectStatus = "Select Status";
   static String accepted = "Accepted";
@@ -93,5 +94,6 @@ class AppStrings {
   static String addApplication = "Add Application";
   static String acceptedApplication = "Accepted Applications";
   static String universityName = "University Name";
+  static String upload = "Upload";
 
 }

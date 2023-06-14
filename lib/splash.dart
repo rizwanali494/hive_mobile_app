@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 
-import 'features/university_application/screens/application_request/screens/university_selection_screen.dart';
+import 'features/university_application/screens/application_info/screens/application_info_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      context.pushReplacement(UniversitySelectionScreen.route);
+      context.pushReplacement(ApplicationInfoScreen.route);
       // Navigator.pushReplacement(
       //     context,
       //     MaterialPageRoute(
