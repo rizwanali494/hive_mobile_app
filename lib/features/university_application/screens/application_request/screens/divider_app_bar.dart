@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../app/resources/app_theme.dart';
 
@@ -18,11 +19,19 @@ class DividerAppBar extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding:
-              EdgeInsets.only(top: MediaQuery.of(context).padding.top + 20),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 20,
+          ),
           child: Row(
             children: [
-              const Icon(Icons.arrow_back_ios),
+              GestureDetector(
+                onTap: () {
+                  context.pop();
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                ),
+              ),
               15.horizontalSpace,
               Text(
                 title,

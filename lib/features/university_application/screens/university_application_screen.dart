@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
 
 import '../../../app/enums/application_status_enum.dart';
 import '../../../app/resources/app_theme.dart';
+import 'application_request/screens/university_selection_screen.dart';
 
 class UniversityApplicationScreen extends StatefulWidget {
   static const route = "/UniversityApplication";
@@ -48,27 +48,11 @@ class _UniversityApplicationScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    decoration: BoxDecoration(
-                        color: styles.skyBlue,
-                        borderRadius: BorderRadius.circular(28)),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 28.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppStrings.addApplication,
-                            style: styles.inter16w400.copyWith(
-                              color: styles.white,
-                            ),
-                          ),
-                          SvgPicture.asset(SvgIcons.addSquare),
-                        ],
-                      ),
-                    ),
+                  BlueActionButton(
+                    title: AppStrings.addApplication,
+                    onTap: () {
+                      context.push(UniversitySelectionScreen.route);
+                    },
                   ),
                   5.verticalSpace,
                   Expanded(

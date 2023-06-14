@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/application_status_enum.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 import '../../../app/resources/app_theme.dart';
@@ -51,17 +53,22 @@ class ApplicationInfoWidget extends StatelessWidget {
             ),
             Expanded(
               child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.comment,
-                      style: styles.inter14w600.copyWith(
-                        color: styles.darkSlateGrey,
+                child: GestureDetector(
+                  onTap: () {
+                    context.push(DescriptionScreen.route);
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.comment,
+                        style: styles.inter14w600.copyWith(
+                          color: styles.darkSlateGrey,
+                        ),
                       ),
-                    ),
-                    SvgPicture.asset(SvgIcons.eye)
-                  ],
+                      SvgPicture.asset(SvgIcons.eye)
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -78,11 +85,11 @@ class ApplicationInfoWidget extends StatelessWidget {
                 iconPath: SvgIcons.applied,
               )
             else
-            ApplicationStatusWidget(
-              title: AppStrings.rejected,
-              color: styles.lightPink,
-              iconPath: SvgIcons.undecided,
-            ),
+              ApplicationStatusWidget(
+                title: AppStrings.rejected,
+                color: styles.lightPink,
+                iconPath: SvgIcons.undecided,
+              ),
           ],
         ),
         5.verticalSpace,

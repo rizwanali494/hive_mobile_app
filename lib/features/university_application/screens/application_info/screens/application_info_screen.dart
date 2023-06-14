@@ -2,6 +2,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/navigation/extensions.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/screens/title_text_field.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/widgets/application_status_widget.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../../../app/resources/app_strings.dart';
 import '../../../../../app/resources/app_theme.dart';
 import '../../application_request/screens/divider_app_bar.dart';
+import '../../university_application_screen.dart';
 import '../view_models/application_info_vm.dart';
 
 class ApplicationInfoScreen extends StatefulWidget {
@@ -67,13 +69,15 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                                 provider.selectStatus(AppStrings.applied);
                               },
                               iconPath: SvgIcons.applied,
-                              isSelected: provider.iSelected(AppStrings.applied),
+                              isSelected:
+                                  provider.iSelected(AppStrings.applied),
                             ),
                             10.horizontalSpace,
                             ApplicationStatusWidget(
                               title: AppStrings.accepted,
                               iconPath: SvgIcons.tickSquare,
-                              isSelected: provider.iSelected(AppStrings.accepted),
+                              isSelected:
+                                  provider.iSelected(AppStrings.accepted),
                               onTap: () {
                                 provider.selectStatus(AppStrings.accepted);
                               },
@@ -87,7 +91,8 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                               onTap: () {
                                 provider.selectStatus(AppStrings.rejected);
                               },
-                              isSelected: provider.iSelected(AppStrings.rejected),
+                              isSelected:
+                                  provider.iSelected(AppStrings.rejected),
                             ),
                           ],
                         ),
@@ -177,7 +182,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                             ),
                             18.horizontalSpace,
                             Expanded(
-                              child : TitleTextField(
+                              child: TitleTextField(
                                 title: AppStrings.scholarship,
                                 hintText: "",
                               ),
@@ -185,7 +190,13 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                           ],
                         ),
                         29.verticalSpace,
-                        BlueElevatedButton(text: AppStrings.add)
+                        BlueElevatedButton(
+                          text: AppStrings.add,
+                          onTap: () {
+                            context.pushAndRemoveUntil(
+                                UniversityApplicationScreen.route);
+                          },
+                        )
                       ],
                     ),
                   ),

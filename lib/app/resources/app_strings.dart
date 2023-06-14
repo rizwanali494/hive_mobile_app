@@ -95,5 +95,5 @@ class AppStrings {
   static String acceptedApplication = "Accepted Applications";
   static String universityName = "University Name";
   static String upload = "Upload";
-
+  static String subjectTitle = "Subject Title";
 }

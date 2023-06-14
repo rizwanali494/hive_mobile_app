@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 
 import '../../resources/app_theme.dart';
 

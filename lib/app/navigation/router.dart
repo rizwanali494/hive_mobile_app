@@ -9,6 +9,7 @@ import '../../features/activities/screens/activities_screen.dart';
 import '../../features/activities/screens/activity_details_screen.dart';
 import '../../features/university_application/screens/application_info/screens/application_info_screen.dart';
 import '../../features/university_application/screens/application_request/screens/university_selection_screen.dart';
+import '../view/widgets/description_screen.dart';
 import '../../features/university_application/screens/university_application_screen.dart';
 
 export 'extensions.dart';
@@ -64,6 +65,11 @@ final goRouter = GoRouter(
       path: ApplicationInfoScreen.route,
       name: ApplicationInfoScreen.route,
       builder: (_, state) => const ApplicationInfoScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: DescriptionScreen.route,
+      name: DescriptionScreen.route,
+      builder: (_, state) => const DescriptionScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',
