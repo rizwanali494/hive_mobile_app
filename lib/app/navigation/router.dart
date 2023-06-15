@@ -1,16 +1,16 @@
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
-import 'package:hive_mobile/features/home/screens/home_screen.dart';
-import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
-import 'package:hive_mobile/splash.dart';
-
+import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/home/screens/home_screen.dart';
+import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
+import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/screens/application_info_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
-import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
+import 'package:hive_mobile/splash.dart';
 
 export 'extensions.dart';
 
@@ -70,6 +70,11 @@ final goRouter = GoRouter(
       path: DescriptionScreen.route,
       name: DescriptionScreen.route,
       builder: (_, state) => const DescriptionScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: SessionNotesScreen.route,
+      name: SessionNotesScreen.route,
+      builder: (_, state) => const SessionNotesScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

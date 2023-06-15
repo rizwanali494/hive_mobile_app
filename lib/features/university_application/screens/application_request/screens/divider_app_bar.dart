@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class DividerAppBar extends StatelessWidget {
   final String title;
+  final bool showDivider;
 
   const DividerAppBar({
     super.key,
     required this.title,
+    this.showDivider = true,
   });
 
   @override
@@ -40,10 +41,12 @@ class DividerAppBar extends StatelessWidget {
             ],
           ),
         ),
-        7.verticalSpace,
-        Divider(
-          color: styles.black.withOpacity(0.2),
-        ),
+        if (showDivider) ...[
+          7.verticalSpace,
+          Divider(
+            color: styles.black.withOpacity(0.2),
+          ),
+        ],
       ],
     );
   }

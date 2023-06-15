@@ -96,4 +96,6 @@ class AppStrings {
   static String universityName = "University Name";
   static String upload = "Upload";
   static String subjectTitle = "Subject Title";
+  static String acknowledged = "Acknowledged";
+  static String pending = "Pending";
 }

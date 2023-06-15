@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
+import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      context.pushReplacement(UniversityApplicationScreen.route);
+      context.pushReplacement(SessionNotesScreen.route);
       // Navigator.pushReplacement(
       //     context,
       //     MaterialPageRoute(
