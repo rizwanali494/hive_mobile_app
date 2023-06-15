@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/view/widgets/drop_down/dropdown_button2.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/report_list_tile.dart';
+import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -32,66 +33,13 @@ class ReportsScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 19.w),
-                  child: TabBar(
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                    isScrollable: false,
-                    labelColor: styles.white,
-                    padding: EdgeInsets.zero,
-                    labelPadding: EdgeInsets.zero,
-                    dividerColor: Colors.transparent,
-                    splashFactory: NoSplash.splashFactory,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    unselectedLabelColor: styles.lightGrey,
-                    unselectedLabelStyle: styles.inter12w400,
-                    splashBorderRadius: BorderRadius.circular(26.r),
-                    indicatorPadding: EdgeInsetsDirectional.zero,
-                    indicator: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(26.r),
-                    ),
+                  child: TabBarWidget(
                     onTap: (index) {
                       provider.setIndex(index);
                     },
-                    tabs: [
-                      Tab(
-                        child: Container(
-                          height: 29.h,
-                          margin: EdgeInsets.only(right: 10.w),
-                          decoration: BoxDecoration(
-                            color: provider.selectedIndex == 0 ? styles.skyBlue : styles.darkGrey,
-                            borderRadius: BorderRadius.circular(26.r),
-                          ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              AppStrings.academicReport,
-                              style: styles.inter12w400.copyWith(
-                                color: provider.selectedIndex == 0 ? styles.white : styles.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: Container(
-                          height: 29.h,
-                          margin: EdgeInsets.only(left: 10.w),
-                          decoration: BoxDecoration(
-                            color: provider.selectedIndex == 1 ? styles.skyBlue : styles.darkGrey,
-                            borderRadius: BorderRadius.circular(26.r),
-                          ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              AppStrings.attendance,
-                              style: styles.inter12w400.copyWith(
-                                color: provider.selectedIndex == 1 ? styles.white : styles.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    selectedIndex: provider.selectedIndex,
+                    tab1Title: AppStrings.academicReport,
+                    tab2Title: AppStrings.attendance,
                   ),
                 ),
                 20.verticalSpace,
@@ -157,7 +105,8 @@ class ReportsScreen extends StatelessWidget {
                         scrollbarTheme: ScrollbarThemeData(
                           radius: const Radius.circular(40),
                           thickness: MaterialStateProperty.all<double>(6),
-                          thumbVisibility: MaterialStateProperty.all<bool>(true),
+                          thumbVisibility:
+                              MaterialStateProperty.all<bool>(true),
                         ),
                       ),
                       menuItemStyleData: const MenuItemStyleData(
@@ -234,7 +183,8 @@ class ReportsScreen extends StatelessWidget {
                   trailing: Container(
                     height: 21.h,
                     width: 21.w,
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: styles.yellowGreen),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: styles.yellowGreen),
                     child: Icon(
                       Icons.arrow_downward_sharp,
                       size: 15,
