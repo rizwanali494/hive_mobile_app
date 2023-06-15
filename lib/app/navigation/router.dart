@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
+import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/screens/application_info_screen.dart';
@@ -75,6 +76,11 @@ final goRouter = GoRouter(
       path: SessionNotesScreen.route,
       name: SessionNotesScreen.route,
       builder: (_, state) => const SessionNotesScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: MyServicesScreen.route,
+      name: MyServicesScreen.route,
+      builder: (_, state) => const MyServicesScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

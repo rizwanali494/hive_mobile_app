@@ -98,4 +98,7 @@ class AppStrings {
   static String subjectTitle = "Subject Title";
   static String acknowledged = "Acknowledged";
   static String pending = "Pending";
+  static String initiateRequest = "Initiate a Request";
+  static String approved = "Approved";
+  static String myRequest = "My Requests";
 }

@@ -6,11 +6,13 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 class DividerAppBar extends StatelessWidget {
   final String title;
   final bool showDivider;
+  final TextStyle? titleStyle;
 
   const DividerAppBar({
     super.key,
     required this.title,
     this.showDivider = true,
+    this.titleStyle,
   });
 
   @override
@@ -36,7 +38,7 @@ class DividerAppBar extends StatelessWidget {
               15.horizontalSpace,
               Text(
                 title,
-                style: styles.inter20w700,
+                style: titleStyle ?? styles.inter20w700,
               ),
             ],
           ),
