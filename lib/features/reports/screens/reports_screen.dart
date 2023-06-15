@@ -14,8 +14,6 @@ class ReportsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary;
     return ChangeNotifierProvider(
       create: (BuildContext context) => ReportsScreenVM(),
       child: Consumer<ReportsScreenVM>(
@@ -223,7 +221,6 @@ class ReportsScreen extends StatelessWidget {
     return ListView.builder(
       itemCount: records.length,
       itemBuilder: (context, index) {
-        final record = records[index];
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(

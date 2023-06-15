@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../app/resources/app_theme.dart';
-import '../../../../../app/view/widgets/text_field_widget.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 
 class TitleTextField extends StatelessWidget {
   final String title;

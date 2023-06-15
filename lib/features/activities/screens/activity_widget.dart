@@ -4,10 +4,10 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
-import '../../../app/enums/post_type_enum.dart';
-import '../../../app/resources/app_theme.dart';
-import '../../../app/view/widgets/poll_widget.dart';
-import '../../home/screens/news_feed/models/mock_news_feed_model.dart';
+import 'package:hive_mobile/app/enums/post_type_enum.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
+import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
 
 class ActivityWidget extends StatelessWidget {
   const ActivityWidget({

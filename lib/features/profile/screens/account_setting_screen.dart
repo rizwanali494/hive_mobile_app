@@ -8,7 +8,7 @@ import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/hobbie_chip_widget.dart';
 import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 
-import '../../../app/resources/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class AccountSettingScreen extends StatefulWidget {
   static const route = '/AccountScreen';

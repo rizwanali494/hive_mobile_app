@@ -5,12 +5,12 @@ import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/splash.dart';
 
-import '../../features/activities/screens/activities_screen.dart';
-import '../../features/activities/screens/activity_details_screen.dart';
-import '../../features/university_application/screens/application_info/screens/application_info_screen.dart';
-import '../../features/university_application/screens/application_request/screens/university_selection_screen.dart';
-import '../view/widgets/description_screen.dart';
-import '../../features/university_application/screens/university_application_screen.dart';
+import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
+import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info/screens/application_info_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
+import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
 
 export 'extensions.dart';
 
@@ -34,7 +34,7 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: HomeScreen.route,
       name: HomeScreen.route,
-      builder: (_, state) => HomeScreen(),
+      builder: (_, state) => const HomeScreen(),
     ),
     CustomGoRoute.cupertino(
       path: AccountSettingScreen.route,

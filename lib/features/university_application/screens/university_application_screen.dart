@@ -6,9 +6,9 @@ import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
 
-import '../../../app/enums/application_status_enum.dart';
-import '../../../app/resources/app_theme.dart';
-import 'application_request/screens/university_selection_screen.dart';
+import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
 
 class UniversityApplicationScreen extends StatefulWidget {
   static const route = "/UniversityApplication";

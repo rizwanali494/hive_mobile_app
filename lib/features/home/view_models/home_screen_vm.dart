@@ -4,7 +4,7 @@ import 'package:hive_mobile/features/notification/screens/notifications_screen.d
 import 'package:hive_mobile/features/profile/screens/profile_screen.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
 
-import '../../../app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 
 class HomeScreenVm extends ChangeNotifier {
   final List<Widget> _pages = const [

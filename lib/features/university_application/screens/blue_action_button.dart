@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 
-import '../../../app/resources/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class BlueActionButton extends StatelessWidget {
   final String title;

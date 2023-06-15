@@ -8,7 +8,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
-import '../../../app/resources/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ApplicationInfoWidget extends StatelessWidget {
   final ApplicationStatus? applicationStatus;

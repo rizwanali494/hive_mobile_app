@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../../app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 
 class ApplicationInfoVM extends ChangeNotifier {
   String _selectedStatus = AppStrings.applied;

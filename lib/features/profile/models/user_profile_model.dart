@@ -1,4 +1,4 @@
-import '../../../app/constants/network_images.dart';
+import 'package:hive_mobile/app/constants/network_images.dart';
 
 class UserProfileModel {
   final String name;

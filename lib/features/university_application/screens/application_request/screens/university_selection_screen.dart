@@ -7,8 +7,8 @@ import 'package:hive_mobile/features/university_application/screens/application_
 import 'package:hive_mobile/features/university_application/screens/application_request/view_models/university_selection_vm.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../app/resources/app_strings.dart';
-import '../../../../../app/resources/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class UniversitySelectionScreen extends StatefulWidget {
   static const route = "/UniversitySelection";

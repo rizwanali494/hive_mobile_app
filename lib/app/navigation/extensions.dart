@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'go_router_observer.dart';
+import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 
 extension GoRouterExtOnBuildContext on BuildContext {
   /// A custom GoRouter extension that pops [until] it can

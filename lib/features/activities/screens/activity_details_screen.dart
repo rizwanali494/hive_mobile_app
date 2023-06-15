@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/activities/models/activity_model.dart';
 
-import '../../../app/resources/app_strings.dart';
-import '../../../app/resources/app_theme.dart';
-import '../widgets/activity_detail_widget.dart';
-import 'activity_status_widget.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/activities/widgets/activity_detail_widget.dart';
+import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
 class ActivityDetailScreen extends StatefulWidget {
   const ActivityDetailScreen({Key? key}) : super(key: key);

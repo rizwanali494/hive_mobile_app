@@ -8,11 +8,11 @@ import 'package:hive_mobile/features/university_application/screens/application_
 import 'package:hive_mobile/features/university_application/screens/application_info/widgets/application_status_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../app/resources/app_strings.dart';
-import '../../../../../app/resources/app_theme.dart';
-import '../../application_request/screens/divider_app_bar.dart';
-import '../../university_application_screen.dart';
-import '../view_models/application_info_vm.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info/view_models/application_info_vm.dart';
 
 class ApplicationInfoScreen extends StatefulWidget {
   static const route = "/ApplicationInfo";
@@ -150,7 +150,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: styles.lightGrey,
-                                    minimumSize: Size(0, 0),
+                                    minimumSize: const Size(0, 0),
                                     padding: EdgeInsetsDirectional.symmetric(
                                       horizontal: 25.w,
                                       vertical: 6.h,

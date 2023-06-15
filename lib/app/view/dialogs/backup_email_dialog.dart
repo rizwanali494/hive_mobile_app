@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 
-import '../../resources/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class BackUpEmailDialog extends StatefulWidget {
   const BackUpEmailDialog({Key? key}) : super(key: key);

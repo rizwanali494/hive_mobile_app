@@ -9,9 +9,9 @@ import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/resources/app_strings.dart';
-import '../../../app/resources/app_theme.dart';
-import '../../home/view_models/home_screen_vm.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

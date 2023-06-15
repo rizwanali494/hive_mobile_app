@@ -10,12 +10,12 @@ import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/view/dialogs/backup_email_dialog.dart';
+import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   static const route = '/HomeScreen';
 
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

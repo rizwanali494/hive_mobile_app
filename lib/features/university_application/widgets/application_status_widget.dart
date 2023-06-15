@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 
-import '../../../app/resources/app_theme.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ApplicationStatusWidget extends StatelessWidget {
   final String title;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_info_widget.dart';
 
-import '../../../app/enums/application_status_enum.dart';
-import '../../../app/resources/app_theme.dart';
+import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {
   final String tile;

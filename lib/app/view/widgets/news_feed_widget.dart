@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
-import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
-
-import '../../enums/post_type_enum.dart';
-
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
@@ -21,18 +19,13 @@ class NewsFeedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final options = [
-      "1",
-      "2",
-      "3",
-    ];
+
     var selected = "1";
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
-          color: styles.white,
-          borderRadius: BorderRadius.circular(25)),
+          color: styles.white, borderRadius: BorderRadius.circular(25)),
       margin: EdgeInsets.symmetric(horizontal: 19.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,15 +44,12 @@ class NewsFeedWidget extends StatelessWidget {
                 children: [
                   Text(
                     _user.name,
-                    style: styles
-                        .inter16w600
+                    style: styles.inter16w600
                         .copyWith(color: styles.darkSlateGrey),
                   ),
                   Text(
                     _user.time,
-                    style: styles
-                        .inter8w400
-                        .copyWith(color: styles.darkGrey),
+                    style: styles.inter8w400.copyWith(color: styles.darkGrey),
                   ),
                 ],
               ),
@@ -68,9 +58,7 @@ class NewsFeedWidget extends StatelessWidget {
           16.verticalSpace,
           Text(
             _user.description,
-            style: styles
-                .inter16w400
-                .copyWith(color: styles.black),
+            style: styles.inter16w400.copyWith(color: styles.black),
           ),
           if (type == PostType.image)
             Padding(
@@ -116,9 +104,7 @@ class NewsFeedWidget extends StatelessWidget {
                     6.5.horizontalSpace,
                     Text(
                       _user.likeCount,
-                      style: styles
-                          .inter12w400
-                          .copyWith(color: styles.skyBlue),
+                      style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                   ],
                 ),
@@ -131,9 +117,7 @@ class NewsFeedWidget extends StatelessWidget {
                   children: [
                     Text(
                       _user.disLikeCount,
-                      style: styles
-                          .inter12w400
-                          .copyWith(color: styles.skyBlue),
+                      style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                     6.5.horizontalSpace,
                     SvgPicture.asset(SvgIcons.dislike),
