@@ -101,4 +101,7 @@ class AppStrings {
   static String initiateRequest = "Initiate a Request";
   static String approved = "Approved";
   static String myRequest = "My Requests";
+  static String requestName = "Request Name";
+  static String subjectChange = "Subject/Teacher Change Request";
+  static String sendRequest = "Send Request";
 }

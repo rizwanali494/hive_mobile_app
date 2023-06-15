@@ -4,6 +4,8 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
 
+import 'features/my_services/screens/new_request_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -47,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      context.pushReplacement(MyServicesScreen.route);
+      context.pushReplacement(NewRequestScreen.route);
       // Navigator.pushReplacement(
       //     context,
       //     MaterialPageRoute(
