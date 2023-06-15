@@ -20,27 +20,25 @@ class ApplicationStatusWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(36),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 11.w,
-          vertical: 5.h,
-        ),
-        child: Row(
-          children: [
-            3.horizontalSpace,
-            SvgPicture.asset(iconPath),
-            10.horizontalSpace,
-            Text(
-              title,
-              style: styles.inter12w400,
-            ),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(36),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 11.w,
+        vertical: 5.h,
+      ),
+      child: Row(
+        children: [
+          3.horizontalSpace,
+          SvgPicture.asset(iconPath),
+          10.horizontalSpace,
+          Text(
+            title,
+            style: styles.inter12w400,
+          ),
+        ],
       ),
     );
   }

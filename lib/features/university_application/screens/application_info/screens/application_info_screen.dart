@@ -63,7 +63,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                         13.verticalSpace,
                         Row(
                           children: [
-                            ApplicationStatusWidget(
+                            ApplicationStatusToggleWidget(
                               title: AppStrings.applied,
                               onTap: () {
                                 provider.selectStatus(AppStrings.applied);
@@ -73,7 +73,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                                   provider.iSelected(AppStrings.applied),
                             ),
                             10.horizontalSpace,
-                            ApplicationStatusWidget(
+                            ApplicationStatusToggleWidget(
                               title: AppStrings.accepted,
                               iconPath: SvgIcons.tickSquare,
                               isSelected:
@@ -84,7 +84,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                               spaceBetween: 7,
                             ),
                             10.horizontalSpace,
-                            ApplicationStatusWidget(
+                            ApplicationStatusToggleWidget(
                               title: AppStrings.rejected,
                               iconPath: SvgIcons.undecided,
                               spaceBetween: 7,

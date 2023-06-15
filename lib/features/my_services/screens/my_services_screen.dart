@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/service_count_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
@@ -64,7 +66,11 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return MyServiceWidget();
+                  return GestureDetector(
+                      onTap: () {
+                        context.push(DescriptionScreen.route);
+                      },
+                      child: MyServiceWidget());
                 },
                 separatorBuilder: (context, index) {
                   return 10.verticalSpace;

@@ -33,7 +33,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
               title: AppStrings.newRequest,
               titleStyle: styles.inter20w700,
             ),
-            26.verticalSpace,
+            16.verticalSpace,
             TitleTextField(
                 title: AppStrings.myRequest,
                 hintText: AppStrings.characterCertificate),
@@ -52,7 +52,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                 ),
               ],
             ),
-            42.verticalSpace,
+            29.verticalSpace,
             TitleTextField(
               title: AppStrings.description,
               hintText: AppStrings.loremPorum * 2,
@@ -60,7 +60,6 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
             ),
             23.verticalSpace,
             Align(alignment: Alignment.topLeft,child: BlueElevatedButton(text: AppStrings.sendRequest))
-
           ],
         ),
       ),

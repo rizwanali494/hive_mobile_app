@@ -4,14 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
-class ApplicationStatusWidget extends StatelessWidget {
+class ApplicationStatusToggleWidget extends StatelessWidget {
   final bool isSelected;
   final Function()? onTap;
   final String title;
   final String iconPath;
   final double? spaceBetween;
 
-  const ApplicationStatusWidget({
+  const ApplicationStatusToggleWidget({
     super.key,
     required this.isSelected,
     required this.title,
