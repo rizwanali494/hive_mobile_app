@@ -1,18 +1,17 @@
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/navigation/extensions.dart';
-import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
-import 'package:hive_mobile/features/university_application/screens/application_info/screens/title_text_field.dart';
-import 'package:hive_mobile/features/university_application/screens/application_info/widgets/application_status_widget.dart';
-import 'package:provider/provider.dart';
-
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info/screens/document_upload_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info/screens/title_text_field.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info/view_models/application_info_vm.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info/widgets/application_status_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/application_info/view_models/application_info_vm.dart';
+import 'package:provider/provider.dart';
 
 class ApplicationInfoScreen extends StatefulWidget {
   static const route = "/ApplicationInfo";
@@ -106,65 +105,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                           ),
                         ),
                         14.verticalSpace,
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 16.h,
-                            horizontal: 19.w,
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(
-                                  color: styles.black.withOpacity(0.3))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  badges.Badge(
-                                    badgeStyle: badges.BadgeStyle(
-                                      badgeColor: styles.greyWhite,
-                                    ),
-                                    position:
-                                        badges.BadgePosition.topEnd(end: -5),
-                                    badgeContent: Icon(
-                                      Icons.close,
-                                      size: 10,
-                                      color: styles.darkGrey,
-                                    ),
-                                    child: Container(
-                                      width: 51.w,
-                                      height: 51.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          10,
-                                        ),
-                                        color: styles.smokeWhite,
-                                      ),
-                                    ),
-                                  ),
-                                  11.horizontalSpace,
-                                  Text(AppStrings.documentName)
-                                ],
-                              ),
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: styles.lightGrey,
-                                    minimumSize: const Size(0, 0),
-                                    padding: EdgeInsetsDirectional.symmetric(
-                                      horizontal: 25.w,
-                                      vertical: 6.h,
-                                    )),
-                                child: Text(
-                                  AppStrings.upload,
-                                  style: styles.inter12w400.copyWith(
-                                    color: styles.darkGrey,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        DocumentUploadWidget(),
                         28.verticalSpace,
                         TitleTextField(
                           title: AppStrings.sessionNote,

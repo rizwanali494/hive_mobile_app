@@ -27,6 +27,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
   //w700
   final TextStyle inter12w700;
+  final TextStyle inter16w700;
   final TextStyle inter20w700;
   final TextStyle inter28w700;
   final TextStyle inter30w700;
@@ -75,6 +76,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.inter16w600,
     required this.inter20w600,
     required this.inter12w700,
+    required this.inter16w700,
     required this.inter20w700,
     required this.inter28w700,
     required this.inter30w700,
@@ -130,6 +132,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter16w600: TextStyle.lerp(inter16w600, other.inter16w600, t)!,
       inter20w600: TextStyle.lerp(inter20w600, other.inter20w600, t)!,
       inter12w700: TextStyle.lerp(inter12w700, other.inter12w700, t)!,
+      inter16w700: TextStyle.lerp(inter16w700, other.inter16w700, t)!,
       inter20w700: TextStyle.lerp(inter20w700, other.inter20w700, t)!,
       inter28w700: TextStyle.lerp(inter28w700, other.inter28w700, t)!,
       inter30w700: TextStyle.lerp(inter30w700, other.inter30w700, t)!,
@@ -258,6 +261,12 @@ class AppTheme extends ThemeExtension<AppTheme> {
       fontWeight: FontWeight.w700,
       color: Colors.black,
     ),
+    inter16w700: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 16.sp,
+      fontWeight: FontWeight.w700,
+      color: Colors.black,
+    ),
     inter20w700: TextStyle(
       fontFamily: 'Inter',
       fontSize: 20.sp,
@@ -347,6 +356,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     TextStyle? inter16w600,
     TextStyle? inter20w600,
     TextStyle? inter12w700,
+    TextStyle? inter16w700,
     TextStyle? inter20w700,
     TextStyle? inter28w700,
     TextStyle? inter30w700,
@@ -393,6 +403,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter16w600: inter16w600 ?? this.inter16w600,
       inter20w600: inter20w600 ?? this.inter20w600,
       inter12w700: inter12w700 ?? this.inter12w700,
+      inter16w700: inter16w700 ?? this.inter16w700,
       inter20w700: inter20w700 ?? this.inter20w700,
       inter28w700: inter28w700 ?? this.inter28w700,
       inter30w700: inter30w700 ?? this.inter30w700,

@@ -56,7 +56,7 @@ class AppStrings {
   static String applied = "Applied";
   static String viewDetails = "View Details";
   static String degree = "Degree";
-  static String institute = "Degree";
+  static String institute = "Institution";
   static String grade = "Grade";
   static String document = "Document";
   static String documentName = "Document Name";
@@ -104,4 +104,5 @@ class AppStrings {
   static String requestName = "Request Name";
   static String subjectChange = "Subject/Teacher Change Request";
   static String sendRequest = "Send Request";
+  static String uploadResult = "Upload Result";
 }

@@ -30,6 +30,7 @@ class ApplicationStatusWidget extends StatelessWidget {
         vertical: 5.h,
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           3.horizontalSpace,
           SvgPicture.asset(iconPath),

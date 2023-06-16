@@ -4,6 +4,9 @@ import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
+import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
+import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
@@ -87,6 +90,21 @@ final goRouter = GoRouter(
       path: NewRequestScreen.route,
       name: NewRequestScreen.route,
       builder: (_, state) => const NewRequestScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: AddExternalGradeScreen.route,
+      name: AddExternalGradeScreen.route,
+      builder: (_, state) => const AddExternalGradeScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: ExternalGradingScreen.route,
+      name: ExternalGradingScreen.route,
+      builder: (_, state) => const ExternalGradingScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: GradeDetailsScreen.route,
+      name: GradeDetailsScreen.route,
+      builder: (_, state) => const GradeDetailsScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',
