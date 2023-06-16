@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
+import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      context.pushReplacement(GradeDetailsScreen.route);
+      context.pushReplacement(ExternalGradingScreen.route);
       // Navigator.pushReplacement(
       //     context,
       //     MaterialPageRoute(

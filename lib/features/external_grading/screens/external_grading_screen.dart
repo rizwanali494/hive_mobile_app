@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grading_title_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
@@ -32,7 +34,9 @@ class ExternalGradingScreen extends StatelessWidget {
             36.verticalSpace,
             BlueActionButton(
               title: AppStrings.addExternalGrade,
-              onTap: () {},
+              onTap: () {
+                context.push(AddExternalGradeScreen.route);
+              },
             ),
             20.verticalSpace,
             Container(
@@ -71,9 +75,7 @@ class ExternalGradingScreen extends StatelessWidget {
             5.verticalSpace,
             Expanded(
               child: ListView.separated(
-                padding: EdgeInsets.symmetric(
-                  vertical: 8.h
-                ),
+                padding: EdgeInsets.symmetric(vertical: 8.h),
                 itemBuilder: (context, index) {
                   return GradeInfoWidget();
                 },
