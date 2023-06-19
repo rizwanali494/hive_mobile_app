@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
+import 'package:intl/intl.dart';
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
@@ -18,6 +19,7 @@ class NewsFeedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    datesInMonth();
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     var selected = "1";
@@ -130,6 +132,14 @@ class NewsFeedWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+void datesInMonth() {
+  DateTime now = DateTime.now();
+  final daysCount = DateUtils.getDaysInMonth(2024, DateTime.february);
+  List<String> monthNames = DateFormat.MMMM().dateSymbols.MONTHS;
+  debugPrint(monthNames.toString());
+  debugPrint(daysCount.toString());
 }
 
 const _user = MockNewsFeedModel.user;

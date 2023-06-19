@@ -4,6 +4,7 @@ import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
@@ -105,6 +106,11 @@ final goRouter = GoRouter(
       path: GradeDetailsScreen.route,
       name: GradeDetailsScreen.route,
       builder: (_, state) => const GradeDetailsScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: CalendarScreen.route,
+      name: CalendarScreen.route,
+      builder: (_, state) => const CalendarScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',
