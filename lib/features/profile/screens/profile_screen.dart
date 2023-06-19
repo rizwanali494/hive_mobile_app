@@ -3,15 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'package:hive_mobile/app/resources/app_strings.dart';
-import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -54,9 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       child: SvgPicture.asset(SvgIcons.edit)),
                 ],
-                onMenuTap: () {
-                  provider.openDrawer();
-                },
               ),
               27.verticalSpace,
               Padding(

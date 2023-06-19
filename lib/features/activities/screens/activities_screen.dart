@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/activities/screens/activity_widget.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
-
-import 'package:hive_mobile/app/enums/post_type_enum.dart';
-import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ActivitiesScreen extends StatelessWidget {
   static const route = '/ActivitiesScreen';
@@ -22,13 +21,14 @@ class ActivitiesScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          AppBarWidget(
-            onMenuTap: () {
-              context.pop();
-            },
-            color: styles.black,
-            title: AppStrings.activities,
-            icon: const Icon(Icons.arrow_back_ios),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+            ),
+            child: AppBarWidget(
+              color: styles.black,
+              title: AppStrings.activities,
+            ),
           ),
           Expanded(
             child: Padding(

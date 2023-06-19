@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_note_widget.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
@@ -33,7 +34,7 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 19.w),
                 child: Column(
                   children: [
-                    DividerAppBar(title: AppStrings.sessionNote,showDivider: false,),
+                    AppBarWidget(color: styles.black, title: AppStrings.sessionNote),
                     21.verticalSpace,
                     TabBarWidget(
                       onTap: (index) {

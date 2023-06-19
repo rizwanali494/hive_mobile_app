@@ -29,13 +29,16 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
 
     return Column(
       children: [
-        AppBarWidget(
-          color: styles.black,
-          title: AppStrings.newsFeed,
-          titleStyle: styles.inter40w700,
-          onMenuTap: () {
-            provider.openDrawer();
-          },
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 12.w
+          ),
+          child: AppBarWidget(
+            color: styles.black,
+            title: AppStrings.newsFeed,
+            titleStyle: styles.inter40w700,
+
+          ),
         ),
         Expanded(
           child: Padding(

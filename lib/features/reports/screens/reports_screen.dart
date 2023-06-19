@@ -29,7 +29,6 @@ class ReportsScreen extends StatelessWidget {
                   color: styles.black,
                   title: AppStrings.reports,
                   titleStyle: styles.inter40w700,
-                  onMenuTap: () {},
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 19.w),

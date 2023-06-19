@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/enums/application_status_enum.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
-
-import 'package:hive_mobile/app/enums/application_status_enum.dart';
-import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
 
 class UniversityApplicationScreen extends StatefulWidget {
   static const route = "/UniversityApplication";
@@ -31,9 +30,6 @@ class _UniversityApplicationScreenState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppBarWidget(
-            onMenuTap: () {
-              context.pop();
-            },
             color: styles.black,
             icon: const Icon(Icons.arrow_back_ios),
             titleStyle: styles.inter28w700,

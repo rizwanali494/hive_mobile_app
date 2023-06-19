@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/network_images.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
+import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/hobbie_chip_widget.dart';
-import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
-
-import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 
 class AccountSettingScreen extends StatefulWidget {
   static const route = '/AccountScreen';
@@ -27,17 +26,9 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
     return Scaffold(
       body: Column(
         children: [
-          AppBarWidget(
-            color: styles.black,
+          DividerAppBar(
             title: AppStrings.accountSettings,
-            titleStyle: styles.inter20w700,
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            onMenuTap: () {
-              context.pop();
-            },
+            showDivider: false,
           ),
           10.verticalSpace,
           Padding(
@@ -105,10 +96,11 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
           ),
           24.verticalSpace,
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 19.w
+            padding: EdgeInsets.symmetric(horizontal: 19.w),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: BlueElevatedButton(text: AppStrings.saveChanges),
             ),
-            child: Align(alignment: Alignment.topLeft,child: BlueElevatedButton(text: AppStrings.saveChanges)),
           )
         ],
       ),
