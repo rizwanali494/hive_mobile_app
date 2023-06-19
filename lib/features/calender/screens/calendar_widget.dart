@@ -6,15 +6,17 @@ import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
 import 'package:provider/provider.dart';
 
 class CalendarWidget extends StatelessWidget {
+  final String monthName;
+
   const CalendarWidget({
     super.key,
-    required this.styles,
+    required this.monthName,
   });
-
-  final AppTheme styles;
 
   @override
   Widget build(BuildContext context) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
     return Consumer<CalendarVM>(
       builder: (context, provider, child) {
         return Padding(
@@ -25,11 +27,12 @@ class CalendarWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "January",
+                   monthName,
                     style: styles.inter20w700,
                   ),
                 ],
               ),
+              12.verticalSpace,
               Container(
                 padding: EdgeInsets.symmetric(
                   vertical: 9.h,
@@ -63,11 +66,11 @@ class CalendarWidget extends StatelessWidget {
                 ),
               ),
               WeekDaysWidget(weekNumber: 1),
+              WeekDaysWidget(weekNumber: 7),
               WeekDaysWidget(weekNumber: 14),
               WeekDaysWidget(weekNumber: 21),
               WeekDaysWidget(weekNumber: 28),
               WeekDaysWidget(weekNumber: 35),
-              WeekDaysWidget(weekNumber: 42),
             ],
           ),
         );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/calender/screens/day_widget.dart';
-import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
+import 'package:hive_mobile/features/calender/view_models/week_day_vm.dart';
 import 'package:provider/provider.dart';
 
 class WeekDaysWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class WeekDaysWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return Consumer<CalendarVM>(
+    return Consumer<WeekDayVM>(
       builder: (context, provider, child) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.w),
@@ -38,13 +38,9 @@ class WeekDaysWidget extends StatelessWidget {
                       ),
                       child: Center(
                         child: DayWidget(
-                          // day: index + 1,
                           day: index + weekNumber,
                           isValidDay: provider.isValidDay(
-                            // index + 1,
                             index + weekNumber,
-                            2,
-                            2024,
                           ),
                         ),
                       ),
