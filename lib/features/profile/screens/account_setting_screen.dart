@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/network_images.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/hobbie_chip_widget.dart';
 import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 
-import '../../../app/resources/app_theme.dart';
 
 class AccountSettingScreen extends StatefulWidget {
   static const route = '/AccountScreen';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
+import 'package:hive_mobile/features/inbox/screens/inbox_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';
 import 'package:hive_mobile/features/profile/screens/profile_screen.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
@@ -9,6 +10,7 @@ import '../../../app/constants/svg_icons.dart';
 class HomeScreenVm extends ChangeNotifier {
   final List<Widget> _pages = const [
     NewsFeedScreen(),
+    InboxScreen(),
     ReportsScreen(),
     ProfileScreen(),
   ];
