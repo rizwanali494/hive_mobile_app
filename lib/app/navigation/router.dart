@@ -1,21 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
-import 'package:hive_mobile/app/view/widgets/description_screen.dart';
-import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
-import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
-import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
-import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
-import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
-import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
-import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
-import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
-import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/application_info/screens/application_info_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
 import 'package:hive_mobile/splash.dart';
 
 export 'extensions.dart';
@@ -40,7 +27,7 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: HomeScreen.route,
       name: HomeScreen.route,
-      builder: (_, state) => const HomeScreen(),
+      builder: (_, state) => HomeScreen(),
     ),
     CustomGoRoute.cupertino(
       path: AccountSettingScreen.route,
@@ -111,6 +98,16 @@ final goRouter = GoRouter(
       path: CalendarScreen.route,
       name: CalendarScreen.route,
       builder: (_, state) => const CalendarScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: NewConversationScreen.route,
+      name: NewConversationScreen.route,
+      builder: (_, state) => const NewConversationScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: ChatScreen.route,
+      name: ChatScreen.route,
+      builder: (_, state) => const ChatScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

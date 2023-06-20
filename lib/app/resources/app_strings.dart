@@ -31,7 +31,7 @@ class AppStrings {
   static String attending = "Attending";
   static String maybe = "Maybe";
   static String undecided = "Undecided";
-  static String comment = "Comments";
+  static String comment = "Comment";
   static String newRequest = "New Request";
   static String addExternalGrade = "Add External Grades";
   static String reportView = "Report View";
@@ -56,10 +56,9 @@ class AppStrings {
   static String applied = "Applied";
   static String viewDetails = "View Details";
   static String degree = "Degree";
-  static String institute = "Institution";
+  static String institute = "Degree";
   static String grade = "Grade";
   static String document = "Document";
-  static String documentName = "Document Name";
   static String delete = "Delete";
   static String selectStatus = "Select Status";
   static String accepted = "Accepted";
@@ -73,22 +72,20 @@ class AppStrings {
   static String percent1 = "1%";
   static String youHaveANewMessage = "You have a new message";
   static String time = "2:45PM";
-  static String aPollStartedClickToParticipate =
-      "A poll started. Click to participate";
+  static String aPollStartedClickToParticipate = "A poll started. Click to participate";
   static String sportsEventIsComing = "Sports event is coming";
   static String youHaveAUnreadMessage = "You have a unread message";
   static String announcement = "Announcement!";
   static String academicReport = "Academic Report";
   static String name = "Name";
   static String date = "Date";
-  static String hobbies = "Hobbies";
   static String action = "Action";
+  static String overAll = "OverAll";
+  static String hobbies = "Hobbies";
   static String achievementsAwards = "Achievements & Awards";
   static String editProfilePicture = "Edit Profile Picture";
-  static String editBios = "Edit Bios";
   static String editHobbies = "Edit Hobbies";
   static String saveChanges = "Save Changes";
-  static String overAll = "OverAll";
   static String eventBy = "Event by";
   static String peopleGoing = "are going";
   static String addApplication = "Add Application";
@@ -105,4 +102,7 @@ class AppStrings {
   static String subjectChange = "Subject/Teacher Change Request";
   static String sendRequest = "Send Request";
   static String uploadResult = "Upload Result";
+  static String editBios = "Edit Bios";
+  static String documentName = "Document Name";
+
 }
