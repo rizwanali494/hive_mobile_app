@@ -72,7 +72,8 @@ class AppStrings {
   static String percent1 = "1%";
   static String youHaveANewMessage = "You have a new message";
   static String time = "2:45PM";
-  static String aPollStartedClickToParticipate = "A poll started. Click to participate";
+  static String aPollStartedClickToParticipate =
+      "A poll started. Click to participate";
   static String sportsEventIsComing = "Sports event is coming";
   static String youHaveAUnreadMessage = "You have a unread message";
   static String announcement = "Announcement!";
@@ -104,5 +105,5 @@ class AppStrings {
   static String uploadResult = "Upload Result";
   static String editBios = "Edit Bios";
   static String documentName = "Document Name";
-
+  static String typeMessagesHere = "Type message here...";
 }

@@ -20,7 +20,7 @@ class ChatWidget extends StatelessWidget {
             vertical: 29.h,
           ),
           decoration: BoxDecoration(
-            // color: styles.paleWhite,
+            color: styles.paleWhite,
             borderRadius: BorderRadius.only(
                 topLeft: buildRadius(),
                 topRight: buildRadius(),

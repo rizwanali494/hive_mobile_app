@@ -7,7 +7,6 @@ import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/service_count_widget.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 
 class MyServicesScreen extends StatefulWidget {

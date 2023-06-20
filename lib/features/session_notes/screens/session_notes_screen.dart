@@ -6,7 +6,6 @@ import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_note_widget.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class SessionNotesScreen extends StatefulWidget {

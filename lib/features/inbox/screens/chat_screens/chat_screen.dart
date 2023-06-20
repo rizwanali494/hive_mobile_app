@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/inbox/widgets/chat_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 
 class ChatScreen extends StatelessWidget {
   static const route = "/ChatScreen";
@@ -16,7 +17,6 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -24,57 +24,59 @@ class ChatScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // DividerAppBar(title: _user.name),
+            DividerAppBar(title: _user.name),
             Expanded(
-              child: ListView.builder(itemBuilder: (context, index) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      children: [
-                        buildDivider(styles),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          child: Text(
-                            "Wednesday - 12:45PM",
-                            style: styles.inter9w400,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          buildDivider(styles),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: Text(
+                              "Wednesday - 12:45PM",
+                              style: styles.inter9w400,
+                            ),
                           ),
-                        ),
-                        buildDivider(styles),
-                      ],
-                    ),
-                    34.verticalSpace,
-                    const ChatWidget(),
-                    8.verticalSpace,
-                    const ChatWidget(),
-                    // 14.verticalSpace,
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       child: Container(
-                    //         decoration: BoxDecoration(
-                    //             color: styles.greyWhite,
-                    //             border: Border.all(color: styles.skyBlue),
-                    //             borderRadius: BorderRadius.circular(36.r)),
-                    //         child: Padding(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 26.w,
-                    //           ),
-                    //           child: TextFieldWidget(
-                    //             hintText: AppStrings.typeMessagesHere,
-                    //             styles: styles,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     11.horizontalSpace,
-                    //     SvgPicture.asset(SvgIcons.send)
-                    //   ],
-                    // ),
-                    25.verticalSpace,
-                  ],
-                );
-              },),
+                          buildDivider(styles),
+                        ],
+                      ),
+                      34.verticalSpace,
+                      const ChatWidget(),
+                      8.verticalSpace,
+                      const ChatWidget(),
+                      // 14.verticalSpace,
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Container(
+                      //         decoration: BoxDecoration(
+                      //             color: styles.greyWhite,
+                      //             border: Border.all(color: styles.skyBlue),
+                      //             borderRadius: BorderRadius.circular(36.r)),
+                      //         child: Padding(
+                      //           padding: EdgeInsets.symmetric(
+                      //             horizontal: 26.w,
+                      //           ),
+                      //           child: TextFieldWidget(
+                      //             hintText: AppStrings.typeMessagesHere,
+                      //             styles: styles,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     11.horizontalSpace,
+                      //     SvgPicture.asset(SvgIcons.send)
+                      //   ],
+                      // ),
+                      25.verticalSpace,
+                    ],
+                  );
+                },
+              ),
             ),
             // Expanded(
             //   child: Column(

@@ -29,30 +29,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  styles.linearBlueGradientTopLeft,
-                  styles.linearBlueGradientBottomRight,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(40),
-                  bottomRight: Radius.circular(40))),
+            gradient: LinearGradient(
+              colors: [
+                styles.linearBlueGradientTopLeft,
+                styles.linearBlueGradientBottomRight,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40),
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppBarWidget(
-                color: styles.white,
-                title: AppStrings.profile,
-                actions: [
-                  GestureDetector(
-                      onTap: () {
-                        context.push("/AccountScreen");
-                      },
-                      child: SvgPicture.asset(SvgIcons.edit)),
-                ],
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 19.w,
+                ),
+                child: AppBarWidget(
+                  color: styles.white,
+                  title: AppStrings.profile,
+                  actions: [
+                    GestureDetector(
+                        onTap: () {
+                          context.push("/AccountScreen");
+                        },
+                        child: SvgPicture.asset(SvgIcons.edit)),
+                  ],
+                ),
               ),
               27.verticalSpace,
               Padding(

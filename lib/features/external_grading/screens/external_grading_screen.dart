@@ -7,7 +7,6 @@ import 'package:hive_mobile/features/external_grading/screens/adding_external_gr
 import 'package:hive_mobile/features/external_grading/widgets/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grading_title_widget.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 
 class ExternalGradingScreen extends StatelessWidget {
@@ -27,7 +26,10 @@ class ExternalGradingScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            AppBarWidget(color: styles.black, title: AppStrings.externalGrading,titleStyle: styles.inter28w700),
+            AppBarWidget(
+                color: styles.black,
+                title: AppStrings.externalGrading,
+                titleStyle: styles.inter28w700),
             // DividerAppBar(
             //   title: AppStrings.externalGrading,
             //   titleStyle: styles.inter32w700,

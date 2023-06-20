@@ -4,6 +4,8 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
+import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
+import 'package:hive_mobile/features/inbox/screens/inbox_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';
 import 'package:hive_mobile/features/profile/screens/profile_screen.dart';
@@ -14,6 +16,7 @@ import 'package:hive_mobile/features/university_application/screens/university_a
 class HomeScreenVm extends ChangeNotifier {
   final List<Widget> bottomNavBarWidget = const [
     NewsFeedScreen(),
+    InboxScreen(),
     ReportsScreen(),
     ProfileScreen(),
   ];
@@ -40,7 +43,10 @@ class HomeScreenVm extends ChangeNotifier {
     if (currentDrawerWidget != null) {
       return currentDrawerWidget!;
     }
-    return bottomNavBarWidget[_currentIndex % bottomNavBarWidget.length];
+    if( _currentIndex >1 ){
+      return bottomNavBarWidget[(_currentIndex-1) % bottomNavBarWidget.length];
+    }
+    return bottomNavBarWidget[(_currentIndex) % bottomNavBarWidget.length];
   }
 
   int get currentIndex {
@@ -86,10 +92,8 @@ class HomeScreenVm extends ChangeNotifier {
     scaffoldKey.currentState?.closeDrawer();
   }
 
-  bool _isBottomNav = true;
 
   void setDrawerIndex() {
-    _isBottomNav = false;
   }
 
   final drawerIcons = [

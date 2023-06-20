@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/calender/view_models/week_day_vm.dart';
 import 'package:provider/provider.dart';
-
-import '../view_models/week_day_vm.dart';
 
 class DayWidget extends StatelessWidget {
   final int? day;
