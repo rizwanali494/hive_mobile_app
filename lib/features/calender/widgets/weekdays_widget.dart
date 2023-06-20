@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
+import 'package:hive_mobile/features/calender/utils/enums.dart';
+import 'package:hive_mobile/features/calender/utils/extensions.dart';
+
+class WeekdaysWidget extends StatelessWidget {
+  final bool showWeekdays;
+  final CleanCalendarController cleanCalendarController;
+  final String locale;
+  final Layout? layout;
+  final TextStyle? textStyle;
+  final Widget Function(BuildContext context, String weekday)? weekdayBuilder;
+
+  const WeekdaysWidget({
+    Key? key,
+    required this.showWeekdays,
+    required this.cleanCalendarController,
+    required this.locale,
+    required this.layout,
+    required this.weekdayBuilder,
+    required this.textStyle,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (!showWeekdays) return const SizedBox.shrink();
+
+    return GridView.count(
+      crossAxisCount: DateTime.daysPerWeek,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      children: List.generate(DateTime.daysPerWeek, (index) {
+        final weekDay = cleanCalendarController.getDaysOfWeek(locale)[index];
+
+        if (weekdayBuilder != null) {
+          return weekdayBuilder!(context, weekDay);
+        }
+
+        return <Layout, Widget Function()>{
+          Layout.DEFAULT: () => _pattern(context, weekDay),
+          Layout.BEAUTY: () => _beauty(context, weekDay)
+        }[layout]!();
+      }),
+    );
+  }
+
+  Widget _pattern(BuildContext context, String weekday) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Center(
+      child: Text(
+        weekday.capitalize(),
+        style: textStyle ??
+            Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .color!
+                      .withOpacity(.4),
+                  fontWeight: FontWeight.bold,
+                ),
+      ),
+    );
+  }
+
+  Widget _beauty(BuildContext context, String weekday) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Center(
+      child: Text(
+        weekday.capitalize(),
+        style: styles.inter12w400,
+        // style: textStyle ??
+        //     Theme.of(context).textTheme.bodyLarge!.copyWith(
+        //           color: Theme.of(context)
+        //               .textTheme
+        //               .bodyLarge!
+        //               .color!
+        //               .withOpacity(.4),
+        //           fontWeight: FontWeight.bold,
+        //         ),
+      ),
+    );
+  }
+}

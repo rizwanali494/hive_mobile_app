@@ -127,6 +127,7 @@ class ChatScreen extends StatelessWidget {
             //     ],
             //   ),
             // ),
+            12.verticalSpace,
             Row(
               children: [
                 Expanded(
@@ -150,7 +151,7 @@ class ChatScreen extends StatelessWidget {
                 SvgPicture.asset(SvgIcons.send)
               ],
             ),
-            25.verticalSpace,
+            12.verticalSpace,
           ],
         ),
       ),
@@ -169,6 +170,10 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
+
+
+
 }
+
 
 const _user = MockNewsFeedModel.user;

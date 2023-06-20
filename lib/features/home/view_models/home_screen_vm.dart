@@ -86,7 +86,7 @@ class HomeScreenVm extends ChangeNotifier {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   void openDrawer() {
-    scaffoldKey.currentState!.openDrawer();
+    scaffoldKey.currentState?.openDrawer();
   }
 
   void closeDrawer() {

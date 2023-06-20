@@ -27,7 +27,7 @@ class SvgIcons {
   static const String newMessage = "${_iconsPath}new_message.svg";
   static const String notificationNav = "${_iconsPath}notification_nav.svg";
   static const String poll = "${_iconsPath}poll.svg";
-  static const String profileNav = "${_iconsPath}profile.svg";
+  static const String profileNav = "${_iconsPath}profile_nav_bar.svg";
   static const String reportNav = "${_iconsPath}report_nav.svg";
   static const String star = "${_iconsPath}star.svg";
   static const String tickSquare = "${_iconsPath}ticksquare.svg";
