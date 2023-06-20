@@ -56,7 +56,7 @@ class AppStrings {
   static String applied = "Applied";
   static String viewDetails = "View Details";
   static String degree = "Degree";
-  static String institute = "Degree";
+  static String institute = "Institute";
   static String grade = "Grade";
   static String document = "Document";
   static String delete = "Delete";

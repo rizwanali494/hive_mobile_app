@@ -29,13 +29,17 @@ class _UniversityApplicationScreenState
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppBarWidget(
-            color: styles.black,
-            icon: const Icon(Icons.arrow_back_ios),
-            titleStyle: styles.inter28w700,
-            title: AppStrings.universityApplication,
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 19.w,
+            ),
+            child: AppBarWidget(
+              color: styles.black,
+              titleStyle: styles.inter20w700,
+              title: AppStrings.universityApplication,
+            ),
           ),
-          30.verticalSpace,
+          25.verticalSpace,
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(

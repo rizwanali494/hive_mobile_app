@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
+import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
@@ -105,7 +106,7 @@ class HomeScreenVm extends ChangeNotifier {
     SvgIcons.universityApplication,
   ];
 
-  final actionNames = [
+  final drawerActionNames = [
     AppStrings.activities,
     AppStrings.calendar,
     AppStrings.myServices,
@@ -117,7 +118,7 @@ class HomeScreenVm extends ChangeNotifier {
 
   List<Widget> drawerWidgets = [
     ActivitiesScreen(),
-    Container(),
+    CalendarScreen(),
     MyServicesScreen(),
     SessionNotesScreen(),
     ExternalGradingScreen(),

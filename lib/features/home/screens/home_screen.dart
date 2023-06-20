@@ -109,14 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ...List.generate(
-                          provider.btmNavIcons.length,
-                              (index) => GestureDetector(
+                          provider.drawerIcons.length,
+                          (index) => GestureDetector(
                             onTap: () {
                               provider.setDrawerWidget(index);
                             },
                             child: DrawerActionWidget(
-                              icon: provider.btmNavIcons[index],
-                              actionName: provider.actionNames[index],
+                              icon: provider.drawerIcons[index],
+                              actionName: provider.drawerActionNames[index],
                             ),
                           ),
                         ),
