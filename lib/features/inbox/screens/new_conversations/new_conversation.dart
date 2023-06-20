@@ -56,7 +56,8 @@ class NewConversationScreen extends StatelessWidget {
                               ),
                               onTap: () {},
                               title: 'Awais Ali Khan',
-                              subTitle: 'Awais Ali Khan Lorem ipsum dolor sit amet',
+                              subTitle:
+                                  'Awais Ali Khan Lorem ipsum dolor sit amet',
                             ),
                             const Divider(color: Colors.black45),
                           ],

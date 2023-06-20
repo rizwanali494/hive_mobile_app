@@ -86,4 +86,6 @@ class AppStrings {
   static String editProfilePicture = "Edit Profile Picture";
   static String editHobbies = "Edit Hobbies";
   static String saveChanges = "Save Changes";
+  static String typeMessagesHere = "Type message here...";
+
 }

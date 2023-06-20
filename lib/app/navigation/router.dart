@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
+import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/splash.dart';
@@ -39,6 +40,11 @@ final goRouter = GoRouter(
       path: NewConversationScreen.route,
       name: NewConversationScreen.route,
       builder: (_, state) => const NewConversationScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: ChatScreen.route,
+      name: ChatScreen.route,
+      builder: (_, state) => const ChatScreen(),
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

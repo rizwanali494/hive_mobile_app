@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
@@ -34,10 +36,27 @@ class InboxScreen extends StatelessWidget {
                 onMenuTap: () {},
                 actions: [
                   IconButton(
-                    onPressed: () => context.pushNamed(NewConversationScreen.route),
+                    onPressed: () =>
+                        context.pushNamed(NewConversationScreen.route),
                     icon: SvgPicture.asset(SvgIcons.messageAdd),
                   )
                 ],
+              ),
+              23.verticalSpace,
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 26.w,
+                ),
+                decoration: BoxDecoration(
+                    color: styles.greyWhite,
+                    borderRadius: BorderRadius.circular(36.r)),
+                child: TextFieldWidget(
+                  hintText: AppStrings.searchMessagesHere,
+                  styles: styles,
+                ),
               ),
               Expanded(
                 child: ListView.builder(
@@ -49,9 +68,12 @@ class InboxScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           InboxListTile(
-                            onTap: () {},
+                            onTap: () {
+                              context.push(ChatScreen.route);
+                            },
                             title: AppStrings.academicReport,
-                            subTitle: 'Awais Ali Khan Lorem ipsum dolor sit amet',
+                            subTitle:
+                                'Awais Ali Khan Lorem ipsum dolor sit amet',
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
