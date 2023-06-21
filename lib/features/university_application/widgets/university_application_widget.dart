@@ -6,12 +6,12 @@ import 'package:hive_mobile/app/enums/application_status_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {
-  final String tile;
+  final String title;
   final ApplicationStatus applicationStatus;
 
   const UniversityApplicationWidget({
     super.key,
-    required this.tile,
+    required this.title,
     required this.applicationStatus,
   });
 
@@ -23,7 +23,7 @@ class UniversityApplicationWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          tile,
+          title,
           style: styles.inter20w700,
         ),
         25.verticalSpace,

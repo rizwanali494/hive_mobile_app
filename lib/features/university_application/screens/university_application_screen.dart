@@ -59,7 +59,7 @@ class _UniversityApplicationScreenState
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return UniversityApplicationWidget(
-                          tile: applications[index],
+                          title: applications[index],
                           applicationStatus: index.isEven
                               ? ApplicationStatus.accepted
                               : ApplicationStatus.applied,

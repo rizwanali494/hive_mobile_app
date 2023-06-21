@@ -36,9 +36,13 @@ class DividerAppBar extends StatelessWidget {
                 ),
               ),
               15.horizontalSpace,
-              Text(
-                title,
-                style: titleStyle ?? styles.inter20w700,
+              Expanded(
+                child: Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: titleStyle ?? styles.inter20w700,
+                ),
               ),
             ],
           ),

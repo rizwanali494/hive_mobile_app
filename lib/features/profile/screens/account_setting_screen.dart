@@ -70,6 +70,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
             ),
             child: Column(
               children: [
+                5.verticalSpace,
                 TextFieldWidget(
                     styles: styles, hintText: AppStrings.editHobbies),
                 35.verticalSpace,

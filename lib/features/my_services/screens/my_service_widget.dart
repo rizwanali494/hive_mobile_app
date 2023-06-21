@@ -18,10 +18,12 @@ class MyServiceWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "School Leaving Certificate",
-              style: styles.inter14w600.copyWith(
-                color: styles.darkSlateGrey,
+            Expanded(
+              child : Text(
+                "School Leaving Certificate",
+                style: styles.inter14w600.copyWith(
+                  color: styles.darkSlateGrey,
+                ),
               ),
             ),
             Text(

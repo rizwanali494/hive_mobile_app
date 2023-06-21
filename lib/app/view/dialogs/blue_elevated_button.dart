@@ -26,7 +26,7 @@ class BlueElevatedButton extends StatelessWidget {
           0,
         ),
         padding: EdgeInsetsDirectional.symmetric(
-          vertical: 8.h,
+          vertical: 14.h,
           horizontal: 52.w,
         ),
       ),

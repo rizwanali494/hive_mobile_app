@@ -24,9 +24,11 @@ class DrawerActionWidget extends StatelessWidget {
             icon,
           ),
           19.horizontalSpace,
-          Text(
-            actionName,
-            style: styles.inter15w400,
+          Expanded(
+            child: Text(
+              actionName,
+              style: styles.inter15w400,
+            ),
           ),
         ],
       ),

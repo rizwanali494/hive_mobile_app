@@ -66,10 +66,11 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                      onTap: () {
-                        context.push(DescriptionScreen.route);
-                      },
-                      child: MyServiceWidget());
+                    onTap: () {
+                      context.push(DescriptionScreen.route);
+                    },
+                    child: MyServiceWidget(),
+                  );
                 },
                 separatorBuilder: (context, index) {
                   return 10.verticalSpace;

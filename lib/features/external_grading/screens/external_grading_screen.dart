@@ -70,7 +70,7 @@ class ExternalGradingScreen extends StatelessWidget {
                       title: AppStrings.grade,
                     ),
                     Expanded(
-                      child: Container(),
+                      child: SizedBox.shrink(),
                     ),
                   ],
                 ),

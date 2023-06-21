@@ -35,7 +35,7 @@ class ApplicationInfoWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppStrings.universityName,
+                      AppStrings.universityName*2,
                       style: styles.inter14w600.copyWith(
                         color: styles.darkSlateGrey,
                       ),

@@ -75,83 +75,88 @@ class _HomeScreenState extends State<HomeScreen> {
                           backgroundImage: NetworkImage(_user.userAvatar),
                         ),
                         12.horizontalSpace,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _user.name,
-                              style: styles.inter16w600.copyWith(
-                                color: styles.white,
-                              ),
-                            ),
-                            Text(
-                              AppStrings.clickToView,
-                              style: styles.inter12w400Underline
-                                  .copyWith(color: styles.white),
-                            ),
-                          ],
-                        ),
                         Expanded(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: SvgPicture.asset(SvgIcons.arrowRight),
+
+                          flex: 2,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _user.name,
+                                style: styles.inter16w600.copyWith(
+                                  color: styles.white,
+                                ),
+                              ),
+                              Text(
+                                AppStrings.clickToView,
+                                style: styles.inter12w400Underline
+                                    .copyWith(color: styles.white),
+                              ),
+                            ],
                           ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: SvgPicture.asset(SvgIcons.arrowRight),
                         ),
                       ],
                     ),
                   ),
                   41.verticalSpace,
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 36.h,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ...List.generate(
-                          provider.drawerIcons.length,
-                          (index) => GestureDetector(
-                            onTap: () {
-                              provider.setDrawerWidget(index);
-                            },
-                            child: DrawerActionWidget(
-                              icon: provider.drawerIcons[index],
-                              actionName: provider.drawerActionNames[index],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30.w,
+                      padding: EdgeInsets.only(
+                        left: 36.h,
                       ),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
+                      child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Divider(
-                              color: styles.black.withOpacity(0.2),
-                            ),
-                            10.verticalSpace,
-                            Row(
-                              children: [
-                                SvgPicture.asset(SvgIcons.logout),
-                                20.horizontalSpace,
-                                Text(
-                                  AppStrings.logout,
-                                  style: styles.inter15w400,
+                            ...List.generate(
+                              provider.drawerIcons.length,
+                              (index) => GestureDetector(
+                                onTap: () {
+                                  provider.setDrawerWidget(index);
+                                },
+                                child: DrawerActionWidget(
+                                  icon: provider.drawerIcons[index],
+                                  actionName: provider.drawerActionNames[index],
                                 ),
-                              ],
+                              ),
                             ),
-                            50.verticalSpace
                           ],
                         ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 30.w,
+                    ),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Divider(
+                            color: styles.black.withOpacity(0.2),
+                          ),
+                          10.verticalSpace,
+                          Row(
+                            children: [
+                              SvgPicture.asset(SvgIcons.logout),
+                              20.horizontalSpace,
+                              Text(
+                                AppStrings.logout,
+                                style: styles.inter15w400,
+                              ),
+                            ],
+                          ),
+                          50.verticalSpace
+                        ],
                       ),
                     ),
                   ),

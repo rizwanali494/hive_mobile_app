@@ -29,17 +29,19 @@ class ApplicationStatusWidget extends StatelessWidget {
         horizontal: 11.w,
         vertical: 5.h,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          3.horizontalSpace,
-          SvgPicture.asset(iconPath),
-          10.horizontalSpace,
-          Text(
-            title,
-            style: styles.inter12w400,
-          ),
-        ],
+      child: Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            3.horizontalSpace,
+            SvgPicture.asset(iconPath),
+            10.horizontalSpace,
+            Text(
+              title,
+              style: styles.inter12w400,
+            ),
+          ],
+        ),
       ),
     );
   }
