@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/my_service_widget.dart';
+import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/service_count_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 
@@ -33,7 +34,9 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
             AppBarWidget(color: styles.black, title: AppStrings.myServices),
             26.verticalSpace,
             BlueActionButton(
-              onTap: () {},
+              onTap: () {
+                context.push(NewRequestScreen.route);
+              },
               title: AppStrings.initiateRequest,
             ),
             21.verticalSpace,

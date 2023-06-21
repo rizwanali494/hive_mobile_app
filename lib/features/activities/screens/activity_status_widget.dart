@@ -28,22 +28,24 @@ class ActivityStatusWidget extends StatelessWidget {
         ),
       ),
       child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              iconPath,
-              colorFilter: ColorFilter.mode(
-                styles.skyBlue,
-                BlendMode.srcIn,
+        child: Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                iconPath,
+                colorFilter: ColorFilter.mode(
+                  styles.skyBlue,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            8.horizontalSpace,
-            Text(
-              title,
-              style: styles.inter12w400.copyWith(color: styles.skyBlue),
-            ),
-          ],
+              8.horizontalSpace,
+              Text(
+                title,
+                style: styles.inter12w400.copyWith(color: styles.skyBlue),
+              ),
+            ],
+          ),
         ),
       ),
     );
