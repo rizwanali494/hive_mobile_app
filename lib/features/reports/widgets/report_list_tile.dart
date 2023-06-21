@@ -64,15 +64,11 @@ class ReportListTile extends StatelessWidget {
             style: titleTextStyle,
           ),
         ),
-        // 78.horizontalSpace,
+        // 78.horizontalSpace,,
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(
-              right: 15.w
-            ),
-            child: trailing??SizedBox.shrink(),
-          ),
+          child: Align(alignment: Alignment.topLeft,child: trailing!),
         ),
+
       ],
     );
   }
