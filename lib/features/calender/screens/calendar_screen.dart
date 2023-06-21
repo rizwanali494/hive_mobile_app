@@ -7,13 +7,21 @@ import 'package:hive_mobile/features/calender/screens/scrollable_clean_calendar.
 import 'package:hive_mobile/features/calender/utils/enums.dart';
 import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
-import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:provider/provider.dart';
 
-class CalendarScreen extends StatelessWidget {
+class CalendarScreen extends StatefulWidget {
   static const route = "/Calendar";
 
-  const CalendarScreen({Key? key}) : super(key: key);
+  const CalendarScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<CalendarScreen> createState() => _CalendarScreenState();
+}
+
+class _CalendarScreenState extends State<CalendarScreen> {
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +66,10 @@ class CalendarScreen extends StatelessWidget {
               Expanded(
                 child: ScrollableCleanCalendar(
                   calendarController: controller,
+                  scrollController: scrollController,
                   layout: Layout.BEAUTY,
-                  calendarCrossAxisSpacing: 4,
+
+                  calendarCrossAxisSpacing: 0,
                 ),
               )
             ],

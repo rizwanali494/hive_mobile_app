@@ -5,11 +5,13 @@ import 'package:hive_mobile/app/navigation/extensions.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
+import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/screens/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/screens/title_text_field.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/view_models/application_info_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info/widgets/application_status_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -134,8 +136,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                         BlueElevatedButton(
                           text: AppStrings.add,
                           onTap: () {
-                            context.pushAndRemoveUntil(
-                                UniversityApplicationScreen.route);
+                            context.popUntil(
+                              HomeScreen.route,
+                            );
                           },
                         )
                       ],
