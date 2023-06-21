@@ -29,7 +29,7 @@ class GradeInfoWidget extends StatelessWidget {
               ),
               GradingTitleWidget(
                 title: AppStrings.institute,
-                flex: 2,
+                // flex: 2,
               ),
               GradingTitleWidget(
                 title: AppStrings.subjects,
@@ -37,21 +37,19 @@ class GradeInfoWidget extends StatelessWidget {
               GradingTitleWidget(
                 title: AppStrings.grade,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 19.w),
+              SizedBox(
+                width: 35.w,
+                height: 20.h,
                 child: GestureDetector(
                     onTap: () {
                       context.push(GradeDetailsScreen.route);
-                    }, child: SvgPicture.asset(SvgIcons.eye)),
-              )
-              // Expanded(
-              //   child: Padding(
-              //     padding: EdgeInsets.only(
-              //       right: 10
-              //     ),
-              //     child: SvgPicture.asset(SvgIcons.eye),
-              //   ),
-              // ),
+                    },
+                    child: SvgPicture.asset(SvgIcons.eye)),
+              ),
+              // GestureDetector(
+              //     onTap: () {
+              //       context.push(GradeDetailsScreen.route);
+              //     }, child: Expanded(child: SvgPicture.asset(SvgIcons.eye)))
             ],
           ),
         ),

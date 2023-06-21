@@ -21,6 +21,7 @@ class GradingTitleWidget extends StatelessWidget {
         child: Text(
           title,
           style: styles.inter12w400,
+          textAlign: TextAlign.center,
         ),
       ),
     );

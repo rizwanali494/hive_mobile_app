@@ -24,9 +24,11 @@ class ActivityDetailWidget extends StatelessWidget {
         children: [
           SvgPicture.asset(iconPath),
           8.8.horizontalSpace,
-          Text(
-            title,
-            style: styles.inter12w500,
+          Expanded(
+            child: Text(
+              title,
+              style: styles.inter12w500,
+            ),
           )
         ],
       ),

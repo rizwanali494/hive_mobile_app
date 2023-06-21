@@ -30,11 +30,6 @@ class ExternalGradingScreen extends StatelessWidget {
                 color: styles.black,
                 title: AppStrings.externalGrading,
                 titleStyle: styles.inter28w700),
-            // DividerAppBar(
-            //   title: AppStrings.externalGrading,
-            //   titleStyle: styles.inter32w700,
-            //   showDivider: false,
-            // ),
             27.verticalSpace,
             BlueActionButton(
               title: AppStrings.addExternalGrade,
@@ -61,7 +56,7 @@ class ExternalGradingScreen extends StatelessWidget {
                     ),
                     GradingTitleWidget(
                       title: AppStrings.institute,
-                      flex: 2,
+                      // flex: 2,
                     ),
                     GradingTitleWidget(
                       title: AppStrings.subjects,
@@ -69,8 +64,9 @@ class ExternalGradingScreen extends StatelessWidget {
                     GradingTitleWidget(
                       title: AppStrings.grade,
                     ),
-                    Expanded(
-                      child: SizedBox.shrink(),
+                    SizedBox(
+                      width: 35.w,
+                      height: 13.h  ,
                     ),
                   ],
                 ),

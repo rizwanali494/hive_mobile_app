@@ -87,10 +87,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           8.verticalSpace,
                           Container(
                             decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: styles.white.withOpacity(0.5),
-                                ),
-                                borderRadius: BorderRadius.circular(15)),
+                              border: Border.all(
+                                color: styles.white.withOpacity(0.5),
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                15.r,
+                              ),
+                            ),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 9.w, vertical: 10.h),
                             child: Text(

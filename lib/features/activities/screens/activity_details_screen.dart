@@ -44,35 +44,41 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            context.pop();
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: styles.white,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              context.pop();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: styles.white,
+                            ),
                           ),
-                        ),
-                        20.horizontalSpace,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              _activity.title,
-                              style: styles.inter20w700
-                                  .copyWith(color: styles.white),
+                          20.horizontalSpace,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  _activity.title,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: styles.inter20w700
+                                      .copyWith(color: styles.white),
+                                ),
+                                Text(
+                                  _activity.dayTime,
+                                  maxLines: 1,
+                                  style: styles.inter16w400
+                                      .copyWith(color: styles.white),
+                                ),
+                              ],
                             ),
-                            Text(
-                              _activity.dayTime,
-                              style: styles.inter16w400
-                                  .copyWith(color: styles.white),
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                     IntrinsicHeight(
                       child: IntrinsicWidth(
@@ -116,25 +122,29 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 children: [
-                  ActivityDetailWidget(
-                    title: _activity.campusName,
-                    iconPath: SvgIcons.campusLocation,
-                  ),
-                  ActivityDetailWidget(
-                    title: "${AppStrings.eventBy}: ${_activity.eventBy}",
-                    iconPath: SvgIcons.userBlue,
-                  ),
-                  ActivityDetailWidget(
-                    title:
-                        "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
-                    iconPath: SvgIcons.archiveTick,
-                  ),
-                  12.verticalSpace,
                   Expanded(
                     child: SingleChildScrollView(
-                      child: Text(
-                        data(),
-                        style: styles.inter12w400,
+                      child: Column(
+                        children: [
+                          ActivityDetailWidget(
+                            title: _activity.campusName,
+                            iconPath: SvgIcons.campusLocation,
+                          ),
+                          ActivityDetailWidget(
+                            title: "${AppStrings.eventBy}: ${_activity.eventBy}",
+                            iconPath: SvgIcons.userBlue,
+                          ),
+                          ActivityDetailWidget(
+                            title:
+                            "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
+                            iconPath: SvgIcons.archiveTick,
+                          ),
+                          12.verticalSpace,
+                          Text(
+                            data(),
+                            style: styles.inter12w400,
+                          ),
+                        ],
                       ),
                     ),
                   ),

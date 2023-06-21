@@ -18,7 +18,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       style: styles.inter12w400,
-      maxLines: maxLines ,
+      maxLines: maxLines ?? 1,
       decoration: InputDecoration(
           border: InputBorder.none,
           isDense: true,

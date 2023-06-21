@@ -27,18 +27,20 @@ class BasicInfoWidget extends StatelessWidget {
       children: [
         SvgPicture.asset(iconPath),
         13.horizontalSpace,
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              info,
-              style: styles.inter12w500,
-            ),
-            Text(
-              title,
-              style: styles.inter9w400,
-            ),
-          ],
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                info,
+                style: styles.inter12w500,
+              ),
+              Text(
+                title,
+                style: styles.inter9w400,
+              ),
+            ],
+          ),
         ),
       ],
     );
