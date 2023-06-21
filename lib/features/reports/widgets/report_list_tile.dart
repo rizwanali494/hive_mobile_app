@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ReportListTile extends StatelessWidget {
@@ -15,7 +14,7 @@ class ReportListTile extends StatelessWidget {
   final VoidCallback? onTap;
   final String title;
   final String date;
-  final Widget? trailing;
+  final Widget trailing;
   final Color? iconColor;
 
   @override
@@ -66,7 +65,7 @@ class ReportListTile extends StatelessWidget {
         ),
         // 78.horizontalSpace,,
         Expanded(
-          child: Align(alignment: Alignment.topLeft,child: trailing!),
+          child: Align(alignment: Alignment.topLeft,child: trailing),
         ),
 
       ],

@@ -22,7 +22,8 @@ class NotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final titleTextStyle = styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
+    final titleTextStyle =
+        styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
     return ListTile(
       visualDensity: const VisualDensity(vertical: -3, horizontal: 0.0),
       // minVerticalPadding: 20.h,
@@ -37,7 +38,9 @@ class NotificationTile extends StatelessWidget {
         svgIconPath,
         height: 17.h,
         width: 17.w,
-        color: iconColor,
+        colorFilter: iconColor != null
+            ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+            : null,
       ),
       title: Text(
         title,

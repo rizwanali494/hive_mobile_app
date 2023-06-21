@@ -135,7 +135,6 @@ class NewsFeedWidget extends StatelessWidget {
 }
 
 void datesInMonth() {
-  DateTime now = DateTime.now();
   final daysCount = DateUtils.getDaysInMonth(2024, DateTime.february);
   List<String> monthNames = DateFormat.MMMM().dateSymbols.MONTHS;
   debugPrint(monthNames.toString());

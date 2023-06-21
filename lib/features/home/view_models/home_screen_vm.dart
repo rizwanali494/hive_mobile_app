@@ -5,7 +5,6 @@ import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
-import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/inbox_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';
@@ -23,7 +22,7 @@ class HomeScreenVm extends ChangeNotifier {
   ];
 
   bool isSelected(String icon) {
-    if( _currentIndex < 0  ){
+    if (_currentIndex < 0) {
       return false;
     }
     return icon == btmNavIcons[currentIndex];
@@ -44,15 +43,16 @@ class HomeScreenVm extends ChangeNotifier {
     if (currentDrawerWidget != null) {
       return currentDrawerWidget!;
     }
-    if( _currentIndex >1 ){
-      return bottomNavBarWidget[(_currentIndex-1) % bottomNavBarWidget.length];
+    if (_currentIndex > 1) {
+      return bottomNavBarWidget[
+          (_currentIndex - 1) % bottomNavBarWidget.length];
     }
     return bottomNavBarWidget[(_currentIndex) % bottomNavBarWidget.length];
   }
 
   int get currentIndex {
-    if( _currentIndex < 0 ){
-      return 0 ;
+    if (_currentIndex < 0) {
+      return 0;
     }
     return _currentIndex;
   }
@@ -93,9 +93,7 @@ class HomeScreenVm extends ChangeNotifier {
     scaffoldKey.currentState?.closeDrawer();
   }
 
-
-  void setDrawerIndex() {
-  }
+  void setDrawerIndex() {}
 
   final drawerIcons = [
     SvgIcons.activities,

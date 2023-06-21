@@ -33,7 +33,6 @@ class PollWidget extends StatelessWidget {
                 LinearPercentIndicator(
                   lineHeight: 35.h,
                   percent: percentage,
-                  linearStrokeCap: LinearStrokeCap.roundAll,
                   backgroundColor: styles.smokeWhite,
                   progressColor: isSelected
                       ? styles.lavender

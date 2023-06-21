@@ -218,17 +218,6 @@ class DaysWidget extends StatelessWidget {
 
     BorderRadiusGeometry? borderRadius;
     Color bgColor = Colors.transparent;
-    TextStyle txtStyle =
-        (textStyle ?? Theme.of(context).textTheme.bodyLarge)!.copyWith(
-      color: backgroundColor != null
-          ? backgroundColor!.computeLuminance() > .5
-              ? Colors.black
-              : Colors.white
-          : Theme.of(context).colorScheme.onSurface,
-      fontWeight: values.isFirstDayOfWeek || values.isLastDayOfWeek
-          ? FontWeight.bold
-          : null,
-    );
 
     if (values.isSelected) {
       if (values.isFirstDayOfWeek) {
@@ -249,15 +238,6 @@ class DaysWidget extends StatelessWidget {
               values.day.isSameDay(values.selectedMaxDate!))) {
         bgColor =
             selectedBackgroundColor ?? Theme.of(context).colorScheme.primary;
-        txtStyle =
-            (textStyle ?? Theme.of(context).textTheme.bodyLarge)!.copyWith(
-          color: selectedBackgroundColor != null
-              ? selectedBackgroundColor!.computeLuminance() > .5
-                  ? Colors.black
-                  : Colors.white
-              : Theme.of(context).colorScheme.onPrimary,
-          fontWeight: FontWeight.bold,
-        );
 
         if (values.selectedMinDate == values.selectedMaxDate) {
           borderRadius = BorderRadius.circular(radius);
@@ -277,26 +257,10 @@ class DaysWidget extends StatelessWidget {
       } else {
         bgColor = selectedBackgroundColorBetween ??
             Theme.of(context).colorScheme.primary.withOpacity(.3);
-        txtStyle =
-            (textStyle ?? Theme.of(context).textTheme.bodyLarge)!.copyWith(
-          color:
-              selectedBackgroundColor ?? Theme.of(context).colorScheme.primary,
-          fontWeight: values.isFirstDayOfWeek || values.isLastDayOfWeek
-              ? FontWeight.bold
-              : null,
-        );
       }
     } else if (values.day.isSameDay(values.minDate)) {
     } else if (values.day.isBefore(values.minDate) ||
         values.day.isAfter(values.maxDate)) {
-      txtStyle = (textStyle ?? Theme.of(context).textTheme.bodyLarge)!.copyWith(
-        color: dayDisableColor ??
-            Theme.of(context).colorScheme.onSurface.withOpacity(.5),
-        decoration: TextDecoration.lineThrough,
-        fontWeight: values.isFirstDayOfWeek || values.isLastDayOfWeek
-            ? FontWeight.bold
-            : null,
-      );
     }
 
     return Container(

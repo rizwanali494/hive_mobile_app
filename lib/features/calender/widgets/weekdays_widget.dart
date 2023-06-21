@@ -47,7 +47,6 @@ class WeekdaysWidget extends StatelessWidget {
   }
 
   Widget _pattern(BuildContext context, String weekday) {
-    final styles = Theme.of(context).extension<AppTheme>()!;
 
     return Center(
       child: Text(

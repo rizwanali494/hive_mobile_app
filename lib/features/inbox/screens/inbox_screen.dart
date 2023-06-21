@@ -19,8 +19,6 @@ class InboxScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary;
     return ChangeNotifierProvider(
       create: (BuildContext context) => InboxScreenVM(),
       child: Consumer<InboxScreenVM>(
