@@ -22,30 +22,58 @@ class ReportListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final titleTextStyle = styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
-    return ListTile(
-      visualDensity: const VisualDensity(vertical: -4, horizontal: 0.0),
-      minVerticalPadding: 0.h,
-      minLeadingWidth: 0,
-      horizontalTitleGap: 29.w,
-      onTap: onTap,
-      contentPadding: EdgeInsets.only(
-        top: 5.h,
-        bottom: 5.h,
-      ),
-      title: Row(
-        children: [
-          Text(
+    // return ListTile(
+    //   visualDensity: const VisualDensity(vertical: -4, horizontal: 0.0),
+    //   minVerticalPadding: 0.h,
+    //   minLeadingWidth: 0,
+    //   horizontalTitleGap: 29.w,
+    //   onTap: onTap,
+    //   contentPadding: EdgeInsets.only(
+    //     top: 5.h,
+    //     bottom: 5.h,
+    //   ),
+    //   title: Row(
+    //     children: [
+    //       Text(
+    //         title,
+    //         style: titleTextStyle,
+    //       ),
+    //       50.horizontalSpace,
+    //       Text(
+    //         date,
+    //         style: titleTextStyle,
+    //       ),
+    //     ],
+    //   ),
+    //   trailing:trailing ,
+    // );
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Text(
             title,
             style: titleTextStyle,
           ),
-          50.horizontalSpace,
-          Text(
+        ),
+        // 137.horizontalSpace,
+        Expanded(
+          flex: 2,
+          child: Text(
             date,
             style: titleTextStyle,
           ),
-        ],
-      ),
-      trailing:trailing ,
+        ),
+        // 78.horizontalSpace,
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: 15.w
+            ),
+            child: trailing??SizedBox.shrink(),
+          ),
+        ),
+      ],
     );
   }
 }

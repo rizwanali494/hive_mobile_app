@@ -62,14 +62,16 @@ class ReportsScreen extends StatelessWidget {
                         ],
                       ),
                       items: provider.items
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style: styles.inter12w400,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ))
+                          .map(
+                            (item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: styles.inter12w400,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
                           .toList(),
                       value: provider.selectedValue,
                       onChanged: (value) {
@@ -133,25 +135,32 @@ class ReportsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          AppStrings.name,
-                          style: styles.inter10w400,
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            AppStrings.name,
+                            style: styles.inter10w400,
+                          ),
                         ),
-                        137.horizontalSpace,
-                        Text(
-                          AppStrings.date,
-                          style: styles.inter10w400,
+                        // 137.horizontalSpace,
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            AppStrings.date,
+                            style: styles.inter10w400,
+                          ),
                         ),
-                        78.horizontalSpace,
-                        Text(
-                          AppStrings.action,
-                          style: styles.inter10w400,
+                        // 78.horizontalSpace,
+                        Expanded(
+                          child: Text(
+                            AppStrings.action,
+                            style: styles.inter10w400,
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                13.verticalSpace,
                 Expanded(
                   child: TabBarView(
                     physics: const NeverScrollableScrollPhysics(),
@@ -171,8 +180,9 @@ class ReportsScreen extends StatelessWidget {
 
   Widget _buildRecordsList(List<Record> records, BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    return ListView.builder(
+    return ListView.separated(
       itemCount: records.length,
+      padding: EdgeInsets.symmetric(vertical: 20.h),
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -183,12 +193,14 @@ class ReportsScreen extends StatelessWidget {
                 child: ReportListTile(
                   onTap: () {},
                   date: '14-3-2023',
-                  title: AppStrings.academicReport,
+                  title: records[index].title,
                   trailing: Container(
                     height: 21.h,
                     width: 21.w,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: styles.yellowGreen),
+                      shape: BoxShape.circle,
+                      color: styles.yellowGreen,
+                    ),
                     child: Icon(
                       Icons.arrow_downward_sharp,
                       size: 15,
@@ -197,8 +209,19 @@ class ReportsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(color: Colors.black45),
             ],
+          ),
+        );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 20.h,
+          ),
+          child: const Divider(
+            color: Colors.black45,
+            height: 0,
           ),
         );
       },

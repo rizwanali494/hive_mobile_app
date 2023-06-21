@@ -14,6 +14,9 @@ class ReportsScreenVM extends ChangeNotifier {
   List<Record> tab1Records = [
     Record(id: '1', title: 'Record 1', description: 'Description 1'),
     Record(id: '2', title: 'Record 2', description: 'Description 2'),
+    ...List.generate(20, (index) =>
+        Record(id: '${index + 2}', title: "${index + 2}",
+            description: "${index + 2}"),),
   ];
 
   List<Record> tab2Records = [
@@ -34,6 +37,7 @@ class ReportsScreenVM extends ChangeNotifier {
   String? _selectedValue;
 
   String? get selectedValue => _selectedValue;
+
   List<String> get items => _items;
 
   void setSelectedValue(String value) {
@@ -41,6 +45,7 @@ class ReportsScreenVM extends ChangeNotifier {
     notifyListeners();
   }
 }
+
 class Record {
   final String id;
   final String title;
