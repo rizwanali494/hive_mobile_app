@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/enums/application_status_enum.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
@@ -77,7 +78,15 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: DescriptionScreen.route,
       name: DescriptionScreen.route,
-      builder: (_, state) => const DescriptionScreen(),
+      builder: (_, state) {
+        ApplicationStatus? status;
+        if (state.extra is ApplicationStatus) {
+          status = state.extra as ApplicationStatus?;
+        }
+        return  DescriptionScreen(
+          applicationStatus: status,
+        );
+      },
     ),
     CustomGoRoute.cupertino(
       path: SessionNotesScreen.route,

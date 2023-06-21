@@ -5,10 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/application_status_enum.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
-
-import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ApplicationInfoWidget extends StatelessWidget {
   final ApplicationStatus? applicationStatus;
@@ -55,7 +54,8 @@ class ApplicationInfoWidget extends StatelessWidget {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
-                    context.push(DescriptionScreen.route);
+                    context.push(DescriptionScreen.route,
+                        extra: applicationStatus ?? ApplicationStatus.rejected);
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
