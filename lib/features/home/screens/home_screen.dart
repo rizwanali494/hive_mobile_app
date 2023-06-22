@@ -77,40 +77,45 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottomRight: bottomRadius,
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage(_user.userAvatar),
-                        ),
-                        12.horizontalSpace,
-                        Expanded(
-
-                          flex: 2,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _user.name,
-                                style: styles.inter16w600.copyWith(
-                                  color: styles.white,
-                                ),
-                              ),
-                              Text(
-                                AppStrings.clickToView,
-                                style: styles.inter12w400Underline
-                                    .copyWith(color: styles.white),
-                              ),
-                            ],
+                    child: GestureDetector(
+                      onTap: (){
+                        provider.setBottomNavWidget(4, context);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          CircleAvatar(
+                            radius: 25,
+                            backgroundImage: NetworkImage(_user.userAvatar),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: SvgPicture.asset(SvgIcons.arrowRight),
-                        ),
-                      ],
+                          12.horizontalSpace,
+                          Expanded(
+
+                            flex: 2,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _user.name,
+                                  style: styles.inter16w600.copyWith(
+                                    color: styles.white,
+                                  ),
+                                ),
+                                Text(
+                                  AppStrings.clickToView,
+                                  style: styles.inter12w400Underline
+                                      .copyWith(color: styles.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: SvgPicture.asset(SvgIcons.arrowRight),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   41.verticalSpace,
