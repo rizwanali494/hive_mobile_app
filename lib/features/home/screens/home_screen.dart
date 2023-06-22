@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/navigation/extensions.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
+import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
@@ -43,13 +45,20 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             key: provider.scaffoldKey,
             backgroundColor: styles.white,
+            // extendBody: true,
             drawer: Drawer(
-              width: MediaQuery.of(context).size.width * 0.75,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.75,
               child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                      top: (83 + MediaQuery.of(context).padding.top).h,
+                      top: (83 + MediaQuery
+                          .of(context)
+                          .padding
+                          .top).h,
                       bottom: 30.h,
                       left: 19.h,
                       right: 36.h,
@@ -117,15 +126,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             ...List.generate(
                               provider.drawerIcons.length,
-                              (index) => GestureDetector(
-                                onTap: () {
-                                  provider.setDrawerWidget(index);
-                                },
-                                child: DrawerActionWidget(
-                                  icon: provider.drawerIcons[index],
-                                  actionName: provider.drawerActionNames[index],
-                                ),
-                              ),
+                                  (index) =>
+                                  GestureDetector(
+                                    onTap: () {
+                                      provider.setDrawerWidget(index);
+                                    },
+                                    child: DrawerActionWidget(
+                                      icon: provider.drawerIcons[index],
+                                      actionName: provider
+                                          .drawerActionNames[index],
+                                    ),
+                                  ),
                             ),
                           ],
                         ),
@@ -146,15 +157,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: styles.black.withOpacity(0.2),
                           ),
                           10.verticalSpace,
-                          Row(
-                            children: [
-                              SvgPicture.asset(SvgIcons.logout),
-                              20.horizontalSpace,
-                              Text(
-                                AppStrings.logout,
-                                style: styles.inter15w400,
-                              ),
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              context.pushAndRemoveUntil(
+                                  SignInScreen.route
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(SvgIcons.logout),
+                                20.horizontalSpace,
+                                Text(
+                                  AppStrings.logout,
+                                  style: styles.inter15w400,
+                                ),
+                              ],
+                            ),
                           ),
                           50.verticalSpace
                         ],
@@ -167,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
             body: provider.currentPage,
             bottomNavigationBar: Container(
               decoration: const BoxDecoration(
+                color: Colors.transparent,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(47),
                   topLeft: Radius.circular(47),
@@ -187,6 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   backgroundColor: styles.white,
+                  key:provider.bottomKey ,
                   currentIndex: provider.currentIndex,
                   onTap: (index) {
                     provider.setBottomNavWidget(index, context);

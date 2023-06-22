@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
@@ -40,6 +41,11 @@ final goRouter = GoRouter(
     //   fullscreenDialog: true,
     //   childBuilder: (context, state) => EmbeddedAuthBuilder(type: state.extra as LocalAuthWayType?),
     // ),
+    CustomGoRoute.cupertino(
+      path: SignInScreen.route,
+      name: SignInScreen.route,
+      builder: (_, state) => const SignInScreen(),
+    ),
     CustomGoRoute.cupertino(
       path: HomeScreen.route,
       name: HomeScreen.route,
@@ -83,7 +89,7 @@ final goRouter = GoRouter(
         if (state.extra is ApplicationStatus) {
           status = state.extra as ApplicationStatus?;
         }
-        return  DescriptionScreen(
+        return DescriptionScreen(
           applicationStatus: status,
         );
       },

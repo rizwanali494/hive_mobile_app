@@ -55,7 +55,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
             ),
             child: TextFieldWidget(
               styles: styles,
-              hintText: AppStrings.editProfilePicture,
+              hintText: AppStrings.editBios,
             ),
           ),
           14.verticalSpace,

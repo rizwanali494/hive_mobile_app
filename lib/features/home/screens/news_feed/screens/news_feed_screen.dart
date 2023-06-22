@@ -23,21 +23,25 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: AppBarWidget(
-            color: styles.black,
-            title: AppStrings.newsFeed,
-            titleStyle: styles.inter40w700,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: styles.smokeWhite,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: AppBarWidget(
+              color: styles.black,
+              title: AppStrings.newsFeed,
+              titleStyle: styles.inter40w700,
+            ),
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(),
+          Expanded(
             child: ListView.separated(
-                padding: EdgeInsets.symmetric(vertical: 12.h),
+                padding: EdgeInsets.symmetric(
+                  vertical: 12.h,
+                ),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -61,8 +65,8 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 },
                 itemCount: 12),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

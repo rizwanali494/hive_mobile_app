@@ -18,8 +18,11 @@ class ActivitiesScreen extends StatelessWidget {
 
     var selected = "1";
 
-    return Scaffold(
-      body: Column(
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: styles.smokeWhite,
+      ),
+      child: Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(

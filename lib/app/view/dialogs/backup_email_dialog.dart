@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
-import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
-
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 
 class BackUpEmailDialog extends StatefulWidget {
   const BackUpEmailDialog({Key? key}) : super(key: key);
@@ -62,7 +62,12 @@ class _BackUpEmailDialogState extends State<BackUpEmailDialog> {
       actions: [
         SizedBox(
           width: double.infinity,
-          child: BlueElevatedButton(text: AppStrings.enter.toUpperCase()),
+          child: BlueElevatedButton(
+            text: AppStrings.enter.toUpperCase(),
+            onTap: () {
+              context.pop();
+            },
+          ),
         ),
       ],
     );

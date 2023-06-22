@@ -7,9 +7,9 @@ import 'package:hive_mobile/app/view/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/features/authentication/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
-
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+  static final route = "/SignIn";
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -25,9 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
         builder: (context, provider, child) {
           return Scaffold(
             body: Padding(
-              padding: MediaQuery
-                  .of(context)
-                  .padding,
+              padding: MediaQuery.of(context).padding,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,18 +73,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         children: [
                           Text(
                             AppStrings.welcome,
-                            style: styles.inter50w700.copyWith(
-                              color: styles.white
-                            ),
+                            style: styles.inter50w700
+                                .copyWith(color: styles.white),
                           ),
                           SizedBox(
                             height: 17.h,
                           ),
                           Text(
                             AppStrings.signInWithGoogle,
-                            style: styles.inter12w400.copyWith(
-                                color: styles.white
-                            ),
+                            style: styles.inter12w400
+                                .copyWith(color: styles.white),
                           ),
                           SizedBox(
                             height: 60.h,

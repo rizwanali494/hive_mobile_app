@@ -39,6 +39,7 @@ class HomeScreenVm extends ChangeNotifier {
   int _currentIndex = 0;
 
   Widget get currentPage {
+    debugPrint("${bottomKey.currentState?.context.size.toString()} bottom key");
     closeDrawer();
     if (currentDrawerWidget != null) {
       return currentDrawerWidget!;
@@ -84,6 +85,7 @@ class HomeScreenVm extends ChangeNotifier {
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> bottomKey = GlobalKey();
 
   void openDrawer() {
     scaffoldKey.currentState?.openDrawer();
