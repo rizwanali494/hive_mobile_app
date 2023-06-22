@@ -46,7 +46,7 @@ class ReportsScreen extends StatelessWidget {
                     tab2Title: AppStrings.attendance,
                   ),
                 ),
-                20.verticalSpace,
+                15.verticalSpace,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 19.w),
                   child: DropdownButtonHideUnderline(

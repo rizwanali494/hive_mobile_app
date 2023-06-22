@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
@@ -47,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate(BuildContext context) {
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      context.pushReplacement(HomeScreen.route);
+      context.pushReplacement(kIsWeb ? HomeScreen.route : SignInScreen.route);
       // Navigator.pushReplacement(
       //     context,
       //     MaterialPageRoute(

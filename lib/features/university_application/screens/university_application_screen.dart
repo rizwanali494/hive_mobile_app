@@ -54,9 +54,12 @@ class _UniversityApplicationScreenState
                       context.push(UniversitySelectionScreen.route);
                     },
                   ),
-                  5.verticalSpace,
+                  3.verticalSpace,
                   Expanded(
                     child: ListView.builder(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 26.h,
+                      ),
                       itemBuilder: (context, index) {
                         return UniversityApplicationWidget(
                           title: applications[index],
