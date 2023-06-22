@@ -24,6 +24,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return Scaffold(
+      backgroundColor: styles.white,
       body: Column(
         children: [
           Padding(
@@ -76,13 +77,13 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Wrap(
-                    runSpacing: 8.w,
+                    runSpacing: 12.w,
                     spacing: 8,
                     children: [
                       ...List.generate(
                         hobbies.length,
                         (index) => HobbyChipWidget(text: hobbies[index]),
-                      )
+                      ),
                     ],
                   ),
                 ),

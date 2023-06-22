@@ -440,7 +440,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
 // light
 ThemeData lightTheme = ThemeData.light(useMaterial3: true).copyWith(
-  scaffoldBackgroundColor: const Color(0xffF2F2F2),
+  scaffoldBackgroundColor: Colors.white,
   splashColor: Colors.transparent,
   canvasColor: Colors.transparent,
   colorScheme: const ColorScheme.light(

@@ -44,7 +44,7 @@ class InboxScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              23.verticalSpace,
+              19.verticalSpace,
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: 20.w,
@@ -53,16 +53,22 @@ class InboxScreen extends StatelessWidget {
                   horizontal: 26.w,
                 ),
                 decoration: BoxDecoration(
-                    color: styles.greyWhite,
-                    borderRadius: BorderRadius.circular(36.r)),
+                  color: styles.greyWhite,
+                  borderRadius: BorderRadius.circular(
+                    36.r,
+                  ),
+                ),
                 child: TextFieldWidget(
                   hintText: AppStrings.searchMessagesHere,
                   styles: styles,
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 3,
+                child: ListView.separated(
+                  itemCount: 20,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 19.h,
+                  ),
                   itemBuilder: (context, index) {
                     // final record = records[index];
                     return Padding(
@@ -82,7 +88,8 @@ class InboxScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   '2:45PM',
-                                  style: styles.inter10w400,
+                                  style: styles.inter10w400.copyWith(
+                                      color: styles.black.withOpacity(0.5)),
                                 ),
                                 7.verticalSpace,
                                 Container(
@@ -96,8 +103,17 @@ class InboxScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const Divider(color: Colors.black45),
                         ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 17.h),
+                      child: Divider(
+                        color: styles.black.withOpacity(0.3),
+                        height: 1,
                       ),
                     );
                   },

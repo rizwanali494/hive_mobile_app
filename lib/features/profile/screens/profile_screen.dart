@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
 import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
+import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
 
@@ -52,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   actions: [
                     GestureDetector(
                         onTap: () {
-                          context.push("/AccountScreen");
+                          context.push(AccountSettingScreen.route);
                         },
                         child: SvgPicture.asset(SvgIcons.edit)),
                   ],

@@ -52,6 +52,7 @@ class ReportsScreen extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2(
                       isExpanded: true,
+
                       hint: Row(
                         children: [
                           Text(
@@ -86,7 +87,7 @@ class ReportsScreen extends StatelessWidget {
                           border: Border.all(
                             color: styles.black,
                           ),
-                          color: styles.smokeWhite,
+                          color: styles.white,
                         ),
                         elevation: 0,
                       ),
@@ -219,8 +220,10 @@ class ReportsScreen extends StatelessWidget {
             horizontal: 20.w,
             vertical: 20.h,
           ),
-          child: const Divider(
-            color: Colors.black45,
+          child:  Divider(
+            color: styles.black.withOpacity(
+              0.2
+            ),
             height: 0,
           ),
         );

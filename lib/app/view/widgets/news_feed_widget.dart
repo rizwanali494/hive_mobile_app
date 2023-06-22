@@ -11,10 +11,12 @@ import 'package:intl/intl.dart';
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
+  final double? horizontalPadding;
 
   const NewsFeedWidget({
     super.key,
     required this.type,
+    this.horizontalPadding,
   });
 
   @override
@@ -25,7 +27,8 @@ class NewsFeedWidget extends StatelessWidget {
     var selected = "1";
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+      padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
       decoration: BoxDecoration(
           color: styles.white, borderRadius: BorderRadius.circular(25)),
       margin: EdgeInsets.symmetric(horizontal: 19.w),

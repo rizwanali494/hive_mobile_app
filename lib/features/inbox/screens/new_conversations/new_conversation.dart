@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
+import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class NewConversationScreen extends StatelessWidget {
@@ -16,21 +17,6 @@ class NewConversationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Icon(
-            Icons.arrow_back_ios_rounded,
-            size: 20.h,
-            color: styles.black,
-          ),
-        ),
-        titleSpacing: 0.w,
-        title: Text(
-          AppStrings.newConversation,
-          style: styles.inter20w700,
-        ),
-      ),
       body: ChangeNotifierProvider(
         create: (BuildContext context) => NewConversationScreenVM(),
         child: Consumer<NewConversationScreenVM>(
@@ -41,10 +27,22 @@ class NewConversationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(color: Colors.black45),
+                  DividerAppBar(title: AppStrings.newConversation),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: 3,
+                    child: ListView.separated(
+                      itemCount: 20,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 10.h,
+                      ),
+                      separatorBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 17.h),
+                          child: Divider(
+                            color: styles.black.withOpacity(0.3),
+                            height: 1,
+                          ),
+                        );
+                      },
                       itemBuilder: (context, index) {
                         // final record = records[index];
                         return Column(
@@ -59,7 +57,6 @@ class NewConversationScreen extends StatelessWidget {
                               subTitle:
                                   'Awais Ali Khan Lorem ipsum dolor sit amet',
                             ),
-                            const Divider(color: Colors.black45),
                           ],
                         );
                       },

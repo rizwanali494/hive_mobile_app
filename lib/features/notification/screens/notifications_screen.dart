@@ -31,14 +31,14 @@ class NotificationScreen extends StatelessWidget {
               title: AppStrings.youHaveANewMessage,
               trailing: AppStrings.time,
             ),
-            const Divider(color: Colors.black45),
+            buildDivider(),
             NotificationTile(
               onTap: () {},
               svgIconPath: SvgIcons.poll,
               title: AppStrings.aPollStartedClickToParticipate,
               trailing: AppStrings.time,
             ),
-            const Divider(color: Colors.black45),
+            buildDivider(),
             NotificationTile(
               onTap: () {},
               svgIconPath: SvgIcons.game,
@@ -46,21 +46,21 @@ class NotificationScreen extends StatelessWidget {
               title: AppStrings.sportsEventIsComing,
               trailing: AppStrings.time,
             ),
-            const Divider(color: Colors.black45),
+            buildDivider(),
             NotificationTile(
               onTap: () {},
               svgIconPath: SvgIcons.newMessage,
               title: AppStrings.youHaveAUnreadMessage,
               trailing: AppStrings.time,
             ),
-            const Divider(color: Colors.black45),
+            buildDivider(),
             NotificationTile(
               onTap: () {},
               svgIconPath: SvgIcons.announcement,
               title: AppStrings.announcement,
               trailing: AppStrings.time,
             ),
-            const Divider(color: Colors.black45),
+            buildDivider(),
             NotificationTile(
               onTap: () {},
               svgIconPath: SvgIcons.newMessage,
@@ -73,4 +73,6 @@ class NotificationScreen extends StatelessWidget {
       ),
     );
   }
+
+  Divider buildDivider() =>  Divider(color: Colors.black.withOpacity(0.2));
 }

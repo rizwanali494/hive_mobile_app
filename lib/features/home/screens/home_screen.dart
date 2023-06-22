@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (providerContext, provider, child) {
           return Scaffold(
             key: provider.scaffoldKey,
+            backgroundColor: styles.white,
             drawer: Drawer(
               width: MediaQuery.of(context).size.width * 0.75,
               child: Column(

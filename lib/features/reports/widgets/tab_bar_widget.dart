@@ -44,7 +44,7 @@ class TabBarWidget extends StatelessWidget {
             height: 29.h,
             margin: EdgeInsets.only(right: 10.w),
             decoration: BoxDecoration(
-              color: selectedIndex == 0 ? styles.skyBlue : styles.darkGrey,
+              color: selectedIndex == 0 ? styles.skyBlue : styles.lightGrey,
               borderRadius: BorderRadius.circular(26.r),
             ),
             child: Align(
@@ -52,7 +52,8 @@ class TabBarWidget extends StatelessWidget {
               child: Text(
                 tab1Title,
                 style: styles.inter12w400.copyWith(
-                  color: selectedIndex == 0 ? styles.white : styles.black,
+                  color: selectedIndex == 0 ? styles.white : styles.darkGrey,
+
                 ),
               ),
             ),
@@ -63,7 +64,7 @@ class TabBarWidget extends StatelessWidget {
             height: 29.h,
             margin: EdgeInsets.only(left: 10.w),
             decoration: BoxDecoration(
-              color: selectedIndex == 1 ? styles.skyBlue : styles.darkGrey,
+              color: selectedIndex == 1 ? styles.skyBlue : styles.lightGrey,
               borderRadius: BorderRadius.circular(26.r),
             ),
             child: Align(
@@ -71,7 +72,7 @@ class TabBarWidget extends StatelessWidget {
               child: Text(
                 tab2Title,
                 style: styles.inter12w400.copyWith(
-                  color: selectedIndex == 1 ? styles.white : styles.black,
+                  color: selectedIndex == 1 ? styles.white : styles.darkGrey,
                 ),
               ),
             ),

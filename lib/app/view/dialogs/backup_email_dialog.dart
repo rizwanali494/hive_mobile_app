@@ -62,7 +62,7 @@ class _BackUpEmailDialogState extends State<BackUpEmailDialog> {
       actions: [
         SizedBox(
           width: double.infinity,
-          child: BlueElevatedButton(text: AppStrings.email),
+          child: BlueElevatedButton(text: AppStrings.enter.toUpperCase()),
         ),
       ],
     );

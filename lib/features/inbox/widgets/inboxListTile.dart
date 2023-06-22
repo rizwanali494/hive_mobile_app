@@ -55,7 +55,9 @@ class InboxListTile extends StatelessWidget {
           3.verticalSpace,
           Text(
             subTitle,
-            style: styles.inter10w400,
+            style: styles.inter10w400.copyWith(
+              color: styles.darkGrey,
+            ),
           ),
         ],
       ),

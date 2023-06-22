@@ -48,7 +48,9 @@ class NotificationTile extends StatelessWidget {
       ),
       trailing: Text(
         trailing,
-        style: styles.inter10w400,
+        style: styles.inter10w400.copyWith(
+          color: styles.black.withOpacity(0.5)
+        ),
       ),
     );
   }
