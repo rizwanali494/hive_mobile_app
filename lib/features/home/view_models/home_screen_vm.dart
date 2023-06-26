@@ -17,6 +17,7 @@ class HomeScreenVm extends ChangeNotifier {
   final List<Widget> bottomNavBarWidget = const [
     NewsFeedScreen(),
     InboxScreen(),
+    NotificationScreen(),
     ReportsScreen(),
     ProfileScreen(),
   ];
@@ -44,10 +45,6 @@ class HomeScreenVm extends ChangeNotifier {
     if (currentDrawerWidget != null) {
       return currentDrawerWidget!;
     }
-    if (_currentIndex > 1) {
-      return bottomNavBarWidget[
-          (_currentIndex - 1) % bottomNavBarWidget.length];
-    }
     return bottomNavBarWidget[(_currentIndex) % bottomNavBarWidget.length];
   }
 
@@ -58,31 +55,6 @@ class HomeScreenVm extends ChangeNotifier {
     return _currentIndex;
   }
 
-  void setIndex(int index, BuildContext context) {
-    debugPrint("$index");
-    if (index == 2) {
-      _openBottomSheet(context);
-      return;
-    }
-    _currentIndex = index;
-    notifyListeners();
-    debugPrint("$_currentIndex");
-  }
-
-  void _openBottomSheet(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Colors.white,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.9,
-            ),
-            child: const SingleChildScrollView(child: NotificationScreen()));
-      },
-    );
-  }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final GlobalKey<ScaffoldState> bottomKey = GlobalKey();
@@ -132,10 +104,6 @@ class HomeScreenVm extends ChangeNotifier {
   }
 
   void setBottomNavWidget(int index, BuildContext context) {
-    if (index == 2) {
-      _openBottomSheet(context);
-      return;
-    }
     currentDrawerWidget = null;
     debugPrint("$index");
     _currentIndex = index;
