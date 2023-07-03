@@ -40,8 +40,6 @@ class HomeScreenVm extends ChangeNotifier {
   int _currentIndex = 0;
 
   Widget get currentPage {
-    debugPrint("${bottomKey.currentState?.context.size.toString()} bottom key");
-    closeDrawer();
     if (currentDrawerWidget != null) {
       return currentDrawerWidget!;
     }
@@ -55,16 +53,16 @@ class HomeScreenVm extends ChangeNotifier {
     return _currentIndex;
   }
 
-
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  final GlobalKey<ScaffoldState> bottomKey = GlobalKey();
 
   void openDrawer() {
     scaffoldKey.currentState?.openDrawer();
   }
 
   void closeDrawer() {
-    scaffoldKey.currentState?.closeDrawer();
+    if (scaffoldKey.currentState?.isDrawerOpen ?? false) {
+      scaffoldKey.currentState?.closeDrawer();
+    }
   }
 
   void setDrawerIndex() {}
@@ -98,12 +96,14 @@ class HomeScreenVm extends ChangeNotifier {
   ];
 
   void setDrawerWidget(int index) {
+    closeDrawer();
     _currentIndex = -1;
     currentDrawerWidget = drawerWidgets[index];
     notifyListeners();
   }
 
   void setBottomNavWidget(int index, BuildContext context) {
+    closeDrawer();
     currentDrawerWidget = null;
     debugPrint("$index");
     _currentIndex = index;

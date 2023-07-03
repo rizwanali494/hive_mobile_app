@@ -8,7 +8,6 @@ class AuthVM extends ChangeNotifier {
   Future googleSignIn(BuildContext context) async {
     AuthService authService = GoogleAuthService();
     await authService.logOut();
-    String? user = await authService.logIn();
     if (context.mounted) {
       context.pushReplacement(HomeScreen.route);
     }

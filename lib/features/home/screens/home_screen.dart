@@ -211,7 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   backgroundColor: styles.white,
-                  key:provider.bottomKey ,
                   currentIndex: provider.currentIndex,
                   onTap: (index) {
                     provider.setBottomNavWidget(index, context);
