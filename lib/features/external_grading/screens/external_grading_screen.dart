@@ -6,7 +6,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grading_title_widget.dart';
-import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 
 class ExternalGradingScreen extends StatelessWidget {

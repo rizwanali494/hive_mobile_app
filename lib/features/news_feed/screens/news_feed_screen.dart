@@ -4,7 +4,7 @@ import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
-import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 
 class NewsFeedScreen extends StatefulWidget {
   const NewsFeedScreen({Key? key}) : super(key: key);

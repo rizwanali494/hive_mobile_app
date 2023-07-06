@@ -7,7 +7,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
-import 'package:hive_mobile/features/home/screens/news_feed/models/mock_news_feed_model.dart';
+import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';

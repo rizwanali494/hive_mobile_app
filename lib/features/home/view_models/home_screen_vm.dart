@@ -4,7 +4,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
-import 'package:hive_mobile/features/home/screens/news_feed/screens/news_feed_screen.dart';
+import 'package:hive_mobile/features/news_feed/screens/news_feed_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/inbox_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/notification/screens/notifications_screen.dart';

@@ -6,7 +6,7 @@ import 'package:hive_mobile/features/calender/controllers/clean_calendar_control
 import 'package:hive_mobile/features/calender/screens/scrollable_clean_calendar.dart';
 import 'package:hive_mobile/features/calender/utils/enums.dart';
 import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
-import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 class CalendarScreen extends StatefulWidget {

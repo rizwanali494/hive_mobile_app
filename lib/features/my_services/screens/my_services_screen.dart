@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
-import 'package:hive_mobile/features/home/screens/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/service_count_widget.dart';
