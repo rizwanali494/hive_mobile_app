@@ -29,13 +29,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: AppBarWidget(
-              color: styles.black,
-              title: AppStrings.newsFeed,
-              titleStyle: styles.inter40w700,
-            ),
+          AppBarWidget(
+            color: styles.black,
+            horizontalPadding: 12,
+            title: AppStrings.newsFeed,
+            titleStyle: styles.inter40w700,
           ),
           Expanded(
             child: ListView.separated(

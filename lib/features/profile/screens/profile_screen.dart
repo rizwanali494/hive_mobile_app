@@ -43,21 +43,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 19.w,
-                ),
-                child: AppBarWidget(
-                  color: styles.white,
-                  title: AppStrings.profile,
-                  actions: [
-                    GestureDetector(
-                        onTap: () {
-                          context.push(AccountSettingScreen.route);
-                        },
-                        child: SvgPicture.asset(SvgIcons.edit)),
-                  ],
-                ),
+              AppBarWidget(
+                color: styles.white,
+                horizontalPadding: 19,
+                title: AppStrings.profile,
+                actions: [
+                  GestureDetector(
+                      onTap: () {
+                        context.push(AccountSettingScreen.route);
+                      },
+                      child: SvgPicture.asset(SvgIcons.edit)),
+                ],
               ),
               27.verticalSpace,
               Padding(

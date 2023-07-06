@@ -23,12 +23,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 14.w,
-            ),
-            child: AppBarWidget(
-                color: styles.black, title: AppStrings.notifications),
+          AppBarWidget(
+            color: styles.black,
+            title: AppStrings.notifications,
+            horizontalPadding: 14,
           ),
           Expanded(
             child: Padding(

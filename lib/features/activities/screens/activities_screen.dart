@@ -24,14 +24,10 @@ class ActivitiesScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-            ),
-            child: AppBarWidget(
-              color: styles.black,
-              title: AppStrings.activities,
-            ),
+          AppBarWidget(
+            color: styles.black,
+            horizontalPadding: 12,
+            title: AppStrings.activities,
           ),
           Expanded(
             child: Padding(

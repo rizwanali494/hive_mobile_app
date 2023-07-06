@@ -29,15 +29,11 @@ class _UniversityApplicationScreenState
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 19.w,
-            ),
-            child: AppBarWidget(
-              color: styles.black,
-              titleStyle: styles.inter20w700,
-              title: AppStrings.universityApplication,
-            ),
+          AppBarWidget(
+            color: styles.black,
+            horizontalPadding: 19.w,
+            titleStyle: styles.inter20w700,
+            title: AppStrings.universityApplication,
           ),
           25.verticalSpace,
           Expanded(

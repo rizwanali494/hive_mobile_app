@@ -11,6 +11,7 @@ class AppBarWidget extends StatelessWidget {
   final TextStyle? titleStyle;
   final List<Widget> actions;
   final Widget? icon;
+  final double? horizontalPadding;
 
   const AppBarWidget({
     super.key,
@@ -20,46 +21,49 @@ class AppBarWidget extends StatelessWidget {
     this.actions = const [],
     required this.title,
     this.icon,
+    this.horizontalPadding,
   });
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final provider = context.read<HomeScreenVm>();
-
     return Padding(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 20.h,
       ),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              provider.openDrawer();
-            },
-            child: icon ??
-                Icon(
-                  Icons.menu,
-                  color: color,
-                  size: 40.w,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: (horizontalPadding ?? 12).w),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                provider.openDrawer();
+              },
+              child: icon ??
+                  Icon(
+                    Icons.menu,
+                    color: color,
+                    size: 40.w,
+                  ),
+            ),
+            9.5.horizontalSpace,
+            Text(
+              title,
+              style: titleStyle?.copyWith(color: color) ??
+                  styles.inter40w700.copyWith(color: color),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [...actions],
                 ),
-          ),
-          9.5.horizontalSpace,
-          Text(
-            title,
-            style: titleStyle?.copyWith(color: color) ??
-                styles.inter40w700.copyWith(color: color),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [...actions],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

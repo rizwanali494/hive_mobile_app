@@ -25,15 +25,11 @@ class ReportsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 19.w,
-                  ),
-                  child: AppBarWidget(
-                    color: styles.black,
-                    title: AppStrings.reports,
-                    titleStyle: styles.inter40w700,
-                  ),
+                AppBarWidget(
+                  color: styles.black,
+                  horizontalPadding: 19.w,
+                  title: AppStrings.reports,
+                  titleStyle: styles.inter40w700,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 19.w),

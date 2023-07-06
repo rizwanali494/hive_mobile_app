@@ -27,22 +27,17 @@ class InboxScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                ),
-                child: AppBarWidget(
-                  color: styles.black,
-                  title: AppStrings.inbox,
-                  titleStyle: styles.inter40w700,
-                  actions: [
-                    IconButton(
-                      onPressed: () =>
-                          context.pushNamed(NewConversationScreen.route),
-                      icon: SvgPicture.asset(SvgIcons.messageAdd),
-                    )
-                  ],
-                ),
+              AppBarWidget(
+                color: styles.black,
+                title: AppStrings.inbox,
+                titleStyle: styles.inter40w700,
+                actions: [
+                  IconButton(
+                    onPressed: () =>
+                        context.pushNamed(NewConversationScreen.route),
+                    icon: SvgPicture.asset(SvgIcons.messageAdd),
+                  )
+                ],
               ),
               19.verticalSpace,
               Container(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
@@ -36,14 +35,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
         builder: (context, provider, child) {
           return Column(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 19.w,
-                ),
-                child: AppBarWidget(
-                  color: styles.black,
-                  title: AppStrings.calendar,
-                ),
+              AppBarWidget(
+                color: styles.black,
+                horizontalPadding: 19,
+                title: AppStrings.calendar,
               ),
               // Expanded(
               //   child: ListView.separated(

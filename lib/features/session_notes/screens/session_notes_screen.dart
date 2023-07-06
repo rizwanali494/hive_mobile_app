@@ -33,7 +33,11 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 19.w),
                 child: Column(
                   children: [
-                    AppBarWidget(color: styles.black, title: AppStrings.sessionNote),
+                    AppBarWidget(
+                      color: styles.black,
+                      title: AppStrings.sessionNote,
+                      horizontalPadding: 0,
+                    ),
                     21.verticalSpace,
                     TabBarWidget(
                       onTap: (index) {

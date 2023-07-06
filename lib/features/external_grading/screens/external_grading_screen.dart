@@ -28,6 +28,7 @@ class ExternalGradingScreen extends StatelessWidget {
           children: [
             AppBarWidget(
                 color: styles.black,
+                horizontalPadding: 0,
                 title: AppStrings.externalGrading,
                 titleStyle: styles.inter28w700),
             27.verticalSpace,
