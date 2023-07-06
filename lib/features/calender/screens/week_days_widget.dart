@@ -27,7 +27,7 @@ class WeekDaysWidget extends StatelessWidget {
                 ...List.generate(
                   7,
                   (index) => Expanded(
-                    child: Container(
+                    child: DecoratedBox(
                       decoration: BoxDecoration(
                         border: Border(
                           right: horizontalBorderSide(styles, index),

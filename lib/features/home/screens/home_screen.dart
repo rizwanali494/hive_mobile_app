@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             body: provider.currentPage,
-            bottomNavigationBar: Container(
+            bottomNavigationBar: DecoratedBox(
               decoration: const BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.only(

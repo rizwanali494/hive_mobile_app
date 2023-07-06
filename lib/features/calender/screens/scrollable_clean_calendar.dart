@@ -196,7 +196,7 @@ class _ScrollableCleanCalendarState extends State<ScrollableCleanCalendar> {
         12.verticalSpace,
         Column(
           children: [
-            Container(
+            DecoratedBox(
               decoration: BoxDecoration(
                 color: styles.lightCyan,
                 borderRadius: BorderRadius.circular(
