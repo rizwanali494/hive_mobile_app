@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/navigation/router.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (_, __) => MaterialApp.router(
         routerConfig: goRouter,
         title: AppStrings.appName,
+        showPerformanceOverlay: kProfileMode,
         theme: lightTheme,
         darkTheme: lightTheme,
         themeMode: ThemeMode.light,

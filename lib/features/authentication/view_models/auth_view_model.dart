@@ -9,7 +9,7 @@ class AuthVM extends ChangeNotifier {
   Future googleSignIn(BuildContext context) async {
     AuthService authService = GoogleAuthService();
     await authService.logOut();
-    if( kDebugMode ){
+    if( kDebugMode || kProfileMode ){
       context.pushReplacement(HomeScreen.route);
       return;
     }
