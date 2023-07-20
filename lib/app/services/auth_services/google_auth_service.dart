@@ -1,5 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hive_mobile/app/services/auth_service.dart';
+import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 
 class GoogleAuthService extends AuthService {
   final _googleSign = GoogleSignIn();
