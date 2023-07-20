@@ -7,13 +7,11 @@ import 'package:http/http.dart' as http;
 
 class ApiServiceImpl extends ApiService {
   @override
-  Future<http.Response> patch(
-      {required String url,
-      required Map body,
-      Map<String, String>? headers}) async {
+  Future<http.Response> get(
+      {required String url, Map<String, String>? headers}) async {
     http.Response response;
     try {
-      response = await http.patch(url.parsedUri, body: body, headers: headers);
+      response = await http.get(url.parsedUri, headers: headers);
     } catch (e) {
       throw AppStrings.somethingWentWrong;
     }
@@ -36,11 +34,13 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<http.Response> get(
-      {required String url, Map<String, String>? headers}) async {
+  Future<http.Response> patch(
+      {required String url,
+      required Map body,
+      Map<String, String>? headers}) async {
     http.Response response;
     try {
-      response = await http.get(url.parsedUri, headers: headers);
+      response = await http.patch(url.parsedUri, body: body, headers: headers);
     } catch (e) {
       throw AppStrings.somethingWentWrong;
     }
