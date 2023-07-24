@@ -7,15 +7,18 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServiceImpl extends ApiService {
-  final headers = {"Content-Type": "application/json"};
+  final _headers = {"Content-Type": "application/json"};
 
   @override
   Future<http.Response> get(
-      {required String url, Map<String, String>? headers}) async {
+      {required String url,
+      Map<String, String>? headers,
+      String? queryParameters}) async {
     http.Response response;
+    url = "$url${queryParameters ?? ""}";
     try {
       response =
-          await http.get(url.parsedUri, headers: headers ?? this.headers);
+          await http.get(url.parsedUri, headers: headers ?? this._headers);
       return getResponse(response: response);
     } catch (e) {
       throw e;
@@ -23,14 +26,16 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<http.Response> post({required String url,
-    required Map body,
-    Map<String, String>? headers}) async {
+  Future<http.Response> post(
+      {required String url,
+      required Map body,
+      Map<String, String>? headers,
+      String? queryParameters}) async {
     http.Response response;
     debugPrint(url.parsedUri.toString());
     try {
       response = await http.post(url.parsedUri,
-          body: jsonEncode(body), headers: headers ?? this.headers);
+          body: jsonEncode(body), headers: headers ?? this._headers);
       return getResponse(response: response);
     } catch (e) {
       throw e;
@@ -38,13 +43,15 @@ class ApiServiceImpl extends ApiService {
   }
 
   @override
-  Future<http.Response> patch({required String url,
-    required Map body,
-    Map<String, String>? headers}) async {
+  Future<http.Response> patch(
+      {required String url,
+      required Map body,
+      Map<String, String>? headers,
+      String? queryParameters}) async {
     http.Response response;
     try {
       response = await http.patch(url.parsedUri,
-          body: body, headers: headers ?? this.headers);
+          body: body, headers: headers ?? this._headers);
       return getResponse(response: response);
     } catch (e) {
       throw e;
