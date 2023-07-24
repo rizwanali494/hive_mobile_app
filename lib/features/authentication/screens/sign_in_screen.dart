@@ -89,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           AuthButtonWidget(
                             onTap: () async {
-                              provider.googleSignIn(context);
+                              await provider.googleSignIn(context);
                             },
                           ),
                         ],
