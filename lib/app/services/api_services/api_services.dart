@@ -6,4 +6,6 @@ abstract class ApiService {
   Future<Response> post({required String url, required Map body});
 
   Future<Response> patch({required String url, required Map body});
+
+  Future<Response> getResponse({required Response response});
 }
