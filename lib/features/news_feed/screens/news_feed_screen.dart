@@ -23,7 +23,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    return ShimmerContainer(withShadow: true);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: styles.smokeWhite,
