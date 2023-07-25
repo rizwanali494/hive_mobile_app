@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
-import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -21,39 +20,43 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
 
   Future googleSignIn(BuildContext context) async {
     AuthService authService = GoogleAuthService();
-    // await authService.logOut();
-    // var user = await authService.logIn();
-    // if (user == null) {
-    //   debugPrint("null");
-    // }
-    // if (user != null) {
-    //   var body = {
-    //     "payload": {"email": "$user", "email_verified": true}
-    //   };
-    var body = {
-      "payload": {"email": "bcp.test1@beaconite.edu.pk", "email_verified": true}
-    };
-    try {
-      var response = await apiService.post(
-        url: ApiEndpoints.googleLogin,
-        body: body,
-      );
-      var responseBody = jsonDecode(response.body);
-      var model = UserModel.fromJson(responseBody);
-      registerUserModel(model);
-    } catch (e) {
-      handleException(e);
+    await authService.logOut();
+    var user = await authService.logIn().timeout(Duration(seconds: 5));
+    if (user == null) {
+      debugPrint("null");
     }
+    if (user != null) {
+      // var body = {
+      //   "payload": {"email": "$user", "email_verified": true}
+      // };
+      var body = {
+        "payload": {
+          "email": "bcp.test1@beaconite.edu.pk",
+          "email_verified": true
+        }
+      };
+      try {
+        var response = await apiService.post(
+          url: ApiEndpoints.googleLogin,
+          body: body,
+        );
+        var responseBody = jsonDecode(response.body);
+        var model = UserModel.fromJson(responseBody);
+        registerUserModel(model);
+      } catch (e) {
+        handleException(e);
+      }
 
-    // context.pushReplacement(HomeScreen.route);
+      // context.pushReplacement(HomeScreen.route);
 
-    // if (kDebugMode || kProfileMode) {
-    //   context.pushReplacement(HomeScreen.route);
-    //   return;
-    // }
-    // var user = await authService.logIn();
-    // if ((context.mounted && user != null)) {
-    //   context.pushReplacement(HomeScreen.route);
-    // }
+      // if (kDebugMode || kProfileMode) {
+      //   context.pushReplacement(HomeScreen.route);
+      //   return;
+      // }
+      // var user = await authService.logIn();
+      // if ((context.mounted && user != null)) {
+      //   context.pushReplacement(HomeScreen.route);
+      // }
+    }
   }
 }
