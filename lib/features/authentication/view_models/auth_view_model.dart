@@ -8,7 +8,7 @@ import 'package:hive_mobile/features/home/screens/home_screen.dart';
 class AuthVM extends ChangeNotifier {
   Future googleSignIn(BuildContext context) async {
     AuthService authService = GoogleAuthService();
-    await authService.logOut();
+    // await authService.logOut();
     if( kDebugMode || kProfileMode ){
       context.pushReplacement(HomeScreen.route);
       return;
