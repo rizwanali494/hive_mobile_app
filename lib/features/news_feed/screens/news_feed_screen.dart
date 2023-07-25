@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/shimmers/shimmer_container.dart';
 
 class NewsFeedScreen extends StatefulWidget {
   const NewsFeedScreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-
+    return ShimmerContainer(withShadow: true);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: styles.smokeWhite,

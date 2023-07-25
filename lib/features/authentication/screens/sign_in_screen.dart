@@ -92,24 +92,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           AuthButtonWidget(
                             onTap: () async {
-                              GoogleSignIn s = GoogleSignIn();
-                              // var i = await s.isSignedIn();
-                              // debugPrint(i.toString());
-                              // if( i) {
-                              //   var b =  s.signOut();
-                              // }
-                              await s.signOut();
-                              var a = await s.signIn();
-                              debugPrint(a!.displayName);
-                              // await provider.googleSignIn(context);
+                              await provider.googleSignIn(context);
                             },
                           ),
                           10.verticalSpace,
-                          AuthButtonWidget(
-                            onTap: () async {
-                              context.push(HomeScreen.route);
-                            },
-                          ),
                         ],
                       ),
                     ),
