@@ -35,34 +35,37 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
             title: AppStrings.newsFeed,
             titleStyle: styles.inter40w700,
           ),
-          Expanded(
-            child: ListView.separated(
-                padding: EdgeInsets.symmetric(
-                  vertical: 12.h,
-                ),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          child: NewsFeedWidget(
-                            type: index.isEven ? PostType.image : PostType.poll,
-                            horizontalPadding: 0,
+          if (false)
+            Expanded(
+              child: ListView.separated(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 12.h,
+                  ),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: NewsFeedWidget(
+                              type: index.isEven ? PostType.image : PostType.poll,
+                              horizontalPadding: 0,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: NewsFeedWidget(
-                      type: index.isEven ? PostType.image : PostType.poll,
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return 20.verticalSpace;
-                },
-                itemCount: 12),
-          ),
+                        );
+                      },
+                      child: NewsFeedWidget(
+                        type: index.isEven ? PostType.image : PostType.poll,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return 20.verticalSpace;
+                  },
+                  itemCount: 12),
+            )
+          else
+            Expanded(child: ShimmerContainer(withShadow: false))
         ],
       ),
     );

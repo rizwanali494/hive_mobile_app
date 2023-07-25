@@ -38,6 +38,6 @@ class ShimmerContainer extends StatelessWidget {
         ],
       ),
     ).animate(onComplete: (controller) => controller.repeat()).shimmer(
-        color: Colors.grey.shade200, duration: const Duration(seconds: 2));
+        color: Colors.grey.shade300, duration: const Duration(seconds: 2));
   }
 }
