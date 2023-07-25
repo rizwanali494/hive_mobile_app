@@ -20,7 +20,7 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
 
   Future googleSignIn(BuildContext context) async {
     AuthService authService = GoogleAuthService();
-    await authService.logOut();
+    // await authService.logOut();
     var user = await authService.logIn().timeout(Duration(seconds: 5));
     if (user == null) {
       debugPrint("null");

@@ -33,6 +33,8 @@ class ApiServiceImpl extends ApiService {
       String? queryParameters}) async {
     http.Response response;
     debugPrint(url.parsedUri.toString());
+    url = "$url${queryParameters ?? ""}";
+
     try {
       response = await http.post(url.parsedUri,
           body: jsonEncode(body), headers: headers ?? this._headers);
@@ -49,6 +51,7 @@ class ApiServiceImpl extends ApiService {
       Map<String, String>? headers,
       String? queryParameters}) async {
     http.Response response;
+    url = "$url${queryParameters ?? ""}";
     try {
       response = await http.patch(url.parsedUri,
           body: body, headers: headers ?? this._headers);
