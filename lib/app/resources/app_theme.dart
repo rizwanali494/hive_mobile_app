@@ -47,6 +47,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color deepSkyBlue;
   final Color lavender;
   final Color darkGrey;
+  final Color greayShade300;
   final Color lightGrey;
   final Color greyWhite;
   final Color darkSlateGrey;
@@ -92,6 +93,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.lightBlue,
     required this.lavender,
     required this.darkGrey,
+    required this.greayShade300,
     required this.lightGrey,
     required this.greyWhite,
     required this.darkSlateGrey,
@@ -149,6 +151,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       skyBlue: Color.lerp(skyBlue, other.skyBlue, t)!,
       lavender: Color.lerp(lavender, other.lavender, t)!,
       darkGrey: Color.lerp(darkGrey, other.darkGrey, t)!,
+      greayShade300: Color.lerp(greayShade300, other.darkGrey, t)!,
       lightGrey: Color.lerp(lightGrey, other.lightGrey, t)!,
       greyWhite: Color.lerp(greyWhite, other.greyWhite, t)!,
       darkSlateGrey: Color.lerp(darkSlateGrey, other.darkSlateGrey, t)!,
@@ -316,6 +319,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     skyBlue: const Color(0xff08A5DE),
     lavender: const Color(0xffCEEDF8),
     darkGrey: const Color(0xff969696),
+    greayShade300: Colors.grey.shade300,
     lightGrey: const Color(0xffD9D9D9),
     greyWhite: const Color(0xffE6E6E6),
     darkSlateGrey: const Color(0xff464646),
@@ -373,6 +377,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? deepSkyBlue,
     Color? lavender,
     Color? darkGrey,
+    Color? greayShade300,
     Color? lightGrey,
     Color? greyWhite,
     Color? darkSlateGrey,
@@ -420,6 +425,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       skyBlue: skyBlue ?? this.skyBlue,
       lavender: lavender ?? this.lavender,
       darkGrey: darkGrey ?? this.darkGrey,
+      greayShade300: greayShade300 ?? this.greayShade300,
       lightGrey: lightGrey ?? this.lightGrey,
       greyWhite: greyWhite ?? this.greyWhite,
       darkSlateGrey: darkSlateGrey ?? this.darkSlateGrey,

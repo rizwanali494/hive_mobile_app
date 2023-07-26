@@ -17,7 +17,7 @@ class PostShimmerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    var selected = "1";
+    final color = styles.greayShade300;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
@@ -35,8 +35,7 @@ class PostShimmerWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25,
-                backgroundColor:
-                    buildGrey(), // Customize the avatar background color
+                backgroundColor: color, // Customize the avatar background color
               ),
               12.horizontalSpace,
               Column(
@@ -45,14 +44,14 @@ class PostShimmerWidget extends StatelessWidget {
                   Container(
                     width: 100.w, // Customize the width of the name container
                     height: 12.h, // Customize the height of the name container
-                    color: buildGrey(), // Customize the container color
+                    color: color, // Customize the container color
                   ),
                   SizedBox(height: 6.h),
                   Container(
-                    width: 20.w, // Customize the width of the time container
-                    height: 8.h, // Customize the height of the time container
-                    color: buildGrey(), // Customize the container color
-                  ),
+                      width: 20.w, // Customize the width of the time container
+                      height: 8.h, // Customize the height of the time container
+                      color: color // Customize the container color
+                      ),
                 ],
               ),
             ],
@@ -66,13 +65,13 @@ class PostShimmerWidget extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 12.h,
-                  color: buildGrey(), // Customize the container color
+                  color: color, // Customize the container color
                 ),
                 10.verticalSpace,
                 Container(
                   width: 200.w,
                   height: 12.h,
-                  color: buildGrey(), // Customize the container color
+                  color: color, // Customize the container color
                 ),
               ],
             ),
@@ -84,7 +83,7 @@ class PostShimmerWidget extends StatelessWidget {
               child: Container(
                 width: 333.w,
                 height: 221.h,
-                color: buildGrey(),
+                color: color,
               ),
             ),
           ),
@@ -107,7 +106,6 @@ class PostShimmerWidget extends StatelessWidget {
         );
   }
 
-  Color buildGrey() => Colors.grey.shade300;
 }
 
 class RoundContainerShimmer extends StatelessWidget {

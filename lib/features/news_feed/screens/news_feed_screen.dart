@@ -6,7 +6,6 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
-import 'package:hive_mobile/app/view/widgets/shimmers/shimmer_container.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -95,34 +94,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               },
             ),
 
-            // Expanded(
-            //   child: ListView.separated(
-            //       padding: EdgeInsets.symmetric(
-            //         vertical: 12.h,
-            //       ),
-            //       itemBuilder: (context, index) {
-            //         return GestureDetector(
-            //           onTap: () {
-            //             showDialog(
-            //               context: context,
-            //               builder: (context) => Dialog(
-            //                 child: NewsFeedWidget(
-            //                   type: index.isEven ? PostType.image : PostType.poll,
-            //                   horizontalPadding: 0,
-            //                 ),
-            //               ),
-            //             );
-            //           },
-            //           child: NewsFeedWidget(
-            //             type: index.isEven ? PostType.image : PostType.poll,
-            //           ),
-            //         );
-            //       },
-            //       separatorBuilder: (context, index) {
-            //         return 20.verticalSpace;
-            //       },
-            //       itemCount: 12),
-            // )
           ],
         ),
       ),

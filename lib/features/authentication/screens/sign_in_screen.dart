@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/features/authentication/view_models/auth_view_model.dart';
-import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
