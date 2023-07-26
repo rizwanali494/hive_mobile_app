@@ -13,14 +13,14 @@ class NotificationShimmerWidget extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 25.w,
-          height: 25.h,
+          width: 35.w,
+          height: 35.h,
           decoration: BoxDecoration(
               color: color, borderRadius: BorderRadius.circular(6.r)),
         ),
         24.horizontalSpace,
         Container(
-          width: 70.w,
+          width: 100.w,
           height: 12.h,
           decoration: BoxDecoration(color: color),
         ),
