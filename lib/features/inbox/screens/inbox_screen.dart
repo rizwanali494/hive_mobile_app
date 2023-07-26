@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
+import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
 import 'package:provider/provider.dart';
 
 class InboxScreen extends StatelessWidget {
@@ -19,6 +21,8 @@ class InboxScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+    final color = styles.greayShade300;
+
     return ChangeNotifierProvider(
       create: (BuildContext context) => InboxScreenVM(),
       child: Consumer<InboxScreenVM>(
@@ -60,60 +64,89 @@ class InboxScreen extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.separated(
-                  itemCount: 20,
+                  itemCount: 12,
                   padding: EdgeInsets.symmetric(
                     vertical: 19.h,
                   ),
                   itemBuilder: (context, index) {
-                    // final record = records[index];
                     return Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Column(
-                        children: [
-                          InboxListTile(
-                            onTap: () {
-                              context.push(ChatScreen.route);
-                            },
-                            title: AppStrings.academicReport,
-                            subTitle:
-                                'Awais Ali Khan Lorem ipsum dolor sit amet',
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  '2:45PM',
-                                  style: styles.inter10w400.copyWith(
-                                      color: styles.black.withOpacity(0.5)),
-                                ),
-                                7.verticalSpace,
-                                Container(
-                                  height: 7.h,
-                                  width: 7.w,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: styles.linearBlueGradientTopLeft,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                      child: InboxShimmerWidget(),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 17.h),
+                          horizontal: 20.w, vertical: 15.h),
                       child: Divider(
                         color: styles.black.withOpacity(0.3),
                         height: 1,
                       ),
-                    );
+                    )..animate(
+                        onComplete: (controller) => controller.repeat(),
+                      ).shimmer(
+                        color: Colors.grey.shade200,
+                        duration: const Duration(seconds: 2),
+                      );
                   },
                 ),
               ),
+              // Expanded(
+              //   child: ListView.separated(
+              //     itemCount: 20,
+              //     padding: EdgeInsets.symmetric(
+              //       vertical: 19.h,
+              //     ),
+              //     itemBuilder: (context, index) {
+              //       // final record = records[index];
+              //       return Padding(
+              //         padding: EdgeInsets.symmetric(horizontal: 20.w),
+              //         child: Column(
+              //           children: [
+              //             InboxListTile(
+              //               onTap: () {
+              //                 context.push(ChatScreen.route);
+              //               },
+              //               title: AppStrings.academicReport,
+              //               subTitle:
+              //                   'Awais Ali Khan Lorem ipsum dolor sit amet',
+              //               trailing: Column(
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 crossAxisAlignment: CrossAxisAlignment.end,
+              //                 children: [
+              //                   Text(
+              //                     '2:45PM',
+              //                     style: styles.inter10w400.copyWith(
+              //                         color: styles.black.withOpacity(0.5)),
+              //                   ),
+              //                   7.verticalSpace,
+              //                   Container(
+              //                     height: 7.h,
+              //                     width: 7.w,
+              //                     decoration: BoxDecoration(
+              //                       shape: BoxShape.circle,
+              //                       color: styles.linearBlueGradientTopLeft,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       );
+              //     },
+              //     separatorBuilder: (BuildContext context, int index) {
+              //       return Padding(
+              //         padding: EdgeInsets.symmetric(
+              //             horizontal: 20.w, vertical: 17.h),
+              //         child: Divider(
+              //           color: styles.black.withOpacity(0.3),
+              //           height: 1,
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           );
         },

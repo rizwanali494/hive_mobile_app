@@ -78,55 +78,6 @@ class ChatScreen extends StatelessWidget {
                 },
               ),
             ),
-            // Expanded(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           buildDivider(styles),
-            //           Padding(
-            //             padding: EdgeInsets.symmetric(horizontal: 8.w),
-            //             child: Text(
-            //               "Wednesday - 12:45PM",
-            //               style: styles.inter9w400,
-            //             ),
-            //           ),
-            //           buildDivider(styles),
-            //         ],
-            //       ),
-            //       34.verticalSpace,
-            //       const ChatWidget(),
-            //       8.verticalSpace,
-            //       const ChatWidget(),
-            //       14.verticalSpace,
-            //       Row(
-            //         children: [
-            //           Expanded(
-            //             child: Container(
-            //               decoration: BoxDecoration(
-            //                   color: styles.greyWhite,
-            //                   border: Border.all(color: styles.skyBlue),
-            //                   borderRadius: BorderRadius.circular(36.r)),
-            //               child: Padding(
-            //                 padding: EdgeInsets.symmetric(
-            //                   horizontal: 26.w,
-            //                 ),
-            //                 child: TextFieldWidget(
-            //                   hintText: AppStrings.typeMessagesHere,
-            //                   styles: styles,
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //           11.horizontalSpace,
-            //           SvgPicture.asset(SvgIcons.send)
-            //         ],
-            //       ),
-            //       25.verticalSpace,
-            //     ],
-            //   ),
-            // ),
             12.verticalSpace,
             Row(
               children: [
