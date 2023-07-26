@@ -2,28 +2,14 @@ import 'package:hive_mobile/app/constants/api_expand_fields.dart';
 
 extension ApiFieldExpandExtension on String {
   String get withOwnerObject {
-    return includeQueryParameter(ApiExpandField.owner);
-
-    // if (this.contains("?")) {
-    //   return includeQueryParameter(ApiExpandField.owner);
-    //   return "$this,owner";
-    // }
-    // return "$this?_fields_expand=owner";
-    // return "$this?_fields_expand=owner";
+    return _appendExpandField(ApiExpandField.owner);
   }
 
   String get withPolls {
-    return includeQueryParameter(ApiExpandField.polls);
-
-    // if (this.contains("?")) {
-    //   return includeQueryParameter(ApiExpandField.owner);
-    //   return "$this,owner";
-    // }
-    // return "$this?_fields_expand=owner";
-    // return "$this?_fields_expand=owner";
+    return _appendExpandField(ApiExpandField.polls);
   }
 
-  String includeQueryParameter(String field) {
+  String _appendExpandField(String field) {
     if (this.contains(ApiExpandField.expandQueryName)) {
       return "$this,$field";
     }
