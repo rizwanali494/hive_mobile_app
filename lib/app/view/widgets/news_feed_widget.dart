@@ -21,11 +21,8 @@ class NewsFeedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    datesInMonth();
     final styles = Theme.of(context).extension<AppTheme>()!;
-
     var selected = "1";
-
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
@@ -135,13 +132,6 @@ class NewsFeedWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-void datesInMonth() {
-  final daysCount = DateUtils.getDaysInMonth(2024, DateTime.february);
-  List<String> monthNames = DateFormat.MMMM().dateSymbols.MONTHS;
-  debugPrint(monthNames.toString());
-  debugPrint(daysCount.toString());
 }
 
 const _user = MockNewsFeedModel.user;
