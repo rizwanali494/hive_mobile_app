@@ -4,6 +4,7 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
 import 'package:hive_mobile/features/notification/widgets/notification_tile.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -38,20 +39,39 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   vertical: 27.h,
                 ),
                 separatorBuilder: (context, index) {
-                  return buildDivider();
+                  return 20.verticalSpace;
                 },
                 itemBuilder: (context, index) {
-                  return NotificationTile(
-                    onTap: () {},
-                    svgIconPath: svgIcons[index % svgIcons.length],
-                    title: titles[index % titles.length],
-                    trailing: AppStrings.time,
-                  );
+                  return NotificationShimmerWidget();
                 },
-                itemCount: 24,
+                itemCount: 12,
               ),
             ),
           ),
+          // Expanded(
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(
+          //       horizontal: 19.w,
+          //     ),
+          //     child: ListView.separated(
+          //       padding: EdgeInsets.symmetric(
+          //         vertical: 27.h,
+          //       ),
+          //       separatorBuilder: (context, index) {
+          //         return buildDivider();
+          //       },
+          //       itemBuilder: (context, index) {
+          //         return NotificationTile(
+          //           onTap: () {},
+          //           svgIconPath: svgIcons[index % svgIcons.length],
+          //           title: titles[index % titles.length],
+          //           trailing: AppStrings.time,
+          //         );
+          //       },
+          //       itemCount: 24,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

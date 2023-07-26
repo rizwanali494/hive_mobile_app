@@ -34,6 +34,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
     signingConfigs {
         debug {
             keyAlias 'upload'
@@ -42,7 +43,6 @@ android {
             storePassword 'Password'
         }
     }
-
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
@@ -59,10 +59,7 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
-
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
     }
