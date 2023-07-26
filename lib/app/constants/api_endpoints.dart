@@ -4,3 +4,4 @@ class ApiEndpoints {
   static String authUrl = "${apiUrl}auth/";
   static String googleLogin = "${authUrl}google_login_mobile/";
 }
+
