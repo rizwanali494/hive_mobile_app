@@ -85,7 +85,7 @@ class InboxScreen extends StatelessWidget {
                     )..animate(
                         onComplete: (controller) => controller.repeat(),
                       ).shimmer(
-                        color: Colors.grey.shade200,
+                        color: styles.greyShade200,
                         duration: const Duration(seconds: 2),
                       );
                   },
