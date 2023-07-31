@@ -66,6 +66,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       padding: EdgeInsets.symmetric(
                         vertical: 12.h,
                       ),
+                      controller: provider.scrollController,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
