@@ -14,21 +14,11 @@ extension ApiFieldExpandExtension on String {
   }
 
   String withOffSet(int? offSet) {
-    return _appendPaginationParameter("Offset", offSet);
-
-    if (this.contains("?")) {
-      return "$this&Offset=$offSet";
-    }
-    return "$this?Offset=$offSet";
+    return _appendPaginationParameter("offset", offSet);
   }
 
   String withLimit(int? limit) {
     return _appendPaginationParameter("limit", limit);
-
-    if (this.contains("?")) {
-      return "$this&limit=$limit";
-    }
-    return "$this?limit=$limit";
   }
 
   String _appendPaginationParameter(String para, int? value) {

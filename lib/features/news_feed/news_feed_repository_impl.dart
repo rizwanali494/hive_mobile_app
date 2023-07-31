@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -29,7 +30,6 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
         .map<AnnouncementPostModel>(
             (item) => AnnouncementPostModel.fromJson(item))
         .toList();
-    print(announcements.length.toString());
     return announcements;
   }
 
@@ -39,6 +39,23 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
     int? limit,
   }) async {
     List<AnnouncementPostModel> announcements = [];
+    log(ApiEndpoints.announcementPost.withOwnerObject.withPolls.withAttachments
+        .withLimit(limit)
+        .withOffSet(offSet));
+    var response = await apiService.get(
+      url: ApiEndpoints
+          .announcementPost.withOwnerObject.withPolls.withAttachments
+          .withLimit(limit)
+          .withOffSet(offSet),
+    );
+
+    var result = jsonDecode(response.body);
+    List items = result["results"] ?? [];
+    announcements = items
+        .map<AnnouncementPostModel>(
+            (item) => AnnouncementPostModel.fromJson(item))
+        .toList();
+    print(announcements.length.toString());
     return announcements;
   }
 }
