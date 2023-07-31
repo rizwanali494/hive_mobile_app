@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_fields_expands_extension.dart';
@@ -18,14 +19,17 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   }) async {
     List<AnnouncementPostModel> announcements = [];
     var response = await apiService.get(
-        url: ApiEndpoints
-            .announcementPost.withOwnerObject.withPolls.withAttachments);
+      url: ApiEndpoints
+          .announcementPost.withOwnerObject.withPolls.withAttachments
+          .withLimit(limit),
+    );
     var result = jsonDecode(response.body);
-    List items = result["result"] ?? [];
+    List items = result["results"] ?? [];
     announcements = items
         .map<AnnouncementPostModel>(
             (item) => AnnouncementPostModel.fromJson(item))
         .toList();
+    print(announcements.length.toString());
     return announcements;
   }
 

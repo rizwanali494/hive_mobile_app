@@ -36,7 +36,7 @@ extension ApiFieldExpandExtension on String {
       return this;
     }
     if (this.contains("?")) {
-      return "$this&$para=$para";
+      return "$this&$para=$value";
     }
     return "$this?$para=$value";
   }

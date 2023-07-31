@@ -4,6 +4,6 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 final _getIt = GetIt.instance;
 
-void registerApiServiceInstance() {
-  _getIt.registerSingleton<ApiService>(ApiServiceImpl());
+void registerApiServiceInstance({String? token}) {
+  _getIt.registerSingleton<ApiService>(ApiServiceImpl(token: token));
 }

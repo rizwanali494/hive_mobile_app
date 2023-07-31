@@ -7,7 +7,16 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServiceImpl extends ApiService {
-  final _headers = {"Content-Type": "application/json"};
+  String? _token;
+  late Map<String, String> _headers;
+
+  ApiServiceImpl({String? token}) {
+    this._token = token;
+    _headers = {"Content-Type": "application/json"};
+    if (_token != null) {
+      _headers["Authorization"] = "Bearer ${_token!}";
+    }
+  }
 
   @override
   Future<http.Response> get(

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/constants/api_endpoints.dart';
+import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/extensions/api_fields_expands_extension.dart';
 import 'package:hive_mobile/app/models/pigination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_service_impl.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -15,7 +18,7 @@ class NewsFeedVM extends ChangeNotifier {
   late NewsFeedRepository newsFeedRepository;
 
   void inItValues() {
-    apiService = getIt.get<ApiServiceImpl>();
+    apiService = getIt.get<ApiService>();
     newsFeedRepository = NewsFeedRepositoryImpl(apiService: apiService);
     paginationController = PaginationController(
       controller: _scrollController,
@@ -25,11 +28,23 @@ class NewsFeedVM extends ChangeNotifier {
 
   NewsFeedVM() {
     inItValues();
+    print(ApiEndpoints
+        .announcementPost.withOwnerObject.withPolls.withAttachments
+        .withOffSet(1)
+        .withLimit(0));
     getInitialNewsFeed();
   }
 
   Future<void> getInitialNewsFeed() async {
-    var list = newsFeedRepository.getInitialNewsFeed();
+    try {
+      var list = await newsFeedRepository.getInitialNewsFeed();
+      print("the length is : ${list.length}");
+      toggleLoading();
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        print(e.response.statusCode);
+      }
+    }
     addScrollListener();
   }
 
