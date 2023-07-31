@@ -12,7 +12,10 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   NewsFeedRepositoryImpl({required super.apiService});
 
   @override
-  Future<List<AnnouncementPostModel>> getInitialNewsFeed() async {
+  Future<List<AnnouncementPostModel>> getInitialNewsFeed({
+    int? offSet,
+    int? limit,
+  }) async {
     List<AnnouncementPostModel> announcements = [];
     var response = await apiService.get(
         url: ApiEndpoints
@@ -27,7 +30,10 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   }
 
   @override
-  Future<List<AnnouncementPostModel>> getNextNewsFeed() async {
+  Future<List<AnnouncementPostModel>> getNextNewsFeed({
+    int? offSet,
+    int? limit,
+  }) async {
     List<AnnouncementPostModel> announcements = [];
     return announcements;
   }

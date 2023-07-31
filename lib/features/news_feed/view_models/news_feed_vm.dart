@@ -29,6 +29,7 @@ class NewsFeedVM extends ChangeNotifier {
   }
 
   Future<void> getInitialNewsFeed() async {
+    var list = newsFeedRepository.getInitialNewsFeed();
     addScrollListener();
   }
 

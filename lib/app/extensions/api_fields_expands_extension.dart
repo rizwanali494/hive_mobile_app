@@ -13,18 +13,32 @@ extension ApiFieldExpandExtension on String {
     return _appendExpandField(ApiExpandField.attachments);
   }
 
-  String withOffSet(int offSet) {
+  String withOffSet(int? offSet) {
+    return _appendPaginationParameter("Offset", offSet);
+
     if (this.contains("?")) {
       return "$this&Offset=$offSet";
     }
-    return "$this&Offset=$offSet";
+    return "$this?Offset=$offSet";
   }
 
-  String withLimit(int limit) {
+  String withLimit(int? limit) {
+    return _appendPaginationParameter("limit", limit);
+
     if (this.contains("?")) {
-      return "$this&Offset=$limit";
+      return "$this&limit=$limit";
     }
-    return "$this&Offset=$limit";
+    return "$this?limit=$limit";
+  }
+
+  String _appendPaginationParameter(String para, int? value) {
+    if (value == null) {
+      return this;
+    }
+    if (this.contains("?")) {
+      return "$this&$para=$para";
+    }
+    return "$this?$para=$value";
   }
 
   String _appendExpandField(String field) {
