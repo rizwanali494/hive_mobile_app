@@ -6,7 +6,13 @@ abstract class NewsFeedRepository {
 
   NewsFeedRepository({required this.apiService});
 
-  Future<List<AnnouncementPostModel>> getInitialNewsFeed();
+  Future<List<AnnouncementPostModel>> getInitialNewsFeed({
+    int? offSet,
+    int? limit,
+  });
 
-  Future<List<AnnouncementPostModel>> getNextNewsFeed();
+  Future<List<AnnouncementPostModel>> getNextNewsFeed({
+    int? offSet,
+    int? limit,
+  });
 }

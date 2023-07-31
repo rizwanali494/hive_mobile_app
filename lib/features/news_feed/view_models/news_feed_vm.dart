@@ -8,23 +8,23 @@ import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
 
 class NewsFeedVM extends ChangeNotifier {
   bool _isLoading = true;
-  late PaginationController paginationController;
   ScrollController _scrollController = ScrollController();
   GetIt getIt = GetIt.instance;
+  late PaginationController paginationController;
   late ApiService apiService;
   late NewsFeedRepository newsFeedRepository;
 
   void inItValues() {
     apiService = getIt.get<ApiServiceImpl>();
     newsFeedRepository = NewsFeedRepositoryImpl(apiService: apiService);
-  }
-
-  NewsFeedVM() {
-    inItValues();
     paginationController = PaginationController(
       controller: _scrollController,
       onScroll: getNewsFeed,
     );
+  }
+
+  NewsFeedVM() {
+    inItValues();
     getInitialNewsFeed();
   }
 
@@ -32,21 +32,10 @@ class NewsFeedVM extends ChangeNotifier {
     addScrollListener();
   }
 
-  void toggleLoading() {
-    _isLoading = !_isLoading;
-    notifyListeners();
-  }
-
-  bool get isLoading => _isLoading;
-
   Future<void> getNewsFeed() async {
     toggleLoading();
     await Future.delayed(Duration(seconds: 3));
     toggleLoading();
-  }
-
-  void addScrollListener() {
-    paginationController.addListener();
   }
 
   Future<void> refreshNewsFeed() async {
@@ -54,7 +43,19 @@ class NewsFeedVM extends ChangeNotifier {
     return;
   }
 
+  bool get isLoading => _isLoading;
+
+  void toggleLoading() {
+    _isLoading = !_isLoading;
+    notifyListeners();
+  }
+
   ScrollController get scrollController => _scrollController;
+
+  void addScrollListener() {
+    paginationController.addListener();
+  }
+
 
   void resetOffset() {
     paginationController.resetOffset();
