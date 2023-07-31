@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
@@ -10,23 +11,30 @@ import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart'
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
+  final AnnouncementPostModel model;
   final double? horizontalPadding;
 
   const NewsFeedWidget({
     super.key,
     required this.type,
     this.horizontalPadding,
+    required this.model,
   });
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     var selected = "1";
+    var user = model.owner!;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
       decoration: BoxDecoration(
-          color: styles.white, borderRadius: BorderRadius.circular(25)),
+        color: styles.white,
+        borderRadius: BorderRadius.circular(
+          25,
+        ),
+      ),
       margin: EdgeInsets.symmetric(horizontal: 19.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,16 +43,17 @@ class NewsFeedWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(_user.userAvatar),
-                radius: 25,
-              ),
+              if (user.picture?.file != null)
+                CircleAvatar(
+                  backgroundImage: NetworkImage(user.picture!.file!),
+                  radius: 25,
+                ),
               12.horizontalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _user.name,
+                    model.id?.toString() ?? "",
                     style: styles.inter16w600
                         .copyWith(color: styles.darkSlateGrey),
                   ),
@@ -58,7 +67,7 @@ class NewsFeedWidget extends StatelessWidget {
           ),
           16.verticalSpace,
           Text(
-            _user.description,
+            model.text ?? "",
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
           if (type == PostType.image)
@@ -104,7 +113,7 @@ class NewsFeedWidget extends StatelessWidget {
                     SvgPicture.asset(SvgIcons.like),
                     6.5.horizontalSpace,
                     Text(
-                      _user.likeCount,
+                      model.likes.toString(),
                       style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                   ],
@@ -117,7 +126,7 @@ class NewsFeedWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      _user.disLikeCount,
+                      model.dislikes.toString(),
                       style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                     6.5.horizontalSpace,
@@ -132,5 +141,4 @@ class NewsFeedWidget extends StatelessWidget {
     );
   }
 }
-
 const _user = MockNewsFeedModel.user;

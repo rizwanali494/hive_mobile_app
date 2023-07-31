@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/pigination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
@@ -13,7 +14,7 @@ class NewsFeedVM extends ChangeNotifier {
   ScrollController _scrollController = ScrollController();
   GetIt getIt = GetIt.instance;
   static const limit = 10;
-
+  List<AnnouncementPostModel> announcements = [];
   late PaginationController paginationController;
   late ApiService apiService;
   late NewsFeedRepository newsFeedRepository;
@@ -35,43 +36,43 @@ class NewsFeedVM extends ChangeNotifier {
   Future<void> getInitialNewsFeed() async {
     try {
       var list = await newsFeedRepository.getInitialNewsFeed(limit: limit);
+      announcements.addAll(list);
       toggleLoading();
-    } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        print(e.response.statusCode);
-      }
-    }
+    } catch (e) {}
     addScrollListener();
   }
 
   bool _isGettingMore = false;
+  bool _isLastPage = false;
 
   Future<void> getNextNewsFeed() async {
-    if (_isGettingMore) {
+    if (_isGettingMore || _isLastPage) {
       return;
     }
-    log(paginationController.offset.toString());
     try {
       _isGettingMore = true;
       var list = await newsFeedRepository.getNextNewsFeed(
         limit: limit,
         offSet: paginationController.offset,
       );
+      log("got ${list.length} items with offset : ${[
+        paginationController.offset
+      ]}");
+      announcements.addAll(list);
+      if (list.length < limit) {
+        _isLastPage = true;
+      }
       paginationController.setOffset =
           paginationController.offset + list.length;
-      log("The list length is ${list.length}");
       _isGettingMore = false;
       notifyListeners();
     } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        log(e.response.statusCode.toString());
-      }
       log(e.toString());
     }
   }
 
   Future<void> refreshNewsFeed() async {
-    resetOffset();
+    try {} catch (e) {}
     return;
   }
 

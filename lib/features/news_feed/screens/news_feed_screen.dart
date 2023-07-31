@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
@@ -62,39 +64,47 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                   );
                 }
                 return Expanded(
-                  child: ListView.separated(
+                  child: RefreshIndicator(
+                    onRefresh: provider.refreshNewsFeed,
+                    backgroundColor: styles.white,
+                    child: ListView.separated(
                       padding: EdgeInsets.symmetric(
                         vertical: 12.h,
                       ),
                       controller: provider.scrollController,
                       itemBuilder: (context, index) {
+                        log(provider.announcements.length.toString());
                         return GestureDetector(
                           onTap: () {
                             showDialog(
                               context: context,
                               builder: (context) => Dialog(
                                 child: NewsFeedWidget(
-                                  type: index.isEven
+                                  type: provider.announcements[index].type ==
+                                          "POST"
                                       ? PostType.image
                                       : PostType.poll,
                                   horizontalPadding: 0,
+                                  model: provider.announcements[index],
                                 ),
-                              ),
+                                  ),
                             );
                           },
                           child: NewsFeedWidget(
                             type: index.isEven ? PostType.image : PostType.poll,
+                            model: provider.announcements[index],
                           ),
                         );
                       },
                       separatorBuilder: (context, index) {
                         return 20.verticalSpace;
                       },
-                      itemCount: 12),
+                      itemCount: provider.announcements.length,
+                    ),
+                  ),
                 );
               },
             ),
-
           ],
         ),
       ),
