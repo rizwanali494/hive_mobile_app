@@ -5,8 +5,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
-import 'package:hive_mobile/features/notification/widgets/notification_tile.dart';
-
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({
     super.key,
