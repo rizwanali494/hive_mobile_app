@@ -1,4 +1,4 @@
-import 'package:hive_mobile/app/models/account_extra_model.dart';
+import 'package:hive_mobile/app/models/data/account_extra_model.dart';
 
 class AccountDataModel {
   AccountDataModel({

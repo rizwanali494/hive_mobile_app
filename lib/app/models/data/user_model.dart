@@ -1,4 +1,4 @@
-import 'package:hive_mobile/app/models/account_picture_model.dart';
+import 'package:hive_mobile/app/models/data/account_picture_model.dart';
 
 class UserModel {
   UserModel({

@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
-import 'package:hive_mobile/app/models/user_model.dart';
+import 'package:hive_mobile/app/models/data/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart';

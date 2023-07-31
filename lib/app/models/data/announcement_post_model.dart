@@ -1,7 +1,7 @@
-import 'package:hive_mobile/app/models/polls_model.dart';
+import 'package:hive_mobile/app/models/data/polls_model.dart';
 
-import 'package:hive_mobile/app/models/attachments_model.dart';
-import 'package:hive_mobile/app/models/owner_model.dart';
+import 'package:hive_mobile/app/models/data/attachments_model.dart';
+import 'package:hive_mobile/app/models/data/owner_model.dart';
 
 class AnnouncementPostModel {
   AnnouncementPostModel({
