@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class PaginationController {
   late ScrollController _scrollController;
   static const limit = 10;
-  int offset = 0;
+  int _offset = 0;
   bool _isLastPage = false;
   late Function onScroll;
 
@@ -20,5 +20,13 @@ class PaginationController {
         onScroll();
       }
     });
+  }
+
+  void resetOffset() {
+    _offset = 0;
+  }
+
+  set setOffset(int value) {
+    _offset = value;
   }
 }
