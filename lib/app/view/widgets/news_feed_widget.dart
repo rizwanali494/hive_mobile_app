@@ -8,16 +8,18 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
+import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
+  final NewsFeedWidgetVm controller;
   final double? horizontalPadding;
 
   const NewsFeedWidget({
     super.key,
     required this.type,
     this.horizontalPadding,
-    required this.model,
+    required this.controller,
   });
 
   @override
@@ -41,9 +43,9 @@ class NewsFeedWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
-              if (user.picture?.file != null)
+              if (controller.userImage != null)
                 CircleAvatar(
-                  backgroundImage: NetworkImage(user.picture!.file!),
+                  backgroundImage: NetworkImage(controller.userImage!),
                   radius: 25,
                 ),
               12.horizontalSpace,
@@ -51,7 +53,7 @@ class NewsFeedWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.id?.toString() ?? "",
+                    controller.userName,
                     style: styles.inter16w600
                         .copyWith(color: styles.darkSlateGrey),
                   ),
@@ -65,10 +67,10 @@ class NewsFeedWidget extends StatelessWidget {
           ),
           16.verticalSpace,
           Text(
-            model.text ?? "",
+            controller.description,
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
-          if (type == PostType.image)
+          if (controller.isPost)
             Padding(
               padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
               child: ClipRRect(
@@ -111,7 +113,7 @@ class NewsFeedWidget extends StatelessWidget {
                     SvgPicture.asset(SvgIcons.like),
                     6.5.horizontalSpace,
                     Text(
-                      model.likes.toString(),
+                      controller.likes,
                       style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                   ],
@@ -124,7 +126,7 @@ class NewsFeedWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      model.dislikes.toString(),
+                      controller.dislikes,
                       style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                     6.5.horizontalSpace,
@@ -139,4 +141,3 @@ class NewsFeedWidget extends StatelessWidget {
     );
   }
 }
-const _user = MockNewsFeedModel.user;

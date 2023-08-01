@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
+import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:provider/provider.dart';
 
 class NewsFeedScreen extends StatefulWidget {
@@ -85,14 +86,18 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                                       ? PostType.image
                                       : PostType.poll,
                                   horizontalPadding: 0,
-                                  model: provider.announcements[index],
-                                ),
+                                  controller: NewsFeedWidgetVm(
+                                    model: provider.announcements[index],
                                   ),
+                                ),
+                              ),
                             );
                           },
                           child: NewsFeedWidget(
                             type: index.isEven ? PostType.image : PostType.poll,
-                            model: provider.announcements[index],
+                            controller: NewsFeedWidgetVm(
+                              model: provider.announcements[index],
+                            ),
                           ),
                         );
                       },
