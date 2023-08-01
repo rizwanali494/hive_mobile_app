@@ -14,6 +14,7 @@ part 'announcement_post_model.g.dart';
 class AnnouncementPostModel {
   AnnouncementPostModel({
     this.id,
+    this.localId = 0,
     this.likes,
     this.dislikes,
     this.polls,
@@ -28,6 +29,7 @@ class AnnouncementPostModel {
 
   AnnouncementPostModel.fromJson(dynamic json) {
     id = json['id'];
+    localId = json['id'];
     likes = json['likes'];
     dislikes = json['dislikes'];
     if (json['polls'] != null) {
@@ -51,7 +53,8 @@ class AnnouncementPostModel {
   }
 
   int? id;
-  Id localId = Isar.autoIncrement;
+  late Id localId;
+
   int? likes;
   int? dislikes;
   List<Polls>? polls;
@@ -65,6 +68,7 @@ class AnnouncementPostModel {
 
   AnnouncementPostModel copyWith({
     int? id,
+    int? localId,
     int? likes,
     int? dislikes,
     List<Polls>? polls,
@@ -81,6 +85,7 @@ class AnnouncementPostModel {
         likes: likes ?? this.likes,
         dislikes: dislikes ?? this.dislikes,
         polls: polls ?? this.polls,
+        localId: localId ?? this.localId,
         attachments: attachments ?? this.attachments,
         owner: owner ?? this.owner,
         dateAdded: dateAdded ?? this.dateAdded,
@@ -115,9 +120,9 @@ class AnnouncementPostModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AnnouncementPostModel &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is AnnouncementPostModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;
