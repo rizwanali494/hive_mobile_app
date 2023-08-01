@@ -1,5 +1,5 @@
+import 'package:hive_mobile/app/models/data/account_data_model.dart';
 import 'package:hive_mobile/app/models/data/account_picture_model.dart';
-import 'package:hive_mobile/app/models/data/user_model.dart';
 
 class OwnerModel {
   OwnerModel({
@@ -22,7 +22,7 @@ class OwnerModel {
         ? AccountPicture.fromJson(json['picture'])
         : null;
     accountData = json['account_data'] != null
-        ? AccountData.fromJson(json['account_data'])
+        ? AccountDataModel.fromJson(json['account_data'])
         : null;
   }
 
@@ -32,7 +32,7 @@ class OwnerModel {
   String? accountType;
   bool? isActive;
   AccountPicture? picture;
-  AccountData? accountData;
+  AccountDataModel? accountData;
 
   OwnerModel copyWith({
     num? id,
@@ -41,7 +41,7 @@ class OwnerModel {
     String? accountType,
     bool? isActive,
     AccountPicture? picture,
-    AccountData? accountData,
+    AccountDataModel? accountData,
   }) =>
       OwnerModel(
         id: id ?? this.id,

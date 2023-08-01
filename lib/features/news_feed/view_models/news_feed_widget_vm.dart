@@ -7,7 +7,7 @@ class NewsFeedWidgetVm {
   NewsFeedWidgetVm({required AnnouncementPostModel model}) : _model = model;
 
   String get userName {
-    return _model.owner?.accountData?.extra?.studentName ?? "";
+    return _model.owner?.accountData?.extra?.employeeName ?? "";
   }
 
   String get description {

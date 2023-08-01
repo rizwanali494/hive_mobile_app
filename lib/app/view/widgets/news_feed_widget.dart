@@ -74,11 +74,14 @@ class NewsFeedWidget extends StatelessWidget {
                 padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image(
-                    image: NetworkImage(controller.attachment),
-                    width: 333.w,
-                    fit: BoxFit.cover,
-                    height: 221.h,
+                  child: AspectRatio(
+                    aspectRatio: 0.89,
+                    child: Image(
+                      image: NetworkImage(controller.attachment),
+                      // width: 333.w,
+                      fit: BoxFit.cover,
+                      // height: 221.h,
+                    ),
                   ),
                 ),
               )
