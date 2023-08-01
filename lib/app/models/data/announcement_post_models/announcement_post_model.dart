@@ -4,6 +4,10 @@ import 'package:hive_mobile/app/models/data/announcement_post_models/attachments
 import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
 import 'package:isar/isar.dart';
 
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_data_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_extra_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+
 part 'announcement_post_model.g.dart';
 
 @collection
