@@ -2,7 +2,11 @@ import 'package:hive_mobile/app/models/data/polls_model.dart';
 
 import 'package:hive_mobile/app/models/data/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/owner_model.dart';
+import 'package:isar/isar.dart';
 
+part 'email.g.dart';
+
+@collection
 class AnnouncementPostModel {
   AnnouncementPostModel({
     this.id,
@@ -106,9 +110,9 @@ class AnnouncementPostModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AnnouncementPostModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+          other is AnnouncementPostModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
 
   @override
   int get hashCode => id.hashCode;

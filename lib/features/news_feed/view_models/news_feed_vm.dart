@@ -65,11 +65,14 @@ class NewsFeedVM extends ChangeNotifier {
 
   Future<void> refreshNewsFeed() async {
     try {
+      toggleValues();
       var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
       if (list.length < _limit) {
         isLastPage();
       }
-      announcements = [...list, ...announcements].toSet().toList();
+      announcements = list;
+      paginationController.setOffset(list.length);
+      // announcements = [...list, ...announcements].toSet().toList();
     } catch (e) {}
     notifyListeners();
     return;
@@ -90,6 +93,11 @@ class NewsFeedVM extends ChangeNotifier {
 
   void resetOffset() {
     paginationController.resetOffset();
+  }
+
+  void toggleValues() {
+    isLastPage();
+    // isGettingMore();
   }
 
   void isLastPage() {

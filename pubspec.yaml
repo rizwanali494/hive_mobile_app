@@ -21,17 +21,22 @@ dependencies:
   go_router: ^8.0.1
   badges: 3.1.1
   intl: ^0.17.0
-#  scrollable_clean_calendar: ^1.4.1
+  #  scrollable_clean_calendar: ^1.4.1
   scrollable_positioned_list: ^0.3.8
   http: ^0.13.6
   get_it: ^7.6.0
   flutter_animate: ^4.2.0
   timeago: ^3.3.0
+  isar: any
+  isar_flutter_libs: any
+  cached_network_image: ^3.2.3
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  isar_generator: any
+  build_runner: any
 
 flutter:
 

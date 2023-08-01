@@ -78,9 +78,7 @@ class NewsFeedWidget extends StatelessWidget {
                     aspectRatio: 0.89,
                     child: Image(
                       image: NetworkImage(controller.attachment),
-                      // width: 333.w,
                       fit: BoxFit.cover,
-                      // height: 221.h,
                     ),
                   ),
                 ),

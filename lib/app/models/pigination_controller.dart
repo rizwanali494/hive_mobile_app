@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 
@@ -20,6 +21,7 @@ class PaginationController {
       final nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
       if (_scrollController.position.pixels > nextPageTrigger) {
         if (_isGettingMore || _isLastPage) {
+          log("not getting last page : ${_isLastPage}  isGettingMore : ${_isGettingMore}");
           return;
         }
         onScroll();
