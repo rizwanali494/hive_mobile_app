@@ -13,7 +13,7 @@ class NewsFeedVM extends ChangeNotifier {
   bool _isLoading = true;
   ScrollController _scrollController = ScrollController();
   GetIt getIt = GetIt.instance;
-  static const limit = 10;
+  static const _limit = 10;
   List<AnnouncementPostModel> announcements = [];
   late PaginationController paginationController;
   late ApiService apiService;
@@ -35,36 +35,29 @@ class NewsFeedVM extends ChangeNotifier {
 
   Future<void> getInitialNewsFeed() async {
     try {
-      var list = await newsFeedRepository.getInitialNewsFeed(limit: limit);
-      if (list.length < limit) {
-        _isLastPage = true;
+      var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
+      if (list.length < _limit) {
+        paginationController.toggleLastPage();
       }
       announcements.addAll(list);
+      addScrollListener();
       toggleLoading();
     } catch (e) {}
-    addScrollListener();
   }
 
-  bool _isGettingMore = false;
-  bool _isLastPage = false;
-
   Future<void> getNextNewsFeed() async {
-    if (_isGettingMore || _isLastPage) {
-      return;
-    }
     try {
-      _isGettingMore = true;
+      isGettingMore();
       var list = await newsFeedRepository.getNextNewsFeed(
-        limit: limit,
+        limit: _limit,
         offSet: paginationController.offset,
       );
       announcements.addAll(list);
-      if (list.length < limit) {
-        _isLastPage = true;
+      if (list.length < _limit) {
+        isLastPage();
       }
-      paginationController.setOffset =
-          paginationController.offset + list.length;
-      _isGettingMore = false;
+      paginationController.setOffset(paginationController.offset + list.length);
+      isGettingMore();
       notifyListeners();
     } catch (e) {
       log(e.toString());
@@ -73,9 +66,9 @@ class NewsFeedVM extends ChangeNotifier {
 
   Future<void> refreshNewsFeed() async {
     try {
-      var list = await newsFeedRepository.getInitialNewsFeed(limit: limit);
-      if (list.length < limit) {
-        _isLastPage = true;
+      var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
+      if (list.length < _limit) {
+        isLastPage();
       }
       announcements = [...list, ...announcements].toSet().toList();
     } catch (e) {}
@@ -97,5 +90,13 @@ class NewsFeedVM extends ChangeNotifier {
 
   void resetOffset() {
     paginationController.resetOffset();
+  }
+
+  void isLastPage() {
+    paginationController.toggleLastPage();
+  }
+
+  void isGettingMore() {
+    paginationController.toggleIsGettingMore();
   }
 }

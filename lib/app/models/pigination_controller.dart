@@ -6,6 +6,8 @@ class PaginationController {
   late ScrollController _scrollController;
   int _offset = 10;
   late Function onScroll;
+  bool _isGettingMore = false;
+  bool _isLastPage = false;
 
   int get offset => _offset;
 
@@ -18,6 +20,9 @@ class PaginationController {
     _scrollController.addListener(() {
       final nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
       if (_scrollController.position.pixels > nextPageTrigger) {
+        if (_isGettingMore || _isLastPage) {
+          return;
+        }
         onScroll();
       }
     });
@@ -27,7 +32,15 @@ class PaginationController {
     _offset = 0;
   }
 
-  set setOffset(int value) {
+  void setOffset(int value) {
     _offset = value;
+  }
+
+  void toggleLastPage() {
+    _isLastPage = !_isLastPage;
+  }
+
+  void toggleIsGettingMore() {
+    _isGettingMore = !_isGettingMore;
   }
 }

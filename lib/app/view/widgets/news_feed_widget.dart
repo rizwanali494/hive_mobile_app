@@ -11,7 +11,6 @@ import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart'
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
-  final AnnouncementPostModel model;
   final double? horizontalPadding;
 
   const NewsFeedWidget({
@@ -25,7 +24,6 @@ class NewsFeedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     var selected = "1";
-    var user = model.owner!;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
