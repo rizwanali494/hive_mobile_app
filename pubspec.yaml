@@ -27,9 +27,10 @@ dependencies:
   get_it: ^7.6.0
   flutter_animate: ^4.2.0
   timeago: ^3.3.0
-  isar: any
-  isar_flutter_libs: any
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
   cached_network_image: ^3.2.3
+  path_provider: ^2.0.15
 
 
 dev_dependencies:
