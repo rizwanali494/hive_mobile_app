@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/pigination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -72,6 +71,7 @@ class NewsFeedVM extends ChangeNotifier {
       }
       announcements = [...list, ...announcements].toSet().toList();
     } catch (e) {}
+    notifyListeners();
     return;
   }
 

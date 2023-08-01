@@ -3,11 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
-import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 
 class NewsFeedWidget extends StatelessWidget {
@@ -58,7 +56,7 @@ class NewsFeedWidget extends StatelessWidget {
                         .copyWith(color: styles.darkSlateGrey),
                   ),
                   Text(
-                    _user.time,
+                    controller.postTime,
                     style: styles.inter8w400.copyWith(color: styles.darkGrey),
                   ),
                 ],
@@ -71,18 +69,21 @@ class NewsFeedWidget extends StatelessWidget {
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
           if (controller.isPost)
-            Padding(
-              padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image(
-                  image: NetworkImage(_user.universityImage),
-                  width: 333.w,
-                  fit: BoxFit.cover,
-                  height: 221.h,
+            if (controller.attachment.isNotEmpty)
+              Padding(
+                padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image(
+                    image: NetworkImage(controller.attachment),
+                    width: 333.w,
+                    fit: BoxFit.cover,
+                    height: 221.h,
+                  ),
                 ),
-              ),
-            )
+              )
+            else
+              26.verticalSpace
           else
             Padding(
               padding: EdgeInsets.only(top: 20.h),

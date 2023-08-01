@@ -1,3 +1,4 @@
+import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
 
 class NewsFeedWidgetVm {
@@ -35,5 +36,10 @@ class NewsFeedWidgetVm {
 
   String get dislikes {
     return (_model.dislikes?.toInt() ?? 0).toString();
+  }
+
+  String get postTime {
+    var time = DateTime.tryParse(_model.dateAdded ?? "");
+    return time?.formattedTime ?? "";
   }
 }
