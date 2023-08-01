@@ -1,6 +1,10 @@
-import 'package:hive_mobile/app/models/data/account_data_model.dart';
-import 'package:hive_mobile/app/models/data/account_picture_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_data_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+import 'package:isar/isar.dart';
 
+part 'owner_model.g.dart';
+
+@embedded
 class OwnerModel {
   OwnerModel({
     this.id,
@@ -26,7 +30,7 @@ class OwnerModel {
         : null;
   }
 
-  num? id;
+  int? id;
   String? email;
   String? dateJoined;
   String? accountType;
@@ -35,7 +39,7 @@ class OwnerModel {
   AccountDataModel? accountData;
 
   OwnerModel copyWith({
-    num? id,
+    int? id,
     String? email,
     String? dateJoined,
     String? accountType,

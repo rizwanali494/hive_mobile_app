@@ -1,4 +1,4 @@
-import 'package:hive_mobile/app/models/data/account_picture_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
 
 class UserModel {
   UserModel({
@@ -33,7 +33,7 @@ class UserModel {
     isEmailVerified = json['is_email_verified'];
   }
 
-  num? id;
+  int? id;
   AccountPicture? picture;
   AccountData? accountData;
   String? lastLogin;
@@ -46,7 +46,7 @@ class UserModel {
   bool? isEmailVerified;
 
   UserModel copyWith({
-    num? id,
+    int? id,
     AccountPicture? picture,
     AccountData? accountData,
     String? lastLogin,
@@ -126,31 +126,31 @@ class AccountData {
     }
   }
 
-  num? id;
+  int? id;
   Extra? extra;
   String? dateAdded;
   String? dateLastModified;
   dynamic classId;
   dynamic regionId;
   dynamic cityId;
-  num? branchId;
+  int? branchId;
   dynamic bio;
   dynamic backupEmail;
-  num? owner;
+  int? owner;
   List<dynamic>? hobbies;
 
   AccountData copyWith({
-    num? id,
+    int? id,
     Extra? extra,
     String? dateAdded,
     String? dateLastModified,
     dynamic classId,
     dynamic regionId,
     dynamic cityId,
-    num? branchId,
+    int? branchId,
     dynamic bio,
     dynamic backupEmail,
-    num? owner,
+    int? owner,
     List<dynamic>? hobbies,
   }) =>
       AccountData(
@@ -237,7 +237,7 @@ class Extra {
     lastPresentDate = json['last_present_date'];
   }
 
-  num? studentId;
+  int? studentId;
   String? studentName;
   String? gender;
   String? dateOfBirth;
@@ -246,20 +246,20 @@ class Extra {
   String? studentAddress;
   String? bloodGroup;
   String? smsNumber;
-  num? linkNumber;
-  num? branchId;
+  int? linkNumber;
+  int? branchId;
   String? branchName;
-  num? classId;
+  int? classId;
   String? className;
-  num? classOrder;
-  num? sectionId;
+  int? classOrder;
+  int? sectionId;
   String? sectionName;
   String? admissionDate;
   dynamic leftDate;
   dynamic lastPresentDate;
 
   Extra copyWith({
-    num? studentId,
+    int? studentId,
     String? studentName,
     String? gender,
     String? dateOfBirth,
@@ -268,13 +268,13 @@ class Extra {
     String? studentAddress,
     String? bloodGroup,
     String? smsNumber,
-    num? linkNumber,
-    num? branchId,
+    int? linkNumber,
+    int? branchId,
     String? branchName,
-    num? classId,
+    int? classId,
     String? className,
-    num? classOrder,
-    num? sectionId,
+    int? classOrder,
+    int? sectionId,
     String? sectionName,
     String? admissionDate,
     dynamic leftDate,

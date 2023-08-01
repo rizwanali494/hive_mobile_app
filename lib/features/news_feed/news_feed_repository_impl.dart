@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_fields_expands_extension.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
 
 class NewsFeedRepositoryImpl extends NewsFeedRepository {

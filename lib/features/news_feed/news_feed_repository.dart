@@ -1,4 +1,4 @@
-import 'package:hive_mobile/app/models/data/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class NewsFeedRepository {

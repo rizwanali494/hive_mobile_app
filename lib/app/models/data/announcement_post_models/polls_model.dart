@@ -1,3 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'polls_model.g.dart';
+
+@embedded
 class Polls {
   Polls({
     this.id,
@@ -21,24 +26,24 @@ class Polls {
     post = json['post'];
   }
 
-  num? id;
-  num? selectors;
+  int? id;
+  int? selectors;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
+  int? branchId;
   String? label;
-  num? owner;
-  num? post;
+  int? owner;
+  int? post;
 
   Polls copyWith({
-    num? id,
-    num? selectors,
+    int? id,
+    int? selectors,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
+    int? branchId,
     String? label,
-    num? owner,
-    num? post,
+    int? owner,
+    int? post,
   }) =>
       Polls(
         id: id ?? this.id,

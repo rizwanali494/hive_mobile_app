@@ -1,5 +1,9 @@
-import 'package:hive_mobile/app/models/data/account_extra_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_extra_model.dart';
+import 'package:isar/isar.dart';
 
+part 'account_data_model.g.dart';
+
+@embedded
 class AccountDataModel {
   AccountDataModel({
     this.id,
@@ -19,20 +23,20 @@ class AccountDataModel {
     owner = json['owner'];
   }
 
-  num? id;
+  int? id;
   AccountExtra? extra;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
-  num? owner;
+  int? branchId;
+  int? owner;
 
   AccountDataModel copyWith({
-    num? id,
+    int? id,
     AccountExtra? extra,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
-    num? owner,
+    int? branchId,
+    int? owner,
   }) =>
       AccountDataModel(
         id: id ?? this.id,

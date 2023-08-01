@@ -1,3 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'account_extra_model.g.dart';
+
+@embedded
 class AccountExtra {
   AccountExtra({
     this.employeeId,
@@ -29,31 +34,31 @@ class AccountExtra {
     companyName = json['company_name'];
   }
 
-  num? employeeId;
+  int? employeeId;
   String? prefix;
   String? employeeName;
   String? emailAddress;
-  num? departmentId;
+  int? departmentId;
   String? departmentName;
-  num? branchId;
+  int? branchId;
   String? branchName;
-  num? regionId;
+  int? regionId;
   String? regionName;
-  num? companyId;
+  int? companyId;
   String? companyName;
 
   AccountExtra copyWith({
-    num? employeeId,
+    int? employeeId,
     String? prefix,
     String? employeeName,
     String? emailAddress,
-    num? departmentId,
+    int? departmentId,
     String? departmentName,
-    num? branchId,
+    int? branchId,
     String? branchName,
-    num? regionId,
+    int? regionId,
     String? regionName,
-    num? companyId,
+    int? companyId,
     String? companyName,
   }) =>
       AccountExtra(

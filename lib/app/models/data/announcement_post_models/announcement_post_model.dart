@@ -1,10 +1,10 @@
-import 'package:hive_mobile/app/models/data/polls_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 
-import 'package:hive_mobile/app/models/data/attachments_model.dart';
-import 'package:hive_mobile/app/models/data/owner_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
 import 'package:isar/isar.dart';
 
-part 'email.g.dart';
+part 'announcement_post_model.g.dart';
 
 @collection
 class AnnouncementPostModel {
@@ -46,28 +46,29 @@ class AnnouncementPostModel {
     type = json['type'];
   }
 
-  num? id;
-  num? likes;
-  num? dislikes;
+  int? id;
+  Id localId = Isar.autoIncrement;
+  int? likes;
+  int? dislikes;
   List<Polls>? polls;
   List<Attachments>? attachments;
   OwnerModel? owner;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
+  int? branchId;
   String? text;
   String? type;
 
   AnnouncementPostModel copyWith({
-    num? id,
-    num? likes,
-    num? dislikes,
+    int? id,
+    int? likes,
+    int? dislikes,
     List<Polls>? polls,
     List<Attachments>? attachments,
     OwnerModel? owner,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
+    int? branchId,
     String? text,
     String? type,
   }) =>

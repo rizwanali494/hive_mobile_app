@@ -1,5 +1,10 @@
-class AccountPicture {
-  AccountPicture({
+import 'package:isar/isar.dart';
+
+part 'attachments_model.g.dart';
+
+@embedded
+class Attachments {
+  Attachments({
     this.id,
     this.dateAdded,
     this.dateLastModified,
@@ -10,7 +15,7 @@ class AccountPicture {
     this.owner,
   });
 
-  AccountPicture.fromJson(dynamic json) {
+  Attachments.fromJson(dynamic json) {
     id = json['id'];
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
@@ -28,9 +33,9 @@ class AccountPicture {
   String? purpose;
   String? label;
   String? mimeType;
-  num? owner;
+  int? owner;
 
-  AccountPicture copyWith({
+  Attachments copyWith({
     String? id,
     String? dateAdded,
     String? dateLastModified,
@@ -38,9 +43,9 @@ class AccountPicture {
     String? purpose,
     String? label,
     String? mimeType,
-    num? owner,
+    int? owner,
   }) =>
-      AccountPicture(
+      Attachments(
         id: id ?? this.id,
         dateAdded: dateAdded ?? this.dateAdded,
         dateLastModified: dateLastModified ?? this.dateLastModified,
