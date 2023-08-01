@@ -36,6 +36,9 @@ class NewsFeedVM extends ChangeNotifier {
   Future<void> getInitialNewsFeed() async {
     try {
       var list = await newsFeedRepository.getInitialNewsFeed(limit: limit);
+      if (list.length < limit) {
+        _isLastPage = true;
+      }
       announcements.addAll(list);
       toggleLoading();
     } catch (e) {}
@@ -55,9 +58,6 @@ class NewsFeedVM extends ChangeNotifier {
         limit: limit,
         offSet: paginationController.offset,
       );
-      log("got ${list.length} items with offset : ${[
-        paginationController.offset
-      ]}");
       announcements.addAll(list);
       if (list.length < limit) {
         _isLastPage = true;
@@ -72,7 +72,13 @@ class NewsFeedVM extends ChangeNotifier {
   }
 
   Future<void> refreshNewsFeed() async {
-    try {} catch (e) {}
+    try {
+      var list = await newsFeedRepository.getInitialNewsFeed(limit: limit);
+      if (list.length < limit) {
+        _isLastPage = true;
+      }
+      announcements = [...list, ...announcements].toSet().toList();
+    } catch (e) {}
     return;
   }
 
