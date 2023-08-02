@@ -1,5 +1,6 @@
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 
 class NewsFeedWidgetVm {
   final AnnouncementPostModel _model;
@@ -42,4 +43,16 @@ class NewsFeedWidgetVm {
     var time = DateTime.tryParse(_model.dateAdded ?? "");
     return time?.formattedTime ?? "";
   }
+
+  List<Polls> get polls {
+    return (_model.polls ?? []);
+  }
+
+  double? get totalSelectors {
+    return _model.polls?.fold(0.0, (previousValue, element) =>
+    (previousValue ?? 0) +
+        (element.selectors ?? 0));
+  }
+
+
 }

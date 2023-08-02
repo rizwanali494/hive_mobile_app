@@ -81,18 +81,18 @@ class ActivityWidget extends StatelessWidget {
               padding: EdgeInsets.only(top: 20.h),
               child: Column(
                 children: [
-                  PollWidget(
-                    selected: selected,
-                    isSelected: true,
-                    value: "1",
-                    percentage: .67,
-                  ),
-                  PollWidget(
-                    selected: selected,
-                    value: "2",
-                    isSelected: false,
-                    percentage: .4,
-                  ),
+                  // PollWidget(
+                  //   selected: selected,
+                  //   isSelected: true,
+                  //   value: "1",
+                  //   percentage: .67,
+                  // ),
+                  // PollWidget(
+                  //   selected: selected,
+                  //   value: "2",
+                  //   isSelected: false,
+                  //   percentage: .4,
+                  // ),
                 ],
               ),
             ),

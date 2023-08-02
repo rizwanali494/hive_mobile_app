@@ -2,22 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class PollWidget extends StatelessWidget {
-  final String value;
-  final bool isSelected;
-  final double percentage;
+ final PollWidgetVM controller;
 
   const PollWidget({
     super.key,
-    required this.selected,
-    required this.value,
-    required this.isSelected,
-    required this.percentage,
+    required this.selected, required this.controller,
   });
 
-  final String selected;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -26,63 +22,64 @@ class PollWidget extends StatelessWidget {
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.only(bottom: 16.h),
-        child: IntrinsicHeight(
-          child: IntrinsicWidth(
-            child: Stack(
-              children: [
-                LinearPercentIndicator(
-                  lineHeight: 35.h,
-                  percent: percentage,
-                  backgroundColor: styles.smokeWhite,
-                  progressColor: isSelected
-                      ? styles.lavender
-                      : styles.platinum,
-                  barRadius: const Radius.circular(36),
-                  padding: EdgeInsets.zero,
-                ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Row(
-                      children: [
-                        Radio<String>(
-                          value: value,
-                          fillColor: MaterialStateProperty.resolveWith ((Set  states) {
-                            if (states.contains(MaterialState.selected)) {
-                              return styles.deepSkyBlue;
-                            }
-                            return Colors.white;
-                          }),
-                          activeColor: styles.deepSkyBlue,
-                          visualDensity: const VisualDensity(
-                              horizontal: VisualDensity.minimumDensity,
-                              vertical: VisualDensity.minimumDensity),
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          groupValue: selected,
-                          onChanged: (val) {},
-                        ),
-                        10.horizontalSpace,
-                        Text(
-                          AppStrings.loremPorum,
+        child: IntrinsicWidth(
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              LinearPercentIndicator(
+                lineHeight: 35.h,
+                percent: controller.pollPercentage,
+                backgroundColor: styles.smokeWhite,
+                progressColor: selected
+                    ? styles.lavender
+                    : styles.platinum,
+                barRadius: const Radius.circular(36),
+                padding: EdgeInsets.zero,
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Row(
+                    children: [
+                      Radio<bool>(
+                        value: true,
+                        fillColor: MaterialStateProperty.resolveWith ((Set  states) {
+                          if (states.contains(MaterialState.selected)) {
+                            return styles.deepSkyBlue;
+                          }
+                          return Colors.white;
+                        }),
+                        activeColor: styles.deepSkyBlue,
+                        visualDensity: const VisualDensity(
+                            horizontal: VisualDensity.minimumDensity,
+                            vertical: VisualDensity.minimumDensity),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        groupValue: false,
+                        onChanged: (val) {},
+                      ),
+                      10.horizontalSpace,
+                      Expanded(
+                        child: Text(
+                          controller.labelText,
                           style: styles.inter12w400,
+                          overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "${(percentage*100).toStringAsFixed(0)}%",
-                              // AppStrings.percent67,
-                              style: styles.inter12w600,
-                            ),
-                          ),
+                      ),
+                      10.horizontalSpace,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "${controller.pollPercentageString}%",
+                          // AppStrings.percent67,
+                          style: styles.inter12w600,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

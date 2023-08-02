@@ -6,7 +6,10 @@ import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
+import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
+import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
+import 'package:provider/provider.dart';
 
 class NewsFeedWidget extends StatelessWidget {
   final PostType type;
@@ -23,7 +26,7 @@ class NewsFeedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    var selected = "1";
+    final newsFeedController = context.read<NewsFeedVM>();
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
@@ -90,18 +93,13 @@ class NewsFeedWidget extends StatelessWidget {
               padding: EdgeInsets.only(top: 20.h),
               child: Column(
                 children: [
-                  PollWidget(
-                    selected: selected,
-                    isSelected: true,
-                    value: "1",
-                    percentage: .67,
-                  ),
-                  PollWidget(
-                    selected: selected,
-                    value: "2",
-                    isSelected: false,
-                    percentage: .4,
-                  ),
+                  for (var element in controller.polls)
+                    PollWidget(
+                      selected: false,
+                      controller: PollWidgetVM(
+                          poll: element,
+                          totalPolls: controller.totalSelectors ?? 0),
+                    ),
                 ],
               ),
             ),

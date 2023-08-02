@@ -139,7 +139,7 @@ class NewsFeedVM extends ChangeNotifier {
     }
     var collection = isar!.collection<AnnouncementPostModel>();
     await isar?.writeTxn(
-      () => collection.putAll(objects),
+          () => collection.putAll(objects),
     );
     // await collection!.putAll(objects);
     getPostFromLocalStorage();
@@ -151,4 +151,6 @@ class NewsFeedVM extends ChangeNotifier {
     isar?.close();
     super.dispose();
   }
+
+
 }
