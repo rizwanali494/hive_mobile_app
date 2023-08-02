@@ -37,6 +37,7 @@ class PollWidget extends StatelessWidget {
                 //   barRadius: const Radius.circular(36),
                 //   padding: EdgeInsets.zero,
                 // ),
+
                 Container(
                   // height: double.infinity,
                   decoration: BoxDecoration(
@@ -82,11 +83,16 @@ class PollWidget extends StatelessWidget {
                         ),
                         10.horizontalSpace,
                         Expanded(
-                          child: Text(
-                            controller.labelText,
-                            style: styles.inter12w400,
-                            // overflow: TextOverflow.ellipsis,
-                            // maxLines: 1,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10.h,
+                            ),
+                            child: Text(
+                              controller.labelText,
+                              style: styles.inter12w400,
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 1,
+                            ),
                           ),
                         ),
                         10.horizontalSpace,
