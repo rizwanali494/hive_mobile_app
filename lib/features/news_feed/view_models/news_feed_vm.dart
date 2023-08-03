@@ -186,6 +186,14 @@ class NewsFeedVM extends ChangeNotifier {
   }
 
   Future<void> likePost(AnnouncementPostModel model) async {
+    if (model.isLiked ?? false) {
+      model.likes = (model.likes ?? 1) - 1;
+      model.isLiked = false;
+      int indexOf = announcements.indexOf(model);
+      announcements[indexOf] = model;
+      notifyListeners();
+      return;
+    }
     try {
       await newsFeedRepository.likePost(model.id ?? 0);
       model.isLiked = true;
@@ -201,10 +209,19 @@ class NewsFeedVM extends ChangeNotifier {
         log("${e.response.statusCode}");
       }
     }
+
     notifyListeners();
   }
 
   Future<void> dislikePost(AnnouncementPostModel model) async {
+    if (model.isDisliked ?? false) {
+      model.dislikes = (model.dislikes ?? 1) - 1;
+      model.isDisliked = false;
+      int indexOf = announcements.indexOf(model);
+      announcements[indexOf] = model;
+      notifyListeners();
+      return;
+    }
     try {
       await newsFeedRepository.disLikePost(model.id ?? 0);
       model.dislikes = (model.dislikes ?? 0) + 1;
@@ -215,11 +232,13 @@ class NewsFeedVM extends ChangeNotifier {
       }
       int indexOf = announcements.indexOf(model);
       announcements[indexOf] = model;
-    } on Exception catch (e) {
+    } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
       }
     }
+    int indexOf = announcements.indexOf(model);
+    announcements[indexOf] = model;
     notifyListeners();
   }
 }
