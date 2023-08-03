@@ -54,30 +54,40 @@ const AnnouncementPostModelSchema = CollectionSchema(
       name: r'id',
       type: IsarType.long,
     ),
-    r'likes': PropertySchema(
+    r'isDisliked': PropertySchema(
       id: 7,
+      name: r'isDisliked',
+      type: IsarType.bool,
+    ),
+    r'isLiked': PropertySchema(
+      id: 8,
+      name: r'isLiked',
+      type: IsarType.bool,
+    ),
+    r'likes': PropertySchema(
+      id: 9,
       name: r'likes',
       type: IsarType.long,
     ),
     r'owner': PropertySchema(
-      id: 8,
+      id: 10,
       name: r'owner',
       type: IsarType.object,
       target: r'OwnerModel',
     ),
     r'polls': PropertySchema(
-      id: 9,
+      id: 11,
       name: r'polls',
       type: IsarType.objectList,
       target: r'Polls',
     ),
     r'text': PropertySchema(
-      id: 10,
+      id: 12,
       name: r'text',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 11,
+      id: 13,
       name: r'type',
       type: IsarType.string,
     )
@@ -189,21 +199,23 @@ void _announcementPostModelSerialize(
   writer.writeLong(offsets[4], object.dislikes);
   writer.writeLong(offsets[5], object.hashCode);
   writer.writeLong(offsets[6], object.id);
-  writer.writeLong(offsets[7], object.likes);
+  writer.writeBool(offsets[7], object.isDisliked);
+  writer.writeBool(offsets[8], object.isLiked);
+  writer.writeLong(offsets[9], object.likes);
   writer.writeObject<OwnerModel>(
-    offsets[8],
+    offsets[10],
     allOffsets,
     OwnerModelSchema.serialize,
     object.owner,
   );
   writer.writeObjectList<Polls>(
-    offsets[9],
+    offsets[11],
     allOffsets,
     PollsSchema.serialize,
     object.polls,
   );
-  writer.writeString(offsets[10], object.text);
-  writer.writeString(offsets[11], object.type);
+  writer.writeString(offsets[12], object.text);
+  writer.writeString(offsets[13], object.type);
 }
 
 AnnouncementPostModel _announcementPostModelDeserialize(
@@ -224,21 +236,23 @@ AnnouncementPostModel _announcementPostModelDeserialize(
     dateLastModified: reader.readStringOrNull(offsets[3]),
     dislikes: reader.readLongOrNull(offsets[4]),
     id: reader.readLongOrNull(offsets[6]),
-    likes: reader.readLongOrNull(offsets[7]),
+    isDisliked: reader.readBoolOrNull(offsets[7]),
+    isLiked: reader.readBoolOrNull(offsets[8]),
+    likes: reader.readLongOrNull(offsets[9]),
     localId: id,
     owner: reader.readObjectOrNull<OwnerModel>(
-      offsets[8],
+      offsets[10],
       OwnerModelSchema.deserialize,
       allOffsets,
     ),
     polls: reader.readObjectList<Polls>(
-      offsets[9],
+      offsets[11],
       PollsSchema.deserialize,
       allOffsets,
       Polls(),
     ),
-    text: reader.readStringOrNull(offsets[10]),
-    type: reader.readStringOrNull(offsets[11]),
+    text: reader.readStringOrNull(offsets[12]),
+    type: reader.readStringOrNull(offsets[13]),
   );
   return object;
 }
@@ -270,23 +284,27 @@ P _announcementPostModelDeserializeProp<P>(
     case 6:
       return (reader.readLongOrNull(offset)) as P;
     case 7:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 8:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 9:
+      return (reader.readLongOrNull(offset)) as P;
+    case 10:
       return (reader.readObjectOrNull<OwnerModel>(
         offset,
         OwnerModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 9:
+    case 11:
       return (reader.readObjectList<Polls>(
         offset,
         PollsSchema.deserialize,
         allOffsets,
         Polls(),
       )) as P;
-    case 10:
+    case 12:
       return (reader.readStringOrNull(offset)) as P;
-    case 11:
+    case 13:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1088,6 +1106,62 @@ extension AnnouncementPostModelQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> isDislikedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isDisliked',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> isDislikedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isDisliked',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> isDislikedEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isDisliked',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> isLikedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isLiked',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> isLikedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isLiked',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> isLikedEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isLiked',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
       QAfterFilterCondition> likesIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1769,6 +1843,34 @@ extension AnnouncementPostModelQuerySortBy
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      sortByIsDisliked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDisliked', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      sortByIsDislikedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDisliked', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      sortByIsLiked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isLiked', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      sortByIsLikedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isLiked', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
       sortByLikes() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'likes', Sort.asc);
@@ -1898,6 +2000,34 @@ extension AnnouncementPostModelQuerySortThenBy
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      thenByIsDisliked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDisliked', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      thenByIsDislikedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDisliked', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      thenByIsLiked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isLiked', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      thenByIsLikedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isLiked', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
       thenByLikes() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'likes', Sort.asc);
@@ -2000,6 +2130,20 @@ extension AnnouncementPostModelQueryWhereDistinct
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QDistinct>
+      distinctByIsDisliked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isDisliked');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QDistinct>
+      distinctByIsLiked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isLiked');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QDistinct>
       distinctByLikes() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'likes');
@@ -2074,6 +2218,20 @@ extension AnnouncementPostModelQueryProperty on QueryBuilder<
   QueryBuilder<AnnouncementPostModel, int?, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, bool?, QQueryOperations>
+      isDislikedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isDisliked');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, bool?, QQueryOperations>
+      isLikedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isLiked');
     });
   }
 

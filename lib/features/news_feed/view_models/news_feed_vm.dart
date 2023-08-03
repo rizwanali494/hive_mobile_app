@@ -2,11 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 import 'package:hive_mobile/app/models/pigination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
+import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -28,6 +31,7 @@ class NewsFeedVM extends ChangeNotifier {
       onScroll: getNextNewsFeed,
     );
     setIsarInstance();
+    pollRepository = PollRepository();
   }
 
   NewsFeedVM() {
@@ -147,10 +151,66 @@ class NewsFeedVM extends ChangeNotifier {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     isar?.close();
     super.dispose();
   }
 
+  late PollRepository pollRepository;
 
+  Future<Polls> selectPoll(Polls poll,
+      {required AnnouncementPostModel model}) async {
+    poll.isSelected = true;
+    try {
+      await pollRepository.selectPoll(poll.id ?? 0);
+      var fetchedModel = await fetchAnnouncementPost(model.id ?? 0);
+      model = fetchedModel;
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log(e.response.statusCode.toString());
+      }
+    }
+    notifyListeners();
+    return poll;
+  }
+
+  int? selectedPollId(AnnouncementPostModel model) {
+    var list = model.polls?.where((element) => element.isSelected ?? false);
+    if (list?.isNotEmpty ?? false) {
+      return list?.first.id;
+    }
+    return null;
+  }
+
+  Future<AnnouncementPostModel> fetchAnnouncementPost(int id) async {
+    return await newsFeedRepository.fetchNewsFeedModel(id);
+  }
+
+  Future<void> likePost(AnnouncementPostModel model) async {
+    try {
+      await newsFeedRepository.likePost(model.id ?? 0);
+      var fetchedModel = await fetchAnnouncementPost(model.id ?? 0);
+      int indexOf = announcements.indexOf(model);
+      announcements[indexOf] = fetchedModel;
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("${e.response.statusCode}");
+      }
+      // TODO
+    }
+    notifyListeners();
+  }
+
+  Future<void> dislikePost(AnnouncementPostModel model) async {
+    try {
+      await newsFeedRepository.disLikePost(model.id ?? 0);
+      var fetchedModel = await fetchAnnouncementPost(model.id ?? 0);
+      int indexOf = announcements.indexOf(model);
+      announcements[indexOf] = fetchedModel;
+    } on Exception catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("${e.response.statusCode}");
+      }
+    }
+    notifyListeners();
+  }
 }

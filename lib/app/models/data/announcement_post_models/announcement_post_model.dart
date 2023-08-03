@@ -17,6 +17,8 @@ class AnnouncementPostModel {
     this.localId = 0,
     this.likes,
     this.dislikes,
+    this.isLiked,
+    this.isDisliked,
     this.polls,
     this.attachments,
     this.owner,
@@ -32,6 +34,8 @@ class AnnouncementPostModel {
     localId = json['id'];
     likes = json['likes'];
     dislikes = json['dislikes'];
+    isLiked = json['is_liked'];
+    isDisliked = json['isDisliked'];
     if (json['polls'] != null) {
       polls = [];
       json['polls'].forEach((v) {
@@ -65,12 +69,16 @@ class AnnouncementPostModel {
   int? branchId;
   String? text;
   String? type;
+  bool? isLiked;
+  bool? isDisliked;
 
   AnnouncementPostModel copyWith({
     int? id,
     int? localId,
     int? likes,
     int? dislikes,
+    bool? isLiked,
+    bool? isDisliked,
     List<Polls>? polls,
     List<Attachments>? attachments,
     OwnerModel? owner,
@@ -84,6 +92,8 @@ class AnnouncementPostModel {
         id: id ?? this.id,
         likes: likes ?? this.likes,
         dislikes: dislikes ?? this.dislikes,
+        isLiked: isLiked ?? this.isLiked,
+        isDisliked: isDisliked ?? this.isDisliked,
         polls: polls ?? this.polls,
         localId: localId ?? this.localId,
         attachments: attachments ?? this.attachments,
@@ -100,6 +110,8 @@ class AnnouncementPostModel {
     map['id'] = id;
     map['likes'] = likes;
     map['dislikes'] = dislikes;
+    map['is_liked'] = isLiked;
+    map['is_disliked'] = isDisliked;
     if (polls != null) {
       map['polls'] = polls?.map((v) => v.toJson()).toList();
     }

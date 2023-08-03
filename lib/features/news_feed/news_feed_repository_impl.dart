@@ -54,4 +54,32 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
     print(announcements.length.toString());
     return announcements;
   }
+
+  @override
+  Future<AnnouncementPostModel> fetchNewsFeedModel(int id) async {
+    var url = ApiEndpoints.announcementPost
+        .withPostModel(id)
+        .withPolls
+        .withOwnerObject
+        .withAttachments;
+    log(url);
+    var response = await apiService.get(url: url);
+    var body = jsonDecode(response.body);
+    return AnnouncementPostModel.fromJson(body);
+  }
+
+  @override
+  Future<void> disLikePost(int id) async {
+    var url = ApiEndpoints.announcementPost.withDislike(id);
+    var response = await apiService.post(url: url, body: {});
+    log(url);
+  }
+
+  @override
+  Future<void> likePost(int id) async {
+    var url = ApiEndpoints.announcementPost.withLike(id);
+    log(url);
+
+    var response = await apiService.post(url: url, body: {});
+  }
 }

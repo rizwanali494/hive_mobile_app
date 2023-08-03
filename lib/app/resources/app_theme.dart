@@ -43,6 +43,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color black;
   final Color skyBlue;
   final Color paleWhite;
+  final Color paleBlue;
   final Color lightBlue;
   final Color deepSkyBlue;
   final Color lavender;
@@ -91,6 +92,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.white,
     required this.black,
     required this.skyBlue,
+    required this.paleBlue,
     required this.lightBlue,
     required this.lavender,
     required this.darkGrey,
@@ -151,6 +153,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       white: Color.lerp(white, other.white, t)!,
       black: Color.lerp(black, other.black, t)!,
       skyBlue: Color.lerp(skyBlue, other.skyBlue, t)!,
+      paleBlue: Color.lerp(paleBlue, other.paleBlue, t)!,
       lavender: Color.lerp(lavender, other.lavender, t)!,
       darkGrey: Color.lerp(darkGrey, other.darkGrey, t)!,
       greayShade300: Color.lerp(greayShade300, other.greayShade300, t)!,
@@ -320,6 +323,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     white: Colors.white,
     black: Colors.black,
     skyBlue: const Color(0xff08A5DE),
+    paleBlue: const Color(0xffCBEAF4),
     lavender: const Color(0xffCEEDF8),
     darkGrey: const Color(0xff969696),
     greayShade300: Colors.grey.shade300,
@@ -378,6 +382,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? black,
     Color? skyBlue,
     Color? lightBlue,
+    Color? paleBlue,
     Color? deepSkyBlue,
     Color? lavender,
     Color? darkGrey,
@@ -428,6 +433,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       white: white ?? this.white,
       black: black ?? this.black,
       skyBlue: skyBlue ?? this.skyBlue,
+      paleBlue: paleBlue ?? this.paleBlue,
       lavender: lavender ?? this.lavender,
       darkGrey: darkGrey ?? this.darkGrey,
       greayShade300: greayShade300 ?? this.greayShade300,

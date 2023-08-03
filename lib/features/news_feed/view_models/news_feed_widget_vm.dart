@@ -3,28 +3,28 @@ import 'package:hive_mobile/app/models/data/announcement_post_models/announcemen
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 
 class NewsFeedWidgetVm {
-  final AnnouncementPostModel _model;
+  final AnnouncementPostModel model;
 
-  NewsFeedWidgetVm({required AnnouncementPostModel model}) : _model = model;
+  NewsFeedWidgetVm({required AnnouncementPostModel model}) : model = model;
 
   String get userName {
-    return _model.owner?.accountData?.extra?.employeeName ?? "";
+    return model.owner?.accountData?.extra?.employeeName ?? "";
   }
 
   String get description {
-    return _model.text ?? "";
+    return model.text ?? "";
   }
 
   String? get userImage {
-    return _model.owner?.picture?.file;
+    return model.owner?.picture?.file;
   }
 
   bool get isPost {
-    return _model.type == "POST";
+    return model.type == "POST";
   }
 
   String get attachment {
-    var list = _model.attachments;
+    var list = model.attachments;
     if (list?.isNotEmpty ?? false) {
       return list?.first.file ?? "";
     }
@@ -32,27 +32,34 @@ class NewsFeedWidgetVm {
   }
 
   String get likes {
-    return (_model.likes?.toInt() ?? 0).toString();
+    return (model.likes?.toInt() ?? 0).toString();
   }
 
   String get dislikes {
-    return (_model.dislikes?.toInt() ?? 0).toString();
+    return (model.dislikes?.toInt() ?? 0).toString();
   }
 
   String get postTime {
-    var time = DateTime.tryParse(_model.dateAdded ?? "");
+    var time = DateTime.tryParse(model.dateAdded ?? "");
     return time?.formattedTime ?? "";
   }
 
   List<Polls> get polls {
-    return (_model.polls ?? []);
+    return (model.polls ?? []);
   }
 
   double? get totalSelectors {
-    return _model.polls?.fold(0.0, (previousValue, element) =>
-    (previousValue ?? 0) +
-        (element.selectors ?? 0));
+    return model.polls?.fold(
+        0.0,
+        (previousValue, element) =>
+            (previousValue ?? 0) + (element.selectors ?? 0));
   }
 
+  bool get isLiked {
+    return model.isLiked ?? false;
+  }
 
+  bool get isDisliked {
+    return model.isDisliked ?? false;
+  }
 }

@@ -33,23 +33,28 @@ const PollsSchema = Schema(
       name: r'id',
       type: IsarType.long,
     ),
-    r'label': PropertySchema(
+    r'isSelected': PropertySchema(
       id: 4,
+      name: r'isSelected',
+      type: IsarType.bool,
+    ),
+    r'label': PropertySchema(
+      id: 5,
       name: r'label',
       type: IsarType.string,
     ),
     r'owner': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'owner',
       type: IsarType.long,
     ),
     r'post': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'post',
       type: IsarType.long,
     ),
     r'selectors': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'selectors',
       type: IsarType.long,
     )
@@ -97,10 +102,11 @@ void _pollsSerialize(
   writer.writeString(offsets[1], object.dateAdded);
   writer.writeString(offsets[2], object.dateLastModified);
   writer.writeLong(offsets[3], object.id);
-  writer.writeString(offsets[4], object.label);
-  writer.writeLong(offsets[5], object.owner);
-  writer.writeLong(offsets[6], object.post);
-  writer.writeLong(offsets[7], object.selectors);
+  writer.writeBool(offsets[4], object.isSelected);
+  writer.writeString(offsets[5], object.label);
+  writer.writeLong(offsets[6], object.owner);
+  writer.writeLong(offsets[7], object.post);
+  writer.writeLong(offsets[8], object.selectors);
 }
 
 Polls _pollsDeserialize(
@@ -114,10 +120,11 @@ Polls _pollsDeserialize(
     dateAdded: reader.readStringOrNull(offsets[1]),
     dateLastModified: reader.readStringOrNull(offsets[2]),
     id: reader.readLongOrNull(offsets[3]),
-    label: reader.readStringOrNull(offsets[4]),
-    owner: reader.readLongOrNull(offsets[5]),
-    post: reader.readLongOrNull(offsets[6]),
-    selectors: reader.readLongOrNull(offsets[7]),
+    isSelected: reader.readBoolOrNull(offsets[4]),
+    label: reader.readStringOrNull(offsets[5]),
+    owner: reader.readLongOrNull(offsets[6]),
+    post: reader.readLongOrNull(offsets[7]),
+    selectors: reader.readLongOrNull(offsets[8]),
   );
   return object;
 }
@@ -138,12 +145,14 @@ P _pollsDeserializeProp<P>(
     case 3:
       return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
       return (reader.readLongOrNull(offset)) as P;
     case 7:
+      return (reader.readLongOrNull(offset)) as P;
+    case 8:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -578,6 +587,32 @@ extension PollsQueryFilter on QueryBuilder<Polls, Polls, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> isSelectedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isSelected',
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> isSelectedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isSelected',
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> isSelectedEqualTo(
+      bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isSelected',
+        value: value,
       ));
     });
   }

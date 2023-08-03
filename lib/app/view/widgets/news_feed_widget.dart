@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,7 +28,7 @@ class NewsFeedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final newsFeedController = context.read<NewsFeedVM>();
+    final newsFeedVM = context.read<NewsFeedVM>();
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
@@ -94,11 +96,18 @@ class NewsFeedWidget extends StatelessWidget {
               child: Column(
                 children: [
                   for (var element in controller.polls)
-                    PollWidget(
-                      selected: false,
-                      controller: PollWidgetVM(
+                    GestureDetector(
+                      onTap: () {
+                        newsFeedVM.selectPoll(element, model: controller.model);
+                      },
+                      child: PollWidget(
+                        controller: PollWidgetVM(
                           poll: element,
-                          totalPolls: controller.totalSelectors ?? 0),
+                          totalPolls: controller.totalSelectors ?? 0,
+                          selectedPollId:
+                              newsFeedVM.selectedPollId(controller.model),
+                        ),
+                      ),
                     ),
                 ],
               ),
@@ -106,6 +115,10 @@ class NewsFeedWidget extends StatelessWidget {
           Row(
             children: [
               BlueBorderContainer(
+                isSelected: controller.isLiked,
+                onTap: () {
+                  newsFeedVM.likePost(controller.model);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,6 +134,10 @@ class NewsFeedWidget extends StatelessWidget {
               ),
               9.horizontalSpace,
               BlueBorderContainer(
+                isSelected: controller.isDisliked,
+                onTap: () {
+                  newsFeedVM.dislikePost(controller.model);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

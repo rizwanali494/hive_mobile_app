@@ -77,24 +77,26 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                         log(provider.announcements.length.toString());
                         return GestureDetector(
                           onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => Dialog(
-                                child: NewsFeedWidget(
-                                  type: provider.announcements[index].type ==
-                                          "POST"
-                                      ? PostType.image
-                                      : PostType.poll,
-                                  horizontalPadding: 0,
-                                  controller: NewsFeedWidgetVm(
-                                    model: provider.announcements[index],
-                                  ),
-                                ),
-                              ),
-                            );
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (context) => Dialog(
+                            //     child: NewsFeedWidget(
+                            //       type: provider.announcements[index].type ==
+                            //               "POST"
+                            //           ? PostType.image
+                            //           : PostType.poll,
+                            //       horizontalPadding: 0,
+                            //       controller: NewsFeedWidgetVm(
+                            //         model: provider.announcements[index],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // );
                           },
                           child: NewsFeedWidget(
-                            type: index.isEven ? PostType.image : PostType.poll,
+                            type: provider.announcements[index].type == "POST"
+                                ? PostType.image
+                                : PostType.poll,
                             controller: NewsFeedWidgetVm(
                               model: provider.announcements[index],
                             ),

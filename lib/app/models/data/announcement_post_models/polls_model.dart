@@ -13,6 +13,7 @@ class Polls {
     this.label,
     this.owner,
     this.post,
+    this.isSelected,
   });
 
   Polls.fromJson(dynamic json) {
@@ -24,6 +25,7 @@ class Polls {
     label = json['label'];
     owner = json['owner'];
     post = json['post'];
+    isSelected = json['is_selected'];
   }
 
   int? id;
@@ -34,10 +36,12 @@ class Polls {
   String? label;
   int? owner;
   int? post;
+  bool? isSelected;
 
   Polls copyWith({
     int? id,
     int? selectors,
+    bool? isSelected,
     String? dateAdded,
     String? dateLastModified,
     int? branchId,
@@ -53,6 +57,7 @@ class Polls {
         branchId: branchId ?? this.branchId,
         label: label ?? this.label,
         owner: owner ?? this.owner,
+        isSelected: isSelected ?? this.isSelected,
         post: post ?? this.post,
       );
 
@@ -61,6 +66,7 @@ class Polls {
     map['id'] = id;
     map['selectors'] = selectors;
     map['date_added'] = dateAdded;
+    map['is_selected'] = isSelected;
     map['date_last_modified'] = dateLastModified;
     map['branch_id'] = branchId;
     map['label'] = label;

@@ -6,7 +6,6 @@ import 'package:hive_mobile/features/activities/screens/activity_status_widget.d
 
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 
 class ActivityWidget extends StatelessWidget {

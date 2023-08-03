@@ -27,7 +27,7 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
     // await authService.logOut();
     if (kDebugMode) {
       var token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNDc0NTM4LCJpYXQiOjE2OTA4Njk3MzgsImp0aSI6IjE1NzU1NWRlNzIzNTRiNDliN2FkODRjOGZjMTE4YTZmIiwidXNlcl9pZCI6Mjh9.l1JNCE5ro1tXjR9KTmAFHytcjilUy-W4jxaPdiOuyTY";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjUzOTQ3LCJpYXQiOjE2OTEwNDkxNDcsImp0aSI6IjM0NDY2YWZhZWM4NTRmNjU4ZWI2MTQzNjJmZDY2ODAxIiwidXNlcl9pZCI6NDJ9.i17BGv146sPKStEb9vG20lgRiwtqxV_SA-k9V501qYc";
       registerApiServiceInstance(token: token);
       context.pushReplacement(HomeScreen.route);
       return;

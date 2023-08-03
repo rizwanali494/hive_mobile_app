@@ -15,4 +15,10 @@ abstract class NewsFeedRepository {
     int? offSet,
     int? limit,
   });
+
+  Future<AnnouncementPostModel> fetchNewsFeedModel(int id);
+
+  Future<void> likePost(int id);
+
+  Future<void> disLikePost(int id);
 }

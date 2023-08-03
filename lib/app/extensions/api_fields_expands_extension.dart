@@ -37,4 +37,20 @@ extension ApiFieldExpandExtension on String {
     }
     return "$this?${ApiExpandField.expandQueryName}=$field";
   }
+
+  String selectPoll(int id) {
+    return "${this}poll/$id/select/";
+  }
+
+  String withPostModel(int id) {
+    return "${this}$id/";
+  }
+
+  String withLike(int id) {
+    return "${this}$id/like/";
+  }
+
+  String withDislike(int id) {
+    return "${this}$id/dislike/";
+  }
 }
