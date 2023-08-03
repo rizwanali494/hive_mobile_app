@@ -79,7 +79,6 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   Future<void> likePost(int id) async {
     var url = ApiEndpoints.announcementPost.withLike(id);
     log(url);
-
     var response = await apiService.post(url: url, body: {});
   }
 }

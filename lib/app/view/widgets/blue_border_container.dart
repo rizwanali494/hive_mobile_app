@@ -19,7 +19,7 @@ class BlueBorderContainer extends StatelessWidget {
     final styles = Theme.of(context).extension<AppTheme>()!;
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
         height: 32.h,
         width: 75.w,
         decoration: BoxDecoration(
@@ -27,6 +27,7 @@ class BlueBorderContainer extends StatelessWidget {
           color: isSelected ? styles.paleBlue : null,
           border: Border.all(color: styles.skyBlue),
         ),
+        duration: Duration(milliseconds: 500),
         child: child,
       ),
     );

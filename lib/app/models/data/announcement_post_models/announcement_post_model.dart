@@ -35,7 +35,7 @@ class AnnouncementPostModel {
     likes = json['likes'];
     dislikes = json['dislikes'];
     isLiked = json['is_liked'];
-    isDisliked = json['isDisliked'];
+    isDisliked = json['is_disliked'];
     if (json['polls'] != null) {
       polls = [];
       json['polls'].forEach((v) {

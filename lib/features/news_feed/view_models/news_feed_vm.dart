@@ -143,7 +143,7 @@ class NewsFeedVM extends ChangeNotifier {
     }
     var collection = isar!.collection<AnnouncementPostModel>();
     await isar?.writeTxn(
-          () => collection.putAll(objects),
+      () => collection.putAll(objects),
     );
     // await collection!.putAll(objects);
     getPostFromLocalStorage();
@@ -188,14 +188,18 @@ class NewsFeedVM extends ChangeNotifier {
   Future<void> likePost(AnnouncementPostModel model) async {
     try {
       await newsFeedRepository.likePost(model.id ?? 0);
-      var fetchedModel = await fetchAnnouncementPost(model.id ?? 0);
+      model.isLiked = true;
+      model.likes = (model.likes ?? 0) + 1;
+      if (model.isDisliked ?? false) {
+        model.isDisliked = false;
+        model.dislikes = (model.dislikes ?? 1) - 1;
+      }
       int indexOf = announcements.indexOf(model);
-      announcements[indexOf] = fetchedModel;
+      announcements[indexOf] = model;
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
       }
-      // TODO
     }
     notifyListeners();
   }
@@ -203,9 +207,14 @@ class NewsFeedVM extends ChangeNotifier {
   Future<void> dislikePost(AnnouncementPostModel model) async {
     try {
       await newsFeedRepository.disLikePost(model.id ?? 0);
-      var fetchedModel = await fetchAnnouncementPost(model.id ?? 0);
+      model.dislikes = (model.dislikes ?? 0) + 1;
+      model.isDisliked = true;
+      if (model.isLiked ?? false) {
+        model.isLiked = false;
+        model.likes = (model.likes ?? 1) - 1;
+      }
       int indexOf = announcements.indexOf(model);
-      announcements[indexOf] = fetchedModel;
+      announcements[indexOf] = model;
     } on Exception catch (e) {
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
