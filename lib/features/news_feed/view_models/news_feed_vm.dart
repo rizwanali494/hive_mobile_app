@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
@@ -13,25 +14,32 @@ import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-class NewsFeedVM extends ChangeNotifier {
+class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
   bool _isLoading = true;
   ScrollController _scrollController = ScrollController();
   GetIt getIt = GetIt.instance;
   static const _limit = 10;
   List<AnnouncementPostModel> announcements = [];
-  late PaginationController paginationController;
+  PaginationController? paginationController;
   late ApiService apiService;
   late NewsFeedRepository newsFeedRepository;
 
   Future<void> inItValues() async {
     apiService = getIt.get<ApiService>();
     newsFeedRepository = NewsFeedRepositoryImpl(apiService: apiService);
+    setPaginationController();
+    setIsarInstance();
+    pollRepository = PollRepository();
+  }
+
+  void setPaginationController() {
+    if (paginationController != null) {
+      return;
+    }
     paginationController = PaginationController(
       controller: _scrollController,
       onScroll: getNextNewsFeed,
     );
-    setIsarInstance();
-    pollRepository = PollRepository();
   }
 
   NewsFeedVM() {
@@ -39,53 +47,86 @@ class NewsFeedVM extends ChangeNotifier {
     getInitialNewsFeed();
   }
 
+  bool _hasError = false;
+
+  bool get hasError => _hasError;
+
   Future<void> getInitialNewsFeed() async {
     try {
       var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
       if (list.length < _limit) {
-        paginationController.toggleLastPage();
+        paginationController?.toggleLastPage();
       }
       announcements.addAll(list);
       await saveLocally(list);
-      addScrollListener();
       toggleLoading();
+      addScrollListener();
     } catch (e) {
+      onError();
       log(e.toString());
     }
   }
 
   Future<void> getNextNewsFeed() async {
     try {
+      // throw "Something went wrong";
+
       isGettingMore();
       var list = await newsFeedRepository.getNextNewsFeed(
         limit: _limit,
-        offSet: paginationController.offset,
+        offSet: paginationController?.offset,
       );
       announcements.addAll(list);
       if (list.length < _limit) {
         isLastPage();
       }
-      paginationController.setOffset(paginationController.offset + list.length);
+      paginationController
+          ?.setOffset((paginationController?.offset ?? 0) + list.length);
       isGettingMore();
+      addScrollListener();
       notifyListeners();
     } catch (e) {
-      log(e.toString());
+      onError();
     }
   }
 
+  bool get isGettingMoreLoading => paginationController?.isGettingMore ?? false;
+
   Future<void> refreshNewsFeed() async {
     try {
-      toggleValues();
+      setHasErrorFalse();
+      setLastPageFalse();
+      // toggleValues();
       var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
       if (list.length < _limit) {
         isLastPage();
       }
       announcements = list;
-      paginationController.setOffset(list.length);
-      // announcements = [...list, ...announcements].toSet().toList();
-    } catch (e) {}
+      paginationController?.setOffset(list.length);
+      addScrollListener();
+    } catch (e) {
+      onError();
+    }
     notifyListeners();
     return;
+  }
+
+  void setHasErrorFalse() {
+    _hasError = false;
+  }
+
+  void setLastPageFalse() {
+    paginationController?.toggleLastPage(false);
+  }
+
+  void onError() {
+    _hasError = true;
+    _isLoading = false;
+    paginationController?.toggleIsGettingMore(false);
+    setLastPageFalse();
+    announcements = [];
+    paginationController?.removeListener();
+    notifyListeners();
   }
 
   bool get isLoading => _isLoading;
@@ -95,27 +136,33 @@ class NewsFeedVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleHasError() {
+    _hasError = !_hasError;
+    notifyListeners();
+  }
+
   ScrollController get scrollController => _scrollController;
 
   void addScrollListener() {
-    paginationController.addListener();
+    if (!_scrollController.hasListeners) {
+      paginationController?.addListener();
+    }
   }
 
   void resetOffset() {
-    paginationController.resetOffset();
+    paginationController?.resetOffset();
   }
 
   void toggleValues() {
     isLastPage();
-    // isGettingMore();
   }
 
   void isLastPage() {
-    paginationController.toggleLastPage();
+    paginationController?.toggleLastPage();
   }
 
   void isGettingMore() {
-    paginationController.toggleIsGettingMore();
+    paginationController?.toggleIsGettingMore();
   }
 
   Isar? isar;
@@ -147,12 +194,6 @@ class NewsFeedVM extends ChangeNotifier {
     );
     // await collection!.putAll(objects);
     getPostFromLocalStorage();
-  }
-
-  @override
-  void dispose() {
-    isar?.close();
-    super.dispose();
   }
 
   late PollRepository pollRepository;
@@ -240,5 +281,12 @@ class NewsFeedVM extends ChangeNotifier {
     int indexOf = announcements.indexOf(model);
     announcements[indexOf] = model;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    isar?.close();
+    _scrollController.dispose();
+    super.dispose();
   }
 }

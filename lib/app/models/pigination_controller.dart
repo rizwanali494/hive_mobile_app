@@ -37,11 +37,19 @@ class PaginationController {
     _offset = value;
   }
 
-  void toggleLastPage() {
-    _isLastPage = !_isLastPage;
+  void toggleLastPage([bool? value]) {
+    _isLastPage = value ?? !_isLastPage;
   }
 
-  void toggleIsGettingMore() {
-    _isGettingMore = !_isGettingMore;
+  void toggleIsGettingMore([bool? value]) {
+    _isGettingMore = value ?? !_isGettingMore;
+  }
+
+  bool get isGettingMore {
+    return _isGettingMore;
+  }
+
+  void removeListener() {
+    _scrollController.removeListener(() {});
   }
 }

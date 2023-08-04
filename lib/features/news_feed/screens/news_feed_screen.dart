@@ -46,6 +46,37 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
             ),
             Consumer<NewsFeedVM>(
               builder: (BuildContext context, provider, Widget? child) {
+                if (provider.hasError) {
+                  return Expanded(
+                    child: Center(
+                      child: RefreshIndicator(
+                        onRefresh: provider.refreshNewsFeed,
+                        backgroundColor: styles.white,
+                        child: Center(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ListView(
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w),
+                                      child: Text(
+                                        AppStrings.somethingWentWrong,
+                                        style: styles.inter20w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
                 if (provider.isLoading) {
                   return Expanded(
                     child: ListView.separated(
@@ -74,7 +105,12 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       ),
                       controller: provider.scrollController,
                       itemBuilder: (context, index) {
-                        log(provider.announcements.length.toString());
+                        if (index == provider.announcements.length) {
+                          if (provider.isGettingMoreLoading) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          return SizedBox.shrink();
+                        }
                         return GestureDetector(
                           onTap: () {
                             // showDialog(
@@ -104,9 +140,12 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                         );
                       },
                       separatorBuilder: (context, index) {
+                        if (index == provider.announcements.length) {
+                          return SizedBox.shrink();
+                        }
                         return 20.verticalSpace;
                       },
-                      itemCount: provider.announcements.length,
+                      itemCount: provider.announcements.length + 1,
                     ),
                   ),
                 );
