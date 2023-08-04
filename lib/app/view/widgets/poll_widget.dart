@@ -39,13 +39,14 @@ class PollWidget extends StatelessWidget {
                   child: FractionallySizedBox(
                     widthFactor: controller.pollPercentage,
                     alignment: Alignment.topLeft,
-                    child: Container(
+                    child: AnimatedContainer(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(36.r),
                         color: controller.isSelected
                             ? styles.lavender
                             : styles.platinum,
                       ),
+                      duration: Duration(milliseconds: 1200),
                     ),
                   ),
                 ),

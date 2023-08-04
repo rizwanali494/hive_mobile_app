@@ -11,6 +11,8 @@ import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:provider/provider.dart';
 
 class NewsFeedWidget extends StatelessWidget {
@@ -47,9 +49,23 @@ class NewsFeedWidget extends StatelessWidget {
           Row(
             children: [
               if (controller.userImage != null)
-                CircleAvatar(
-                  backgroundImage: NetworkImage(controller.userImage!),
-                  radius: 25,
+                CachedNetworkImage(
+                  imageUrl: controller.userImage!,
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 45.h,
+                    height: 45.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  placeholder: (context, url) =>
+                      SvgPicture.asset(SvgIcons.userPlaceholder),
+                  errorWidget: (context, url, error) =>
+                      SvgPicture.asset(SvgIcons.userPlaceholder),
                 ),
               12.horizontalSpace,
               Column(
@@ -81,9 +97,16 @@ class NewsFeedWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   child: AspectRatio(
                     aspectRatio: 0.89,
-                    child: Image(
-                      image: NetworkImage(controller.attachment),
+                    // child: Image(
+                    //   image: NetworkImage(controller.attachment),
+                    //   fit: BoxFit.cover,
+                    // ),
+                    child: CachedNetworkImage(
+                      imageUrl: controller.attachment,
                       fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                   ),
                 ),

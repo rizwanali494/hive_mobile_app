@@ -45,4 +45,5 @@ class SvgIcons {
   static const String campusLocation = "${_iconsPath}campus_location.svg";
   static const String archiveTick = "${_iconsPath}archive_tick.svg";
   static const String send = "${_iconsPath}send.svg";
+  static const String userPlaceholder = "${_iconsPath}user_placeholder.svg";
 }

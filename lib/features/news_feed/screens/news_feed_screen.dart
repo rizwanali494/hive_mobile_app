@@ -48,29 +48,24 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
               builder: (BuildContext context, provider, Widget? child) {
                 if (provider.hasError) {
                   return Expanded(
-                    child: Center(
-                      child: RefreshIndicator(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => RefreshIndicator(
                         onRefresh: provider.refreshNewsFeed,
                         backgroundColor: styles.white,
-                        child: Center(
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              ListView(
-                                children: [
-                                  Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10.w),
-                                      child: Text(
-                                        AppStrings.somethingWentWrong,
-                                        style: styles.inter20w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minHeight: constraints.maxHeight),
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Text(
+                                  AppStrings.somethingWentWrong,
+                                  style: styles.inter20w600,
+                                ),
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
