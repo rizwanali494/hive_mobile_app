@@ -106,6 +106,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
         isLastPage();
       }
       announcements = list;
+      saveLocally(list);
       paginationController?.setOffset(list.length);
       addScrollListener();
     } catch (e) {
@@ -188,7 +189,12 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     }
     var collection = isar?.collection<AnnouncementPostModel>();
     try {
-      list = await collection?.where(distinct: true).findAll() ?? [];
+      list = await collection?.where(distinct: true).sortByIdDesc().findAll() ??
+          [];
+      list.forEach((element) {
+        log(element.id.toString());
+      });
+      log("local list length : ${list.length}");
     } catch (e) {
       log("Data not fetched from local storage error:$e");
     }
@@ -204,6 +210,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
       await isar?.writeTxn(
         () => collection.where().deleteAll(),
       );
+      log("saving object : ${objects.length}");
       await isar?.writeTxn(
         () => collection.putAll(objects),
       );
