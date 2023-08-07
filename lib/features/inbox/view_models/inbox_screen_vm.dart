@@ -9,6 +9,7 @@ import 'package:hive_mobile/features/inbox/repositories/inbox_repository.dart';
 class InboxScreenVM extends ChangeNotifier {
   bool _isLoading = true;
   bool _hasError = false;
+  bool isLoadingMore = false;
   static const _limit = 10;
   late PaginationController _paginationController;
   late InboxRepository inboxRepository;
@@ -16,6 +17,8 @@ class InboxScreenVM extends ChangeNotifier {
   ApiService apiService = GetIt.instance.get<ApiService>();
 
   bool get isLoading => _isLoading;
+
+  bool get isGettingMore => _paginationController.isGettingMore;
 
   InboxScreenVM() {
     inItValues();
@@ -43,5 +46,12 @@ class InboxScreenVM extends ChangeNotifier {
     } catch (e) {
       log("Error occurred : $e");
     }
+  }
+
+  int get listCount {
+    if (isGettingMore) {
+      return 12;
+    }
+    return 11;
   }
 }

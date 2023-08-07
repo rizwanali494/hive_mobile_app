@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/network_images.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 
 class InboxListTile extends StatelessWidget {
+  final InboxTileWidgetVM controller;
+
   const InboxListTile({
     super.key,
     this.onTap,
-    required this.title,
-    required this.subTitle,
-    this.trailing,
     this.iconColor,
     this.contentPadding,
+    required this.controller,
   });
 
   final VoidCallback? onTap;
-  final String title;
-  final String subTitle;
-  final Widget? trailing;
   final Color? iconColor;
   final EdgeInsetsGeometry? contentPadding;
 
@@ -49,19 +47,39 @@ class InboxListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            controller.name,
             style: titleTextStyle,
           ),
           3.verticalSpace,
           Text(
-            subTitle,
+            controller.content,
             style: styles.inter10w400.copyWith(
               color: styles.darkGrey,
             ),
           ),
         ],
       ),
-      trailing: trailing ?? const SizedBox.shrink(),
+      // trailing: trailing ?? const SizedBox.shrink(),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            controller.time,
+            style: styles.inter10w400
+                .copyWith(color: styles.black.withOpacity(0.5)),
+          ),
+          7.verticalSpace,
+          Container(
+            height: 7.h,
+            width: 7.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: styles.linearBlueGradientTopLeft,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
