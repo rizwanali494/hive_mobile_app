@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation_vm.dart';
+import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
+import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -52,9 +54,7 @@ class NewConversationScreen extends StatelessWidget {
                                 bottom: 20.h,
                               ),
                               onTap: () {},
-                              title: 'Awais Ali Khan',
-                              subTitle:
-                                  'Awais Ali Khan Lorem ipsum dolor sit amet',
+                              controller: InboxTileWidgetVM(),
                             ),
                           ],
                         );

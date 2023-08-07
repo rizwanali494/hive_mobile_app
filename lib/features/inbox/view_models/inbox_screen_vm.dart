@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/inbox/repositories/inbox_repository.dart';
+import 'package:isar/isar.dart';
 
 class InboxScreenVM extends ChangeNotifier {
   bool _isLoading = true;
@@ -15,10 +16,14 @@ class InboxScreenVM extends ChangeNotifier {
   late InboxRepository inboxRepository;
   ScrollController scrollController = ScrollController();
   ApiService apiService = GetIt.instance.get<ApiService>();
+  List inboxList = [];
+  Isar? isar;
 
   bool get isLoading => _isLoading;
 
   bool get isGettingMore => _paginationController.isGettingMore;
+
+  bool get hasError => _hasError;
 
   InboxScreenVM() {
     inItValues();
@@ -30,6 +35,62 @@ class InboxScreenVM extends ChangeNotifier {
       onScroll: () {},
     );
     inboxRepository = InboxRepositoryImpl(apiService: apiService);
+  }
+
+  void addScrollListeners() {
+    if (!scrollController.hasListeners) {
+      _paginationController.addListener();
+    }
+  }
+
+  Future<void> getInitialInboxList() async {
+    final request = () async {
+      var list = await inboxRepository.getInitialInboxList(limit: _limit);
+      if (list.length < _limit) {
+        _paginationController.isLastPage = true;
+      } else {
+        _paginationController
+            .setOffset((_paginationController.offset ?? 0) + list.length);
+      }
+      inboxList.addAll(list);
+      return;
+    };
+    performRequest(request: request);
+  }
+
+  Future<void> getNextInboxList() async {
+    final request = () async {
+      var list = await inboxRepository.getNextInboxList(limit: _limit);
+      if (list.length < _limit) {
+        _paginationController.isLastPage = true;
+      } else {
+        _paginationController
+            .setOffset((_paginationController.offset ?? 0) + list.length);
+      }
+      inboxList.addAll(list);
+      _paginationController.toggleIsGettingMore(false);
+      return;
+    };
+    performRequest(request: request);
+  }
+
+  Future<void> refreshInbox() async {
+    final request = () async {
+      _hasError = false;
+      _paginationController.toggleIsGettingMore(false);
+      _paginationController.toggleLastPage(false);
+      var list = await inboxRepository.getInitialInboxList(limit: _limit);
+      if (list.length < _limit) {
+        _paginationController.isLastPage = true;
+      } else {
+        _paginationController
+            .setOffset((_paginationController.offset ?? 0) + list.length);
+      }
+      inboxList.addAll(list);
+      addScrollListeners();
+    };
+    performRequest(request: request);
+    return;
   }
 
   void setLastPage([bool lastPage = true]) {
