@@ -7,7 +7,7 @@ class PaginationController {
   int _offset = 10;
   late Function onScroll;
   bool _isGettingMore = false;
-  bool _isLastPage = false;
+  bool isLastPage = false;
 
   int get offset => _offset;
 
@@ -20,8 +20,8 @@ class PaginationController {
     _scrollController.addListener(() {
       final nextPageTrigger = 0.8 * _scrollController.position.maxScrollExtent;
       if (_scrollController.position.pixels > nextPageTrigger) {
-        if (_isGettingMore || _isLastPage) {
-          log("not getting last page : ${_isLastPage}  isGettingMore : ${_isGettingMore}");
+        if (_isGettingMore || isLastPage) {
+          log("not getting last page : ${isLastPage}  isGettingMore : ${_isGettingMore}");
           return;
         }
         onScroll();
@@ -38,7 +38,7 @@ class PaginationController {
   }
 
   void toggleLastPage([bool? value]) {
-    _isLastPage = value ?? !_isLastPage;
+    isLastPage = value ?? !isLastPage;
   }
 
   void toggleIsGettingMore([bool? value]) {

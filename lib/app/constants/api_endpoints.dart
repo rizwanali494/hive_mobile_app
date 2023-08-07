@@ -3,6 +3,8 @@ class ApiEndpoints {
   static String apiUrl = "${baseUrl}/api/v1/";
   static String authUrl = "${apiUrl}auth/";
   static String googleLogin = "${authUrl}google_login_mobile/";
-  static String announcementPost = "${apiUrl}communication/announcement_post/";
+  static String communication = "${apiUrl}communication/";
+  static String announcementPost = "${communication}announcement_post/";
+  static String inbox = "${communication}message/";
 }
 
