@@ -1,11 +1,11 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/inbox/repositories/inbox_repository.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class InboxScreenVM extends ChangeNotifier {
   bool _isLoading = true;
@@ -35,6 +35,22 @@ class InboxScreenVM extends ChangeNotifier {
       onScroll: () {},
     );
     inboxRepository = InboxRepositoryImpl(apiService: apiService);
+    setIsarInstance();
+  }
+
+  Future<void> setIsarInstance() async {
+    if (isar != null) {
+      return;
+    }
+    try {
+      // final dir = await getApplicationDocumentsDirectory();
+      // isar = await Isar.open(
+      //   [AnnouncementPostModelSchema],
+      //   directory: dir.path,
+      // );
+    } catch (e) {
+      log("Isar instance not initialized error : $e");
+    }
   }
 
   void addScrollListeners() {
@@ -107,6 +123,7 @@ class InboxScreenVM extends ChangeNotifier {
     } catch (e) {
       log("Error occurred : $e");
     }
+    notifyListener();
   }
 
   int get listCount {
