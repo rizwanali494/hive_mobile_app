@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
+import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
@@ -62,10 +62,9 @@ class NewsFeedWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) =>
-                      SvgPicture.asset(SvgIcons.userPlaceholder),
+                  placeholder: (context, url) => const UserPlaceHolderWidget(),
                   errorWidget: (context, url, error) =>
-                      SvgPicture.asset(SvgIcons.userPlaceholder),
+                      const UserPlaceHolderWidget(),
                 ),
               12.horizontalSpace,
               Column(
