@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/notification/view_models/notfication_tile_vm.dart';
 
 class NotificationTile extends StatelessWidget {
+  final NotificationTimeVM controller;
+
   const NotificationTile({
     super.key,
     required this.onTap,
     required this.svgIconPath,
-    required this.title,
-    required this.trailing,
     this.iconColor,
+    required this.controller,
   });
 
   final VoidCallback onTap;
   final String svgIconPath;
-  final String title;
-  final String trailing;
   final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final titleTextStyle =
-        styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
+    styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
     return ListTile(
       visualDensity: const VisualDensity(vertical: -3, horizontal: 0.0),
       // minVerticalPadding: 20.h,
@@ -43,14 +43,13 @@ class NotificationTile extends StatelessWidget {
             : null,
       ),
       title: Text(
-        title,
+        controller.title,
         style: titleTextStyle,
       ),
       trailing: Text(
-        trailing,
-        style: styles.inter10w400.copyWith(
-          color: styles.black.withOpacity(0.5)
-        ),
+        controller.trailing,
+        style:
+            styles.inter10w400.copyWith(color: styles.black.withOpacity(0.5)),
       ),
     );
   }
