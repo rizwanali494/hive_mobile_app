@@ -6,5 +6,6 @@ class ApiEndpoints {
   static String communication = "${apiUrl}communication/";
   static String announcementPost = "${communication}announcement_post/";
   static String inbox = "${communication}message/";
+  static String notification = "${communication}notification/";
 }
 
