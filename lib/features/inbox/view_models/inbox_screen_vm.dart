@@ -5,7 +5,6 @@ import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/inbox/repositories/inbox_repository.dart';
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 class InboxScreenVM extends ChangeNotifier {
   bool _isLoading = true;
@@ -66,7 +65,7 @@ class InboxScreenVM extends ChangeNotifier {
         _paginationController.isLastPage = true;
       } else {
         _paginationController
-            .setOffset((_paginationController.offset ?? 0) + list.length);
+            .setOffset((_paginationController.offset) + list.length);
       }
       inboxList.addAll(list);
       return;
@@ -81,7 +80,7 @@ class InboxScreenVM extends ChangeNotifier {
         _paginationController.isLastPage = true;
       } else {
         _paginationController
-            .setOffset((_paginationController.offset ?? 0) + list.length);
+            .setOffset((_paginationController.offset) + list.length);
       }
       inboxList.addAll(list);
       _paginationController.toggleIsGettingMore(false);
@@ -100,7 +99,7 @@ class InboxScreenVM extends ChangeNotifier {
         _paginationController.isLastPage = true;
       } else {
         _paginationController
-            .setOffset((_paginationController.offset ?? 0) + list.length);
+            .setOffset((_paginationController.offset) + list.length);
       }
       inboxList.addAll(list);
       addScrollListeners();

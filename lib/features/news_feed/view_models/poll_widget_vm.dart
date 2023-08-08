@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';

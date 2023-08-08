@@ -16,7 +16,6 @@ class PollWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final newsFeedVM = context.read<NewsFeedVM>();
 
     return SizedBox(
       width: double.infinity,

@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 
-import '../../../app/view/widgets/error_text_widget.dart';
+import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({Key? key}) : super(key: key);

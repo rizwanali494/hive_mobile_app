@@ -5,7 +5,6 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
-import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
