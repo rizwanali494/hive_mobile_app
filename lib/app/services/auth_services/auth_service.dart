@@ -1,5 +1,5 @@
-abstract class AuthService {
-  Future<String?> logIn();
+abstract class AuthService<T> {
+  Future<T?> logIn();
 
   Future<void> logOut() async {}
 }

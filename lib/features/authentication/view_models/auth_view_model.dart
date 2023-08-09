@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/get_it/api_service_instance.dart';
@@ -24,19 +26,17 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
 
   Future googleSignIn(BuildContext context) async {
     AuthService authService = GoogleAuthService();
-    // await authService.logOut();
-    if (kDebugMode) {
-      var token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjUzOTQ3LCJpYXQiOjE2OTEwNDkxNDcsImp0aSI6IjM0NDY2YWZhZWM4NTRmNjU4ZWI2MTQzNjJmZDY2ODAxIiwidXNlcl9pZCI6NDJ9.i17BGv146sPKStEb9vG20lgRiwtqxV_SA-k9V501qYc";
-      registerApiServiceInstance(token: token);
-      context.pushReplacement(HomeScreen.route);
-      return;
-    }
+    // if (kDebugMode) {
+    //   var token =
+    //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjUzOTQ3LCJpYXQiOjE2OTEwNDkxNDcsImp0aSI6IjM0NDY2YWZhZWM4NTRmNjU4ZWI2MTQzNjJmZDY2ODAxIiwidXNlcl9pZCI6NDJ9.i17BGv146sPKStEb9vG20lgRiwtqxV_SA-k9V501qYc";
+    //   registerApiServiceInstance(token: token);
+    //   context.pushReplacement(HomeScreen.route);
+    //   return;
+    // }
+    await authService.logOut();
     var user = await authService.logIn().timeout(Duration(seconds: 5));
-    if (user == null) {
-      debugPrint("null");
-    }
-    if (user != null) {
+    log(user.runtimeType.toString());
+    if (user is GoogleSignInAccount) {
       var body = {
         "payload": {
           "email": "bcp.test1@beaconite.edu.pk",
@@ -50,6 +50,9 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
         );
         var responseBody = jsonDecode(response.body);
         var model = UserModel.fromJson(responseBody);
+        var token = responseBody["token"]["access"];
+        log(token.toString());
+        registerApiServiceInstance(token: token);
         registerUserModel(model);
         context.pushReplacement(HomeScreen.route);
       } catch (e) {
