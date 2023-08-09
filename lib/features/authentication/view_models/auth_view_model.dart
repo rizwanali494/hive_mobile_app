@@ -14,9 +14,11 @@ import 'package:hive_mobile/app/models/data/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 
-class AuthVM extends ChangeNotifier with BaseExceptionController {
+class AuthVM extends ChangeNotifier
+    with BaseExceptionController, UtilFunctions {
   GetIt getIt = GetIt.instance;
   late ApiService apiService;
 
@@ -44,6 +46,7 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
         }
       };
       try {
+        showLoaderDialog(context);
         var response = await apiService.post(
           url: ApiEndpoints.googleLogin,
           body: body,
@@ -55,10 +58,13 @@ class AuthVM extends ChangeNotifier with BaseExceptionController {
         registerApiServiceInstance(token: token);
         registerUserModel(model);
         context.pushReplacement(HomeScreen.route);
+        return;
       } catch (e) {
         handleException(e);
       }
-
+      if (context.mounted) {
+        context.pop();
+      }
       // if (kDebugMode || kProfileMode) {
       //   context.pushReplacement(HomeScreen.route);
       //   return;
