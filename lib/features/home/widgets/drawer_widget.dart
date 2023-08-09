@@ -61,7 +61,7 @@ class DrawerWidget extends StatelessWidget {
                 children: [
                   if (controller.userImage.isNotEmpty)
                     CachedNetworkImage(
-                      imageUrl: controller.userImage!,
+                      imageUrl: controller.userImage,
                       imageBuilder: (context, imageProvider) => Container(
                         width: 45.h,
                         height: 45.w,
