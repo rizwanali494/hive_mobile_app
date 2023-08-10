@@ -107,4 +107,6 @@ class AppStrings {
   static String documentName = "Document Name";
   static String typeMessagesHere = "Type message here...";
   static String somethingWentWrong = "Something went wrong";
+  static String pollsClosed = "Poll Closed";
+  static String votes = "votes";
 }

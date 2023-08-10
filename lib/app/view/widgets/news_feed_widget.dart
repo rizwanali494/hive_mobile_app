@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
@@ -140,7 +141,7 @@ class NewsFeedWidget extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                       child: Text(
-                        "Poll Closed • ${controller.totalSelectors?.toInt()} votes",
+                        "${AppStrings.pollsClosed} • ${controller.totalSelectors?.toInt()} ${AppStrings.votes}",
                         style: styles.inter12w400Italic,
                       ),
                     ),
