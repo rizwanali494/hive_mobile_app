@@ -20,7 +20,7 @@ class PollWidget extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.only(bottom: 16.h),
+        padding: EdgeInsets.only(top: 16.h),
         child: IntrinsicHeight(
           child: IntrinsicWidth(
             child: Stack(

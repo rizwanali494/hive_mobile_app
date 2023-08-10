@@ -116,8 +116,9 @@ class NewsFeedWidget extends StatelessWidget {
               26.verticalSpace
           else
             Padding(
-              padding: EdgeInsets.only(top: 20.h),
+              padding: EdgeInsets.only(top: 4.h),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (var element in controller.polls)
                     GestureDetector(
@@ -134,6 +135,17 @@ class NewsFeedWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                  if (true) ...[
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                      child: Text(
+                        "Poll Closed • ${controller.totalSelectors?.toInt()} votes",
+                        style: styles.inter12w400Italic,
+                      ),
+                    ),
+                    15.verticalSpace,
+                  ],
                 ],
               ),
             ),

@@ -36,7 +36,7 @@ class AuthVM extends ChangeNotifier
     //   return;
     // }
     await authService.logOut();
-    var user = await authService.logIn().timeout(Duration(seconds: 5));
+    var user = await authService.logIn();
     log(user.runtimeType.toString());
     if (user is GoogleSignInAccount) {
       var body = {
