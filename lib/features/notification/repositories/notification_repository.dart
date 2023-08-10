@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
-import 'package:hive_mobile/app/extensions/api_fields_expands_extension.dart';
+import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class NotificationRepository {

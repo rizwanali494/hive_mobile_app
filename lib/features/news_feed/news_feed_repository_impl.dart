@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
-import 'package:hive_mobile/app/extensions/api_fields_expands_extension.dart';
+import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
 
@@ -14,9 +14,7 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
       {int? offSet, int? limit}) async {
     List<AnnouncementPostModel> announcements = [];
     var response = await apiService.get(
-      url: ApiEndpoints
-          .announcementPost.withOwnerObject.withPolls.withAttachments
-          .withLimit(limit),
+      url: withAttachments().withLimit(limit),
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
@@ -31,14 +29,9 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   Future<List<AnnouncementPostModel>> getNextNewsFeed(
       {int? offSet, int? limit}) async {
     List<AnnouncementPostModel> announcements = [];
-    log(ApiEndpoints.announcementPost.withOwnerObject.withPolls.withAttachments
-        .withLimit(limit)
-        .withOffSet(offSet));
+    log(withAttachments().withLimit(limit).withOffSet(offSet));
     var response = await apiService.get(
-      url: ApiEndpoints
-          .announcementPost.withOwnerObject.withPolls.withAttachments
-          .withLimit(limit)
-          .withOffSet(offSet),
+      url: withAttachments().withLimit(limit).withOffSet(offSet),
     );
 
     var result = jsonDecode(response.body);
@@ -50,6 +43,9 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
     print(announcements.length.toString());
     return announcements;
   }
+
+  String withAttachments() => ApiEndpoints.announcementPost.withOwnerObject
+      .withPolls.withAttachments.withMostRecentOrder;
 
   @override
   Future<AnnouncementPostModel> fetchNewsFeedModel(int id) async {

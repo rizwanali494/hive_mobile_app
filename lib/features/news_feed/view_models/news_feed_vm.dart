@@ -222,22 +222,43 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
 
   late PollRepository pollRepository;
 
-  Future<Polls> selectPoll(Polls poll,
+  Future<void> selectPoll(Polls poll,
       {required AnnouncementPostModel model}) async {
+    var previous = model.copyWith();
+    if (poll.isSelected ?? false) {
+      return;
+    }
+    var list = model.polls?.where(
+      (element) => element.isSelected ?? false,
+    );
+    if (list?.isNotEmpty ?? false) {
+      var element = list?.first;
+      element?.selectors = (element.selectors ?? -1) - 1;
+    }
+    poll.isSelected = true;
+    poll.selectors = (poll.selectors ?? 0) + 1;
+    var indexOf = model.polls?.indexOf(poll);
+    model.polls![indexOf!] = poll;
+    for (var element in model.polls ?? <Polls>[]) {
+      if (element.id != poll.id) {
+        element.isSelected = false;
+      }
+    }
+    int indexOf1 = announcements.indexOf(model);
+    announcements[indexOf1] = model;
+    notifyListeners();
     try {
       await pollRepository.selectPoll(poll.id ?? 0);
-      var fetchedModel = await fetchAnnouncementPost(model.id ?? 0);
-      int indexOf = announcements.indexOf(model);
-      announcements[indexOf] = fetchedModel;
-      model = fetchedModel;
-      poll.isSelected = true;
     } catch (e) {
+      int indexOf1 = announcements.indexOf(previous);
+      announcements[indexOf1] = previous;
+      notifyListeners();
+      log("Something went wrong");
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
       }
     }
     notifyListeners();
-    return poll;
   }
 
   int? selectedPollId(AnnouncementPostModel model) {

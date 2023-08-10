@@ -53,4 +53,19 @@ extension ApiFieldExpandExtension on String {
   String withDislike(int id) {
     return "${this}$id/dislike/";
   }
+
+  String get withMostRecentOrder {
+    return _appendQueryParameter("ordering=-date_added");
+    // if (this.contains("?")) {
+    //   return "${this}&ordering=-date_added";
+    // }
+    // return "${this}?ordering=-date_added";
+  }
+
+  String _appendQueryParameter(String parameter) {
+    if (this.contains("?")) {
+      return "${this}&$parameter";
+    }
+    return "${this}?$parameter";
+  }
 }

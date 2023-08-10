@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +32,7 @@ class NewsFeedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final newsFeedVM = context.read<NewsFeedVM>();
+
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
@@ -119,8 +121,9 @@ class NewsFeedWidget extends StatelessWidget {
                 children: [
                   for (var element in controller.polls)
                     GestureDetector(
-                      onTap: () {
-                        newsFeedVM.selectPoll(element, model: controller.model);
+                      onTap: () async {
+                        await newsFeedVM.selectPoll(element,
+                            model: controller.model);
                       },
                       child: PollWidget(
                         controller: PollWidgetVM(

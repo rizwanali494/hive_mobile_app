@@ -94,7 +94,8 @@ class AnnouncementPostModel {
         dislikes: dislikes ?? this.dislikes,
         isLiked: isLiked ?? this.isLiked,
         isDisliked: isDisliked ?? this.isDisliked,
-        polls: polls ?? this.polls,
+        polls: polls?.map((e) => e.copyWith()).toList() ??
+            this.polls?.map((e) => e.copyWith()).toList(),
         localId: localId ?? this.localId,
         attachments: attachments ?? this.attachments,
         owner: owner ?? this.owner,
