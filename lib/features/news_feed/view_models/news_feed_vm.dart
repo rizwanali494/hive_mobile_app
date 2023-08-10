@@ -224,40 +224,54 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
 
   Future<void> selectPoll(Polls poll,
       {required AnnouncementPostModel model}) async {
-    var previous = model.copyWith();
     if (poll.isSelected ?? false) {
       return;
     }
-    var list = model.polls?.where(
-      (element) => element.isSelected ?? false,
-    );
-    if (list?.isNotEmpty ?? false) {
-      var element = list?.first;
-      element?.selectors = (element.selectors ?? -1) - 1;
+
+    var previous = model.copyWith();
+
+    var selectedList =
+        model.polls?.where((element) => element.isSelected ?? false);
+    if (selectedList?.isNotEmpty ?? false) {
+      var selectedElement = selectedList!.first;
+      selectedElement.selectors = (selectedElement.selectors ?? -1) - 1;
     }
+
     poll.isSelected = true;
     poll.selectors = (poll.selectors ?? 0) + 1;
-    var indexOf = model.polls?.indexOf(poll);
-    model.polls![indexOf!] = poll;
+
+    var pollIndex = model.polls?.indexOf(poll);
+    if (pollIndex != null && pollIndex >= 0) {
+      model.polls![pollIndex] = poll;
+    }
+
     for (var element in model.polls ?? <Polls>[]) {
       if (element.id != poll.id) {
         element.isSelected = false;
       }
     }
-    int indexOf1 = announcements.indexOf(model);
-    announcements[indexOf1] = model;
+
+    int modelIndex = announcements.indexOf(model);
+    if (modelIndex >= 0) {
+      announcements[modelIndex] = model;
+    }
+
     notifyListeners();
+
     try {
       await pollRepository.selectPoll(poll.id ?? 0);
     } catch (e) {
-      int indexOf1 = announcements.indexOf(previous);
-      announcements[indexOf1] = previous;
+      int previousIndex = announcements.indexOf(previous);
+      if (previousIndex >= 0) {
+        announcements[previousIndex] = previous;
+      }
       notifyListeners();
       log("Something went wrong");
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
       }
     }
+
     notifyListeners();
   }
 
