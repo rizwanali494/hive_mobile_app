@@ -220,6 +220,24 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     return;
   }
 
+  Future<void> updateLocal(AnnouncementPostModel object) async {
+    if (isar == null) {
+      await setIsarInstance();
+    }
+    try {
+      var collection = isar!.collection<AnnouncementPostModel>();
+      var obj = await collection.get(object.id ?? -1);
+      if (obj != null) {
+        await isar?.writeTxn(
+          () => collection.put(object),
+        );
+      }
+    } catch (e) {
+      log("Data not locally error: $e");
+    }
+    return;
+  }
+
   late PollRepository pollRepository;
 
   Future<void> selectPoll(Polls poll,
@@ -260,10 +278,13 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
 
     try {
       await pollRepository.selectPoll(poll.id ?? 0);
+      updateLocal(model);
     } catch (e) {
+      await Future.delayed(Duration(milliseconds: 500));
       int previousIndex = announcements.indexOf(previous);
       if (previousIndex >= 0) {
         announcements[previousIndex] = previous;
+        updateLocal(previous);
       }
       notifyListeners();
       log("Something went wrong");
