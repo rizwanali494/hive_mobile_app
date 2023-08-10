@@ -278,7 +278,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
 
     try {
       await pollRepository.selectPoll(poll.id ?? 0);
-      updateLocal(model);
+      await updateLocal(model);
     } catch (e) {
       await Future.delayed(Duration(milliseconds: 500));
       int previousIndex = announcements.indexOf(previous);
@@ -287,6 +287,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
         updateLocal(previous);
       }
       notifyListeners();
+      updateLocal(previous);
       log("Something went wrong");
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
