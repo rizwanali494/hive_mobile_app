@@ -69,7 +69,8 @@ class NotificationModel {
         attachedObjectType: attachedObjectType ?? this.attachedObjectType,
         attachedObjectId: attachedObjectId ?? this.attachedObjectId,
         recipient: recipient ?? this.recipient,
-        attachments: attachments ?? this.attachments,
+        attachments: attachments?.map((e) => e.copyWith()).toList() ??
+            this.attachments?.map((e) => e.copyWith()).toList(),
       );
 
   Map<String, dynamic> toJson() {
@@ -87,4 +88,14 @@ class NotificationModel {
     }
     return map;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NotificationModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

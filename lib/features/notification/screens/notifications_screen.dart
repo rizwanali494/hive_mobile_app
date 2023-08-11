@@ -60,9 +60,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 else if (provider.hasError)
                   Expanded(
                     child: ErrorTextWidget(
-                      onRefresh: () async {
-                        return;
-                      },
+                      onRefresh: provider.refreshNotificationList,
                     ),
                   )
                 else if (provider.notificationList.isNotEmpty)
@@ -71,34 +69,39 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       padding: EdgeInsets.symmetric(
                         horizontal: 19.w,
                       ),
-                      child: ListView.separated(
-                        controller: provider.scrollController,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 27.h,
-                        ),
-                        separatorBuilder: (context, index) {
-                          // if (index == provider.listCount) {
-                          //   return const SizedBox.shrink();
-                          // }
+                      child: RefreshIndicator(
+                        onRefresh: provider.refreshNotificationList,
+                        backgroundColor: styles.white,
+                        child: ListView.separated(
+                          controller: provider.scrollController,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 27.h,
+                          ),
+                          separatorBuilder: (context, index) {
+                            // if (index == provider.listCount) {
+                            //   return const SizedBox.shrink();
+                            // }
 
-                          return buildDivider();
-                        },
-                        itemBuilder: (context, index) {
-                          if (index == provider.notificationList.length) {
-                            if (provider.isGettingMore) {
-                              return Center(child: CircularProgressIndicator());
+                            return buildDivider();
+                          },
+                          itemBuilder: (context, index) {
+                            if (index == provider.notificationList.length) {
+                              if (provider.isGettingMore) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return SizedBox.shrink();
                             }
-                            return SizedBox.shrink();
-                          }
-                          return NotificationTile(
-                            onTap: () {},
-                            svgIconPath: svgIcons[index % svgIcons.length],
-                            controller: NotificationTileVM(
-                              model: provider.notificationList[index],
-                            ),
-                          );
-                        },
-                        itemCount: provider.listCount,
+                            return NotificationTile(
+                              onTap: () {},
+                              svgIconPath: svgIcons[index % svgIcons.length],
+                              controller: NotificationTileVM(
+                                model: provider.notificationList[index],
+                              ),
+                            );
+                          },
+                          itemCount: provider.listCount,
+                        ),
                       ),
                     ),
                   ),

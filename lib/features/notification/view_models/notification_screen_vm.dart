@@ -58,6 +58,7 @@ class NotificationScreenVM extends ChangeNotifier {
             .setOffset((_paginationController.offset) + list.length);
       }
       notificationList.addAll(list);
+      notificationList = notificationList.toSet().toList();
       _paginationController.addListener();
       return;
     };
@@ -100,10 +101,10 @@ class NotificationScreenVM extends ChangeNotifier {
         _paginationController
             .setOffset((_paginationController.offset) + list.length);
       }
-      notificationList.addAll(list);
+      notificationList = list;
       addScrollListeners();
     };
-    performRequest(request: request);
+    await performRequest(request: request);
     notifyListeners();
     return;
   }
