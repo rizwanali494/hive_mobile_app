@@ -2,11 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
-import 'package:hive_mobile/features/inbox/repositories/inbox_repository.dart';
 import 'package:hive_mobile/features/notification/repositories/notification_repository.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -204,11 +202,7 @@ class NotificationScreenVM extends ChangeNotifier {
     }
     var collection = isar?.collection<NotificationModel>();
     try {
-      list = await collection?.where(distinct: true).sortByIdDesc().findAll() ??
-          [];
-      list.forEach((element) {
-        log(element.id.toString());
-      });
+      list = await collection?.where(distinct: true).findAll() ?? [];
       log("local list length : ${list.length}");
     } catch (e) {
       log("Data not fetched from local storage error:$e");
