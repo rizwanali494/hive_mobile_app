@@ -176,7 +176,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
       isar = await Isar.open(
         [AnnouncementPostModelSchema],
         directory: dir.path,
-      );
+        name: "News Feed");
     } catch (e) {
       log("Isar instance not initialized error : $e");
     }

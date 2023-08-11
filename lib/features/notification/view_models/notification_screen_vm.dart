@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -43,6 +44,12 @@ class NotificationScreenVM extends ChangeNotifier {
   }
 
   Future<void> getInitialNotificationList() async {
+    var localList = await getPostFromLocalStorage();
+    notificationList.addAll(localList);
+    if (localList.isNotEmpty) {
+      notifyListeners();
+    }
+
     _isLoading = true;
     notifyListeners();
     final request = () async {
@@ -59,6 +66,7 @@ class NotificationScreenVM extends ChangeNotifier {
       }
       notificationList.addAll(list);
       notificationList = notificationList.toSet().toList();
+      await saveLocally(list);
       _paginationController.addListener();
       return;
     };
@@ -115,7 +123,10 @@ class NotificationScreenVM extends ChangeNotifier {
     }
     try {
       final dir = await getApplicationDocumentsDirectory();
-      isar = await Isar.getInstance();
+      if (isar == null) {
+        isar = await Isar.open([NotificationModelSchema],
+            directory: dir.path, name: "Notification");
+      }
     } catch (e) {
       log("Isar instance not initialized error : $e");
     }
@@ -165,5 +176,50 @@ class NotificationScreenVM extends ChangeNotifier {
       return notificationList.length + 1;
     }
     return notificationList.length;
+  }
+
+  Future<void> saveLocally(List<NotificationModel> objects) async {
+    if (isar == null) {
+      await setIsarInstance();
+    }
+    try {
+      var collection = isar!.collection<NotificationModel>();
+      await isar?.writeTxn(
+        () => collection.where().deleteAll(),
+      );
+      log("saving object : ${objects.length}");
+      await isar?.writeTxn(
+        () => collection.putAll(objects),
+      );
+    } catch (e) {
+      log("Data not saved locally error: $e");
+    }
+    return;
+  }
+
+  Future<List<NotificationModel>> getPostFromLocalStorage() async {
+    List<NotificationModel> list = [];
+    if (isar == null) {
+      await setIsarInstance();
+    }
+    var collection = isar?.collection<NotificationModel>();
+    try {
+      list = await collection?.where(distinct: true).sortByIdDesc().findAll() ??
+          [];
+      list.forEach((element) {
+        log(element.id.toString());
+      });
+      log("local list length : ${list.length}");
+    } catch (e) {
+      log("Data not fetched from local storage error:$e");
+    }
+    return list;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    isar?.close();
+    super.dispose();
   }
 }
