@@ -31,7 +31,7 @@ class AnnouncementPostModel {
 
   AnnouncementPostModel.fromJson(dynamic json) {
     id = json['id'];
-    localId = json['id'];
+    localId = json['id'] ?? 0;
     likes = json['likes'];
     dislikes = json['dislikes'];
     isLiked = json['is_liked'];
