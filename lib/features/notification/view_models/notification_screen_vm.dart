@@ -1,10 +1,14 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/inbox/repositories/inbox_repository.dart';
+import 'package:hive_mobile/features/notification/repositories/notification_repository.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class NotificationScreenVM extends ChangeNotifier {
   bool _isLoading = true;
@@ -12,10 +16,10 @@ class NotificationScreenVM extends ChangeNotifier {
   bool isLoadingMore = false;
   static const _limit = 10;
   late PaginationController _paginationController;
-  late InboxRepository inboxRepository;
+  late NotificationRepository inboxRepository;
   ScrollController scrollController = ScrollController();
   ApiService apiService = GetIt.instance.get<ApiService>();
-  List notificationList = [];
+  List<NotificationModel> notificationList = [];
   Isar? isar;
 
   bool get isLoading => _isLoading;
@@ -33,34 +37,17 @@ class NotificationScreenVM extends ChangeNotifier {
       controller: scrollController,
       onScroll: () {},
     );
-    inboxRepository = InboxRepositoryImpl(apiService: apiService);
+    inboxRepository = NotificationRepositoryImpl(apiService: apiService);
     setIsarInstance();
-  }
-
-  Future<void> setIsarInstance() async {
-    if (isar != null) {
-      return;
-    }
-    try {
-      // final dir = await getApplicationDocumentsDirectory();
-      // isar = await Isar.open(
-      //   [AnnouncementPostModelSchema],
-      //   directory: dir.path,
-      // );
-    } catch (e) {
-      log("Isar instance not initialized error : $e");
-    }
-  }
-
-  void addScrollListeners() {
-    if (!scrollController.hasListeners) {
-      _paginationController.addListener();
-    }
+    getInitialNotificationList();
   }
 
   Future<void> getInitialNotificationList() async {
+    _isLoading = true;
+    notifyListeners();
     final request = () async {
-      var list = await inboxRepository.getInitialInboxList(limit: _limit);
+      var list =
+          await inboxRepository.getInitialNotificationList(limit: _limit);
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       } else {
@@ -70,12 +57,16 @@ class NotificationScreenVM extends ChangeNotifier {
       notificationList.addAll(list);
       return;
     };
-    performRequest(request: request);
+    await performRequest(request: request);
+    _isLoading = false;
+    notifyListeners();
   }
 
   Future<void> getNextNotificationList() async {
+    _paginationController.toggleIsGettingMore(true);
+    notifyListeners();
     final request = () async {
-      var list = await inboxRepository.getNextInboxList(limit: _limit);
+      var list = await inboxRepository.getNextNotificationList(limit: _limit);
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       } else {
@@ -86,7 +77,9 @@ class NotificationScreenVM extends ChangeNotifier {
       _paginationController.toggleIsGettingMore(false);
       return;
     };
-    performRequest(request: request);
+    await performRequest(request: request);
+    _paginationController.toggleIsGettingMore(true);
+    notifyListeners();
   }
 
   Future<void> refreshNotificationList() async {
@@ -94,7 +87,8 @@ class NotificationScreenVM extends ChangeNotifier {
       _hasError = false;
       _paginationController.toggleIsGettingMore(false);
       _paginationController.toggleLastPage(false);
-      var list = await inboxRepository.getInitialInboxList(limit: _limit);
+      var list =
+          await inboxRepository.getInitialNotificationList(limit: _limit);
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       } else {
@@ -105,7 +99,26 @@ class NotificationScreenVM extends ChangeNotifier {
       addScrollListeners();
     };
     performRequest(request: request);
+    notifyListeners();
     return;
+  }
+
+  Future<void> setIsarInstance() async {
+    if (isar != null) {
+      return;
+    }
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      isar = await Isar.getInstance();
+    } catch (e) {
+      log("Isar instance not initialized error : $e");
+    }
+  }
+
+  void addScrollListeners() {
+    if (!scrollController.hasListeners) {
+      _paginationController.addListener();
+    }
   }
 
   void setLastPage([bool lastPage = true]) {
@@ -120,15 +133,31 @@ class NotificationScreenVM extends ChangeNotifier {
     try {
       await request();
     } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("Error occurred : ${e.response.body}");
+        log("Error occurred : ${e.response.statusCode}");
+      }
+
       log("Error occurred : $e");
+      onError();
     }
-    notifyListener();
+  }
+
+  void onError() {
+    if (notificationList.isEmpty) {
+      _hasError = true;
+    }
+    _isLoading = false;
+    _paginationController.toggleIsGettingMore(false);
+    _paginationController.isLastPage = false;
+    _paginationController.removeListener();
+    notifyListeners();
   }
 
   int get listCount {
     if (isGettingMore) {
-      return 12;
+      return notificationList.length + 1;
     }
-    return 11;
+    return notificationList.length;
   }
 }

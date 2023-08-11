@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/app/navigation/extensions.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
-import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/home/view_models/drawer_widget_vm.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_widget.dart';
-import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
-import 'package:hive_mobile/features/home/widgets/drawer_action_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -103,4 +95,3 @@ class _HomeScreenState extends State<HomeScreen> {
   final bottomRadius = const Radius.circular(40);
 }
 
-const _user = MockNewsFeedModel.user;

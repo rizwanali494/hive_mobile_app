@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/notification/view_models/notfication_tile_vm.dart';
 
 class NotificationTile extends StatelessWidget {
-  final NotificationTimeVM controller;
+  final NotificationTileVM controller;
 
   const NotificationTile({
     super.key,

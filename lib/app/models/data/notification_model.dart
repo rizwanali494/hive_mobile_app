@@ -10,11 +10,11 @@ class NotificationModel {
     this.localId = 0,
     this.dateAdded,
     this.dateLastModified,
-    this.file,
-    this.purpose,
-    this.label,
-    this.mimeType,
-    this.owner,
+    this.content,
+    this.isRead,
+    this.attachedObjectType,
+    this.attachedObjectId,
+    this.recipient,
     this.attachments,
   });
 
@@ -23,11 +23,11 @@ class NotificationModel {
     localId = json['id'] ?? 0;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
-    file = json['file'];
-    purpose = json['purpose'];
-    label = json['label'];
-    mimeType = json['mime_type'];
-    owner = json['owner'];
+    content = json['content'];
+    isRead = json['is_read'];
+    attachedObjectType = json['attached_object_type'];
+    attachedObjectId = json['attached_object_id'];
+    recipient = json['recipient'];
     if (json['attachments'] != null) {
       attachments = [];
       json['attachments'].forEach((v) {
@@ -36,27 +36,27 @@ class NotificationModel {
     }
   }
 
-  String? id;
+  int? id;
   late Id localId;
   String? dateAdded;
   String? dateLastModified;
-  String? file;
-  String? purpose;
-  String? label;
-  String? mimeType;
-  int? owner;
+  String? content;
+  bool? isRead;
+  String? attachedObjectType;
+  int? attachedObjectId;
+  int? recipient;
   List<Attachments>? attachments;
 
   NotificationModel copyWith({
-    String? id,
+    int? id,
     int? localId,
     String? dateAdded,
     String? dateLastModified,
-    String? file,
-    String? purpose,
-    String? label,
-    String? mimeType,
-    int? owner,
+    String? content,
+    bool? isRead,
+    String? attachedObjectType,
+    int? attachedObjectId,
+    int? recipient,
     List<Attachments>? attachments,
   }) =>
       NotificationModel(
@@ -64,11 +64,11 @@ class NotificationModel {
         localId: localId ?? this.localId,
         dateAdded: dateAdded ?? this.dateAdded,
         dateLastModified: dateLastModified ?? this.dateLastModified,
-        file: file ?? this.file,
-        purpose: purpose ?? this.purpose,
-        label: label ?? this.label,
-        mimeType: mimeType ?? this.mimeType,
-        owner: owner ?? this.owner,
+        content: content ?? this.content,
+        isRead: isRead ?? this.isRead,
+        attachedObjectType: attachedObjectType ?? this.attachedObjectType,
+        attachedObjectId: attachedObjectId ?? this.attachedObjectId,
+        recipient: recipient ?? this.recipient,
         attachments: attachments ?? this.attachments,
       );
 
@@ -77,11 +77,11 @@ class NotificationModel {
     map['id'] = id;
     map['date_added'] = dateAdded;
     map['date_last_modified'] = dateLastModified;
-    map['file'] = file;
-    map['purpose'] = purpose;
-    map['label'] = label;
-    map['mime_type'] = mimeType;
-    map['owner'] = owner;
+    map['content'] = content;
+    map['is_read'] = isRead;
+    map['attached_object_type'] = attachedObjectType;
+    map['attached_object_id'] = attachedObjectId;
+    map['recipient'] = recipient;
     if (attachments != null) {
       map['attachments'] = attachments?.map((v) => v.toJson()).toList();
     }

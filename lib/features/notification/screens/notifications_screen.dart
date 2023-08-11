@@ -58,12 +58,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
                   )
                 else if (provider.hasError)
-                  ErrorTextWidget(
-                    onRefresh: () async {
-                      return;
-                    },
+                  Expanded(
+                    child: ErrorTextWidget(
+                      onRefresh: () async {
+                        return;
+                      },
+                    ),
                   )
-                else if (true)
+                else if (provider.notificationList.isNotEmpty)
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -74,22 +76,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           vertical: 27.h,
                         ),
                         separatorBuilder: (context, index) {
-                          if (false) {
-                            return const SizedBox.shrink();
-                          }
+                          // if (index == provider.listCount) {
+                          //   return const SizedBox.shrink();
+                          // }
 
                           return buildDivider();
                         },
                         itemBuilder: (context, index) {
-                          if (false) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
+                          if (index == provider.listCount) {
+                            if (provider.isLoadingMore) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            return SizedBox.shrink();
                           }
                           return NotificationTile(
                             onTap: () {},
                             svgIconPath: svgIcons[index % svgIcons.length],
-                            controller: NotificationTimeVM(),
+                            controller: NotificationTileVM(
+                              model: provider.notificationList[index],
+                            ),
                           );
                         },
                         itemCount: provider.listCount,

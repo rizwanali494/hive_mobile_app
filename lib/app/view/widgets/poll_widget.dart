@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
-import 'package:provider/provider.dart';
 
 class PollWidget extends StatelessWidget {
   final PollWidgetVM controller;

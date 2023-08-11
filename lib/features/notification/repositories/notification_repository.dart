@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class NotificationRepository {
@@ -9,9 +11,10 @@ abstract class NotificationRepository {
 
   NotificationRepository({required this.apiService});
 
-  Future<List> getInitialNotificationList({int? limit});
+  Future<List<NotificationModel>> getInitialNotificationList({int? limit});
 
-  Future<List> getNextNotificationList({int? offSet, int? limit});
+  Future<List<NotificationModel>> getNextNotificationList(
+      {int? offSet, int? limit});
 
   Future<void> readNotification();
 }
@@ -20,25 +23,29 @@ class NotificationRepositoryImpl extends NotificationRepository {
   NotificationRepositoryImpl({required super.apiService});
 
   @override
-  Future<List> getInitialNotificationList({int? limit}) async {
+  Future<List<NotificationModel>> getInitialNotificationList(
+      {int? limit}) async {
+    log(withAttachments.withLimit(limit).toString());
+
     var response = await apiService.get(
-      url: ApiEndpoints.notification.withAttachments.withLimit(limit),
+      url: withAttachments.withLimit(limit),
     );
     var result = jsonDecode(response.body);
-    List items = result["results"] ?? [];
-    return Future.value([]);
+    List list = result["results"] ?? [];
+    return list.map((e) => NotificationModel.fromJson(e)).toList();
   }
 
+  String get withAttachments => ApiEndpoints.notification.withAttachments;
+
   @override
-  Future<List> getNextNotificationList({int? offSet, int? limit}) async {
+  Future<List<NotificationModel>> getNextNotificationList(
+      {int? offSet, int? limit}) async {
     var response = await apiService.get(
-      url: ApiEndpoints.notification.withAttachments
-          .withLimit(limit)
-          .withOffSet(offSet),
+      url: withAttachments.withLimit(limit).withOffSet(offSet),
     );
     var result = jsonDecode(response.body);
-
-    return Future.value([]);
+    List list = result["results"] ?? [];
+    return list.map((e) => NotificationModel.fromJson(e)).toList();
   }
 
   @override
