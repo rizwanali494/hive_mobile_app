@@ -1,6 +1,8 @@
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:isar/isar.dart';
 
+part 'notification_model.g.dart';
+
 @collection
 class NotificationModel {
   NotificationModel({
@@ -42,7 +44,7 @@ class NotificationModel {
   String? purpose;
   String? label;
   String? mimeType;
-  num? owner;
+  int? owner;
   List<Attachments>? attachments;
 
   NotificationModel copyWith({
@@ -54,7 +56,7 @@ class NotificationModel {
     String? purpose,
     String? label,
     String? mimeType,
-    num? owner,
+    int? owner,
     List<Attachments>? attachments,
   }) =>
       NotificationModel(

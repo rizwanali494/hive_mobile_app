@@ -28,33 +28,38 @@ const PollsSchema = Schema(
       name: r'dateLastModified',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 3,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 4,
       name: r'id',
       type: IsarType.long,
     ),
     r'isSelected': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'isSelected',
       type: IsarType.bool,
     ),
     r'label': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'label',
       type: IsarType.string,
     ),
     r'owner': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'owner',
       type: IsarType.long,
     ),
     r'post': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'post',
       type: IsarType.long,
     ),
     r'selectors': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'selectors',
       type: IsarType.long,
     )
@@ -101,12 +106,13 @@ void _pollsSerialize(
   writer.writeLong(offsets[0], object.branchId);
   writer.writeString(offsets[1], object.dateAdded);
   writer.writeString(offsets[2], object.dateLastModified);
-  writer.writeLong(offsets[3], object.id);
-  writer.writeBool(offsets[4], object.isSelected);
-  writer.writeString(offsets[5], object.label);
-  writer.writeLong(offsets[6], object.owner);
-  writer.writeLong(offsets[7], object.post);
-  writer.writeLong(offsets[8], object.selectors);
+  writer.writeLong(offsets[3], object.hashCode);
+  writer.writeLong(offsets[4], object.id);
+  writer.writeBool(offsets[5], object.isSelected);
+  writer.writeString(offsets[6], object.label);
+  writer.writeLong(offsets[7], object.owner);
+  writer.writeLong(offsets[8], object.post);
+  writer.writeLong(offsets[9], object.selectors);
 }
 
 Polls _pollsDeserialize(
@@ -119,12 +125,12 @@ Polls _pollsDeserialize(
     branchId: reader.readLongOrNull(offsets[0]),
     dateAdded: reader.readStringOrNull(offsets[1]),
     dateLastModified: reader.readStringOrNull(offsets[2]),
-    id: reader.readLongOrNull(offsets[3]),
-    isSelected: reader.readBoolOrNull(offsets[4]),
-    label: reader.readStringOrNull(offsets[5]),
-    owner: reader.readLongOrNull(offsets[6]),
-    post: reader.readLongOrNull(offsets[7]),
-    selectors: reader.readLongOrNull(offsets[8]),
+    id: reader.readLongOrNull(offsets[4]),
+    isSelected: reader.readBoolOrNull(offsets[5]),
+    label: reader.readStringOrNull(offsets[6]),
+    owner: reader.readLongOrNull(offsets[7]),
+    post: reader.readLongOrNull(offsets[8]),
+    selectors: reader.readLongOrNull(offsets[9]),
   );
   return object;
 }
@@ -143,16 +149,18 @@ P _pollsDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 4:
-      return (reader.readBoolOrNull(offset)) as P;
-    case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
       return (reader.readLongOrNull(offset)) as P;
+    case 5:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
       return (reader.readLongOrNull(offset)) as P;
     case 8:
+      return (reader.readLongOrNull(offset)) as P;
+    case 9:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -519,6 +527,58 @@ extension PollsQueryFilter on QueryBuilder<Polls, Polls, QFilterCondition> {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'dateLastModified',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Polls, Polls, QAfterFilterCondition> hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
