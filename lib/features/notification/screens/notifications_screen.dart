@@ -72,6 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         horizontal: 19.w,
                       ),
                       child: ListView.separated(
+                        controller: provider.scrollController,
                         padding: EdgeInsets.symmetric(
                           vertical: 27.h,
                         ),
@@ -83,8 +84,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           return buildDivider();
                         },
                         itemBuilder: (context, index) {
-                          if (index == provider.listCount) {
-                            if (provider.isLoadingMore) {
+                          if (index == provider.notificationList.length) {
+                            if (provider.isGettingMore) {
                               return Center(child: CircularProgressIndicator());
                             }
                             return SizedBox.shrink();

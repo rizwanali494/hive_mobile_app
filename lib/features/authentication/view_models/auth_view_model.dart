@@ -39,10 +39,7 @@ class AuthVM extends ChangeNotifier
     log(user.runtimeType.toString());
     if (user is GoogleSignInAccount) {
       var body = {
-        "payload": {
-          "email": "bcp.test1@beaconite.edu.pk",
-          "email_verified": true
-        }
+        "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
       };
       try {
         showLoaderDialog(context);

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 extension DateTimeExtension on DateTime {
@@ -5,5 +6,28 @@ extension DateTimeExtension on DateTime {
     return timeago.format(
       this,
     );
+  }
+
+  String notificationFormattedTime({bool numericDates = false}) {
+    final date2 = DateTime.now();
+    final difference = date2.difference(this);
+    final DateFormat dateFormat = DateFormat("M/d/y");
+    if (difference.inDays >= 2) {
+      return dateFormat.format(this);
+    } else if (difference.inDays >= 1) {
+      return (numericDates) ? '1 day ago' : 'Yesterday';
+    } else if (difference.inHours >= 2) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inHours >= 1) {
+      return (numericDates) ? '1 hour ago' : 'An hour ago';
+    } else if (difference.inMinutes >= 2) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inMinutes >= 1) {
+      return (numericDates) ? '1 minute ago' : 'A minute ago';
+    } else if (difference.inSeconds >= 3) {
+      return '${difference.inSeconds} seconds ago';
+    } else {
+      return 'Just now';
+    }
   }
 }

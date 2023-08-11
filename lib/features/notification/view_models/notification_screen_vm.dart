@@ -35,7 +35,7 @@ class NotificationScreenVM extends ChangeNotifier {
   void inItValues() {
     _paginationController = PaginationController(
       controller: scrollController,
-      onScroll: () {},
+      onScroll: getNextNotificationList,
     );
     inboxRepository = NotificationRepositoryImpl(apiService: apiService);
     setIsarInstance();
@@ -48,6 +48,9 @@ class NotificationScreenVM extends ChangeNotifier {
     final request = () async {
       var list =
           await inboxRepository.getInitialNotificationList(limit: _limit);
+      for (var value in list) {
+        log("${value.id}");
+      }
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       } else {
@@ -55,6 +58,7 @@ class NotificationScreenVM extends ChangeNotifier {
             .setOffset((_paginationController.offset) + list.length);
       }
       notificationList.addAll(list);
+      _paginationController.addListener();
       return;
     };
     await performRequest(request: request);
@@ -66,7 +70,9 @@ class NotificationScreenVM extends ChangeNotifier {
     _paginationController.toggleIsGettingMore(true);
     notifyListeners();
     final request = () async {
-      var list = await inboxRepository.getNextNotificationList(limit: _limit);
+      var list = await inboxRepository.getNextNotificationList(
+          limit: _limit, offSet: _paginationController.offset);
+
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       } else {
@@ -78,7 +84,6 @@ class NotificationScreenVM extends ChangeNotifier {
       return;
     };
     await performRequest(request: request);
-    _paginationController.toggleIsGettingMore(true);
     notifyListeners();
   }
 

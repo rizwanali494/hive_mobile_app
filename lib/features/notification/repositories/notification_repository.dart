@@ -25,8 +25,6 @@ class NotificationRepositoryImpl extends NotificationRepository {
   @override
   Future<List<NotificationModel>> getInitialNotificationList(
       {int? limit}) async {
-    log(withAttachments.withLimit(limit).toString());
-
     var response = await apiService.get(
       url: withAttachments.withLimit(limit),
     );
@@ -35,7 +33,8 @@ class NotificationRepositoryImpl extends NotificationRepository {
     return list.map((e) => NotificationModel.fromJson(e)).toList();
   }
 
-  String get withAttachments => ApiEndpoints.notification.withAttachments;
+  String get withAttachments =>
+      ApiEndpoints.notification.withAttachments.withMostRecentOrder;
 
   @override
   Future<List<NotificationModel>> getNextNotificationList(
