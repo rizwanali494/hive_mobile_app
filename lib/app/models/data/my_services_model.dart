@@ -1,5 +1,3 @@
-import 'package:hive_mobile/app/models/data/user_model.dart';
-
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:isar/isar.dart';
 

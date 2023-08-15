@@ -23,25 +23,26 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
   @override
   Future<List<MyServicesModel>> getInitialServicesList({int? limit}) async {
     var response = await apiService.get(
-      url: ApiEndpoints.inbox.withOwnerObject.withPolls.withAttachments
-          .withLimit(limit),
+      url: endPoint(limit),
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
-    return Future.value([]);
+    return items.map((item) => MyServicesModel.fromJson(item)).toList();
+  }
+
+  String endPoint(int? limit) {
+    return ApiEndpoints.serviceRequest.withLimit(limit);
   }
 
   @override
   Future<List<MyServicesModel>> getNextServicesList(
       {int? offSet, int? limit}) async {
     var response = await apiService.get(
-      url: ApiEndpoints.inbox.withOwnerObject.withPolls.withAttachments
-          .withLimit(limit)
-          .withOffSet(offSet),
+      url: endPoint(limit).withOffSet(offSet),
     );
     var result = jsonDecode(response.body);
-
-    return Future.value([]);
+    List items = result["results"] ?? [];
+    return items.map((item) => MyServicesModel.fromJson(item)).toList();
   }
 
   @override

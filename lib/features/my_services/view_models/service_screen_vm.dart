@@ -28,7 +28,7 @@ class ServiceScreenVM extends ChangeNotifier {
 
   bool get hasError => _hasError;
 
-  NotificationScreenVM() {
+  ServiceScreenVM() {
     inItValues();
   }
 
@@ -39,16 +39,15 @@ class ServiceScreenVM extends ChangeNotifier {
     );
     myServicesRepository = MyServicesRepositoryImpl(apiService: apiService);
     setIsarInstance();
-    getInitialNotificationList();
+    getInitialServicesList();
   }
 
-  Future<void> getInitialNotificationList() async {
+  Future<void> getInitialServicesList() async {
     var localList = await getServiceFromLocal();
     servicesList.addAll(localList);
     if (localList.isNotEmpty) {
       notifyListeners();
     }
-
     _isLoading = true;
     notifyListeners();
     final request = () async {

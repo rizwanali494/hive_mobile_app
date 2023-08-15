@@ -13,7 +13,7 @@ import 'package:hive_mobile/features/external_grading/screens/grade_details_scre
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
-import 'package:hive_mobile/features/my_services/widget/my_services_screen.dart';
+import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
