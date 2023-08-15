@@ -18,13 +18,13 @@ class HobbiesModel {
     name = json['name'];
   }
 
-  num? id;
+  int? id;
   String? dateAdded;
   String? dateLastModified;
   String? name;
 
   HobbiesModel copyWith({
-    num? id,
+    int? id,
     String? dateAdded,
     String? dateLastModified,
     String? name,

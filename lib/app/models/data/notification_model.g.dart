@@ -48,18 +48,23 @@ const NotificationModelSchema = CollectionSchema(
       name: r'dateLastModified',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 6,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 7,
       name: r'id',
       type: IsarType.long,
     ),
     r'isRead': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isRead',
       type: IsarType.bool,
     ),
     r'recipient': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'recipient',
       type: IsarType.long,
     )
@@ -142,9 +147,10 @@ void _notificationModelSerialize(
   writer.writeString(offsets[3], object.content);
   writer.writeString(offsets[4], object.dateAdded);
   writer.writeString(offsets[5], object.dateLastModified);
-  writer.writeLong(offsets[6], object.id);
-  writer.writeBool(offsets[7], object.isRead);
-  writer.writeLong(offsets[8], object.recipient);
+  writer.writeLong(offsets[6], object.hashCode);
+  writer.writeLong(offsets[7], object.id);
+  writer.writeBool(offsets[8], object.isRead);
+  writer.writeLong(offsets[9], object.recipient);
 }
 
 NotificationModel _notificationModelDeserialize(
@@ -165,10 +171,10 @@ NotificationModel _notificationModelDeserialize(
     content: reader.readStringOrNull(offsets[3]),
     dateAdded: reader.readStringOrNull(offsets[4]),
     dateLastModified: reader.readStringOrNull(offsets[5]),
-    id: reader.readLongOrNull(offsets[6]),
-    isRead: reader.readBoolOrNull(offsets[7]),
+    id: reader.readLongOrNull(offsets[7]),
+    isRead: reader.readBoolOrNull(offsets[8]),
     localId: id,
-    recipient: reader.readLongOrNull(offsets[8]),
+    recipient: reader.readLongOrNull(offsets[9]),
   );
   return object;
 }
@@ -198,10 +204,12 @@ P _notificationModelDeserializeProp<P>(
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 9:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1102,6 +1110,62 @@ extension NotificationModelQueryFilter
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
       idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1406,16 +1470,30 @@ extension NotificationModelQuerySortBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  sortByDateLastModified() {
+      sortByDateLastModified() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateLastModified', Sort.asc);
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  sortByDateLastModifiedDesc() {
+      sortByDateLastModifiedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateLastModified', Sort.desc);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
     });
   }
 
@@ -1426,7 +1504,7 @@ extension NotificationModelQuerySortBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  sortByIdDesc() {
+      sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
@@ -1520,16 +1598,30 @@ extension NotificationModelQuerySortThenBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  thenByDateLastModified() {
+      thenByDateLastModified() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateLastModified', Sort.asc);
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  thenByDateLastModifiedDesc() {
+      thenByDateLastModifiedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateLastModified', Sort.desc);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
     });
   }
 
@@ -1540,7 +1632,7 @@ extension NotificationModelQuerySortThenBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  thenByIdDesc() {
+      thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
@@ -1561,14 +1653,14 @@ extension NotificationModelQuerySortThenBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  thenByLocalId() {
+      thenByLocalId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'localId', Sort.asc);
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-  thenByLocalIdDesc() {
+      thenByLocalIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'localId', Sort.desc);
     });
@@ -1625,6 +1717,13 @@ extension NotificationModelQueryWhereDistinct
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dateLastModified',
           caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QDistinct>
+      distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
     });
   }
 
@@ -1695,6 +1794,12 @@ extension NotificationModelQueryProperty
       dateLastModifiedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateLastModified');
+    });
+  }
+
+  QueryBuilder<NotificationModel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 
