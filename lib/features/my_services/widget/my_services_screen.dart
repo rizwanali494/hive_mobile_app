@@ -5,9 +5,9 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
-import 'package:hive_mobile/features/my_services/screens/my_service_widget.dart';
+import 'package:hive_mobile/features/my_services/widget/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
-import 'package:hive_mobile/features/my_services/screens/service_count_widget.dart';
+import 'package:hive_mobile/features/my_services/widget/service_count_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
 
 class MyServicesScreen extends StatefulWidget {
