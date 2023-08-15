@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/inbox/view_models/service_widget_vm.dart';
 
 class MyServiceWidget extends StatelessWidget {
+  final ServiceWidgetVM controller;
+
   const MyServiceWidget({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -19,15 +23,15 @@ class MyServiceWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child : Text(
-                "School Leaving Certificate",
+              child: Text(
+                controller.title,
                 style: styles.inter14w600.copyWith(
                   color: styles.darkSlateGrey,
                 ),
               ),
             ),
             Text(
-              "2:45PM",
+              controller.time,
               style: styles.inter10w400.copyWith(
                 color: styles.darkGrey,
               ),
@@ -35,7 +39,7 @@ class MyServiceWidget extends StatelessWidget {
           ],
         ),
         Text(
-          AppStrings.loremPorum * 2,
+          controller.description,
           style: styles.inter10w400.copyWith(
             color: styles.darkGrey,
           ),

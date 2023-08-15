@@ -28,6 +28,13 @@ class ServiceScreenVM extends ChangeNotifier {
 
   bool get hasError => _hasError;
 
+  int get listCount {
+    if (isGettingMore) {
+      return servicesList.length + 1;
+    }
+    return servicesList.length;
+  }
+
   ServiceScreenVM() {
     inItValues();
   }
@@ -169,12 +176,6 @@ class ServiceScreenVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get listCount {
-    if (isGettingMore) {
-      return servicesList.length + 1;
-    }
-    return servicesList.length;
-  }
 
   Future<void> saveLocally(List<MyServicesModel> objects) async {
     if (isar == null) {

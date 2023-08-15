@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
+import 'package:hive_mobile/features/inbox/view_models/service_widget_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
 import 'package:hive_mobile/features/my_services/widget/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
@@ -122,17 +123,28 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                     Expanded(
                       child: ListView.separated(
                         itemBuilder: (context, index) {
+                          if (index == provider.servicesList.length) {
+                            if (provider.isGettingMore) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            return SizedBox.shrink();
+                          }
+
                           return GestureDetector(
                             onTap: () {
                               context.push(DescriptionScreen.route);
                             },
-                            child: MyServiceWidget(),
+                            child: MyServiceWidget(
+                              controller: ServiceWidgetVM(
+                                model: provider.servicesList[index],
+                              ),
+                            ),
                           );
                         },
                         separatorBuilder: (context, index) {
                           return 10.verticalSpace;
                         },
-                        itemCount: 20,
+                        itemCount: provider.listCount,
                       ),
                     ),
                 ],
