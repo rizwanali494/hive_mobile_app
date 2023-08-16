@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/inbox/view_models/service_widget_vm.dart';
+import 'package:hive_mobile/features/my_services/view_models/service_widget_vm.dart';
 
 class MyServiceWidget extends StatelessWidget {
   final ServiceWidgetVM controller;

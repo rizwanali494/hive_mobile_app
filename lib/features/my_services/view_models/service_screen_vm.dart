@@ -60,9 +60,6 @@ class ServiceScreenVM extends ChangeNotifier {
     final request = () async {
       var list =
           await myServicesRepository.getInitialServicesList(limit: _limit);
-      for (var value in list) {
-        log("${value.id}");
-      }
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       } else {

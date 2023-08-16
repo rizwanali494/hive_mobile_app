@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:isar/isar.dart';
 
@@ -29,8 +31,8 @@ class MyServicesModel {
 
   MyServicesModel.fromJson(dynamic json) {
     id = json['id'];
-    localId = json['id'] ?? 0;
-    owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
+    localId = id ?? 0;
+    // owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
     if (json['attachments'] != null) {
       attachments = [];
       json['attachments'].forEach((v) {
