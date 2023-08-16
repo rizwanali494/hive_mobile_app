@@ -8,7 +8,6 @@ import 'package:hive_mobile/features/profile/widgets/hobbie_chip_widget.dart';
 import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
 
-
 class AccountSettingScreen extends StatefulWidget {
   static const route = '/AccountScreen';
 
@@ -54,7 +53,6 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
               borderRadius: BorderRadius.circular(25),
             ),
             child: TextFieldWidget(
-              styles: styles,
               hintText: AppStrings.editBios,
             ),
           ),
@@ -71,8 +69,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
             child: Column(
               children: [
                 5.verticalSpace,
-                TextFieldWidget(
-                    styles: styles, hintText: AppStrings.editHobbies),
+                TextFieldWidget(hintText: AppStrings.editHobbies),
                 35.verticalSpace,
                 Align(
                   alignment: Alignment.topLeft,
@@ -93,10 +90,10 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
           ),
           24.verticalSpace,
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 19.w
-            ),
-            child: Align(alignment: Alignment.topLeft,child: BlueElevatedButton(text: AppStrings.saveChanges)),
+            padding: EdgeInsets.symmetric(horizontal: 19.w),
+            child: Align(
+                alignment: Alignment.topLeft,
+                child: BlueElevatedButton(text: AppStrings.saveChanges)),
           )
         ],
       ),

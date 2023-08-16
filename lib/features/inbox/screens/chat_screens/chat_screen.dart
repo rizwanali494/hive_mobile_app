@@ -93,7 +93,6 @@ class ChatScreen extends StatelessWidget {
                       ),
                       child: TextFieldWidget(
                         hintText: AppStrings.typeMessagesHere,
-                        styles: styles,
                       ),
                     ),
                   ),

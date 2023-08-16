@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 class TitleTextField extends StatelessWidget {
   final String title;
   final String hintText;
+  final TextEditingController? controller;
   final int? maxLines;
 
   const TitleTextField({
@@ -13,11 +14,14 @@ class TitleTextField extends StatelessWidget {
     required this.title,
     required this.hintText,
     this.maxLines,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
+
     final styles = Theme.of(context).extension<AppTheme>()!;
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +45,7 @@ class TitleTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
           child: TextFieldWidget(
-            styles: styles,
+            controller: controller,
             hintText: hintText,
             maxLines: maxLines,
           ),

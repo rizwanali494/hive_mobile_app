@@ -29,6 +29,17 @@ class MyServicesModel {
     this.state,
   });
 
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MyServicesModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   MyServicesModel.fromJson(dynamic json) {
     id = json['id'];
     localId = id ?? 0;

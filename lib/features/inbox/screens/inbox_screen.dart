@@ -62,7 +62,6 @@ class InboxScreen extends StatelessWidget {
                 ),
                 child: TextFieldWidget(
                   hintText: AppStrings.searchMessagesHere,
-                  styles: styles,
                 ),
               ),
               if (provider.isLoading)

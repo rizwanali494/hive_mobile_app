@@ -18,7 +18,7 @@ class BlueElevatedButton extends StatelessWidget {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return ElevatedButton(
-      onPressed: onTap ?? () {},
+      onPressed: onTap,
       style: ElevatedButton.styleFrom(
         backgroundColor: styles.skyBlue,
         minimumSize: const Size(
