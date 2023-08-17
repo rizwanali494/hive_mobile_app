@@ -48,8 +48,12 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                   ),
                   26.verticalSpace,
                   BlueActionButton(
-                    onTap: () {
-                      context.push(NewRequestScreen.route);
+                    onTap: () async {
+                      bool val =
+                          await context.push(NewRequestScreen.route) ?? false;
+                      if (val) {
+                        provider.refreshServicesList();
+                      }
                     },
                     title: AppStrings.initiateRequest,
                   ),
@@ -123,10 +127,12 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                         onRefresh: provider.refreshServicesList,
                         backgroundColor: styles.white,
                         child: ListView.separated(
+                          controller: provider.scrollController,
                           itemBuilder: (context, index) {
                             if (index == provider.servicesList.length) {
                               if (provider.isGettingMore) {
-                                return Center(child: CircularProgressIndicator());
+                                return Center(
+                                    child: CircularProgressIndicator());
                               }
                               return SizedBox.shrink();
                             }

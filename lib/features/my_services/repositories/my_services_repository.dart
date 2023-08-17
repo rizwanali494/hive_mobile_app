@@ -31,7 +31,7 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
   }
 
   String endPoint(int? limit) {
-    return ApiEndpoints.serviceRequest.withLimit(limit);
+    return ApiEndpoints.serviceRequest.withLimit(limit).withMostRecentOrder;
   }
 
   @override

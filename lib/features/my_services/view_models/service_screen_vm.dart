@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -60,14 +61,20 @@ class ServiceScreenVM extends ChangeNotifier {
     final request = () async {
       var list =
           await myServicesRepository.getInitialServicesList(limit: _limit);
+      for (var value in list) {
+        log(value.id.toString());
+      }
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
-      } else {
-        _paginationController
-            .setOffset((_paginationController.offset) + list.length);
       }
+      _paginationController
+          .setOffset((_paginationController.offset) + list.length);
       servicesList.addAll(list);
       servicesList = servicesList.toSet().toList();
+      log("///");
+      for (var value in servicesList) {
+        log(value.id.toString());
+      }
       await saveLocally(list);
       _paginationController.addListener();
       return;
@@ -83,13 +90,11 @@ class ServiceScreenVM extends ChangeNotifier {
     final request = () async {
       var list = await myServicesRepository.getNextServicesList(
           limit: _limit, offSet: _paginationController.offset);
-
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
-      } else {
-        _paginationController
-            .setOffset((_paginationController.offset) + list.length);
       }
+      _paginationController
+          .setOffset((_paginationController.offset) + list.length);
       servicesList.addAll(list);
       _paginationController.toggleIsGettingMore(false);
       return;
@@ -102,15 +107,16 @@ class ServiceScreenVM extends ChangeNotifier {
     final request = () async {
       _hasError = false;
       _paginationController.toggleIsGettingMore(false);
+      _paginationController.setOffset(0);
       _paginationController.toggleLastPage(false);
       var list =
           await myServicesRepository.getInitialServicesList(limit: _limit);
+      await saveLocally(list);
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
-      } else {
-        _paginationController
-            .setOffset((_paginationController.offset) + list.length);
       }
+      _paginationController
+          .setOffset((_paginationController.offset) + list.length);
       servicesList = list;
       addScrollListeners();
     };
@@ -173,10 +179,12 @@ class ServiceScreenVM extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> saveLocally(List<MyServicesModel> objects) async {
     if (isar == null) {
       await setIsarInstance();
+    }
+    for (var value in objects) {
+      log(value.id.toString());
     }
     try {
       var collection = isar!.collection<MyServicesModel>();
@@ -201,10 +209,15 @@ class ServiceScreenVM extends ChangeNotifier {
     var collection = isar?.collection<MyServicesModel>();
     try {
       list = await collection?.where(distinct: true).findAll() ?? [];
+
       log("local list length : ${list.length}");
     } catch (e) {
       log("Data not fetched from local storage error:$e");
     }
+    list.sortByRecentOrder(
+        getDateAdded: (item) =>
+            DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
+
     return list;
   }
 

@@ -72,7 +72,7 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<http.Response> getResponse({required http.Response response}) async {
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return response;
     }
     throw HTTPStatusCodeException(response: response);
