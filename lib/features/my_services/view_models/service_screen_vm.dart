@@ -49,6 +49,7 @@ class ServiceScreenVM extends ChangeNotifier {
     myServicesRepository = MyServicesRepositoryImpl(apiService: apiService);
     setIsarInstance();
     getInitialServicesList();
+    getServicesStatus();
   }
 
   Future<void> getInitialServicesList() async {
@@ -73,6 +74,7 @@ class ServiceScreenVM extends ChangeNotifier {
         log(value.id.toString());
       }
       await saveLocally(list);
+      await getServicesStatus();
       _paginationController.addListener();
       return;
     };
@@ -159,7 +161,7 @@ class ServiceScreenVM extends ChangeNotifier {
         log("Error occurred : ${e.response.body}");
         log("Error occurred : ${e.response.statusCode}");
       }
-
+      setServiceStatusLocally();
       log("Error occurred : $e");
       onError();
     }
@@ -217,17 +219,50 @@ class ServiceScreenVM extends ChangeNotifier {
     return list;
   }
 
+  void setServiceStatusLocally() {
+    log("setting status : ${servicesList.length}");
+    totalApproved = servicesList
+        .where(
+          (element) =>
+              element.state?.toLowerCase() == AppStrings.approved.toLowerCase(),
+        )
+        .length;
+    totalPending = servicesList
+        .where(
+          (element) =>
+              element.state?.toLowerCase() == AppStrings.pending.toLowerCase(),
+        )
+        .length;
+    totalRejected = servicesList
+        .where(
+          (element) =>
+              element.state?.toLowerCase() == AppStrings.rejected.toLowerCase(),
+        )
+        .length;
+    log("setting status");
+    notifyListeners();
+  }
+
   int totalApproved = 0;
   int totalPending = 0;
   int totalRejected = 0;
 
   void refresh() async {
-    var map = await myServicesRepository.getServicesStatus();
-    totalApproved = map[AppStrings.approved.toLowerCase()] ?? 0;
-    totalPending = map[AppStrings.pending.toLowerCase()] ?? 0;
-    totalRejected = map[AppStrings.rejected.toLowerCase()] ?? 0;
-    notifyListeners();
+    await getServicesStatus();
     refreshServicesList();
+  }
+
+  Future<void> getServicesStatus() async {
+    try {
+      var map = await myServicesRepository.getServicesStatus();
+      totalApproved = map[AppStrings.approved.toLowerCase()] ?? 0;
+      totalPending = map[AppStrings.pending.toLowerCase()] ?? 0;
+      totalRejected = map[AppStrings.rejected.toLowerCase()] ?? 0;
+      notifyListeners();
+    } catch (e) {
+      // TODO
+      setServiceStatusLocally();
+    }
   }
 
   @override
