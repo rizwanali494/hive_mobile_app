@@ -106,6 +106,7 @@ class ServiceScreenVM extends ChangeNotifier {
       _paginationController.toggleIsGettingMore(false);
       _paginationController.setOffset(0);
       _paginationController.toggleLastPage(false);
+      await getServicesStatus();
       var list =
           await myServicesRepository.getInitialServicesList(limit: _limit);
       await saveLocally(list);
