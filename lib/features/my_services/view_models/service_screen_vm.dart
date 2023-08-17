@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
 import 'package:isar/isar.dart';
@@ -214,6 +215,19 @@ class ServiceScreenVM extends ChangeNotifier {
         getDateAdded: (item) =>
             DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
     return list;
+  }
+
+  int totalApproved = 0;
+  int totalPending = 0;
+  int totalRejected = 0;
+
+  void refresh() async {
+    var map = await myServicesRepository.getServicesStatus();
+    totalApproved = map[AppStrings.approved.toLowerCase()] ?? 0;
+    totalPending = map[AppStrings.pending.toLowerCase()] ?? 0;
+    totalRejected = map[AppStrings.rejected.toLowerCase()] ?? 0;
+    notifyListeners();
+    refreshServicesList();
   }
 
   @override

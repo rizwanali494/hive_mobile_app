@@ -52,7 +52,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                       bool val =
                           await context.push(NewRequestScreen.route) ?? false;
                       if (val) {
-                        provider.refreshServicesList();
+                        provider.refresh();
                       }
                     },
                     title: AppStrings.initiateRequest,
@@ -62,19 +62,19 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                     children: [
                       ServiceCountWidget(
                         color: styles.yellowGreen,
-                        count: "20",
+                        count: provider.totalApproved.toString(),
                         type: AppStrings.approved,
                       ),
                       13.horizontalSpace,
                       ServiceCountWidget(
                         color: styles.darkOrange,
-                        count: "3",
+                        count: provider.totalPending.toString(),
                         type: AppStrings.pending,
                       ),
                       13.horizontalSpace,
                       ServiceCountWidget(
                         color: styles.red,
-                        count: "13",
+                        count: provider.totalRejected.toString(),
                         type: AppStrings.rejected,
                       ),
                     ],

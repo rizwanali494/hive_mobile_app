@@ -109,4 +109,5 @@ class AppStrings {
   static String somethingWentWrong = "Something went wrong";
   static String pollsClosed = "Poll Closed";
   static String votes = "votes";
+  static String count = "count";
 }

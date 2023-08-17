@@ -56,10 +56,22 @@ extension ApiFieldExpandExtension on String {
 
   String get withMostRecentOrder {
     return _appendQueryParameter("ordering=-date_added");
-    // if (this.contains("?")) {
-    //   return "${this}&ordering=-date_added";
-    // }
-    // return "${this}?ordering=-date_added";
+  }
+
+  String get withCount {
+    return _appendQueryParameter("_count=true");
+  }
+
+  String get withApprovedState {
+    return _appendQueryParameter("state=APPROVED");
+  }
+
+  String get withPendingState {
+    return _appendQueryParameter("state=PENDING");
+  }
+
+  String get withRejectedState {
+    return _appendQueryParameter("state=REJECTED");
   }
 
   String _appendQueryParameter(String parameter) {
