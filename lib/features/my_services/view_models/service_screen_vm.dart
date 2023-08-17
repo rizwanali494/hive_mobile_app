@@ -66,13 +66,10 @@ class ServiceScreenVM extends ChangeNotifier {
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       }
-      _paginationController
-          .setOffset((_paginationController.offset) + list.length);
+      _paginationController.setOffset(list.length);
       servicesList.addAll(list);
       servicesList = servicesList.toSet().toList();
-      for (var value in servicesList) {
-        log(value.id.toString());
-      }
+
       await saveLocally(list);
       await getServicesStatus();
       _paginationController.addListener();
@@ -84,6 +81,7 @@ class ServiceScreenVM extends ChangeNotifier {
   }
 
   Future<void> getNextServiceList() async {
+    log("offset : ${_paginationController.offset}");
     _paginationController.toggleIsGettingMore(true);
     notifyListeners();
     final request = () async {
@@ -114,8 +112,7 @@ class ServiceScreenVM extends ChangeNotifier {
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       }
-      _paginationController
-          .setOffset((_paginationController.offset) + list.length);
+      _paginationController.setOffset(list.length);
       servicesList = list;
       addScrollListeners();
     };
@@ -182,15 +179,12 @@ class ServiceScreenVM extends ChangeNotifier {
     if (isar == null) {
       await setIsarInstance();
     }
-    for (var value in objects) {
-      log(value.id.toString());
-    }
+
     try {
       var collection = isar!.collection<MyServicesModel>();
       await isar?.writeTxn(
         () => collection.where().deleteAll(),
       );
-      log("saving object : ${objects.length}");
       await isar?.writeTxn(
         () => collection.putAll(objects),
       );
@@ -208,8 +202,6 @@ class ServiceScreenVM extends ChangeNotifier {
     var collection = isar?.collection<MyServicesModel>();
     try {
       list = await collection?.where(distinct: true).findAll() ?? [];
-
-      log("local list length : ${list.length}");
     } catch (e) {
       log("Data not fetched from local storage error:$e");
     }
@@ -220,7 +212,6 @@ class ServiceScreenVM extends ChangeNotifier {
   }
 
   void setServiceStatusLocally() {
-    log("setting status : ${servicesList.length}");
     totalApproved = servicesList
         .where(
           (element) =>
@@ -239,7 +230,6 @@ class ServiceScreenVM extends ChangeNotifier {
               element.state?.toLowerCase() == AppStrings.rejected.toLowerCase(),
         )
         .length;
-    log("setting status");
     notifyListeners();
   }
 
