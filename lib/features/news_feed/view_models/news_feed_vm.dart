@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
@@ -58,11 +59,11 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
       notifyListeners();
     }
     try {
-      // throw "something went wrong";
       var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
       if (list.length < _limit) {
         paginationController?.toggleLastPage();
       }
+      paginationController?.setOffset(list.length);
       announcements.addAll(list);
       announcements = announcements.toSet().toList();
       await saveLocally(list);
@@ -101,6 +102,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     try {
       setHasErrorFalse();
       setLastPageFalse();
+      paginationController?.setOffset(0);
       var list = await newsFeedRepository.getInitialNewsFeed(limit: _limit);
       if (list.length < _limit) {
         isLastPage();
@@ -173,10 +175,8 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
   Future<void> setIsarInstance() async {
     try {
       final dir = await getApplicationDocumentsDirectory();
-      isar = await Isar.open(
-        [AnnouncementPostModelSchema],
-        directory: dir.path,
-        name: "News Feed");
+      isar = await Isar.open([AnnouncementPostModelSchema],
+          directory: dir.path, name: "News Feed");
     } catch (e) {
       log("Isar instance not initialized error : $e");
     }
@@ -198,6 +198,9 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     } catch (e) {
       log("Data not fetched from local storage error:$e");
     }
+    list.sortByRecentOrder(
+        getDateAdded: (item) =>
+            DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
     return list;
   }
 

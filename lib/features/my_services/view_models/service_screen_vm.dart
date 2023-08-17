@@ -61,9 +61,6 @@ class ServiceScreenVM extends ChangeNotifier {
     final request = () async {
       var list =
           await myServicesRepository.getInitialServicesList(limit: _limit);
-      for (var value in list) {
-        log(value.id.toString());
-      }
       if (list.length < _limit) {
         _paginationController.isLastPage = true;
       }
@@ -71,7 +68,6 @@ class ServiceScreenVM extends ChangeNotifier {
           .setOffset((_paginationController.offset) + list.length);
       servicesList.addAll(list);
       servicesList = servicesList.toSet().toList();
-      log("///");
       for (var value in servicesList) {
         log(value.id.toString());
       }
@@ -217,7 +213,6 @@ class ServiceScreenVM extends ChangeNotifier {
     list.sortByRecentOrder(
         getDateAdded: (item) =>
             DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
-
     return list;
   }
 
