@@ -8,11 +8,14 @@ import 'package:hive_mobile/features/university_application/screens/application_
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 class DescriptionScreen extends StatelessWidget {
+  final String description;
+
   final ApplicationStatus? applicationStatus;
   static const route = "/DescriptionScreen";
   final String? title;
 
-  const DescriptionScreen({Key? key, this.title, this.applicationStatus})
+  const DescriptionScreen(
+      {Key? key, this.title, this.applicationStatus, required this.description})
       : super(key: key);
 
   @override
@@ -58,16 +61,16 @@ class DescriptionScreen extends StatelessWidget {
                           iconPath: SvgIcons.applied,
                         )
                       else if (ApplicationStatus.rejected == applicationStatus)
-                        ApplicationStatusWidget(
-                          title: AppStrings.rejected,
-                          color: styles.lightPink,
-                          iconPath: SvgIcons.undecided,
-                        ),
+                          ApplicationStatusWidget(
+                            title: AppStrings.rejected,
+                            color: styles.lightPink,
+                            iconPath: SvgIcons.undecided,
+                          ),
                     ],
                   ),
                   22.verticalSpace,
                   Text(
-                    AppStrings.loremPorum * 15,
+                    description,
                     style: styles.inter12w400,
                   ),
                 ],

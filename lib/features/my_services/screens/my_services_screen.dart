@@ -139,7 +139,11 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
 
                             return GestureDetector(
                               onTap: () {
-                                context.push(DescriptionScreen.route);
+                                context.push(DescriptionScreen.route, extra: {
+                                  "description":
+                                      provider.servicesList[index].description,
+                                  "title": "Comment"
+                                });
                               },
                               child: MyServiceWidget(
                                 controller: ServiceWidgetVM(
