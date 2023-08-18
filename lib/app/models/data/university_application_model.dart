@@ -1,10 +1,13 @@
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:isar/isar.dart';
 
+part 'university_application_model.g.dart';
+
 @collection
 class UniversityApplicationModel {
   UniversityApplicationModel({
     this.id,
+    this.localId = 0,
     this.scholarshipPercent,
     this.dateAdded,
     this.dateLastModified,
@@ -21,6 +24,7 @@ class UniversityApplicationModel {
 
   UniversityApplicationModel.fromJson(dynamic json) {
     id = json['id'];
+    localId = json['id'] ?? 0;
     scholarshipPercent = json['scholarship_percent'];
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
@@ -40,37 +44,40 @@ class UniversityApplicationModel {
     }
   }
 
-  num? id;
+  int? id;
+  late Id localId;
   String? scholarshipPercent;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
+  int? branchId;
   String? description;
   String? scholarshipAmount;
   String? comments;
   String? state;
   String? status;
-  num? owner;
-  num? university;
+  int? owner;
+  int? university;
   List<Attachments>? documents;
 
   UniversityApplicationModel copyWith({
-    num? id,
+    int? id,
+    int? localId,
     String? scholarshipPercent,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
+    int? branchId,
     String? description,
     String? scholarshipAmount,
     String? comments,
     String? state,
     String? status,
-    num? owner,
-    num? university,
+    int? owner,
+    int? university,
     List<Attachments>? documents,
   }) =>
       UniversityApplicationModel(
         id: id ?? this.id,
+        localId: localId ?? this.localId,
         scholarshipPercent: scholarshipPercent ?? this.scholarshipPercent,
         dateAdded: dateAdded ?? this.dateAdded,
         dateLastModified: dateLastModified ?? this.dateLastModified,

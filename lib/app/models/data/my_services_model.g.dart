@@ -48,34 +48,39 @@ const MyServicesModelSchema = CollectionSchema(
       name: r'description',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 6,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 7,
       name: r'id',
       type: IsarType.long,
     ),
     r'isSubjectTeacherChangeRequest': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isSubjectTeacherChangeRequest',
       type: IsarType.bool,
     ),
     r'name': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'name',
       type: IsarType.string,
     ),
     r'owner': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'owner',
       type: IsarType.object,
       target: r'OwnerModel',
     ),
     r'regionId': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'regionId',
       type: IsarType.long,
     ),
     r'state': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'state',
       type: IsarType.string,
     )
@@ -178,17 +183,18 @@ void _myServicesModelSerialize(
   writer.writeString(offsets[3], object.dateAdded);
   writer.writeString(offsets[4], object.dateLastModified);
   writer.writeString(offsets[5], object.description);
-  writer.writeLong(offsets[6], object.id);
-  writer.writeBool(offsets[7], object.isSubjectTeacherChangeRequest);
-  writer.writeString(offsets[8], object.name);
+  writer.writeLong(offsets[6], object.hashCode);
+  writer.writeLong(offsets[7], object.id);
+  writer.writeBool(offsets[8], object.isSubjectTeacherChangeRequest);
+  writer.writeString(offsets[9], object.name);
   writer.writeObject<OwnerModel>(
-    offsets[9],
+    offsets[10],
     allOffsets,
     OwnerModelSchema.serialize,
     object.owner,
   );
-  writer.writeLong(offsets[10], object.regionId);
-  writer.writeString(offsets[11], object.state);
+  writer.writeLong(offsets[11], object.regionId);
+  writer.writeString(offsets[12], object.state);
 }
 
 MyServicesModel _myServicesModelDeserialize(
@@ -209,17 +215,17 @@ MyServicesModel _myServicesModelDeserialize(
     dateAdded: reader.readStringOrNull(offsets[3]),
     dateLastModified: reader.readStringOrNull(offsets[4]),
     description: reader.readStringOrNull(offsets[5]),
-    id: reader.readLongOrNull(offsets[6]),
-    isSubjectTeacherChangeRequest: reader.readBoolOrNull(offsets[7]),
+    id: reader.readLongOrNull(offsets[7]),
+    isSubjectTeacherChangeRequest: reader.readBoolOrNull(offsets[8]),
     localId: id,
-    name: reader.readStringOrNull(offsets[8]),
+    name: reader.readStringOrNull(offsets[9]),
     owner: reader.readObjectOrNull<OwnerModel>(
-      offsets[9],
+      offsets[10],
       OwnerModelSchema.deserialize,
       allOffsets,
     ),
-    regionId: reader.readLongOrNull(offsets[10]),
-    state: reader.readStringOrNull(offsets[11]),
+    regionId: reader.readLongOrNull(offsets[11]),
+    state: reader.readStringOrNull(offsets[12]),
   );
   return object;
 }
@@ -249,20 +255,22 @@ P _myServicesModelDeserializeProp<P>(
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 9:
+      return (reader.readStringOrNull(offset)) as P;
+    case 10:
       return (reader.readObjectOrNull<OwnerModel>(
         offset,
         OwnerModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 10:
-      return (reader.readLongOrNull(offset)) as P;
     case 11:
+      return (reader.readLongOrNull(offset)) as P;
+    case 12:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1082,6 +1090,62 @@ extension MyServicesModelQueryFilter
   }
 
   QueryBuilder<MyServicesModel, MyServicesModel, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterFilterCondition>
+      hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterFilterCondition>
+      hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterFilterCondition>
       idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1731,6 +1795,20 @@ extension MyServicesModelQuerySortBy
     });
   }
 
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterSortBy>
+      sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterSortBy>
+      sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<MyServicesModel, MyServicesModel, QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1869,6 +1947,20 @@ extension MyServicesModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterSortBy>
+      thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MyServicesModel, MyServicesModel, QAfterSortBy>
+      thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<MyServicesModel, MyServicesModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1986,6 +2078,13 @@ extension MyServicesModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<MyServicesModel, MyServicesModel, QDistinct>
+      distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
   QueryBuilder<MyServicesModel, MyServicesModel, QDistinct> distinctById() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id');
@@ -2065,6 +2164,12 @@ extension MyServicesModelQueryProperty
       descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
+    });
+  }
+
+  QueryBuilder<MyServicesModel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 
