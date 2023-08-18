@@ -22,8 +22,7 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   @override
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet}) async {
-    var url =
-        ApiEndpoints.universityApplication.withOffSet(offSet).withLimit(limit);
+    var url = apiEndpoint(offSet, limit);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
@@ -35,8 +34,7 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   @override
   Future<List<UniversityApplicationModel>> getPreviousApplications(
       {int? limit, int? offSet}) async {
-    var url =
-        ApiEndpoints.universityApplication.withOffSet(offSet).withLimit(limit);
+    var url = apiEndpoint(offSet, limit).withNotApprovedApplications;
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
@@ -44,4 +42,7 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
         .map((item) => UniversityApplicationModel.fromJson(item))
         .toList();
   }
+
+  String apiEndpoint(int? offSet, int? limit) =>
+      ApiEndpoints.universityApplication.withOffSet(offSet).withLimit(limit);
 }

@@ -74,6 +74,10 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("state=REJECTED");
   }
 
+  String get withNotApprovedApplications {
+    return _appendQueryParameter("state__ne=${("unapproved").toUpperCase()}");
+  }
+
   String _appendQueryParameter(String parameter) {
     if (this.contains("?")) {
       return "${this}&$parameter";
