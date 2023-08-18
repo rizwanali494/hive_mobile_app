@@ -6,7 +6,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
+import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
 
 class UniversityApplicationScreen extends StatefulWidget {
@@ -51,6 +51,7 @@ class _UniversityApplicationScreenState
                     },
                   ),
                   3.verticalSpace,
+                  CustomScrollView(),
                   Expanded(
                     child: ListView.builder(
                       padding: EdgeInsets.symmetric(

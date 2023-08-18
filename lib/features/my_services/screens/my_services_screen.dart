@@ -13,7 +13,7 @@ import 'package:hive_mobile/features/my_services/widget/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/my_services/widget/service_count_widget.dart';
 import 'package:hive_mobile/features/my_services/widget/services_shimmer_widget.dart';
-import 'package:hive_mobile/features/university_application/screens/blue_action_button.dart';
+import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:provider/provider.dart';
 
 class MyServicesScreen extends StatefulWidget {

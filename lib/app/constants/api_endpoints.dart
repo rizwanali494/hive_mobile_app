@@ -9,5 +9,6 @@ class ApiEndpoints {
   static String notification = "${communication}notification/";
   static String administrative = "${apiUrl}administrative/";
   static String serviceRequest = "${administrative}service_request/";
+  static String universityApplication =
+      "${administrative}university_application/";
 }
-
