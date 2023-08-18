@@ -22,6 +22,16 @@ class UniversityApplicationModel {
     this.documents,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UniversityApplicationModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   UniversityApplicationModel.fromJson(dynamic json) {
     id = json['id'];
     localId = json['id'] ?? 0;

@@ -51,23 +51,39 @@ class _UniversityApplicationScreenState
                     },
                   ),
                   3.verticalSpace,
-                  CustomScrollView(),
                   Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 26.h,
-                      ),
-                      itemBuilder: (context, index) {
-                        return UniversityApplicationWidget(
-                          title: applications[index],
-                          applicationStatus: index.isEven
-                              ? ApplicationStatus.accepted
-                              : ApplicationStatus.applied,
-                        );
-                      },
-                      itemCount: applications.length,
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => UniversityApplicationWidget(
+                              title: applications[index],
+                              applicationStatus: index.isEven
+                                  ? ApplicationStatus.accepted
+                                  : ApplicationStatus.applied,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //     padding: EdgeInsets.symmetric(
+                  //       vertical: 26.h,
+                  //     ),
+                  //     itemBuilder: (context, index) {
+                  //       return UniversityApplicationWidget(
+                  //         title: applications[index],
+                  //         applicationStatus: index.isEven
+                  //             ? ApplicationStatus.accepted
+                  //             : ApplicationStatus.applied,
+                  //       );
+                  //     },
+                  //     itemCount: applications.length,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
