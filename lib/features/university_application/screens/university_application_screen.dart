@@ -51,20 +51,51 @@ class _UniversityApplicationScreenState
                     },
                   ),
                   3.verticalSpace,
+
                   Expanded(
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) => UniversityApplicationWidget(
-                              title: applications[index],
-                              applicationStatus: index.isEven
-                                  ? ApplicationStatus.accepted
-                                  : ApplicationStatus.applied,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 26.h,
+                      ),
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Text(
+                              applications[0],
+                              style: styles.inter20w700,
                             ),
                           ),
-                        ),
-                      ],
+                          SliverToBoxAdapter(child: 20.verticalSpace),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (context, index) => UniversityApplicationWidget(
+                                      title: applications[index],
+                                      applicationStatus: index.isEven
+                                          ? ApplicationStatus.accepted
+                                          : ApplicationStatus.applied,
+                                    ),
+                                childCount: applications.length),
+                          ),
+                          SliverToBoxAdapter(child: 35.verticalSpace),
+                          SliverToBoxAdapter(
+                            child: Text(
+                              applications[1],
+                              style: styles.inter20w700,
+                            ),
+                          ),
+                          SliverToBoxAdapter(child: 20.verticalSpace),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (context, index) => UniversityApplicationWidget(
+                                      title: applications[index],
+                                      applicationStatus: index.isEven
+                                          ? ApplicationStatus.accepted
+                                          : ApplicationStatus.applied,
+                                    ),
+                                childCount: applications.length),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
