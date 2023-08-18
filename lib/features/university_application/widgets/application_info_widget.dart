@@ -72,30 +72,9 @@ class ApplicationInfoWidget extends StatelessWidget {
                 ),
               ),
             ),
-            if (ApplicationStatus.accepted == applicationStatus)
-              Expanded(
-                child: ApplicationStatusWidget(
-                  title: AppStrings.accepted,
-                  color: styles.paleWhite,
-                  iconPath: SvgIcons.tickSquare,
-                ),
-              )
-            else if (ApplicationStatus.applied == applicationStatus)
-              Expanded(
-                child: ApplicationStatusWidget(
-                  title: AppStrings.applied,
-                  color: styles.lightCyan,
-                  iconPath: SvgIcons.applied,
-                ),
-              )
-            else
-              Expanded(
-                child: ApplicationStatusWidget(
-                  title: AppStrings.rejected,
-                  color: styles.lightPink,
-                  iconPath: SvgIcons.undecided,
-                ),
-              ),
+            ApplicationStatusWidget(
+              applicationStatus: applicationStatus,
+            )
           ],
         ),
         5.verticalSpace,

@@ -48,24 +48,9 @@ class DescriptionScreen extends StatelessWidget {
                           color: styles.darkSlateGrey,
                         ),
                       ),
-                      if (ApplicationStatus.accepted == applicationStatus)
-                        ApplicationStatusWidget(
-                          title: AppStrings.accepted,
-                          color: styles.paleWhite,
-                          iconPath: SvgIcons.tickSquare,
-                        )
-                      else if (ApplicationStatus.applied == applicationStatus)
-                        ApplicationStatusWidget(
-                          title: AppStrings.applied,
-                          color: styles.lightCyan,
-                          iconPath: SvgIcons.applied,
-                        )
-                      else if (ApplicationStatus.rejected == applicationStatus)
-                          ApplicationStatusWidget(
-                            title: AppStrings.rejected,
-                            color: styles.lightPink,
-                            iconPath: SvgIcons.undecided,
-                          ),
+                      ApplicationStatusWidget(
+                        applicationStatus: applicationStatus,
+                      )
                     ],
                   ),
                   22.verticalSpace,

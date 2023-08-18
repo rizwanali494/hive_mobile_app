@@ -76,7 +76,7 @@ class _UniversityApplicationScreenState
                                     ),
                                 childCount: applications.length),
                           ),
-                          SliverToBoxAdapter(child: 35.verticalSpace),
+                          SliverToBoxAdapter(child: 20.verticalSpace),
                           SliverToBoxAdapter(
                             child: Text(
                               applications[1],

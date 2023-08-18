@@ -98,14 +98,14 @@ class GradeDetailsScreen extends StatelessWidget {
               ],
             ),
             21.verticalSpace,
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ApplicationStatusWidget(
-                color: styles.lightPink,
-                title: AppStrings.delete,
-                iconPath: SvgIcons.undecided,
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.centerLeft,
+            //   child: ApplicationStatusWidget(
+            //     color: styles.lightPink,
+            //     title: AppStrings.delete,
+            //     iconPath: SvgIcons.undecided,
+            //   ),
+            // ),
           ],
         ),
       ),
