@@ -4,13 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
-import 'package:hive_mobile/app/navigation/extensions.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/my_services/repositories/new_service_request_repo.dart';
-import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
-import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
-import 'package:provider/provider.dart';
 
 class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
   bool _isChangeRequest = false;
