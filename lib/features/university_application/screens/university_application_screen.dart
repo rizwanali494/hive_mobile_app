@@ -9,6 +9,7 @@ import 'package:hive_mobile/features/university_application/screens/application_
 import 'package:hive_mobile/features/university_application/view_models/university_application_screen_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_app_shimmer_widget.dart';
+import 'package:hive_mobile/features/university_application/widgets/university_app_sliver_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -72,22 +73,20 @@ class _UniversityApplicationScreenState
                                   ),
                                 ),
                                 SliverToBoxAdapter(child: 20.verticalSpace),
-                                if (provider.isAcceptedLoading)
-                                  SliverToBoxAdapter(
-                                    child: UniversityAppShimmer(),
-                                  )
-                                else
-                                  SliverList(
-                                    delegate: SliverChildBuilderDelegate(
-                                        (context, index) =>
-                                            UniversityApplicationWidget(
-                                              title: applications[index],
-                                              applicationStatus: index.isEven
-                                                  ? ApplicationState.accepted
-                                                  : ApplicationState.applied,
-                                            ),
-                                        childCount: applications.length),
-                                  ),
+                                UniversityAppSliver(
+                                  applications: provider.acceptedApplications,
+                                ),
+                                // if (provider.isAcceptedLoading)
+                                //   SliverToBoxAdapter(
+                                //     child: UniversityAppShimmer(),
+                                //   )
+                                // else
+                                //   SliverList(
+                                //     delegate: SliverChildBuilderDelegate(
+                                //         (context, index) =>
+                                //             UniversityApplicationWidget(),
+                                //         childCount: applications.length),
+                                //   ),
                                 SliverToBoxAdapter(child: 20.verticalSpace),
                                 SliverToBoxAdapter(
                                   child: Text(
@@ -96,22 +95,25 @@ class _UniversityApplicationScreenState
                                   ),
                                 ),
                                 SliverToBoxAdapter(child: 20.verticalSpace),
-                                if (provider.isPreviousLoading)
-                                  SliverToBoxAdapter(
-                                    child: UniversityAppShimmer(),
-                                  )
-                                else
-                                  SliverList(
-                                    delegate: SliverChildBuilderDelegate(
-                                        (context, index) =>
-                                            UniversityApplicationWidget(
-                                              title: applications[index],
-                                              applicationStatus: index.isEven
-                                                  ? ApplicationState.accepted
-                                                  : ApplicationState.applied,
-                                            ),
-                                        childCount: applications.length),
-                                  ),
+                                UniversityAppSliver(
+                                    applications:
+                                        provider.previousApplications),
+                                // if (provider.isPreviousLoading)
+                                //   SliverToBoxAdapter(
+                                //     child: UniversityAppShimmer(),
+                                //   )
+                                // else
+                                //   SliverList(
+                                //     delegate: SliverChildBuilderDelegate(
+                                //         (context, index) =>
+                                //             UniversityApplicationWidget(
+                                //               title: applications[index],
+                                //               applicationStatus: index.isEven
+                                //                   ? ApplicationState.accepted
+                                //                   : ApplicationState.applied,
+                                //             ),
+                                //         childCount: applications.length),
+                                //   ),
                               ],
                             ),
                           ),

@@ -14,14 +14,10 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'application_status_widget.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {
-  final String title;
-  final ApplicationState applicationStatus;
   final UniversityAppWidgetVM controller;
 
   const UniversityApplicationWidget({
     super.key,
-    required this.title,
-    required this.applicationStatus,
     required this.controller,
   });
 
@@ -42,13 +38,13 @@ class UniversityApplicationWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppStrings.universityName,
+                      controller.universityName,
                       style: styles.inter14w600.copyWith(
                         color: styles.darkSlateGrey,
                       ),
                     ),
                     Text(
-                      AppStrings.loremPorum * 2,
+                      controller.description,
                       style: styles.inter10w400.copyWith(
                         color: styles.darkGrey,
                         overflow: TextOverflow.ellipsis,
@@ -62,8 +58,7 @@ class UniversityApplicationWidget extends StatelessWidget {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
-                    context.push(DescriptionScreen.route,
-                        extra: applicationStatus ?? ApplicationState.rejected);
+                    context.push(DescriptionScreen.route);
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +76,7 @@ class UniversityApplicationWidget extends StatelessWidget {
               ),
             ),
             ApplicationStatusWidget(
-              applicationStatus: applicationStatus,
+              applicationStatus: controller.applicationState,
             ),
           ],
         ),
