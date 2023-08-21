@@ -58,7 +58,10 @@ class UniversityApplicationWidget extends StatelessWidget {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
-                    context.push(DescriptionScreen.route);
+                    context.push(DescriptionScreen.route, extra: {
+                      "title": AppStrings.comment,
+                      "description": controller.description
+                    });
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

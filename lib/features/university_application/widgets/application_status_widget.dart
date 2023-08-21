@@ -71,7 +71,7 @@ class ApplicationStatusWidget extends StatelessWidget {
           ),
         ),
       );
-    } else {
+    } else if (ApplicationState.rejected == applicationStatus) {
       return Expanded(
         child: Container(
           decoration: BoxDecoration(
@@ -98,5 +98,6 @@ class ApplicationStatusWidget extends StatelessWidget {
         ),
       );
     }
+    return SizedBox.shrink();
   }
 }
