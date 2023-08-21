@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
@@ -83,8 +83,8 @@ class _UniversityApplicationScreenState
                                             UniversityApplicationWidget(
                                               title: applications[index],
                                               applicationStatus: index.isEven
-                                                  ? ApplicationStatus.accepted
-                                                  : ApplicationStatus.applied,
+                                                  ? ApplicationState.accepted
+                                                  : ApplicationState.applied,
                                             ),
                                         childCount: applications.length),
                                   ),
@@ -107,8 +107,8 @@ class _UniversityApplicationScreenState
                                             UniversityApplicationWidget(
                                               title: applications[index],
                                               applicationStatus: index.isEven
-                                                  ? ApplicationStatus.accepted
-                                                  : ApplicationStatus.applied,
+                                                  ? ApplicationState.accepted
+                                                  : ApplicationState.applied,
                                             ),
                                         childCount: applications.length),
                                   ),

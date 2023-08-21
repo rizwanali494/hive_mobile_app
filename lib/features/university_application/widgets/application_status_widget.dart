@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ApplicationStatusWidget extends StatelessWidget {
-  final ApplicationStatus? applicationStatus;
+  final ApplicationState? applicationStatus;
 
   const ApplicationStatusWidget({
     super.key,
@@ -19,7 +19,7 @@ class ApplicationStatusWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    if (ApplicationStatus.accepted == applicationStatus) {
+    if (ApplicationState.accepted == applicationStatus) {
       return Expanded(
         child: Container(
           decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class ApplicationStatusWidget extends StatelessWidget {
           ),
         ),
       );
-    } else if (ApplicationStatus.applied == applicationStatus) {
+    } else if (ApplicationState.applied == applicationStatus) {
       return Expanded(
         child: Container(
           decoration: BoxDecoration(

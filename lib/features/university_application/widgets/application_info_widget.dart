@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 class ApplicationInfoWidget extends StatelessWidget {
-  final ApplicationStatus? applicationStatus;
+  final ApplicationState? applicationStatus;
 
   const ApplicationInfoWidget({
     super.key,
@@ -55,7 +55,7 @@ class ApplicationInfoWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     context.push(DescriptionScreen.route,
-                        extra: applicationStatus ?? ApplicationStatus.rejected);
+                        extra: applicationStatus ?? ApplicationState.rejected);
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

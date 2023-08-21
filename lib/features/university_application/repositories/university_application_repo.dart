@@ -44,5 +44,8 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   }
 
   String apiEndpoint(int? offSet, int? limit) =>
-      ApiEndpoints.universityApplication.withOffSet(offSet).withLimit(limit);
+      ApiEndpoints.universityApplication
+          .withOffSet(offSet)
+          .withLimit(limit)
+          .withUniversity;
 }

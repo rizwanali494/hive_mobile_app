@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
-import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
@@ -88,7 +88,7 @@ final goRouter = GoRouter(
       name: DescriptionScreen.route,
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>;
-        ApplicationStatus? status;
+        ApplicationState? status;
         status = extra["status"];
         var description = extra["description"] ?? "";
         log(description.toString());

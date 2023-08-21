@@ -1,3 +1,4 @@
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:isar/isar.dart';
@@ -139,4 +140,30 @@ class UniversityApplicationModel {
 
   @override
   int get hashCode => id.hashCode;
+
+  ApplicationState get getState {
+    switch (status?.toUpperCase()) {
+      case 'APPLIED':
+        return ApplicationState.applied;
+      case 'ACCEPTED':
+        return ApplicationState.accepted;
+      case 'REJECTED':
+        return ApplicationState.rejected;
+      default:
+        return ApplicationState.applied;
+    }
+  }
+
+  ApplicationStatus get getStatus {
+    switch (status?.toUpperCase()) {
+      case 'APPROVED':
+        return ApplicationStatus.approved;
+      case 'UNAPPROVED':
+        return ApplicationStatus.unapproved;
+      case 'PENDING':
+        return ApplicationStatus.pending;
+      default:
+        return ApplicationStatus.approved;
+    }
+  }
 }

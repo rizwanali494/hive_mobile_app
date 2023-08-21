@@ -13,6 +13,10 @@ extension ApiFieldExpandExtension on String {
     return _appendExpandField(ApiExpandField.attachments);
   }
 
+  String get withUniversity {
+    return _appendExpandField(ApiExpandField.university);
+  }
+
   String withOffSet(int? offSet) {
     return _appendPaginationParameter("offset", offSet);
   }

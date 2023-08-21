@@ -5,21 +5,24 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/features/university_application/view_models/university_app_widget_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_info_widget.dart';
 
-import 'package:hive_mobile/app/enums/application_status_enum.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 import 'application_status_widget.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {
   final String title;
-  final ApplicationStatus applicationStatus;
+  final ApplicationState applicationStatus;
+  final UniversityAppWidgetVM controller;
 
   const UniversityApplicationWidget({
     super.key,
     required this.title,
     required this.applicationStatus,
+    required this.controller,
   });
 
   @override
@@ -60,7 +63,7 @@ class UniversityApplicationWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     context.push(DescriptionScreen.route,
-                        extra: applicationStatus ?? ApplicationStatus.rejected);
+                        extra: applicationStatus ?? ApplicationState.rejected);
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
