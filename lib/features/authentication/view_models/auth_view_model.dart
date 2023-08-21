@@ -36,7 +36,6 @@ class AuthVM extends ChangeNotifier
     // }
     await authService.logOut();
     var user = await authService.logIn();
-    log(user.runtimeType.toString());
     if (user is GoogleSignInAccount) {
       var body = {
         "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}

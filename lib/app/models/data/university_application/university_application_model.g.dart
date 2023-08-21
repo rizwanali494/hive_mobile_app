@@ -23,66 +23,82 @@ const UniversityApplicationModelSchema = CollectionSchema(
       name: r'branchId',
       type: IsarType.long,
     ),
-    r'comments': PropertySchema(
+    r'cityId': PropertySchema(
       id: 1,
+      name: r'cityId',
+      type: IsarType.long,
+    ),
+    r'comments': PropertySchema(
+      id: 2,
       name: r'comments',
       type: IsarType.string,
     ),
     r'dateAdded': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'dateAdded',
       type: IsarType.string,
     ),
     r'dateLastModified': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'dateLastModified',
       type: IsarType.string,
     ),
     r'description': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'description',
       type: IsarType.string,
     ),
     r'documents': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'documents',
       type: IsarType.objectList,
       target: r'Attachments',
     ),
+    r'hashCode': PropertySchema(
+      id: 7,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
     r'id': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'id',
       type: IsarType.long,
     ),
     r'owner': PropertySchema(
-      id: 7,
+      id: 9,
       name: r'owner',
       type: IsarType.long,
     ),
+    r'regionId': PropertySchema(
+      id: 10,
+      name: r'regionId',
+      type: IsarType.long,
+    ),
     r'scholarshipAmount': PropertySchema(
-      id: 8,
+      id: 11,
       name: r'scholarshipAmount',
       type: IsarType.string,
     ),
     r'scholarshipPercent': PropertySchema(
-      id: 9,
+      id: 12,
       name: r'scholarshipPercent',
       type: IsarType.string,
     ),
     r'state': PropertySchema(
-      id: 10,
+      id: 13,
       name: r'state',
       type: IsarType.string,
     ),
     r'status': PropertySchema(
-      id: 11,
+      id: 14,
       name: r'status',
       type: IsarType.string,
     ),
     r'university': PropertySchema(
-      id: 12,
+      id: 15,
       name: r'university',
-      type: IsarType.long,
+      type: IsarType.object,
+      target: r'UniversityModel',
     )
   },
   estimateSize: _universityApplicationModelEstimateSize,
@@ -92,7 +108,10 @@ const UniversityApplicationModelSchema = CollectionSchema(
   idName: r'localId',
   indexes: {},
   links: {},
-  embeddedSchemas: {r'Attachments': AttachmentsSchema},
+  embeddedSchemas: {
+    r'UniversityModel': UniversityModelSchema,
+    r'Attachments': AttachmentsSchema
+  },
   getId: _universityApplicationModelGetId,
   getLinks: _universityApplicationModelGetLinks,
   attach: _universityApplicationModelAttach,
@@ -167,6 +186,14 @@ int _universityApplicationModelEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.university;
+    if (value != null) {
+      bytesCount += 3 +
+          UniversityModelSchema.estimateSize(
+              value, allOffsets[UniversityModel]!, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -177,23 +204,31 @@ void _universityApplicationModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.branchId);
-  writer.writeString(offsets[1], object.comments);
-  writer.writeString(offsets[2], object.dateAdded);
-  writer.writeString(offsets[3], object.dateLastModified);
-  writer.writeString(offsets[4], object.description);
+  writer.writeLong(offsets[1], object.cityId);
+  writer.writeString(offsets[2], object.comments);
+  writer.writeString(offsets[3], object.dateAdded);
+  writer.writeString(offsets[4], object.dateLastModified);
+  writer.writeString(offsets[5], object.description);
   writer.writeObjectList<Attachments>(
-    offsets[5],
+    offsets[6],
     allOffsets,
     AttachmentsSchema.serialize,
     object.documents,
   );
-  writer.writeLong(offsets[6], object.id);
-  writer.writeLong(offsets[7], object.owner);
-  writer.writeString(offsets[8], object.scholarshipAmount);
-  writer.writeString(offsets[9], object.scholarshipPercent);
-  writer.writeString(offsets[10], object.state);
-  writer.writeString(offsets[11], object.status);
-  writer.writeLong(offsets[12], object.university);
+  writer.writeLong(offsets[7], object.hashCode);
+  writer.writeLong(offsets[8], object.id);
+  writer.writeLong(offsets[9], object.owner);
+  writer.writeLong(offsets[10], object.regionId);
+  writer.writeString(offsets[11], object.scholarshipAmount);
+  writer.writeString(offsets[12], object.scholarshipPercent);
+  writer.writeString(offsets[13], object.state);
+  writer.writeString(offsets[14], object.status);
+  writer.writeObject<UniversityModel>(
+    offsets[15],
+    allOffsets,
+    UniversityModelSchema.serialize,
+    object.university,
+  );
 }
 
 UniversityApplicationModel _universityApplicationModelDeserialize(
@@ -204,24 +239,30 @@ UniversityApplicationModel _universityApplicationModelDeserialize(
 ) {
   final object = UniversityApplicationModel(
     branchId: reader.readLongOrNull(offsets[0]),
-    comments: reader.readStringOrNull(offsets[1]),
-    dateAdded: reader.readStringOrNull(offsets[2]),
-    dateLastModified: reader.readStringOrNull(offsets[3]),
-    description: reader.readStringOrNull(offsets[4]),
+    cityId: reader.readLongOrNull(offsets[1]),
+    comments: reader.readStringOrNull(offsets[2]),
+    dateAdded: reader.readStringOrNull(offsets[3]),
+    dateLastModified: reader.readStringOrNull(offsets[4]),
+    description: reader.readStringOrNull(offsets[5]),
     documents: reader.readObjectList<Attachments>(
-      offsets[5],
+      offsets[6],
       AttachmentsSchema.deserialize,
       allOffsets,
       Attachments(),
     ),
-    id: reader.readLongOrNull(offsets[6]),
+    id: reader.readLongOrNull(offsets[8]),
     localId: id,
-    owner: reader.readLongOrNull(offsets[7]),
-    scholarshipAmount: reader.readStringOrNull(offsets[8]),
-    scholarshipPercent: reader.readStringOrNull(offsets[9]),
-    state: reader.readStringOrNull(offsets[10]),
-    status: reader.readStringOrNull(offsets[11]),
-    university: reader.readLongOrNull(offsets[12]),
+    owner: reader.readLongOrNull(offsets[9]),
+    regionId: reader.readLongOrNull(offsets[10]),
+    scholarshipAmount: reader.readStringOrNull(offsets[11]),
+    scholarshipPercent: reader.readStringOrNull(offsets[12]),
+    state: reader.readStringOrNull(offsets[13]),
+    status: reader.readStringOrNull(offsets[14]),
+    university: reader.readObjectOrNull<UniversityModel>(
+      offsets[15],
+      UniversityModelSchema.deserialize,
+      allOffsets,
+    ),
   );
   return object;
 }
@@ -236,7 +277,7 @@ P _universityApplicationModelDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
@@ -244,26 +285,36 @@ P _universityApplicationModelDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
       return (reader.readObjectList<Attachments>(
         offset,
         AttachmentsSchema.deserialize,
         allOffsets,
         Attachments(),
       )) as P;
-    case 6:
-      return (reader.readLongOrNull(offset)) as P;
     case 7:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 10:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 11:
       return (reader.readStringOrNull(offset)) as P;
     case 12:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
+    case 13:
+      return (reader.readStringOrNull(offset)) as P;
+    case 14:
+      return (reader.readStringOrNull(offset)) as P;
+    case 15:
+      return (reader.readObjectOrNull<UniversityModel>(
+        offset,
+        UniversityModelSchema.deserialize,
+        allOffsets,
+      )) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -433,6 +484,80 @@ extension UniversityApplicationModelQueryFilter on QueryBuilder<
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'branchId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> cityIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'cityId',
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> cityIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'cityId',
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> cityIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'cityId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> cityIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'cityId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> cityIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'cityId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> cityIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'cityId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1173,6 +1298,62 @@ extension UniversityApplicationModelQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
       QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1368,6 +1549,80 @@ extension UniversityApplicationModelQueryFilter on QueryBuilder<
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'owner',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> regionIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'regionId',
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> regionIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'regionId',
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> regionIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'regionId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> regionIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'regionId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> regionIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'regionId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> regionIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'regionId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2017,62 +2272,6 @@ extension UniversityApplicationModelQueryFilter on QueryBuilder<
       ));
     });
   }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterFilterCondition> universityEqualTo(int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'university',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterFilterCondition> universityGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'university',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterFilterCondition> universityLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'university',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterFilterCondition> universityBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'university',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
 extension UniversityApplicationModelQueryObject on QueryBuilder<
@@ -2081,6 +2280,13 @@ extension UniversityApplicationModelQueryObject on QueryBuilder<
       QAfterFilterCondition> documentsElement(FilterQuery<Attachments> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'documents');
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterFilterCondition> university(FilterQuery<UniversityModel> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'university');
     });
   }
 }
@@ -2101,6 +2307,20 @@ extension UniversityApplicationModelQuerySortBy on QueryBuilder<
       QAfterSortBy> sortByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'branchId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> sortByCityId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'cityId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> sortByCityIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'cityId', Sort.desc);
     });
   }
 
@@ -2161,6 +2381,20 @@ extension UniversityApplicationModelQuerySortBy on QueryBuilder<
   }
 
   QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
       QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -2185,6 +2419,20 @@ extension UniversityApplicationModelQuerySortBy on QueryBuilder<
       QAfterSortBy> sortByOwnerDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'owner', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> sortByRegionId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'regionId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> sortByRegionIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'regionId', Sort.desc);
     });
   }
 
@@ -2243,20 +2491,6 @@ extension UniversityApplicationModelQuerySortBy on QueryBuilder<
       return query.addSortBy(r'status', Sort.desc);
     });
   }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterSortBy> sortByUniversity() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'university', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterSortBy> sortByUniversityDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'university', Sort.desc);
-    });
-  }
 }
 
 extension UniversityApplicationModelQuerySortThenBy on QueryBuilder<
@@ -2272,6 +2506,20 @@ extension UniversityApplicationModelQuerySortThenBy on QueryBuilder<
       QAfterSortBy> thenByBranchIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'branchId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> thenByCityId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'cityId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> thenByCityIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'cityId', Sort.desc);
     });
   }
 
@@ -2332,6 +2580,20 @@ extension UniversityApplicationModelQuerySortThenBy on QueryBuilder<
   }
 
   QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
       QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -2370,6 +2632,20 @@ extension UniversityApplicationModelQuerySortThenBy on QueryBuilder<
       QAfterSortBy> thenByOwnerDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'owner', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> thenByRegionId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'regionId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QAfterSortBy> thenByRegionIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'regionId', Sort.desc);
     });
   }
 
@@ -2428,20 +2704,6 @@ extension UniversityApplicationModelQuerySortThenBy on QueryBuilder<
       return query.addSortBy(r'status', Sort.desc);
     });
   }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterSortBy> thenByUniversity() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'university', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QAfterSortBy> thenByUniversityDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'university', Sort.desc);
-    });
-  }
 }
 
 extension UniversityApplicationModelQueryWhereDistinct on QueryBuilder<
@@ -2450,6 +2712,13 @@ extension UniversityApplicationModelQueryWhereDistinct on QueryBuilder<
       QDistinct> distinctByBranchId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'branchId');
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QDistinct> distinctByCityId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'cityId');
     });
   }
 
@@ -2483,6 +2752,13 @@ extension UniversityApplicationModelQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QDistinct> distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
       QDistinct> distinctById() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id');
@@ -2493,6 +2769,13 @@ extension UniversityApplicationModelQueryWhereDistinct on QueryBuilder<
       QDistinct> distinctByOwner() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'owner');
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
+      QDistinct> distinctByRegionId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'regionId');
     });
   }
 
@@ -2525,13 +2808,6 @@ extension UniversityApplicationModelQueryWhereDistinct on QueryBuilder<
       return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
     });
   }
-
-  QueryBuilder<UniversityApplicationModel, UniversityApplicationModel,
-      QDistinct> distinctByUniversity() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'university');
-    });
-  }
 }
 
 extension UniversityApplicationModelQueryProperty on QueryBuilder<
@@ -2547,6 +2823,13 @@ extension UniversityApplicationModelQueryProperty on QueryBuilder<
       branchIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'branchId');
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, int?, QQueryOperations>
+      cityIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'cityId');
     });
   }
 
@@ -2585,6 +2868,13 @@ extension UniversityApplicationModelQueryProperty on QueryBuilder<
     });
   }
 
+  QueryBuilder<UniversityApplicationModel, int, QQueryOperations>
+      hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
+    });
+  }
+
   QueryBuilder<UniversityApplicationModel, int?, QQueryOperations>
       idProperty() {
     return QueryBuilder.apply(this, (query) {
@@ -2596,6 +2886,13 @@ extension UniversityApplicationModelQueryProperty on QueryBuilder<
       ownerProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'owner');
+    });
+  }
+
+  QueryBuilder<UniversityApplicationModel, int?, QQueryOperations>
+      regionIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'regionId');
     });
   }
 
@@ -2627,7 +2924,7 @@ extension UniversityApplicationModelQueryProperty on QueryBuilder<
     });
   }
 
-  QueryBuilder<UniversityApplicationModel, int?, QQueryOperations>
+  QueryBuilder<UniversityApplicationModel, UniversityModel?, QQueryOperations>
       universityProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'university');

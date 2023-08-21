@@ -3,14 +3,16 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
-import 'package:hive_mobile/app/models/data/university_application_model.dart';
+import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 
 class UniversityApplicationScreenVM extends ChangeNotifier {
-  bool _isAcceptedLoading = false;
-  bool _isPreviousLoading = false;
+  bool _isAcceptedLoading = true;
+  bool _isPreviousLoading = true;
+  bool _isGettingMoreAccepted = false;
+  bool _isGettingMorePrevious = false;
   bool _hasAllAccepted = false;
   bool _hasAllPrevious = false;
   int _acceptedAppOffset = 0;
@@ -35,6 +37,15 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   UniversityApplicationScreenVM() {
     universityApplicationRepository =
         UniversityApplicationRepoImpl(apiService: apiService);
+    getApplications();
+  }
+
+  void getApplications() async {
+    final request = () {
+      getAcceptedApplications();
+      getPreviousApplications();
+    };
+    performRequest(request: request);
   }
 
   Future<void> getAcceptedApplications() async {
@@ -48,10 +59,12 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       acceptedApplications = list;
     };
     await performRequest(request: request);
+    _isAcceptedLoading = false;
     notifyListeners();
   }
 
   Future<void> getNextAcceptedApplications() async {
+    _isGettingMoreAccepted = true;
     final request = () async {
       var list = await universityApplicationRepository.getAcceptedApplications(
           limit: _limit, offSet: _acceptedAppOffset);
@@ -62,6 +75,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       acceptedApplications = list;
     };
     await performRequest(request: request);
+    _isGettingMoreAccepted = false;
     notifyListeners();
   }
 
@@ -76,10 +90,12 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       previousApplications = list;
     };
     await performRequest(request: request);
+    _isPreviousLoading = false;
     notifyListeners();
   }
 
   Future<void> getNextPreviousApplications() async {
+    _isGettingMorePrevious = true;
     final request = () async {
       var list = await universityApplicationRepository.getAcceptedApplications(
           limit: _limit, offSet: _previousAppOffset);
@@ -90,6 +106,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       previousApplications = list;
     };
     await performRequest(request: request);
+    _isGettingMorePrevious = false;
     notifyListeners();
   }
 
