@@ -75,6 +75,7 @@ class _UniversityApplicationScreenState
                                 SliverToBoxAdapter(child: 20.verticalSpace),
                                 UniversityAppSliver(
                                   applications: provider.acceptedApplications,
+                                  isLoading: provider.isAcceptedLoading,
                                 ),
                                 // if (provider.isAcceptedLoading)
                                 //   SliverToBoxAdapter(
@@ -96,8 +97,9 @@ class _UniversityApplicationScreenState
                                 ),
                                 SliverToBoxAdapter(child: 20.verticalSpace),
                                 UniversityAppSliver(
-                                    applications:
-                                        provider.previousApplications),
+                                  applications: provider.previousApplications,
+                                  isLoading: provider.isPreviousLoading,
+                                ),
                                 // if (provider.isPreviousLoading)
                                 //   SliverToBoxAdapter(
                                 //     child: UniversityAppShimmer(),

@@ -41,11 +41,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   void getApplications() async {
-    final request = () {
-      getAcceptedApplications();
-      getPreviousApplications();
-    };
-    performRequest(request: request);
+    getAcceptedApplications();
+    getPreviousApplications();
   }
 
   Future<void> getAcceptedApplications() async {
@@ -119,6 +116,28 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
         log("Error occurred : ${e.response.statusCode}");
       }
       log("Error occurred : $e");
+      onError();
     }
+  }
+
+  Future<void> refresh() async {
+    _acceptedAppOffset = 0;
+    _previousAppOffset = 0;
+    getApplications();
+  }
+
+  bool _hasError = false;
+
+  bool get hasError => _hasError;
+
+  void onError() {
+    if (previousApplications.isEmpty && acceptedApplications.isEmpty) {
+      _hasError = true;
+    }
+    _isAcceptedLoading = false;
+    _isPreviousLoading = false;
+    _isGettingMoreAccepted = false;
+    _isGettingMorePrevious = false;
+    notifyListeners();
   }
 }

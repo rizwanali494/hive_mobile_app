@@ -47,5 +47,6 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
       ApiEndpoints.universityApplication
           .withOffSet(offSet)
           .withLimit(limit)
-          .withUniversity;
+          .withUniversity
+          .withMostRecentOrder;
 }

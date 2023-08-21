@@ -69,7 +69,6 @@ class ServiceScreenVM extends ChangeNotifier {
       _paginationController.setOffset(list.length);
       servicesList.addAll(list);
       servicesList = servicesList.toSet().toList();
-
       await saveLocally(list);
       await getServicesStatus();
       _paginationController.addListener();

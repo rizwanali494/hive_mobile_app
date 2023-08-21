@@ -6,11 +6,11 @@ import 'package:hive_mobile/features/university_application/widgets/university_a
 import 'package:hive_mobile/features/university_application/widgets/university_application_widget.dart';
 
 class UniversityAppSliver extends StatelessWidget {
-  final isLoading;
+  final bool isLoading;
   final List<UniversityApplicationModel> applications;
 
   const UniversityAppSliver(
-      {super.key, this.isLoading, required this.applications});
+      {super.key, required this.isLoading, required this.applications});
 
   @override
   Widget build(BuildContext context) {
