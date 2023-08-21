@@ -40,18 +40,19 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
     getApplications();
   }
 
-  void getApplications() async {
-    getAcceptedApplications();
-    getPreviousApplications();
+  Future<void> getApplications() async {
+    await getAcceptedApplications();
+    await getPreviousApplications();
   }
 
   Future<void> getAcceptedApplications() async {
     final request = () async {
-      var list =
-          await universityApplicationRepository.getAcceptedApplications();
+      var list = await universityApplicationRepository.getAcceptedApplications(
+          limit: _limit);
       if (list.length < _limit) {
         _hasAllAccepted = true;
       }
+      log("accepted : ${list.length}");
       _acceptedAppOffset = list.length;
       acceptedApplications = list;
     };
@@ -78,11 +79,12 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   Future<void> getPreviousApplications() async {
     final request = () async {
-      var list =
-          await universityApplicationRepository.getAcceptedApplications();
+      var list = await universityApplicationRepository.getPreviousApplications(
+          limit: _limit);
       if (list.length < _limit) {
         _hasAllAccepted = true;
       }
+      log("previous : ${list.length}");
       _previousAppOffset = list.length;
       previousApplications = list;
     };
@@ -94,7 +96,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   Future<void> getNextPreviousApplications() async {
     _isGettingMorePrevious = true;
     final request = () async {
-      var list = await universityApplicationRepository.getAcceptedApplications(
+      var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit, offSet: _previousAppOffset);
       if (list.length < _limit) {
         _hasAllAccepted = true;
@@ -123,7 +125,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   Future<void> refresh() async {
     _acceptedAppOffset = 0;
     _previousAppOffset = 0;
-    getApplications();
+    await getApplications();
+    return;
   }
 
   bool _hasError = false;

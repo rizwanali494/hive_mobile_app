@@ -64,59 +64,36 @@ class _UniversityApplicationScreenState
                             padding: EdgeInsets.symmetric(
                               vertical: 26.h,
                             ),
-                            child: CustomScrollView(
-                              slivers: [
-                                SliverToBoxAdapter(
-                                  child: Text(
-                                    applications[0],
-                                    style: styles.inter20w700,
+                            child: RefreshIndicator(
+                              onRefresh: provider.refresh,
+                              backgroundColor: styles.white,
+                              child: CustomScrollView(
+                                slivers: [
+                                  SliverToBoxAdapter(
+                                    child: Text(
+                                      applications[0],
+                                      style: styles.inter20w700,
+                                    ),
                                   ),
-                                ),
-                                SliverToBoxAdapter(child: 20.verticalSpace),
-                                UniversityAppSliver(
-                                  applications: provider.acceptedApplications,
-                                  isLoading: provider.isAcceptedLoading,
-                                ),
-                                // if (provider.isAcceptedLoading)
-                                //   SliverToBoxAdapter(
-                                //     child: UniversityAppShimmer(),
-                                //   )
-                                // else
-                                //   SliverList(
-                                //     delegate: SliverChildBuilderDelegate(
-                                //         (context, index) =>
-                                //             UniversityApplicationWidget(),
-                                //         childCount: applications.length),
-                                //   ),
-                                SliverToBoxAdapter(child: 20.verticalSpace),
-                                SliverToBoxAdapter(
-                                  child: Text(
-                                    applications[1],
-                                    style: styles.inter20w700,
+                                  SliverToBoxAdapter(child: 20.verticalSpace),
+                                  UniversityAppSliver(
+                                    applications: provider.acceptedApplications,
+                                    isLoading: provider.isAcceptedLoading,
                                   ),
-                                ),
-                                SliverToBoxAdapter(child: 20.verticalSpace),
-                                UniversityAppSliver(
-                                  applications: provider.previousApplications,
-                                  isLoading: provider.isPreviousLoading,
-                                ),
-                                // if (provider.isPreviousLoading)
-                                //   SliverToBoxAdapter(
-                                //     child: UniversityAppShimmer(),
-                                //   )
-                                // else
-                                //   SliverList(
-                                //     delegate: SliverChildBuilderDelegate(
-                                //         (context, index) =>
-                                //             UniversityApplicationWidget(
-                                //               title: applications[index],
-                                //               applicationStatus: index.isEven
-                                //                   ? ApplicationState.accepted
-                                //                   : ApplicationState.applied,
-                                //             ),
-                                //         childCount: applications.length),
-                                //   ),
-                              ],
+                                  SliverToBoxAdapter(child: 20.verticalSpace),
+                                  SliverToBoxAdapter(
+                                    child: Text(
+                                      applications[1],
+                                      style: styles.inter20w700,
+                                    ),
+                                  ),
+                                  SliverToBoxAdapter(child: 20.verticalSpace),
+                                  UniversityAppSliver(
+                                    applications: provider.previousApplications,
+                                    isLoading: provider.isPreviousLoading,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

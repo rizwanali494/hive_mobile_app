@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
@@ -13,7 +14,8 @@ abstract class UniversityApplicationRepository {
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet});
 
-  Future<List<UniversityApplicationModel>> getPreviousApplications();
+  Future<List<UniversityApplicationModel>> getPreviousApplications(
+      {int? limit, int? offSet});
 }
 
 class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
@@ -22,7 +24,8 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   @override
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet}) async {
-    var url = apiEndpoint(offSet, limit);
+    var url = apiEndpoint(offSet, limit).withApprovedState;
+    log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
@@ -35,9 +38,11 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   Future<List<UniversityApplicationModel>> getPreviousApplications(
       {int? limit, int? offSet}) async {
     var url = apiEndpoint(offSet, limit).withNotApprovedApplications;
+    log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
+    log(result.first.toString());
     return result
         .map((item) => UniversityApplicationModel.fromJson(item))
         .toList();

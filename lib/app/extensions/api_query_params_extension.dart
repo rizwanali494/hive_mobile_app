@@ -39,6 +39,9 @@ extension ApiFieldExpandExtension on String {
     if (this.contains(ApiExpandField.expandQueryName)) {
       return "$this,$field";
     }
+    if (this.contains("?")) {
+      return "$this&${ApiExpandField.expandQueryName}=$field";
+    }
     return "$this?${ApiExpandField.expandQueryName}=$field";
   }
 
@@ -67,19 +70,19 @@ extension ApiFieldExpandExtension on String {
   }
 
   String get withApprovedState {
-    return _appendQueryParameter("state=APPROVED");
+    return _appendQueryParameter("status=APPROVED");
   }
 
   String get withPendingState {
-    return _appendQueryParameter("state=PENDING");
+    return _appendQueryParameter("status=PENDING");
   }
 
   String get withRejectedState {
-    return _appendQueryParameter("state=REJECTED");
+    return _appendQueryParameter("status=REJECTED");
   }
 
   String get withNotApprovedApplications {
-    return _appendQueryParameter("state__ne=${("unapproved").toUpperCase()}");
+    return _appendQueryParameter("status__ne=${("APPROVED").toUpperCase()}");
   }
 
   String _appendQueryParameter(String parameter) {
