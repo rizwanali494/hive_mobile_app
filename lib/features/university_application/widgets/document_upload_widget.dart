@@ -6,12 +6,14 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class DocumentUploadWidget extends StatelessWidget {
   final Function()? onTap;
+  final Function()? onRemove;
   final String? documentName;
 
   const DocumentUploadWidget({
     super.key,
     this.onTap,
     this.documentName,
+    this.onRemove,
   });
 
   @override
@@ -32,32 +34,45 @@ class DocumentUploadWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              badges.Badge(
-                badgeStyle: badges.BadgeStyle(
-                  badgeColor: styles.greyWhite,
-                ),
-                position: badges.BadgePosition.topEnd(end: -5),
-                badgeContent: Icon(
-                  Icons.close,
-                  size: 10,
-                  color: styles.darkGrey,
-                ),
-                child: Container(
-                  width: 51.w,
-                  height: 51.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      10,
+          Expanded(
+            child: Row(
+              children: [
+                badges.Badge(
+                  badgeStyle: badges.BadgeStyle(
+                    badgeColor: styles.greyWhite,
+                  ),
+                  position: badges.BadgePosition.topEnd(end: -5),
+                  onTap: onRemove,
+                  badgeContent: Icon(
+                    Icons.close,
+                    size: 10,
+                    color: styles.darkGrey,
+                  ),
+                  child: GestureDetector(
+                    onTap: onRemove,
+                    child: Container(
+                      width: 51.w,
+                      height: 51.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                        color: styles.greyWhite,
+                      ),
                     ),
-                    color: styles.greyWhite,
                   ),
                 ),
-              ),
-              11.horizontalSpace,
-              Text(documentName ?? AppStrings.documentName)
-            ],
+                11.horizontalSpace,
+                Expanded(
+                  child: Text(
+                    documentName ?? AppStrings.documentName,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: styles.inter12w400,
+                  ),
+                )
+              ],
+            ),
           ),
           ElevatedButton(
             onPressed: () {

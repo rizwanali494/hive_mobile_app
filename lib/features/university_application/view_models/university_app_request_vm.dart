@@ -69,11 +69,21 @@ class UniversityAppRequestVM extends ChangeNotifier {
   String? documentName;
 
   void pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
     if (result != null) {
-      documentName = result.files.single.name;
-      file = File(result.files.single.path!);
-      notifyListeners();
+      bool validFile = result.files.first.extension == "pdf";
+      if (validFile) {
+        documentName = result.files.single.name;
+        file = File(result.files.single.path!);
+        notifyListeners();
+      }
     } else {}
+  }
+
+  void removeFile() async {
+    file = null;
+    documentName = null;
+    notifyListeners();
   }
 }

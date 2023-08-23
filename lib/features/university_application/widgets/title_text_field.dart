@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class TitleTextField extends StatelessWidget {
   final String? title;
+  final int? maxLength;
   final String hintText;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
   final TextStyle? hintStyle;
 
   final TextEditingController? controller;
@@ -17,6 +21,9 @@ class TitleTextField extends StatelessWidget {
     this.maxLines,
     this.controller,
     this.hintStyle,
+    this.inputFormatters,
+    this.keyboardType,
+    this.maxLength,
   });
 
   @override
@@ -26,7 +33,7 @@ class TitleTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (title != null)
+        if (title != null) ...[
           Padding(
             padding: EdgeInsets.only(left: 4.w),
             child: Text(
@@ -36,7 +43,8 @@ class TitleTextField extends StatelessWidget {
               ),
             ),
           ),
-        11.verticalSpace,
+          11.verticalSpace,
+        ],
         Container(
           padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 5.h),
           decoration: BoxDecoration(
@@ -47,6 +55,9 @@ class TitleTextField extends StatelessWidget {
           ),
           child: TextFormField(
             style: styles.inter12w400,
+            inputFormatters: inputFormatters,
+            keyboardType: keyboardType,
+            maxLength: maxLength,
             controller: controller,
             maxLines: maxLines ?? 1,
             decoration: InputDecoration(

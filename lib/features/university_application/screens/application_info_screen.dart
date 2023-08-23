@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/navigation/extensions.dart';
@@ -43,7 +44,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 Text(
                   AppStrings.selectStatus,
                   style:
-                  styles.inter14w600.copyWith(color: styles.darkSlateGrey),
+                      styles.inter14w600.copyWith(color: styles.darkSlateGrey),
                 ),
                 13.verticalSpace,
                 Row(
@@ -90,6 +91,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 14.verticalSpace,
                 DocumentUploadWidget(
                   onTap: provider.pickFile,
+                  onRemove: provider.removeFile,
                   documentName: provider.documentName,
                 ),
                 28.verticalSpace,
@@ -104,6 +106,10 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                     Expanded(
                       child: TitleTextField(
                         title: AppStrings.scholarshipAmount,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         controller: scholarShipAmount,
                         hintText: "",
                       ),
@@ -112,6 +118,10 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                     Expanded(
                       child: TitleTextField(
                         title: AppStrings.scholarship,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         controller: scholarShipPercent,
                         hintText: "",
                       ),

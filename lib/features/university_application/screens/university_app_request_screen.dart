@@ -119,7 +119,7 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                       if (provider.selectedUniversity != null) ...[
                         35.verticalSpace,
                         ApplicationInfoScreen()
-                      ]
+                      ],
                     ],
                   ],
                 ),
