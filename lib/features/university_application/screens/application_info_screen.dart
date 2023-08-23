@@ -28,6 +28,7 @@ class ApplicationInfoScreen extends StatefulWidget {
 class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
   final scholarShipAmount = TextEditingController();
   final scholarShipPercent = TextEditingController();
+  final description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +96,12 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   documentName: provider.documentName,
                 ),
                 28.verticalSpace,
-                // TitleTextField(
-                //   title: AppStrings.sessionNote,
-                //   hintText: "",
-                // ),
-                // 26.verticalSpace,
+                TitleTextField(
+                  title: AppStrings.description,
+                  controller: description,
+                  hintText: "",
+                ),
+                26.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -132,7 +134,10 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 BlueElevatedButton(
                   text: AppStrings.add,
                   onTap: () {
-                    provider.uploadFile();
+                    provider.validate(
+                        scholarshipAmount: scholarShipAmount.text,
+                        scholarshipPercent: scholarShipPercent.text,
+                        description: description.text);
                     // context.popUntil(
                     //   HomeScreen.route,
                     // );

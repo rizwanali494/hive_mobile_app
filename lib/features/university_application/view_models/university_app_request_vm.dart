@@ -91,21 +91,48 @@ class UniversityAppRequestVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void uploadFile() async {
-    if (file == null) {
+  void validate(
+      {required String scholarshipAmount,
+      required String scholarshipPercent,
+      required String description}) {
+    if (scholarshipAmount.trim().isEmpty ||
+        file == null ||
+        scholarshipPercent.trim().isEmpty ||
+        description.trim().isEmpty) {
+      log("empty");
       return;
     }
+    uploadFile(
+        scholarshipAmount: scholarshipAmount,
+        scholarshipPercent: scholarshipPercent,
+        description: description);
+  }
+
+  void uploadFile(
+      {required String scholarshipAmount,
+      required String scholarshipPercent,
+      required String description}) async {
     try {
-      var result = await apiService.uploadSingleFile(
-          file: file!,
-          purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
-          url: ApiEndpoints.upload);
-      log(jsonDecode(result.body).toString());
+      var fileModel =
+          await repository.uploadUniversityDocumentFile(file: file!);
+      int scholarshipAmountDigit = int.tryParse(scholarshipAmount) ?? 0;
+      int scholarshipPercentDigit = int.tryParse(scholarshipPercent) ?? 0;
+      var body = {
+        "university": selectedUniversity?.id,
+        "description": description,
+        "document": fileModel.id,
+        "scholarship_amount": scholarshipAmountDigit,
+        "scholarship_percent": scholarshipPercentDigit,
+        "state": _selectedStatus.toUpperCase(),
+      };
+      log(body.toString());
+      await repository.uploadUniversityDocument(body: body);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
         log(e.response.body.toString());
       }
+      log(e.toString());
     }
   }
 }

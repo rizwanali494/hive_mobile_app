@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
+import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/models/data/file_upload_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -19,6 +22,11 @@ abstract class UniversityApplicationRepository {
       {int? limit, int? offSet});
 
   Future<List<UniversityModel>> getAllUniversities();
+
+  Future<FileUploadModel> uploadUniversityDocumentFile({required File file});
+
+  Future<UniversityApplicationModel> uploadUniversityDocument(
+      {required Map body});
 }
 
 class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
@@ -65,5 +73,25 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
     List result = body["results"] ?? [];
     log(result.first.toString());
     return result.map((item) => UniversityModel.fromJson(item)).toList();
+  }
+
+  @override
+  Future<FileUploadModel> uploadUniversityDocumentFile(
+      {required File file}) async {
+    var url = ApiEndpoints.universities;
+    var response = await apiService.uploadSingleFile(
+        file: file,
+        purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
+        url: ApiEndpoints.upload);
+    var body = jsonDecode(response.body);
+    return FileUploadModel.fromJson(body);
+  }
+
+  Future<UniversityApplicationModel> uploadUniversityDocument(
+      {required Map body}) async {
+    var url = ApiEndpoints.universityApplication;
+    var response = await apiService.post(url: url, body: body);
+    var responseBody = jsonDecode(response.body);
+    return UniversityApplicationModel.fromJson(responseBody);
   }
 }
