@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/show_more_button.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_application_screen_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_app_sliver_widget.dart';
@@ -77,6 +78,11 @@ class _UniversityApplicationScreenState
                                     applications: provider.acceptedApplications,
                                     isLoading: provider.isAcceptedLoading,
                                   ),
+                                  ShowMoreButton(
+                                    styles: styles,
+                                    hasAll: provider.hasAllAccepted,
+                                    isLoading: provider.isGettingMoreAccepted,
+                                  ),
                                   SliverToBoxAdapter(child: 20.verticalSpace),
                                   SliverToBoxAdapter(
                                     child: Text(
@@ -88,6 +94,11 @@ class _UniversityApplicationScreenState
                                   UniversityAppSliver(
                                     applications: provider.previousApplications,
                                     isLoading: provider.isPreviousLoading,
+                                  ),
+                                  ShowMoreButton(
+                                    styles: styles,
+                                    hasAll: provider.hasAllAccepted,
+                                    isLoading: provider.isGettingMorePrevious,
                                   ),
                                 ],
                               ),

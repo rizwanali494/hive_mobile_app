@@ -19,6 +19,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   int _previousAppOffset = 0;
   final _limit = 10;
 
+  bool get isGettingMoreAccepted => _isGettingMoreAccepted;
+
   bool get isAcceptedLoading => _isAcceptedLoading;
 
   bool get isPreviousLoading => _isPreviousLoading;
@@ -99,7 +101,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit, offSet: _previousAppOffset);
       if (list.length < _limit) {
-        _hasAllAccepted = true;
+        _hasAllPrevious = true;
       }
       _previousAppOffset += list.length;
       previousApplications = list;
@@ -143,4 +145,6 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
     _isGettingMorePrevious = false;
     notifyListeners();
   }
+
+  bool get isGettingMorePrevious => _isGettingMorePrevious;
 }
