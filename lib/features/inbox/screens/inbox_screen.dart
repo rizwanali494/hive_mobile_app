@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';

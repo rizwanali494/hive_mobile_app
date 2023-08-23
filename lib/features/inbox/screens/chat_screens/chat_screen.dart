@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/inbox/widgets/chat_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
