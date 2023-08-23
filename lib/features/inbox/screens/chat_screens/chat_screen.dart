@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/view/widgets/text_field_widget.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/inbox/widgets/chat_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 
 class ChatScreen extends StatelessWidget {
   static const route = "/ChatScreen";
@@ -84,14 +85,15 @@ class ChatScreen extends StatelessWidget {
                 Expanded(
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        color: styles.greyWhite,
-                        border: Border.all(color: styles.skyBlue),
-                        borderRadius: BorderRadius.circular(36.r)),
+                      color: styles.greyWhite,
+                      border: Border.all(color: styles.skyBlue),
+                      borderRadius: BorderRadius.circular(36.r),
+                    ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 26.w,
                       ),
-                      child: TextFieldWidget(
+                      child: TitleTextField(
                         hintText: AppStrings.typeMessagesHere,
                       ),
                     ),
@@ -120,10 +122,6 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
 }
-
 
 const _user = MockNewsFeedModel.user;

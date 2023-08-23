@@ -25,6 +25,9 @@ class ApplicationInfoScreen extends StatefulWidget {
 }
 
 class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
+  final scholarShipAmount = TextEditingController();
+  final scholarShipPercent = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -40,7 +43,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 Text(
                   AppStrings.selectStatus,
                   style:
-                      styles.inter14w600.copyWith(color: styles.darkSlateGrey),
+                  styles.inter14w600.copyWith(color: styles.darkSlateGrey),
                 ),
                 13.verticalSpace,
                 Row(
@@ -85,19 +88,23 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   ),
                 ),
                 14.verticalSpace,
-                DocumentUploadWidget(),
-                28.verticalSpace,
-                TitleTextField(
-                  title: AppStrings.sessionNote,
-                  hintText: "",
+                DocumentUploadWidget(
+                  onTap: provider.pickFile,
+                  documentName: provider.documentName,
                 ),
-                26.verticalSpace,
+                28.verticalSpace,
+                // TitleTextField(
+                //   title: AppStrings.sessionNote,
+                //   hintText: "",
+                // ),
+                // 26.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: TitleTextField(
                         title: AppStrings.scholarshipAmount,
+                        controller: scholarShipAmount,
                         hintText: "",
                       ),
                     ),
@@ -105,6 +112,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                     Expanded(
                       child: TitleTextField(
                         title: AppStrings.scholarship,
+                        controller: scholarShipPercent,
                         hintText: "",
                       ),
                     ),
@@ -114,9 +122,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 BlueElevatedButton(
                   text: AppStrings.add,
                   onTap: () {
-                    context.popUntil(
-                      HomeScreen.route,
-                    );
+                    // context.popUntil(
+                    //   HomeScreen.route,
+                    // );
                   },
                 )
               ],

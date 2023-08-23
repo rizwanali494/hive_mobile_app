@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
@@ -61,5 +63,17 @@ class UniversityAppRequestVM extends ChangeNotifier {
 
   bool iSelected(String value) {
     return value == _selectedStatus;
+  }
+
+  File? file;
+  String? documentName;
+
+  void pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      documentName = result.files.single.name;
+      file = File(result.files.single.path!);
+      notifyListeners();
+    } else {}
   }
 }

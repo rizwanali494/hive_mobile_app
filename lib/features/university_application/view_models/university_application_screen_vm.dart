@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
@@ -151,12 +153,5 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   String _selectedStatus = AppStrings.applied;
 
-  void selectStatus(String value) {
-    _selectedStatus = value;
-    notifyListeners();
-  }
 
-  bool iSelected(String value) {
-    return value == _selectedStatus;
-  }
 }

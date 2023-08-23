@@ -13,6 +13,7 @@ import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
 import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
+import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
 
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
@@ -60,7 +61,7 @@ class InboxScreen extends StatelessWidget {
                     36.r,
                   ),
                 ),
-                child: TextFieldWidget(
+                child: TitleTextField(
                   hintText: AppStrings.searchMessagesHere,
                 ),
               ),

@@ -23,7 +23,7 @@ extension GoRouterExtOnBuildContext on BuildContext {
   }
 
   /// A custom GoRouter extension that pops until it can
-  /// and then pushes to [name] as replacing.
+  /// and then pushes to [documentName] as replacing.
   ///
   /// If until is not provided gonna pop until it can.
   // void pushNamedAndRemoveUntil(

@@ -40,7 +40,6 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                   onRefresh: provider.refresh,
                 ));
               }
-
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,18 +116,10 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                           },
                         ),
                       ),
-                      if (provider.selectedUniversity == null) ...[
-                        12.verticalSpace,
-                        BlueElevatedButton(
-                          text: AppStrings.add,
-                          onTap: () {
-                            context.push(ApplicationInfoScreen.route);
-                          },
-                        )
-                      ] else ...[
+                      if (provider.selectedUniversity != null) ...[
                         35.verticalSpace,
                         ApplicationInfoScreen()
-                      ],
+                      ]
                     ],
                   ],
                 ),

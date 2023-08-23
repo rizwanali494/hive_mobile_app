@@ -5,10 +5,13 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class DocumentUploadWidget extends StatelessWidget {
-
+  final Function()? onTap;
+  final String? documentName;
 
   const DocumentUploadWidget({
     super.key,
+    this.onTap,
+    this.documentName,
   });
 
   @override
@@ -53,11 +56,15 @@ class DocumentUploadWidget extends StatelessWidget {
                 ),
               ),
               11.horizontalSpace,
-              Text(AppStrings.documentName)
+              Text(documentName ?? AppStrings.documentName)
             ],
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (onTap != null) {
+                onTap!();
+              }
+            },
             style: ElevatedButton.styleFrom(
                 backgroundColor: styles.lightGrey,
                 minimumSize: const Size(0, 0),
