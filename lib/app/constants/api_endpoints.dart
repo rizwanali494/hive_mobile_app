@@ -11,4 +11,6 @@ class ApiEndpoints {
   static String serviceRequest = "${administrative}service_request/";
   static String universityApplication =
       "${administrative}university_application/";
+  static String universities =
+      "${administrative}university_application/university/";
 }

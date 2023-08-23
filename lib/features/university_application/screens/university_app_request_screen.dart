@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/application_info_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/view_models/university_selection_vm.dart';
+import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/view_models/university_app_request_vm.dart';
 import 'package:provider/provider.dart';
 
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -26,13 +28,19 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return ChangeNotifierProvider(
-      create: (BuildContext context) => UniversitySelectionVM(),
-      child: Consumer<UniversitySelectionVM>(
-        builder: (context, provider, child) {
-          return Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 18.w),
-              child: Column(
+      create: (BuildContext context) => UniversityAppRequestVM(),
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
+          child: Consumer<UniversityAppRequestVM>(
+            builder: (context, provider, child) {
+              if (provider.hasError) {
+                Expanded(
+                    child: ErrorTextWidget(
+                  onRefresh: provider.refresh,
+                ));
+              }
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DividerAppBar(
@@ -65,7 +73,7 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                     padding: EdgeInsets.symmetric(
                       horizontal: 19.w,
                     ),
-                    child: DropdownButton<String>(
+                    child: DropdownButton<UniversityModel>(
                       value: provider.selectedUniversity,
                       isExpanded: true,
                       icon: const Icon(Icons.keyboard_arrow_down_sharp),
@@ -73,10 +81,10 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                       underline: const SizedBox(),
                       items: provider.universities
                           .map(
-                            (value) => DropdownMenuItem<String>(
+                            (value) => DropdownMenuItem<UniversityModel>(
                               value: value,
                               child: Text(
-                                value,
+                                value.name ?? "",
                                 style: styles.inter12w400,
                               ),
                             ),
@@ -95,10 +103,10 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                     },
                   )
                 ],
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

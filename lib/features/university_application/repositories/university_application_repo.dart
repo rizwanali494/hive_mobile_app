@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
+import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class UniversityApplicationRepository {
@@ -16,6 +17,8 @@ abstract class UniversityApplicationRepository {
 
   Future<List<UniversityApplicationModel>> getPreviousApplications(
       {int? limit, int? offSet});
+
+  Future<List<UniversityModel>> getAllUniversities();
 }
 
 class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
@@ -54,4 +57,14 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
           .withLimit(limit)
           .withUniversity
           .withMostRecentOrder;
+
+  @override
+  Future<List<UniversityModel>> getAllUniversities() async {
+    var url = ApiEndpoints.universities;
+    var response = await apiService.get(url: url);
+    var body = jsonDecode(response.body);
+    List result = body["results"] ?? [];
+    log(result.first.toString());
+    return result.map((item) => UniversityModel.fromJson(item)).toList();
+  }
 }

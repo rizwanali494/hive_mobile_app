@@ -8,9 +8,9 @@ import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/university_application/widgets/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/application_info_vm.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/application_status_widget.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/view_models/application_info_vm.dart';
+import 'package:hive_mobile/features/university_application/widgets/application_state_selection_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class ApplicationInfoScreen extends StatefulWidget {

@@ -19,8 +19,8 @@ import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/application_info_screen.dart';
-import 'package:hive_mobile/features/university_application/screens/application_request/screens/university_selection_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/application_info_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
 import 'package:hive_mobile/splash.dart';
 
