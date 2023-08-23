@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/constants/api_endpoints.dart';
+import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
+import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -72,7 +76,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
     if (result != null) {
-      bool validFile = result.files.first.extension == "pdf";
+      bool validFile = true;
       if (validFile) {
         documentName = result.files.single.name;
         file = File(result.files.single.path!);
@@ -85,5 +89,23 @@ class UniversityAppRequestVM extends ChangeNotifier {
     file = null;
     documentName = null;
     notifyListeners();
+  }
+
+  void uploadFile() async {
+    if (file == null) {
+      return;
+    }
+    try {
+      var result = await apiService.uploadSingleFile(
+          file: file!,
+          purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
+          url: ApiEndpoints.upload);
+      log(jsonDecode(result.body).toString());
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log(e.response.statusCode.toString());
+        log(e.response.body.toString());
+      }
+    }
   }
 }

@@ -132,6 +132,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 BlueElevatedButton(
                   text: AppStrings.add,
                   onTap: () {
+                    provider.uploadFile();
                     // context.popUntil(
                     //   HomeScreen.route,
                     // );

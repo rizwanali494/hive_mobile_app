@@ -1,6 +1,9 @@
 import 'dart:convert';
-
+import 'dart:developer';
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -76,5 +79,28 @@ class ApiServiceImpl extends ApiService {
       return response;
     }
     throw HTTPStatusCodeException(response: response);
+  }
+
+  @override
+  Future<http.Response> uploadSingleFile({
+    required File file,
+    required String purpose,
+    required String url,
+    Map<String, String>? headers,
+  }) async {
+    var postUri = Uri.parse(ApiEndpoints.upload);
+    var request = new http.MultipartRequest("POST", postUri);
+    request.headers.addAll(headers ?? this._headers);
+    request.headers.addAll({"Content-Type": "multipart/form-data"});
+    request.fields['purpose'] = purpose;
+    log(file.path);
+    log(request.headers.toString());
+    var multipartFile = await http.MultipartFile.fromPath('file', file.path);
+    request.files.add(
+      multipartFile,
+    );
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    return getResponse(response: response);
   }
 }

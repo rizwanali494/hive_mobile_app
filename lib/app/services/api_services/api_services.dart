@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart';
 
 abstract class ApiService {
@@ -10,4 +12,11 @@ abstract class ApiService {
       {required String url, required Map body, String? queryParameters});
 
   Future<Response> getResponse({required Response response});
+
+  Future<Response> uploadSingleFile({
+    required File file,
+    required String purpose,
+    required String url,
+    Map<String, String>? headers,
+  });
 }
