@@ -40,69 +40,98 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                   onRefresh: provider.refresh,
                 ));
               }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DividerAppBar(
-                    title: AppStrings.applicationInformation,
-                  ),
-                  26.verticalSpace,
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 4.w,
+
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DividerAppBar(
+                      title: AppStrings.applicationInformation,
                     ),
-                    child: Text(
-                      AppStrings.selectUniversity,
-                      style: styles.inter14w600.copyWith(
-                        color: styles.darkSlateGrey,
+                    26.verticalSpace,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 4.w,
                       ),
-                    ),
-                  ),
-                  14.verticalSpace,
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        25,
-                      ),
-                      border: Border.all(
-                        color: styles.black.withOpacity(
-                          0.2,
+                      child: Text(
+                        AppStrings.selectUniversity,
+                        style: styles.inter14w600.copyWith(
+                          color: styles.darkSlateGrey,
                         ),
                       ),
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 19.w,
-                    ),
-                    child: DropdownButton<UniversityModel>(
-                      value: provider.selectedUniversity,
-                      isExpanded: true,
-                      icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                      dropdownColor: styles.white,
-                      underline: const SizedBox(),
-                      items: provider.universities
-                          .map(
-                            (value) => DropdownMenuItem<UniversityModel>(
-                              value: value,
-                              child: Text(
-                                value.name ?? "",
-                                style: styles.inter12w400,
-                              ),
+                    14.verticalSpace,
+                    if (provider.isGettingUniversities)
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 20.h,
+                          ),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    else if (provider.universities.isEmpty)
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
+                          child: Text(
+                            AppStrings.noUniFound,
+                            style: styles.inter12w400Italic,
+                          ),
+                        ),
+                      )
+                    else ...[
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
+                          border: Border.all(
+                            color: styles.black.withOpacity(
+                              0.2,
                             ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        provider.selectUniversity(value);
-                      },
-                    ),
-                  ),
-                  12.verticalSpace,
-                  BlueElevatedButton(
-                    text: AppStrings.add,
-                    onTap: () {
-                      context.push(ApplicationInfoScreen.route);
-                    },
-                  )
-                ],
+                          ),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 19.w,
+                        ),
+                        child: DropdownButton<UniversityModel>(
+                          value: provider.selectedUniversity,
+                          isExpanded: true,
+                          icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                          dropdownColor: styles.white,
+                          underline: const SizedBox(),
+                          items: provider.universities
+                              .map(
+                                (value) => DropdownMenuItem<UniversityModel>(
+                                  value: value,
+                                  child: Text(
+                                    value.name ?? "",
+                                    style: styles.inter12w400,
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            provider.selectUniversity(value);
+                          },
+                        ),
+                      ),
+                      if (provider.selectedUniversity == null) ...[
+                        12.verticalSpace,
+                        BlueElevatedButton(
+                          text: AppStrings.add,
+                          onTap: () {
+                            context.push(ApplicationInfoScreen.route);
+                          },
+                        )
+                      ] else ...[
+                        35.verticalSpace,
+                        ApplicationInfoScreen()
+                      ],
+                    ],
+                  ],
+                ),
               );
             },
           ),

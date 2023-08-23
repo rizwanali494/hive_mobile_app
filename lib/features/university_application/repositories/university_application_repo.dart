@@ -45,7 +45,6 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
-    log(result.first.toString());
     return result
         .map((item) => UniversityApplicationModel.fromJson(item))
         .toList();

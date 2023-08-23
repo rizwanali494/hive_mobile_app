@@ -91,9 +91,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 }
                 return Expanded(
                   child: RefreshIndicator(
+                    // onRefresh: provider.refreshNewsFeed,
                     onRefresh: provider.refreshNewsFeed,
                     backgroundColor: styles.white,
                     child: ListView.separated(
+                      physics: const AlwaysScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(
                         vertical: 12.h,
                       ),

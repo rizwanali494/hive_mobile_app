@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
@@ -147,4 +148,15 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   bool get isGettingMorePrevious => _isGettingMorePrevious;
+
+  String _selectedStatus = AppStrings.applied;
+
+  void selectStatus(String value) {
+    _selectedStatus = value;
+    notifyListeners();
+  }
+
+  bool iSelected(String value) {
+    return value == _selectedStatus;
+  }
 }

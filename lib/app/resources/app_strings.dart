@@ -110,4 +110,5 @@ class AppStrings {
   static String pollsClosed = "Poll Closed";
   static String votes = "votes";
   static String count = "count";
+  static String noUniFound = "No University Found";
 }

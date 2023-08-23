@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 
@@ -33,6 +34,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
   Future<void> getUniversities() async {
     try {
       var list = await repository.getAllUniversities();
+      universities = list;
       isGettingUniversities = false;
       notifyListeners();
       return;
@@ -48,5 +50,16 @@ class UniversityAppRequestVM extends ChangeNotifier {
     isGettingUniversities = true;
     notifyListeners();
     getUniversities();
+  }
+
+  String _selectedStatus = AppStrings.applied;
+
+  void selectStatus(String value) {
+    _selectedStatus = value;
+    notifyListeners();
+  }
+
+  bool iSelected(String value) {
+    return value == _selectedStatus;
   }
 }
