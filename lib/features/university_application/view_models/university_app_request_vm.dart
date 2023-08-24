@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -17,10 +18,18 @@ class UniversityAppRequestVM extends ChangeNotifier {
   List<UniversityModel> universities = [];
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();
+  UniversityApplicationModel? model;
+  final scholarShipAmount = TextEditingController();
+  final scholarShipPercent = TextEditingController();
+  final description = TextEditingController();
 
-  UniversityAppRequestVM() {
+  UniversityAppRequestVM({required this.model}) {
     repository = UniversityApplicationRepoImpl(apiService: apiService);
-    getUniversities();
+    if (model == null) {
+      getUniversities();
+      return;
+    }
+    setValues();
   }
 
   UniversityModel? selectedUniversity;
@@ -46,6 +55,10 @@ class UniversityAppRequestVM extends ChangeNotifier {
       return;
     } catch (e) {
       hasError = true;
+      if (e is HTTPStatusCodeException) {
+        log(e.response.body);
+        log(e.response.statusCode.toString());
+      }
       log(e.toString());
     }
     notifyListeners();
@@ -115,8 +128,8 @@ class UniversityAppRequestVM extends ChangeNotifier {
     try {
       var fileModel =
           await repository.uploadUniversityDocumentFile(file: file!);
-      int scholarshipAmountDigit = int.tryParse(scholarshipAmount) ?? 0;
-      int scholarshipPercentDigit = int.tryParse(scholarshipPercent) ?? 0;
+      var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
+      var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
       var body = {
         "university": selectedUniversity?.id,
         "description": description,
@@ -134,5 +147,36 @@ class UniversityAppRequestVM extends ChangeNotifier {
       }
       log(e.toString());
     }
+  }
+
+  void setValues() {
+    if (model == null) {
+      return;
+    }
+    scholarShipAmount.text = model!.scholarshipAmount ?? "";
+    scholarShipPercent.text = model!.scholarshipPercent ?? "";
+    setStatus();
+    description.text = model?.description ?? "";
+    isGettingUniversities = false;
+    notifyListeners();
+  }
+
+  void setStatus() {
+    if (model?.state?.toUpperCase() == AppStrings.accepted) {
+      _selectedStatus = AppStrings.accepted;
+    }
+    if (model?.state?.toUpperCase() == AppStrings.applied) {
+      _selectedStatus = AppStrings.applied;
+    }
+    if (model?.state?.toUpperCase() == AppStrings.rejected) {
+      _selectedStatus = AppStrings.rejected;
+    }
+  }
+
+  String get title {
+    if (model == null) {
+      return AppStrings.selectUniversity;
+    }
+    return AppStrings.universityName;
   }
 }

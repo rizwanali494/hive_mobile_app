@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
+import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
@@ -76,7 +77,16 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: UniversitySelectionScreen.route,
       name: UniversitySelectionScreen.route,
-      builder: (_, state) => const UniversitySelectionScreen(),
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        UniversityApplicationModel? model;
+        if (extra != null) {
+          model = extra["model"];
+        }
+        return UniversitySelectionScreen(
+          model: model,
+        );
+      },
     ),
     CustomGoRoute.cupertino(
       path: ApplicationInfoScreen.route,

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_widget_vm.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
@@ -31,23 +32,30 @@ class UniversityApplicationWidget extends StatelessWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      controller.universityName,
-                      style: styles.inter14w600.copyWith(
-                        color: styles.darkSlateGrey,
+                child: GestureDetector(
+                  onTap: () {
+                    context.push(UniversitySelectionScreen.route, extra: {
+                      "model": controller.model,
+                    });
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.universityName,
+                        style: styles.inter14w600.copyWith(
+                          color: styles.darkSlateGrey,
+                        ),
                       ),
-                    ),
-                    Text(
-                      controller.description,
-                      style: styles.inter10w400.copyWith(
-                        color: styles.darkGrey,
-                        overflow: TextOverflow.ellipsis,
+                      Text(
+                        controller.description,
+                        style: styles.inter10w400.copyWith(
+                          color: styles.darkGrey,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

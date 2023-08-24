@@ -87,7 +87,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit);
       if (list.length < _limit) {
-        _hasAllAccepted = true;
+        _hasAllPrevious = true;
       }
       log("previous : ${list.length}");
       _previousAppOffset = list.length;

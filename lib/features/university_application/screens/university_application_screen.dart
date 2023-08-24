@@ -78,11 +78,12 @@ class _UniversityApplicationScreenState
                                     applications: provider.acceptedApplications,
                                     isLoading: provider.isAcceptedLoading,
                                   ),
-                                  ShowMoreButton(
-                                    styles: styles,
-                                    hasAll: provider.hasAllAccepted,
-                                    isLoading: provider.isGettingMoreAccepted,
-                                  ),
+                                  if (!provider.isAcceptedLoading)
+                                    ShowMoreButton(
+                                      styles: styles,
+                                      hasAll: provider.hasAllAccepted,
+                                      isLoading: provider.isGettingMoreAccepted,
+                                    ),
                                   SliverToBoxAdapter(child: 20.verticalSpace),
                                   SliverToBoxAdapter(
                                     child: Text(
@@ -95,11 +96,12 @@ class _UniversityApplicationScreenState
                                     applications: provider.previousApplications,
                                     isLoading: provider.isPreviousLoading,
                                   ),
-                                  ShowMoreButton(
-                                    styles: styles,
-                                    hasAll: provider.hasAllAccepted,
-                                    isLoading: provider.isGettingMorePrevious,
-                                  ),
+                                  if (!provider.isPreviousLoading)
+                                    ShowMoreButton(
+                                      styles: styles,
+                                      hasAll: provider.hasAllPrevious,
+                                      isLoading: provider.isGettingMorePrevious,
+                                    ),
                                 ],
                               ),
                             ),

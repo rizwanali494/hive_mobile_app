@@ -26,9 +26,6 @@ class ApplicationInfoScreen extends StatefulWidget {
 }
 
 class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
-  final scholarShipAmount = TextEditingController();
-  final scholarShipPercent = TextEditingController();
-  final description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +95,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 28.verticalSpace,
                 TitleTextField(
                   title: AppStrings.description,
-                  controller: description,
+                  controller: provider.description,
                   hintText: "",
                 ),
                 26.verticalSpace,
@@ -110,9 +107,10 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                         title: AppStrings.scholarshipAmount,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^[0-9]+.?[0-9]*')),
                         ],
-                        controller: scholarShipAmount,
+                        controller: provider.scholarShipAmount,
                         hintText: "",
                       ),
                     ),
@@ -122,9 +120,10 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                         title: AppStrings.scholarship,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^[0-9]+.?[0-9]*')),
                         ],
-                        controller: scholarShipPercent,
+                        controller: provider.scholarShipPercent,
                         hintText: "",
                       ),
                     ),
@@ -135,9 +134,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   text: AppStrings.add,
                   onTap: () {
                     provider.validate(
-                        scholarshipAmount: scholarShipAmount.text,
-                        scholarshipPercent: scholarShipPercent.text,
-                        description: description.text);
+                        scholarshipAmount: provider.scholarShipAmount.text,
+                        scholarshipPercent: provider.scholarShipPercent.text,
+                        description: provider.description.text);
                     // context.popUntil(
                     //   HomeScreen.route,
                     // );
