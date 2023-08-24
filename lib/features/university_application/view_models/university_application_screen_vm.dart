@@ -49,13 +49,30 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   Future<void> getApplications() async {
     await setIsarInstances();
+    await getLocalSaveApplication();
     await getAcceptedApplications();
     await getPreviousApplications();
   }
 
+  Future<void> getLocalSaveApplication() async {
+    try {
+      var list = await getLocalApplications(acceptedAppIsar);
+      acceptedApplications.addAll(list);
+      acceptedApplications = acceptedApplications.toSet().toList();
+      var previousList = await getLocalApplications(previousAppIsar);
+      previousApplications.addAll(previousList);
+      previousApplications = previousApplications.toSet().toList();
+    } catch (e) {
+      log("isar error : ${e.toString()}");
+
+      // TODO
+    }
+  }
+
   Future<void> getAcceptedApplications() async {
-    var list = await getLocalApplications(acceptedAppIsar);
-    acceptedApplications.addAll(list);
+    // var list = await getLocalApplications(acceptedAppIsar);
+    // acceptedApplications.addAll(list);
+    // acceptedApplications = acceptedApplications.toSet().toList();
     final request = () async {
       var list = await universityApplicationRepository.getAcceptedApplications(
           limit: _limit);
@@ -90,8 +107,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   Future<void> getPreviousApplications() async {
-    var list = await getLocalApplications(previousAppIsar);
-    previousApplications.addAll(list);
+    // var list = await getLocalApplications(previousAppIsar);
+    // previousApplications.addAll(list);
     final request = () async {
       var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit);
@@ -176,7 +193,9 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       previousAppIsar = await Isar.open([UniversityApplicationModelSchema],
           directory: dir.path, name: "previous_application");
       isIsar = true;
-    } catch (e) {}
+    } catch (e) {
+      log("error setting isar error: ${e.toString()}");
+    }
   }
 
   Future<List<UniversityApplicationModel>> getLocalApplications(
@@ -187,6 +206,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
     try {
       var collection = await isar!.collection<UniversityApplicationModel>();
       var list = await collection.where().findAll();
+      log("local list ${list.length}");
       return list;
     } catch (e) {
       log("isar error : ${e.toString()}");
@@ -212,5 +232,13 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       log("isar saving error : ${e.toString()}");
       // TODO
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    acceptedAppIsar?.close();
+    previousAppIsar?.close();
+    super.dispose();
   }
 }
