@@ -32,7 +32,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
       getUniversities();
       return;
     }
-    setValues();
+    setModelValues();
   }
 
   UniversityModel? selectedUniversity;
@@ -152,7 +152,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
     }
   }
 
-  void setValues() {
+  void setModelValues() {
     if (model == null) {
       return;
     }
@@ -200,9 +200,8 @@ class UniversityAppRequestVM extends ChangeNotifier {
       var request = await httpClient.getUrl(Uri.parse(url));
       var response = await request.close();
       var bytes = await consolidateHttpClientResponseBytes(response);
-      final dir =
-          await getTemporaryDirectory(); //(await getApplicationDocumentsDirectory()).path;
-      File file = new File('${dir.path}/$filename');
+      final dir = await getTemporaryDirectory();
+      File file = File('${dir.path}/$filename');
       await file.writeAsBytes(bytes);
       this.documentFile = file;
       documentName = filename;
@@ -213,53 +212,5 @@ class UniversityAppRequestVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Isar? acceptedAppIsar;
-  Isar? previousAppIsar;
-  bool isIsar = false;
 
-  void setIsarInstances() async {
-    try {
-      final dir = await getApplicationDocumentsDirectory();
-      acceptedAppIsar = await Isar.open([UniversityApplicationModelSchema],
-          directory: dir.path, name: "accepted_application");
-      previousAppIsar = await Isar.open([UniversityApplicationModelSchema],
-          directory: dir.path, name: "previous_application");
-      isIsar = true;
-    } catch (e) {}
-  }
-
-  Future<List<UniversityApplicationModel>> getLocalApplications(
-      Isar isar) async {
-    if (!isIsar) {
-      return [];
-    }
-    try {
-      var collection = await isar.collection<UniversityApplicationModel>();
-      var list = await collection.where().findAll();
-      return list;
-    } catch (e) {
-      log("isar error : ${e.toString()}");
-      // TODO
-    }
-    return [];
-  }
-
-  Future<void> setLocalApplications(
-      Isar? isar, List<UniversityApplicationModel> list) async {
-    if (!isIsar) {
-      return;
-    }
-    try {
-      var collection = await isar!.collection<UniversityApplicationModel>();
-      await isar.writeTxn(
-        () => collection.where().deleteAll(),
-      );
-      await isar.writeTxn(
-        () => collection.putAll(list),
-      );
-    } catch (e) {
-      log("isar saving error : ${e.toString()}");
-      // TODO
-    }
-  }
 }

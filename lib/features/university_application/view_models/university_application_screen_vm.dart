@@ -10,6 +10,8 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UniversityApplicationScreenVM extends ChangeNotifier {
   bool _isAcceptedLoading = true;
@@ -46,11 +48,14 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   Future<void> getApplications() async {
+    await setIsarInstances();
     await getAcceptedApplications();
     await getPreviousApplications();
   }
 
   Future<void> getAcceptedApplications() async {
+    var list = await getLocalApplications(acceptedAppIsar);
+    acceptedApplications.addAll(list);
     final request = () async {
       var list = await universityApplicationRepository.getAcceptedApplications(
           limit: _limit);
@@ -59,7 +64,9 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       }
       log("accepted : ${list.length}");
       _acceptedAppOffset = list.length;
-      acceptedApplications = list;
+      acceptedApplications.addAll(list);
+      acceptedApplications = acceptedApplications.toSet().toList();
+      await setLocalApplications(acceptedAppIsar, list);
     };
     await performRequest(request: request);
     _isAcceptedLoading = false;
@@ -83,6 +90,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   Future<void> getPreviousApplications() async {
+    var list = await getLocalApplications(previousAppIsar);
+    previousApplications.addAll(list);
     final request = () async {
       var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit);
@@ -91,7 +100,9 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       }
       log("previous : ${list.length}");
       _previousAppOffset = list.length;
-      previousApplications = list;
+      previousApplications.addAll(list);
+      previousApplications = previousApplications.toSet().toList();
+      await setLocalApplications(previousAppIsar, list);
     };
     await performRequest(request: request);
     _isPreviousLoading = false;
@@ -153,5 +164,53 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   String _selectedStatus = AppStrings.applied;
 
+  Isar? acceptedAppIsar;
+  Isar? previousAppIsar;
+  bool isIsar = false;
 
+  Future<void> setIsarInstances() async {
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      acceptedAppIsar = await Isar.open([UniversityApplicationModelSchema],
+          directory: dir.path, name: "accepted_application");
+      previousAppIsar = await Isar.open([UniversityApplicationModelSchema],
+          directory: dir.path, name: "previous_application");
+      isIsar = true;
+    } catch (e) {}
+  }
+
+  Future<List<UniversityApplicationModel>> getLocalApplications(
+      Isar? isar) async {
+    if (!isIsar) {
+      return [];
+    }
+    try {
+      var collection = await isar!.collection<UniversityApplicationModel>();
+      var list = await collection.where().findAll();
+      return list;
+    } catch (e) {
+      log("isar error : ${e.toString()}");
+      // TODO
+    }
+    return [];
+  }
+
+  Future<void> setLocalApplications(
+      Isar? isar, List<UniversityApplicationModel> list) async {
+    if (!isIsar) {
+      return;
+    }
+    try {
+      var collection = await isar!.collection<UniversityApplicationModel>();
+      await isar.writeTxn(
+        () => collection.where().deleteAll(),
+      );
+      await isar.writeTxn(
+        () => collection.putAll(list),
+      );
+    } catch (e) {
+      log("isar saving error : ${e.toString()}");
+      // TODO
+    }
+  }
 }
