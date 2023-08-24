@@ -8,17 +8,26 @@ class DocumentUploadWidget extends StatelessWidget {
   final Function()? onTap;
   final Function()? onRemove;
   final String? documentName;
+  final bool isDownloading;
 
   const DocumentUploadWidget({
     super.key,
     this.onTap,
     this.documentName,
     this.onRemove,
+    required this.isDownloading,
   });
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+
+    if (isDownloading) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h),
+        child: CircularProgressIndicator(),
+      );
+    }
 
     return Container(
       padding: EdgeInsets.symmetric(

@@ -142,7 +142,9 @@ class AddExternalGradeScreen extends StatelessWidget {
                           ),
                         ),
                         14.verticalSpace,
-                        DocumentUploadWidget(),
+                        DocumentUploadWidget(
+                          isDownloading: false,
+                        ),
                       ],
                     ),
                     24.verticalSpace,

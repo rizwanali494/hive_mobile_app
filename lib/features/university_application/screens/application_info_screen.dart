@@ -26,7 +26,6 @@ class ApplicationInfoScreen extends StatefulWidget {
 }
 
 class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
-
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -91,6 +90,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   onTap: provider.pickFile,
                   onRemove: provider.removeFile,
                   documentName: provider.documentName,
+                  isDownloading: provider.fileDownloading,
                 ),
                 28.verticalSpace,
                 TitleTextField(
