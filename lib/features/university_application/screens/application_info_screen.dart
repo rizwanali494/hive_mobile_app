@@ -93,12 +93,12 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   isDownloading: provider.fileDownloading,
                 ),
                 28.verticalSpace,
-                TitleTextField(
-                  title: AppStrings.description,
-                  controller: provider.description,
-                  hintText: "",
-                ),
-                26.verticalSpace,
+                // TitleTextField(
+                //   title: AppStrings.description,
+                //   controller: provider.description,
+                //   hintText: "",
+                // ),
+                // 26.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -134,9 +134,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   text: AppStrings.add,
                   onTap: () {
                     provider.validate(
-                        scholarshipAmount: provider.scholarShipAmount.text,
-                        scholarshipPercent: provider.scholarShipPercent.text,
-                        description: provider.description.text);
+                      scholarshipAmount: provider.scholarShipAmount.text,
+                      scholarshipPercent: provider.scholarShipPercent.text,
+                    );
                     // context.popUntil(
                     //   HomeScreen.route,
                     // );

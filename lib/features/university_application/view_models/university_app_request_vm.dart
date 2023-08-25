@@ -26,7 +26,8 @@ class UniversityAppRequestVM extends ChangeNotifier {
   bool hasDocumentChanged = false;
   final scholarShipAmount = TextEditingController();
   final scholarShipPercent = TextEditingController();
-  final description = TextEditingController();
+
+  // final description = TextEditingController();
 
   UniversityAppRequestVM({required this.model}) {
     repository = UniversityApplicationRepoImpl(apiService: apiService);
@@ -111,26 +112,22 @@ class UniversityAppRequestVM extends ChangeNotifier {
   }
 
   void validate(
-      {required String scholarshipAmount,
-      required String scholarshipPercent,
-      required String description}) {
+      {required String scholarshipAmount, required String scholarshipPercent}) {
     if (scholarshipAmount.trim().isEmpty ||
         documentFile == null ||
-        scholarshipPercent.trim().isEmpty ||
-        description.trim().isEmpty) {
+        scholarshipPercent.trim().isEmpty) {
       log("empty");
       return;
     }
     uploadFile(
         scholarshipAmount: scholarshipAmount,
-        scholarshipPercent: scholarshipPercent,
-        description: description);
+        scholarshipPercent: scholarshipPercent);
   }
 
-  void uploadFile(
-      {required String scholarshipAmount,
-      required String scholarshipPercent,
-      required String description}) async {
+  void uploadFile({
+    required String scholarshipAmount,
+    required String scholarshipPercent,
+  }) async {
     try {
       var id = await getDocumentId();
       var documentId = await getDocumentId();
@@ -138,7 +135,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
       var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
       var body = {
         "university": selectedUniversity?.id,
-        "description": description,
+        // "description": description,
         "documents": [documentId],
         "scholarship_amount": scholarshipAmountDigit,
         "scholarship_percent": scholarshipPercentDigit,
@@ -162,6 +159,19 @@ class UniversityAppRequestVM extends ChangeNotifier {
       await repository.uploadUniversityDocument(body: body);
     }
     await repository.updateUniversityDocument(body: body, id: model?.id ?? 0);
+    // var newModel = UniversityApplicationModel(
+    //   id: model?.id,
+    //   localId: model?.localId??0,
+    //   branchId: model?.branchId??0,
+    //   cityId: model?.cityId??0,
+    //   comments: model?.comments,
+    //   dateAdded:  model?.comments,
+    //   dateLastModified:  model?.dateLastModified,
+    //   scholarshipAmount: model?.scholarshipAmount,
+    //   scholarshipPercent: model?.scholarshipPercent,
+    //   description: model?.description,
+    //
+    // );
   }
 
   Future<String> getDocumentId() async {
@@ -183,7 +193,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
     scholarShipPercent.text = model!.scholarshipPercent ?? "";
     setStatus();
     selectedUniversity = model?.university;
-    description.text = model?.description ?? "";
+    // description.text = model?.description ?? "";
     isGettingUniversities = false;
     if (model?.documents?.isNotEmpty ?? false) {
       _downloadFile(model?.documents?.first.file ?? "",

@@ -55,6 +55,31 @@ class UniversityApplicationModel {
     }
   }
 
+  // UniversityApplicationModel fromUpdate(dynamic json) {
+  //  return UniversityApplicationModel(
+  //    id: json['id'] ?? this.id,
+  //    localId: localId ?? this.localId,
+  //    scholarshipPercent: json['scholarship_percent'] ?? this.scholarshipPercent,
+  //    university: json['university'] != null
+  //        ? UniversityModel.fromJson(json['university'])
+  //        : null,
+  //    dateAdded: json['id'] ?? this.dateAdded,
+  //    dateLastModified: json['id'] ?? this.dateLastModified,
+  //    branchId: json['id'] ?? this.branchId,
+  //    regionId: json['id'] ?? this.regionId,
+  //    cityId: json['id'] ?? this.cityId,
+  //    description: json['id'] ?? this.description,
+  //    scholarshipAmount: json['id'] ?? this.scholarshipAmount,
+  //    comments: json['id'] ?? this.comments,
+  //    state: json['id'] ?? this.state,
+  //    status: json['id'] ?? this.status,
+  //    owner: json['id'] ?? this.owner,
+  //    documents: json['id']?.map((e) => e.copyWith()).toList() ??
+  //        this.documents?.map((e) => e.copyWith()).toList(),
+  //  );
+  //
+  // }
+
   int? id;
   late Id localId;
   String? scholarshipPercent;
@@ -137,9 +162,9 @@ class UniversityApplicationModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is UniversityApplicationModel &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is UniversityApplicationModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;
