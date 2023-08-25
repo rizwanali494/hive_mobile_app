@@ -65,7 +65,7 @@ class ApiServiceImpl extends ApiService {
     url = "$url${queryParameters ?? ""}";
     try {
       response = await http.patch(url.parsedUri,
-          body: body, headers: headers ?? this._headers);
+          body: jsonEncode(body), headers: headers ?? this._headers);
       return getResponse(response: response);
     } catch (e) {
       throw e;

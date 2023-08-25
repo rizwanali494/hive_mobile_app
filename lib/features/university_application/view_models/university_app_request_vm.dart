@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/data/file_upload_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -22,6 +23,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();
   UniversityApplicationModel? model;
+  bool hasDocumentChanged = false;
   final scholarShipAmount = TextEditingController();
   final scholarShipPercent = TextEditingController();
   final description = TextEditingController();
@@ -92,6 +94,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
     if (result != null) {
+      hasDocumentChanged = true;
       bool validFile = true;
       if (validFile) {
         documentName = result.files.single.name;
@@ -129,20 +132,20 @@ class UniversityAppRequestVM extends ChangeNotifier {
       required String scholarshipPercent,
       required String description}) async {
     try {
-      var fileModel =
-          await repository.uploadUniversityDocumentFile(file: documentFile!);
+      var id = await getDocumentId();
+      var documentId = await getDocumentId();
       var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
       var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
       var body = {
         "university": selectedUniversity?.id,
         "description": description,
-        "document": fileModel.id,
+        "documents": [documentId],
         "scholarship_amount": scholarshipAmountDigit,
         "scholarship_percent": scholarshipPercentDigit,
         "state": _selectedStatus.toUpperCase(),
       };
       log(body.toString());
-      await repository.uploadUniversityDocument(body: body);
+      await submitUniversityDocument(body);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
@@ -152,6 +155,26 @@ class UniversityAppRequestVM extends ChangeNotifier {
     }
   }
 
+  Future<void> submitUniversityDocument(Map<String, Object?> body) async {
+    log("uni app body: ${body}");
+
+    if (model == null) {
+      await repository.uploadUniversityDocument(body: body);
+    }
+    await repository.updateUniversityDocument(body: body, id: model?.id ?? 0);
+  }
+
+  Future<String> getDocumentId() async {
+    if (model != null) {
+      if (!hasDocumentChanged) {
+        return model?.documents?.first.id ?? "";
+      }
+    }
+    var fileModel =
+        await repository.uploadUniversityDocumentFile(file: documentFile!);
+    return fileModel.id ?? "";
+  }
+
   void setModelValues() {
     if (model == null) {
       return;
@@ -159,6 +182,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
     scholarShipAmount.text = model!.scholarshipAmount ?? "";
     scholarShipPercent.text = model!.scholarshipPercent ?? "";
     setStatus();
+    selectedUniversity = model?.university;
     description.text = model?.description ?? "";
     isGettingUniversities = false;
     if (model?.documents?.isNotEmpty ?? false) {
@@ -172,13 +196,13 @@ class UniversityAppRequestVM extends ChangeNotifier {
   }
 
   void setStatus() {
-    if (model?.state?.toUpperCase() == AppStrings.accepted) {
+    if (model?.state?.toUpperCase() == AppStrings.accepted.toUpperCase()) {
       _selectedStatus = AppStrings.accepted;
     }
-    if (model?.state?.toUpperCase() == AppStrings.applied) {
+    if (model?.state?.toUpperCase() == AppStrings.applied.toUpperCase()) {
       _selectedStatus = AppStrings.applied;
     }
-    if (model?.state?.toUpperCase() == AppStrings.rejected) {
+    if (model?.state?.toUpperCase() == AppStrings.rejected.toUpperCase()) {
       _selectedStatus = AppStrings.rejected;
     }
   }
@@ -211,6 +235,4 @@ class UniversityAppRequestVM extends ChangeNotifier {
     fileDownloading = false;
     notifyListeners();
   }
-
-
 }

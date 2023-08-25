@@ -29,6 +29,10 @@ extension ApiFieldExpandExtension on String {
     return _appendPaginationParameter("limit", limit);
   }
 
+  String update(int id) {
+    return "${this}$id/";
+  }
+
   String _appendPaginationParameter(String para, int? value) {
     if (value == null) {
       return this;

@@ -25,7 +25,7 @@ class DocumentUploadWidget extends StatelessWidget {
     if (isDownloading) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 10.h),
-        child: CircularProgressIndicator(),
+        child: Center(child: CircularProgressIndicator()),
       );
     }
 

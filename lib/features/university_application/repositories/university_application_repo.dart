@@ -27,6 +27,9 @@ abstract class UniversityApplicationRepository {
 
   Future<UniversityApplicationModel> uploadUniversityDocument(
       {required Map body});
+
+  Future<UniversityApplicationModel> updateUniversityDocument(
+      {required Map body, required int id});
 }
 
 class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
@@ -91,6 +94,20 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
     var url = ApiEndpoints.universityApplication;
     var response = await apiService.post(url: url, body: body);
     var responseBody = jsonDecode(response.body);
+    return UniversityApplicationModel.fromJson(responseBody);
+  }
+
+  @override
+  Future<UniversityApplicationModel> updateUniversityDocument(
+      {required Map body, required int id}) async {
+    var url = ApiEndpoints.universityApplication
+        .update(id)
+        .withUniversity
+        .withDocuments;
+    log(url);
+    var response = await apiService.patch(url: url, body: body);
+    var responseBody = jsonDecode(response.body);
+    log("after updating uni app : ${responseBody.toString()}");
     return UniversityApplicationModel.fromJson(responseBody);
   }
 }

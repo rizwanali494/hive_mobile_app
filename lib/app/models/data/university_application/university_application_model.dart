@@ -145,7 +145,7 @@ class UniversityApplicationModel {
   int get hashCode => id.hashCode;
 
   ApplicationState get getState {
-    switch (status?.toUpperCase()) {
+    switch (state?.toUpperCase()) {
       case 'APPLIED':
         return ApplicationState.applied;
       case 'ACCEPTED':
