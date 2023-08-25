@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
@@ -28,6 +30,7 @@ class UniversityApplicationModel {
 
   UniversityApplicationModel.fromJson(dynamic json) {
     id = json['id'];
+    log(id.toString());
     localId = json['id'] ?? 0;
     scholarshipPercent = json['scholarship_percent'];
     university = json['university'] != null
@@ -134,9 +137,9 @@ class UniversityApplicationModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UniversityApplicationModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+          other is UniversityApplicationModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
 
   @override
   int get hashCode => id.hashCode;

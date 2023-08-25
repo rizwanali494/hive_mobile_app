@@ -17,6 +17,10 @@ extension ApiFieldExpandExtension on String {
     return _appendExpandField(ApiExpandField.university);
   }
 
+  String get withDocuments {
+    return _appendExpandField(ApiExpandField.documents);
+  }
+
   String withOffSet(int? offSet) {
     return _appendPaginationParameter("offset", offSet);
   }

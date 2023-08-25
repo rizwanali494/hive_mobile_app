@@ -99,6 +99,9 @@ class _UniversityApplicationScreenState
                                   if (!provider.isPreviousLoading)
                                     ShowMoreButton(
                                       styles: styles,
+                                      onTap: () {
+                                        provider.getNextPreviousApplications();
+                                      },
                                       hasAll: provider.hasAllPrevious,
                                       isLoading: provider.isGettingMorePrevious,
                                     ),

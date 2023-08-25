@@ -92,6 +92,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   Future<void> getNextAcceptedApplications() async {
     _isGettingMoreAccepted = true;
+    notifyListeners();
     final request = () async {
       var list = await universityApplicationRepository.getAcceptedApplications(
           limit: _limit, offSet: _acceptedAppOffset);
@@ -99,7 +100,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
         _hasAllAccepted = true;
       }
       _acceptedAppOffset += list.length;
-      acceptedApplications = list;
+      acceptedApplications.addAll(list);
+      acceptedApplications = acceptedApplications.toSet().toList();
     };
     await performRequest(request: request);
     _isGettingMoreAccepted = false;
@@ -110,6 +112,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
     // var list = await getLocalApplications(previousAppIsar);
     // previousApplications.addAll(list);
     final request = () async {
+      log("pre previous");
       var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit);
       if (list.length < _limit) {
@@ -128,6 +131,7 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   Future<void> getNextPreviousApplications() async {
     _isGettingMorePrevious = true;
+    notifyListeners();
     final request = () async {
       var list = await universityApplicationRepository.getPreviousApplications(
           limit: _limit, offSet: _previousAppOffset);
@@ -135,7 +139,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
         _hasAllPrevious = true;
       }
       _previousAppOffset += list.length;
-      previousApplications = list;
+      previousApplications.addAll(list);
+      previousApplications = previousApplications.toSet().toList();
     };
     await performRequest(request: request);
     _isGettingMorePrevious = false;
@@ -220,6 +225,11 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
     if (!isIsar) {
       return;
     }
+    // final _limit = 10;
+    // if (list.length > _limit) {
+    //   list = List<UniversityApplicationModel>.generate(
+    //       _limit, (index) => list[index]);
+    // }
     try {
       var collection = await isar!.collection<UniversityApplicationModel>();
       await isar.writeTxn(
@@ -236,7 +246,6 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     acceptedAppIsar?.close();
     previousAppIsar?.close();
     super.dispose();

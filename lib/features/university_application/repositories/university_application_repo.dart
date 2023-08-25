@@ -59,10 +59,9 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   }
 
   String apiEndpoint(int? offSet, int? limit) =>
-      ApiEndpoints.universityApplication
+      ApiEndpoints.universityApplication.withDocuments.withUniversity
           .withOffSet(offSet)
           .withLimit(limit)
-          .withUniversity
           .withMostRecentOrder;
 
   @override
