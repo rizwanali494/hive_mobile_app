@@ -250,4 +250,16 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
     previousAppIsar?.close();
     super.dispose();
   }
+
+  void addUniversityApp(model) {
+    if (model != null && model is UniversityApplicationModel) {
+      if (previousApplications.isEmpty) {
+        previousApplications.add(model);
+      } else {
+        log("adding..........");
+        previousApplications.insert(0, model);
+      }
+      notifyListeners();
+    }
+  }
 }

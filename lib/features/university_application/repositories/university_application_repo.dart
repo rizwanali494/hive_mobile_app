@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/file_upload_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
@@ -23,7 +24,7 @@ abstract class UniversityApplicationRepository {
 
   Future<List<UniversityModel>> getAllUniversities();
 
-  Future<FileUploadModel> uploadUniversityDocumentFile({required File file});
+  Future<Attachments> uploadUniversityDocumentFile({required File file});
 
   Future<UniversityApplicationModel> uploadUniversityDocument(
       {required Map body});
@@ -78,15 +79,14 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   }
 
   @override
-  Future<FileUploadModel> uploadUniversityDocumentFile(
-      {required File file}) async {
+  Future<Attachments> uploadUniversityDocumentFile({required File file}) async {
     var url = ApiEndpoints.universities;
     var response = await apiService.uploadSingleFile(
         file: file,
         purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
         url: ApiEndpoints.upload);
     var body = jsonDecode(response.body);
-    return FileUploadModel.fromJson(body);
+    return Attachments.fromJson(body);
   }
 
   Future<UniversityApplicationModel> uploadUniversityDocument(
@@ -94,7 +94,7 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
     var url = ApiEndpoints.universityApplication;
     var response = await apiService.post(url: url, body: body);
     var responseBody = jsonDecode(response.body);
-    return UniversityApplicationModel.fromJson(responseBody);
+    return UniversityApplicationModel.createJson(responseBody);
   }
 
   @override
@@ -108,6 +108,6 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
     var response = await apiService.patch(url: url, body: body);
     var responseBody = jsonDecode(response.body);
     log("after updating uni app : ${responseBody.toString()}");
-    return UniversityApplicationModel.fromJson(responseBody);
+    return UniversityApplicationModel.createJson(responseBody);
   }
 }

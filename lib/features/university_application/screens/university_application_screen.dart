@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -21,8 +23,7 @@ class UniversityApplicationScreen extends StatefulWidget {
       _UniversityApplicationScreenState();
 }
 
-class _UniversityApplicationScreenState
-    extends State<UniversityApplicationScreen> {
+class _UniversityApplicationScreenState extends State<UniversityApplicationScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -52,8 +53,11 @@ class _UniversityApplicationScreenState
                       children: [
                         BlueActionButton(
                           title: AppStrings.addApplication,
-                          onTap: () {
-                            context.push(UniversitySelectionScreen.route);
+                          onTap: () async {
+                            var model = await context
+                                .push(UniversitySelectionScreen.route);
+                            log(model.runtimeType.toString());
+                            provider.addUniversityApp(model);
                           },
                         ),
                         3.verticalSpace,

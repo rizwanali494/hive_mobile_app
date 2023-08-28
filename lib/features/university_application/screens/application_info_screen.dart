@@ -136,7 +136,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                     provider.validate(
                       scholarshipAmount: provider.scholarShipAmount.text,
                       scholarshipPercent: provider.scholarShipPercent.text,
-                    );
+                      context: context);
                     // context.popUntil(
                     //   HomeScreen.route,
                     // );

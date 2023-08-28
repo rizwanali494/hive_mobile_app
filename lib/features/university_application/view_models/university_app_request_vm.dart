@@ -6,9 +6,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/file_upload_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
@@ -112,7 +114,9 @@ class UniversityAppRequestVM extends ChangeNotifier {
   }
 
   void validate(
-      {required String scholarshipAmount, required String scholarshipPercent}) {
+      {required String scholarshipAmount,
+      required String scholarshipPercent,
+      required BuildContext context}) {
     if (scholarshipAmount.trim().isEmpty ||
         documentFile == null ||
         scholarshipPercent.trim().isEmpty) {
@@ -121,28 +125,41 @@ class UniversityAppRequestVM extends ChangeNotifier {
     }
     uploadFile(
         scholarshipAmount: scholarshipAmount,
-        scholarshipPercent: scholarshipPercent);
+        scholarshipPercent: scholarshipPercent,
+        context: context);
   }
 
-  void uploadFile({
-    required String scholarshipAmount,
-    required String scholarshipPercent,
-  }) async {
+  void uploadFile(
+      {required String scholarshipAmount,
+      required String scholarshipPercent,
+      required BuildContext context}) async {
     try {
-      var id = await getDocumentId();
-      var documentId = await getDocumentId();
+      var documents = await uploadDocuments();
       var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
       var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
       var body = {
         "university": selectedUniversity?.id,
-        // "description": description,
-        "documents": [documentId],
+        "documents": ["e29e1a999d1693206609", "e29e1a999d1693206609"],
+        "description": "Lorem Porum",
         "scholarship_amount": scholarshipAmountDigit,
         "scholarship_percent": scholarshipPercentDigit,
-        "state": _selectedStatus.toUpperCase(),
+        "state": "APPLIED",
       };
-      log(body.toString());
-      await submitUniversityDocument(body);
+      UniversityApplicationModel? updatedModel;
+      if (model == null) {
+        log(body.toString());
+        var createdModel =
+            await repository.uploadUniversityDocument(body: body);
+        updatedModel = createdModel.copyWith(
+          documents: documents,
+          university: selectedUniversity,
+        );
+      } else {
+        updatedModel = await updateUniversityDocument(
+            scholarshipAmount: scholarshipAmount,
+            scholarshipPercent: scholarshipPercent);
+      }
+      context.pop(updatedModel);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
@@ -152,37 +169,47 @@ class UniversityAppRequestVM extends ChangeNotifier {
     }
   }
 
-  Future<void> submitUniversityDocument(Map<String, Object?> body) async {
-    log("uni app body: ${body}");
-
-    if (model == null) {
-      await repository.uploadUniversityDocument(body: body);
-    }
+  Future<UniversityApplicationModel?> updateUniversityDocument(
+      {required String scholarshipAmount,
+      required String scholarshipPercent}) async {
+    var documents = await getUpdatedDocuments();
+    var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
+    var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
+    var body = {
+      "university": selectedUniversity?.id,
+      "documents": documents?.map((e) => e.id).toList(),
+      "scholarship_amount": scholarshipAmountDigit,
+      "scholarship_percent": scholarshipPercentDigit,
+      "state": _selectedStatus.toUpperCase(),
+    };
     await repository.updateUniversityDocument(body: body, id: model?.id ?? 0);
-    // var newModel = UniversityApplicationModel(
-    //   id: model?.id,
-    //   localId: model?.localId??0,
-    //   branchId: model?.branchId??0,
-    //   cityId: model?.cityId??0,
-    //   comments: model?.comments,
-    //   dateAdded:  model?.comments,
-    //   dateLastModified:  model?.dateLastModified,
-    //   scholarshipAmount: model?.scholarshipAmount,
-    //   scholarshipPercent: model?.scholarshipPercent,
-    //   description: model?.description,
-    //
-    // );
+    var updatedModel = model?.copyWith(
+      university: selectedUniversity,
+      documents: documents,
+      scholarshipAmount: scholarshipAmountDigit.toString(),
+      scholarshipPercent: scholarshipPercentDigit.toString(),
+      state: _selectedStatus.toUpperCase(),
+    );
+    return updatedModel;
   }
 
-  Future<String> getDocumentId() async {
-    if (model != null) {
-      if (!hasDocumentChanged) {
-        return model?.documents?.first.id ?? "";
-      }
+  Future<List<Attachments>?> getUpdatedDocuments() async {
+    List<Attachments> list = [];
+    if (hasDocumentChanged) {
+      var fileModel =
+          await repository.uploadUniversityDocumentFile(file: documentFile!);
+      return [fileModel];
     }
+    if (model?.documents != null || (model?.documents?.isNotEmpty ?? false)) {
+      list.add(model!.documents!.first);
+    }
+    return list;
+  }
+
+  Future<List<Attachments>?> uploadDocuments() async {
     var fileModel =
         await repository.uploadUniversityDocumentFile(file: documentFile!);
-    return fileModel.id ?? "";
+    return [fileModel];
   }
 
   void setModelValues() {

@@ -55,6 +55,23 @@ class UniversityApplicationModel {
     }
   }
 
+  UniversityApplicationModel.createJson(dynamic json) {
+    id = json['id'];
+    localId = json['id'] ?? 0;
+    scholarshipPercent = json['scholarship_percent'];
+    dateAdded = json['date_added'];
+    dateLastModified = json['date_last_modified'];
+    branchId = json['branch_id'];
+    regionId = json['region_id'];
+    cityId = json['city_id'];
+    description = json['description'];
+    scholarshipAmount = json['scholarship_amount'];
+    comments = json['comments'];
+    state = json['state'];
+    status = json['status'];
+    owner = json['owner'];
+  }
+
   // UniversityApplicationModel fromUpdate(dynamic json) {
   //  return UniversityApplicationModel(
   //    id: json['id'] ?? this.id,
