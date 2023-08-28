@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/models/data/announcement_post_models/announcemen
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
 import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';
@@ -29,7 +30,6 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     apiService = getIt.get<ApiService>();
     newsFeedRepository = NewsFeedRepositoryImpl(apiService: apiService);
     setPaginationController();
-    setIsarInstance();
     pollRepository = PollRepository();
   }
 
@@ -53,7 +53,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
   bool get hasError => _hasError;
 
   Future<void> getInitialNewsFeed() async {
-    var localList = await getPostFromLocalStorage();
+    var localList = await isar.findAll();
     announcements.addAll(localList);
     if (localList.isNotEmpty) {
       notifyListeners();
@@ -66,7 +66,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
       paginationController?.setOffset(list.length);
       announcements.addAll(list);
       announcements = announcements.toSet().toList();
-      await saveLocally(list);
+      await isar.saveAll(list);
       toggleLoading();
       addScrollListener();
     } catch (e) {
@@ -108,7 +108,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
         isLastPage();
       }
       announcements = list;
-      saveLocally(list);
+      isar.saveAll(list);
       paginationController?.setOffset(list.length);
       addScrollListener();
     } catch (e) {
@@ -170,76 +170,7 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     paginationController?.toggleIsGettingMore();
   }
 
-  Isar? isar;
-
-  Future<void> setIsarInstance() async {
-    try {
-      final dir = await getApplicationDocumentsDirectory();
-      isar = await Isar.open([AnnouncementPostModelSchema],
-          directory: dir.path, name: "News Feed");
-    } catch (e) {
-      log("Isar instance not initialized error : $e");
-    }
-  }
-
-  Future<List<AnnouncementPostModel>> getPostFromLocalStorage() async {
-    List<AnnouncementPostModel> list = [];
-    if (isar == null) {
-      await setIsarInstance();
-    }
-    var collection = isar?.collection<AnnouncementPostModel>();
-    try {
-      list = await collection?.where(distinct: true).sortByIdDesc().findAll() ??
-          [];
-      list.forEach((element) {
-        log(element.id.toString());
-      });
-      log("local list length : ${list.length}");
-    } catch (e) {
-      log("Data not fetched from local storage error:$e");
-    }
-    list.sortByRecentOrder(
-        getDateAdded: (item) =>
-            DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
-    return list;
-  }
-
-  Future<void> saveLocally(List<AnnouncementPostModel> objects) async {
-    if (isar == null) {
-      await setIsarInstance();
-    }
-    try {
-      var collection = isar!.collection<AnnouncementPostModel>();
-      await isar?.writeTxn(
-        () => collection.where().deleteAll(),
-      );
-      log("saving object : ${objects.length}");
-      await isar?.writeTxn(
-        () => collection.putAll(objects),
-      );
-    } catch (e) {
-      log("Data not locally error: $e");
-    }
-    return;
-  }
-
-  Future<void> updateLocal(AnnouncementPostModel object) async {
-    if (isar == null) {
-      await setIsarInstance();
-    }
-    try {
-      var collection = isar!.collection<AnnouncementPostModel>();
-      var obj = await collection.get(object.id ?? -1);
-      if (obj != null) {
-        await isar?.writeTxn(
-          () => collection.put(object),
-        );
-      }
-    } catch (e) {
-      log("Data not locally error: $e");
-    }
-    return;
-  }
+  LocalService<AnnouncementPostModel> isar = LocalService();
 
   late PollRepository pollRepository;
 
@@ -281,16 +212,16 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
 
     try {
       await pollRepository.selectPoll(poll.id ?? 0);
-      await updateLocal(model);
+      await isar.deleteAndPut(model, model.id ?? 0);
     } catch (e) {
       await Future.delayed(Duration(milliseconds: 500));
       int previousIndex = announcements.indexOf(previous);
       if (previousIndex >= 0) {
         announcements[previousIndex] = previous;
-        updateLocal(previous);
+        isar.put(previous);
       }
       notifyListeners();
-      updateLocal(previous);
+      isar.put(previous);
       log("Something went wrong");
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
@@ -367,12 +298,5 @@ class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
     int indexOf = announcements.indexOf(model);
     announcements[indexOf] = model;
     notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    isar?.close();
-    _scrollController.dispose();
-    super.dispose();
   }
 }
