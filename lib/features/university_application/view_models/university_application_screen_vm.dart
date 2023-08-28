@@ -70,9 +70,6 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   Future<void> getAcceptedApplications() async {
-    // var list = await getLocalApplications(acceptedAppIsar);
-    // acceptedApplications.addAll(list);
-    // acceptedApplications = acceptedApplications.toSet().toList();
     final request = () async {
       var list = await universityApplicationRepository.getAcceptedApplications(
           limit: _limit);
@@ -163,7 +160,8 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
   Future<void> refresh() async {
     _acceptedAppOffset = 0;
     _previousAppOffset = 0;
-    await getApplications();
+    await getAcceptedApplications();
+    await getPreviousApplications();
     return;
   }
 
@@ -256,10 +254,45 @@ class UniversityApplicationScreenVM extends ChangeNotifier {
       if (previousApplications.isEmpty) {
         previousApplications.add(model);
       } else {
-        log("adding..........");
         previousApplications.insert(0, model);
       }
       notifyListeners();
+      updateLocalInstance(model, acceptedAppIsar!);
     }
+  }
+
+  void updateUniversityModel(model, {bool isPrevious = true}) {
+    if (model != null && model is UniversityApplicationModel) {
+      int index = 0;
+      if (isPrevious) {
+        index = previousApplications.indexOf(model);
+        if (index > -1) {
+          previousApplications.add(model);
+        }
+      } else {
+        index = acceptedApplications.indexOf(model);
+        if (index > -1) {
+          acceptedApplications.add(model);
+        }
+      }
+      notifyListeners();
+      updateLocalInstance(model, previousAppIsar!);
+    }
+  }
+
+  Future<void> updateLocalInstance(
+      UniversityApplicationModel model, Isar isar) async {
+    try {
+      var collection = isar.collection<UniversityApplicationModel>();
+      var obj = await collection.get(model.id ?? -1);
+      if (obj != null) {
+        await isar.writeTxn(
+          () => collection.put(model),
+        );
+      }
+    } catch (e) {
+      log("Data not locally error: $e");
+    }
+    return;
   }
 }

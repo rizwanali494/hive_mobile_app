@@ -3,13 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
+import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_widget_vm.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/university_application/view_models/university_application_screen_vm.dart';
 
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
+import 'package:provider/provider.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {
   final UniversityAppWidgetVM controller;
@@ -33,10 +37,18 @@ class UniversityApplicationWidget extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
-                  onTap: () {
-                    context.push(UniversitySelectionScreen.route, extra: {
+                  onTap: () async {
+                    final provider =
+                        context.read<UniversityApplicationScreenVM>();
+                    var model = await context
+                        .push(UniversitySelectionScreen.route, extra: {
                       "model": controller.model,
                     });
+                    UniversityApplicationModel? updatedModel =
+                        model as UniversityApplicationModel?;
+                    provider.updateUniversityModel(model,
+                        isPrevious: updatedModel?.getStatus ==
+                            ApplicationStatus.unapproved);
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
