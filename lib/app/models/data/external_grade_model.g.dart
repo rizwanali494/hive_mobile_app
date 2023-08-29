@@ -38,29 +38,34 @@ const ExternalGradeModelSchema = CollectionSchema(
       name: r'degree',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 4,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 5,
       name: r'id',
       type: IsarType.long,
     ),
     r'institutionName': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'institutionName',
       type: IsarType.string,
     ),
     r'resultFile': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'resultFile',
       type: IsarType.object,
       target: r'Attachments',
     ),
     r'state': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'state',
       type: IsarType.string,
     ),
     r'subjects': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'subjects',
       type: IsarType.objectList,
       target: r'Subjects',
@@ -153,17 +158,18 @@ void _externalGradeModelSerialize(
   writer.writeString(offsets[1], object.dateAdded);
   writer.writeString(offsets[2], object.dateLastModified);
   writer.writeString(offsets[3], object.degree);
-  writer.writeLong(offsets[4], object.id);
-  writer.writeString(offsets[5], object.institutionName);
+  writer.writeLong(offsets[4], object.hashCode);
+  writer.writeLong(offsets[5], object.id);
+  writer.writeString(offsets[6], object.institutionName);
   writer.writeObject<Attachments>(
-    offsets[6],
+    offsets[7],
     allOffsets,
     AttachmentsSchema.serialize,
     object.resultFile,
   );
-  writer.writeString(offsets[7], object.state);
+  writer.writeString(offsets[8], object.state);
   writer.writeObjectList<Subjects>(
-    offsets[8],
+    offsets[9],
     allOffsets,
     SubjectsSchema.serialize,
     object.subjects,
@@ -181,17 +187,17 @@ ExternalGradeModel _externalGradeModelDeserialize(
     dateAdded: reader.readStringOrNull(offsets[1]),
     dateLastModified: reader.readStringOrNull(offsets[2]),
     degree: reader.readStringOrNull(offsets[3]),
-    id: reader.readLongOrNull(offsets[4]),
-    institutionName: reader.readStringOrNull(offsets[5]),
+    id: reader.readLongOrNull(offsets[5]),
+    institutionName: reader.readStringOrNull(offsets[6]),
     localId: id,
     resultFile: reader.readObjectOrNull<Attachments>(
-      offsets[6],
+      offsets[7],
       AttachmentsSchema.deserialize,
       allOffsets,
     ),
-    state: reader.readStringOrNull(offsets[7]),
+    state: reader.readStringOrNull(offsets[8]),
     subjects: reader.readObjectList<Subjects>(
-      offsets[8],
+      offsets[9],
       SubjectsSchema.deserialize,
       allOffsets,
       Subjects(),
@@ -216,18 +222,20 @@ P _externalGradeModelDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 6:
+      return (reader.readStringOrNull(offset)) as P;
+    case 7:
       return (reader.readObjectOrNull<Attachments>(
         offset,
         AttachmentsSchema.deserialize,
         allOffsets,
       )) as P;
-    case 7:
-      return (reader.readStringOrNull(offset)) as P;
     case 8:
+      return (reader.readStringOrNull(offset)) as P;
+    case 9:
       return (reader.readObjectList<Subjects>(
         offset,
         SubjectsSchema.deserialize,
@@ -868,6 +876,62 @@ extension ExternalGradeModelQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'degree',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1515,6 +1579,20 @@ extension ExternalGradeModelQuerySortBy
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
       sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1616,6 +1694,20 @@ extension ExternalGradeModelQuerySortThenBy
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
       thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1704,6 +1796,13 @@ extension ExternalGradeModelQueryWhereDistinct
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QDistinct>
+      distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QDistinct>
       distinctById() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id');
@@ -1757,6 +1856,12 @@ extension ExternalGradeModelQueryProperty
   QueryBuilder<ExternalGradeModel, String?, QQueryOperations> degreeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'degree');
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 
