@@ -79,7 +79,7 @@ class GradeDetailsScreen extends StatelessWidget {
                             size: 20,
                             color: styles.white,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],
