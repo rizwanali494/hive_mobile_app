@@ -12,4 +12,6 @@ class GradeInfoVM {
   String get institute => model.institutionName ?? "";
 
   String get grade => model.subjects?.first.grade ?? "";
+
+  String get documentName => model.resultFile?.label ?? "";
 }

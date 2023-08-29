@@ -46,7 +46,8 @@ class GradeInfoWidget extends StatelessWidget {
                 height: 20.h,
                 child: GestureDetector(
                   onTap: () {
-                    context.push(GradeDetailsScreen.route);
+                    context.push(GradeDetailsScreen.route,
+                        extra: {"controller": controller});
                   },
                   child: SvgPicture.asset(SvgIcons.eye),
                 ),

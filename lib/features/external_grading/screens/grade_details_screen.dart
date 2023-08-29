@@ -4,12 +4,16 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/gradeInfoWidget.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_detail_widget.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
+import 'package:hive_mobile/features/external_grading/widgets/grade_info_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 
 class GradeDetailsScreen extends StatelessWidget {
+  final GradeInfoVM controller;
   static const route = "/GradeDetails";
 
-  const GradeDetailsScreen({Key? key}) : super(key: key);
+  const GradeDetailsScreen({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +31,6 @@ class GradeDetailsScreen extends StatelessWidget {
               titleStyle: styles.inter20w700,
             ),
             26.verticalSpace,
-            // Padding(
-            //   padding: EdgeInsets.symmetric(
-            //     horizontal: 4.w,
-            //   ),
-            //   child: Column(
-            //     children: [
-            //       GradeDetailWidget(title: AppStrings.degree,description: AppStrings.degree),
-            //       GradeDetailWidget(title: AppStrings.institute,description: AppStrings.institute),
-            //       GradeDetailWidget(title: AppStrings.subjects,description: AppStrings.subjects),
-            //       GradeDetailWidget(title: AppStrings.grade,description: AppStrings.grade),
-            //       GradeDetailWidget(title: AppStrings.document,description: AppStrings.document),
-            //     ],
-            //   ),
-            // ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,14 +58,15 @@ class GradeDetailsScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GradeInfoDescription(description: AppStrings.degree),
-                    GradeInfoDescription(description: AppStrings.institute),
-                    GradeInfoDescription(description: AppStrings.subjects),
-                    GradeInfoDescription(description: AppStrings.grade),
+                    GradeInfoDescription(description: controller.degree),
+                    GradeInfoDescription(description: controller.institute),
+                    GradeInfoDescription(description: controller.subject),
+                    GradeInfoDescription(description: controller.grade),
                     Row(
                       children: [
                         GradeInfoDescription(
-                            description: AppStrings.documentName),
+                          description: controller.documentName,
+                        ),
                         12.horizontalSpace,
                         Container(
                           padding: EdgeInsets.all(2),

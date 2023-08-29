@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -51,11 +52,14 @@ class ExternalGradeVM with ChangeNotifier {
     if (localList.isNotEmpty) {
       notifyListeners();
     }
-
     _isLoading = true;
     notifyListeners();
     final request = () async {
       var list = await externalGradeRepo.getInitialGradesList(limit: _limit);
+      list.sortByRecentOrder(
+        getDateAdded: (item) =>
+            DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+      );
       for (var value in list) {
         log("${value.id}");
       }
@@ -139,7 +143,6 @@ class ExternalGradeVM with ChangeNotifier {
         log("Error occurred : ${e.response.body}");
         log("Error occurred : ${e.response.statusCode}");
       }
-
       log("Error occurred : $e");
       onError();
     }

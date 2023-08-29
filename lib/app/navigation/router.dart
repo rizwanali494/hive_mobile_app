@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
+import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
@@ -13,6 +14,8 @@ import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
+import 'package:hive_mobile/features/external_grading/view_models/external_grade_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
@@ -138,7 +141,14 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: GradeDetailsScreen.route,
       name: GradeDetailsScreen.route,
-      builder: (_, state) => const GradeDetailsScreen(),
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        GradeInfoVM controller;
+        controller = extra?["controller"];
+        return GradeDetailsScreen(
+          controller: controller,
+        );
+      },
     ),
     CustomGoRoute.cupertino(
       path: CalendarScreen.route,
