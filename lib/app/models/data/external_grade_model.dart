@@ -1,9 +1,14 @@
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/subject_model.dart';
+import 'package:isar/isar.dart';
 
+part 'external_grade_model.g.dart';
+
+@collection
 class ExternalGradeModel {
   ExternalGradeModel({
     this.id,
+    this.localId = 0,
     this.subjects,
     this.dateAdded,
     this.dateLastModified,
@@ -16,6 +21,7 @@ class ExternalGradeModel {
 
   ExternalGradeModel.fromJson(dynamic json) {
     id = json['id'];
+    localId = id ?? 0;
     if (json['subjects'] != null) {
       subjects = [];
       json['subjects'].forEach((v) {
@@ -33,22 +39,24 @@ class ExternalGradeModel {
         : null;
   }
 
-  num? id;
+  int? id;
+  late Id localId;
   List<Subjects>? subjects;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
+  int? branchId;
   String? institutionName;
   String? degree;
   String? state;
   Attachments? resultFile;
 
   ExternalGradeModel copyWith({
-    num? id,
+    int? id,
+    int? localId,
     List<Subjects>? subjects,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
+    int? branchId,
     String? institutionName,
     String? degree,
     String? state,
@@ -56,6 +64,7 @@ class ExternalGradeModel {
   }) =>
       ExternalGradeModel(
         id: id ?? this.id,
+        localId: localId ?? this.localId,
         subjects: subjects ?? this.subjects,
         dateAdded: dateAdded ?? this.dateAdded,
         dateLastModified: dateLastModified ?? this.dateLastModified,

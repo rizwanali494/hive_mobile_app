@@ -1,3 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'subject_model.g.dart';
+
+@embedded
 class Subjects {
   Subjects({
     this.id,
