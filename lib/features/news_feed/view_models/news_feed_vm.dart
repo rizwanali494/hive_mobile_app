@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
-import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
@@ -13,8 +12,6 @@ import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
 import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 class NewsFeedVM extends ChangeNotifier with BaseExceptionController {
   bool _isLoading = true;

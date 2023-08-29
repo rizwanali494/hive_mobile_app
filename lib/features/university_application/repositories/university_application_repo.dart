@@ -6,7 +6,6 @@ import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
-import 'package:hive_mobile/app/models/data/file_upload_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';

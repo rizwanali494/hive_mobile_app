@@ -10,11 +10,13 @@ class Subjects {
     this.dateLastModified,
     this.branchId,
     this.name,
+    this.grade,
     this.owner,
   });
 
   Subjects.fromJson(dynamic json) {
     id = json['id'];
+    grade = json['grade'];
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
     branchId = json['branch_id'];
@@ -22,20 +24,22 @@ class Subjects {
     owner = json['owner'];
   }
 
-  num? id;
+  int? id;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
+  String? grade;
+  int? branchId;
   String? name;
-  num? owner;
+  int? owner;
 
   Subjects copyWith({
-    num? id,
+    int? id,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
+    int? branchId,
     String? name,
-    num? owner,
+    String? grade,
+    int? owner,
   }) =>
       Subjects(
         id: id ?? this.id,
@@ -43,12 +47,14 @@ class Subjects {
         dateLastModified: dateLastModified ?? this.dateLastModified,
         branchId: branchId ?? this.branchId,
         name: name ?? this.name,
+        grade: grade ?? this.grade,
         owner: owner ?? this.owner,
       );
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
+    map['grade'] = id;
     map['date_added'] = dateAdded;
     map['date_last_modified'] = dateLastModified;
     map['branch_id'] = branchId;

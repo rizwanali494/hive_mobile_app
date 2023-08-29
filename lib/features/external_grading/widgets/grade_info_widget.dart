@@ -6,11 +6,15 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grading_title_widget.dart';
 
 class GradeInfoWidget extends StatelessWidget {
+  final GradeInfoVM controller;
+
   const GradeInfoWidget({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -25,26 +29,27 @@ class GradeInfoWidget extends StatelessWidget {
           child: Row(
             children: [
               GradingTitleWidget(
-                title: AppStrings.degree,
+                title: controller.degree,
               ),
               GradingTitleWidget(
-                title: AppStrings.institute,
+                title: controller.institute,
                 // flex: 2,
               ),
               GradingTitleWidget(
-                title: AppStrings.subjects,
+                title: controller.subject,
               ),
               GradingTitleWidget(
-                title: AppStrings.grade,
+                title: controller.grade,
               ),
               SizedBox(
                 width: 35.w,
                 height: 20.h,
                 child: GestureDetector(
-                    onTap: () {
-                      context.push(GradeDetailsScreen.route);
-                    },
-                    child: SvgPicture.asset(SvgIcons.eye)),
+                  onTap: () {
+                    context.push(GradeDetailsScreen.route);
+                  },
+                  child: SvgPicture.asset(SvgIcons.eye),
+                ),
               ),
               // GestureDetector(
               //     onTap: () {

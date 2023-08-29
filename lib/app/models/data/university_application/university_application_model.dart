@@ -186,6 +186,7 @@ class UniversityApplicationModel {
   @override
   int get hashCode => id.hashCode;
 
+  @ignore
   ApplicationState get getState {
     switch (state?.toUpperCase()) {
       case 'APPLIED':
@@ -199,6 +200,7 @@ class UniversityApplicationModel {
     }
   }
 
+  @ignore
   ApplicationStatus get getStatus {
     switch (status?.toUpperCase()) {
       case 'APPROVED':
