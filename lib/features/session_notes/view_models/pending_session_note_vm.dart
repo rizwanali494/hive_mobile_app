@@ -12,6 +12,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/features/session_notes/repositories/session_note_repo.dart';
+import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 
 class PendingSessionNoteVM with ChangeNotifier {
   LocalService<SessionNoteModel> localService = LocalService();
@@ -53,7 +54,7 @@ class PendingSessionNoteVM with ChangeNotifier {
   }
 
   Future<void> getInitialSessionList() async {
-    var localList = await isar.findAll();
+    var localList = await getLocalList();
 
     sessionNotesList.addAll(localList);
     if (localList.isNotEmpty) {
@@ -106,6 +107,11 @@ class PendingSessionNoteVM with ChangeNotifier {
     };
     await performRequest(request: request);
     notifyListeners();
+  }
+
+  Future<List<SessionNoteModel>> getLocalList() async {
+    var list = await isar.findAll();
+    return list.where((element) => element.isPending).toList();
   }
 
   Future<void> refreshSessionNotes() async {
@@ -178,4 +184,38 @@ class PendingSessionNoteVM with ChangeNotifier {
   bool get hasError => _hasError;
 
   bool get isLoading => _isLoading;
+
+  Future<void> setSessionNote(
+      {required SessionNoteModel model,
+      required String state,
+      required AckSessionNoteVM ackSessionNoteVM}) async {
+    var previousModel = model.copyWith();
+    model.state = state;
+    sessionNotesList.remove(model);
+    notifyListeners();
+    var body = {"state": state.toUpperCase()};
+    try {
+      // await Future.delayed(Duration(seconds: 3));
+      // throw "some";
+      await sessionNotesRepo.ackSessionNode(id: model.id ?? 0, body: body);
+      await localService.put(model);
+      ackSessionNoteVM.setSessionNote(model);
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("message : ${e.response.statusCode.toString()}");
+        log("message : ${e.response.body.toString()}");
+      }
+      log("state : ${model.state}");
+      sessionNotesList.add(previousModel);
+      notifyListeners();
+      log("error updating session note: ${e.toString()}");
+    }
+  }
+
+  void sortByRecentOrder() {
+    sessionNotesList.sortByRecentOrder(
+      getDateAdded: (item) =>
+          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+    );
+  }
 }

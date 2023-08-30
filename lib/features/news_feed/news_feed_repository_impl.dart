@@ -50,7 +50,7 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   @override
   Future<AnnouncementPostModel> fetchNewsFeedModel(int id) async {
     var url = ApiEndpoints.announcementPost
-        .withPostModel(id)
+        .withId(id)
         .withPolls
         .withOwnerObject
         .withAttachments;

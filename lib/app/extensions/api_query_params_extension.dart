@@ -65,7 +65,7 @@ extension ApiFieldExpandExtension on String {
     return "${this}poll/$id/select/";
   }
 
-  String withPostModel(int id) {
+  String withId(int id) {
     return "${this}$id/";
   }
 

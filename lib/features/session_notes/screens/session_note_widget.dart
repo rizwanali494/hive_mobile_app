@@ -6,7 +6,10 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
+import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_widget_vm.dart';
+import 'package:provider/provider.dart';
 
 class SessionNoteWidget extends StatelessWidget {
   final bool isPending;
@@ -50,27 +53,36 @@ class SessionNoteWidget extends StatelessWidget {
                 ),
               ),
               if (isPending)
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setSessionNote(context, AppStrings.accepted);
+                      },
+                      child: SvgPicture.asset(
                         SvgIcons.tickSquare,
+                        height: 25.h,
                         colorFilter: ColorFilter.mode(
                           styles.yellowGreen,
                           BlendMode.srcIn,
                         ),
                       ),
-                      6.verticalSpace,
-                      SvgPicture.asset(
+                    ),
+                    6.verticalSpace,
+                    GestureDetector(
+                      onTap: () {
+                        setSessionNote(context, AppStrings.rejected);
+                      },
+                      child: SvgPicture.asset(
                         SvgIcons.undecided,
+                        height: 25.h,
                         colorFilter: ColorFilter.mode(
                           styles.red,
                           BlendMode.srcIn,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
             ],
           ),
@@ -81,5 +93,12 @@ class SessionNoteWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void setSessionNote(BuildContext context, String state) {
+    final pendingSSProvider = context.read<PendingSessionNoteVM>();
+    final ackSSProvider = context.read<AckSessionNoteVM>();
+    pendingSSProvider.setSessionNote(
+        model: controller.model, state: state, ackSessionNoteVM: ackSSProvider);
   }
 }

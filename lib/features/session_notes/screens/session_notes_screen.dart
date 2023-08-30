@@ -152,6 +152,8 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
     required ScrollController controller,
     required Future<void> Function() onRefresh,
   }) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
     if (isLoading) {
       return Padding(
         padding: EdgeInsets.symmetric(
@@ -175,35 +177,64 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
         return ErrorTextWidget(
           onRefresh: onRefresh,
         );
-      } else {
-        if (list.isNotEmpty) {
-          return ListView.separated(
-            padding: EdgeInsets.symmetric(vertical: 18.h),
-            itemBuilder: (context, index) {
-              if (index == list.length) {
-                if (isGettingMore) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return SizedBox.shrink();
-              }
-
-              return SessionNoteWidget(
-                isPending: list[index].isPending,
-                controller: SessionNoteWidgetVM(
-                  model: list[index],
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return 14.verticalSpace;
-            },
-            itemCount: listCount,
-          );
-        }
       }
+      return RefreshIndicator(
+        onRefresh: onRefresh,
+        backgroundColor: styles.white,
+        child: ListView.separated(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(vertical: 18.h),
+          itemBuilder: (context, index) {
+            if (index == list.length) {
+              if (isGettingMore) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return SizedBox.shrink();
+            }
+
+            return SessionNoteWidget(
+              isPending: list[index].isPending,
+              controller: SessionNoteWidgetVM(
+                model: list[index],
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return 14.verticalSpace;
+          },
+          itemCount: listCount,
+        ),
+      );
+      //   else {
+      //     if (list.isNotEmpty) {
+      //       return ListView.separated(
+      //         padding: EdgeInsets.symmetric(vertical: 18.h),
+      //         itemBuilder: (context, index) {
+      //           if (index == list.length) {
+      //             if (isGettingMore) {
+      //               return Center(child: CircularProgressIndicator());
+      //             }
+      //             return SizedBox.shrink();
+      //           }
+      //
+      //           return SessionNoteWidget(
+      //             isPending: list[index].isPending,
+      //             controller: SessionNoteWidgetVM(
+      //               model: list[index],
+      //             ),
+      //           );
+      //         },
+      //         separatorBuilder: (BuildContext context, int index) {
+      //           return 14.verticalSpace;
+      //         },
+      //         itemCount: listCount,
+      //       );
+      //     }
+      //   }
+      // }
+      // return Center(
+      //   child: Text("No Session Note Found"),
+      // );
     }
-    return Center(
-      child: Text("No Session Note Found"),
-    );
   }
 }

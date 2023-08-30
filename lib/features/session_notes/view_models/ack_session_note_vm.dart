@@ -53,7 +53,7 @@ class AckSessionNoteVM with ChangeNotifier {
   }
 
   Future<void> getInitialSessionList() async {
-    var localList = await isar.findAll();
+    var localList = await getLocalList();
 
     sessionNotes.addAll(localList);
     if (localList.isNotEmpty) {
@@ -82,6 +82,11 @@ class AckSessionNoteVM with ChangeNotifier {
     log("got it");
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<List<SessionNoteModel>> getLocalList() async {
+    var list = await isar.findAll();
+    return list.where((element) => !element.isPending).toList();
   }
 
   Future<void> getNextSessionNotes() async {
@@ -175,4 +180,9 @@ class AckSessionNoteVM with ChangeNotifier {
   bool get hasError => _hasError;
 
   bool get isLoading => _isLoading;
+
+  void setSessionNote(SessionNoteModel model) {
+    sessionNotes.add(model);
+    notifyListeners();
+  }
 }

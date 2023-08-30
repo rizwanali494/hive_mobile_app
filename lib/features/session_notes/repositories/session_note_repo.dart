@@ -14,6 +14,8 @@ abstract class SessionNotesRepo {
   Future<List<SessionNoteModel>> getInitialSessionNotes({int? limit});
 
   Future<List<SessionNoteModel>> getNextSessionNotes({int? offSet, int? limit});
+
+  Future<void> ackSessionNode({required int id, required Map body});
 }
 
 class SessionNotesRepositoryImpl extends SessionNotesRepo {
@@ -33,7 +35,6 @@ class SessionNotesRepositoryImpl extends SessionNotesRepo {
     return list.map((e) => SessionNoteModel.fromJson(e)).toList();
   }
 
-
   @override
   Future<List<SessionNoteModel>> getNextSessionNotes(
       {int? offSet, int? limit}) async {
@@ -43,5 +44,12 @@ class SessionNotesRepositoryImpl extends SessionNotesRepo {
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
     return list.map((e) => SessionNoteModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<void> ackSessionNode({required int id, required Map body}) async {
+    var url = ApiEndpoints.sessionNote.withId(id);
+    var response = await apiService.patch(url: url, body: body);
+    return;
   }
 }

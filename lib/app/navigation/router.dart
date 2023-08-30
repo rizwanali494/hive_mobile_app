@@ -100,12 +100,12 @@ final goRouter = GoRouter(
       path: DescriptionScreen.route,
       name: DescriptionScreen.route,
       builder: (_, state) {
-        var extra = state.extra as Map<String, dynamic>;
+        var extra = state.extra as Map<String, dynamic>?;
         ApplicationState? status;
-        status = extra["status"];
-        var description = extra["description"] ?? "";
+        status = extra?["status"];
+        var description = extra?["description"] ?? "";
         log(description.toString());
-        String? title = extra["title"];
+        String? title = extra?["title"];
         return DescriptionScreen(
           applicationStatus: status,
           description: description,
