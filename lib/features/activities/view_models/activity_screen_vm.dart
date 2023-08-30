@@ -13,7 +13,7 @@ import 'package:hive_mobile/features/activities/repositories/activity_repo.dart'
 class ActivityScreenVM extends ChangeNotifier {
   LocalService<ActivityModel> localService = LocalService();
 
-  List<ActivityModel> sessionNotesList = [];
+  List<ActivityModel> activities = [];
   bool _isLoading = true;
   bool _isGettingMore = false;
   bool _hasError = false;
@@ -51,7 +51,7 @@ class ActivityScreenVM extends ChangeNotifier {
   Future<void> getInitialSessionList() async {
     var localList = await getLocalList();
 
-    sessionNotesList.addAll(localList);
+    activities.addAll(localList);
     if (localList.isNotEmpty) {
       notifyListeners();
     }
@@ -72,8 +72,8 @@ class ActivityScreenVM extends ChangeNotifier {
         paginationController
             .setOffset((paginationController.offset) + list.length);
       }
-      sessionNotesList.addAll(list);
-      sessionNotesList = sessionNotesList.toSet().toList();
+      activities.addAll(list);
+      activities = activities.toSet().toList();
       await localService.saveAll(list);
       paginationController.addListener();
       return;
@@ -96,7 +96,7 @@ class ActivityScreenVM extends ChangeNotifier {
         paginationController
             .setOffset((paginationController.offset) + list.length);
       }
-      sessionNotesList.addAll(list);
+      activities.addAll(list);
       paginationController.toggleIsGettingMore(false);
       return;
     };
@@ -109,7 +109,7 @@ class ActivityScreenVM extends ChangeNotifier {
     return list;
   }
 
-  Future<void> refreshSessionNotes() async {
+  Future<void> refreshActivities() async {
     final request = () async {
       _hasError = false;
       paginationController.toggleIsGettingMore(false);
@@ -121,7 +121,7 @@ class ActivityScreenVM extends ChangeNotifier {
         paginationController
             .setOffset((paginationController.offset) + list.length);
       }
-      sessionNotesList = list;
+      activities = list;
       addScrollListeners();
     };
     await performRequest(request: request);
@@ -159,7 +159,7 @@ class ActivityScreenVM extends ChangeNotifier {
   bool get isGettingMore => paginationController.isGettingMore;
 
   void onError() {
-    if (sessionNotesList.isEmpty) {
+    if (activities.isEmpty) {
       _hasError = true;
     }
     _isLoading = false;
@@ -171,41 +171,36 @@ class ActivityScreenVM extends ChangeNotifier {
 
   int get listCount {
     if (isGettingMore) {
-      return sessionNotesList.length + 1;
+      return activities.length + 1;
     }
-    return sessionNotesList.length;
+    return activities.length;
   }
 
   bool get hasError => _hasError;
 
   bool get isLoading => _isLoading;
 
-// Future<void> setSessionNote(
-//     {required SessionNoteModel model,
-//     required String state,
-//     required AckSessionNoteVM ackSessionNoteVM}) async {
-//   var previousModel = model.copyWith();
-//   model.state = state;
-//   sessionNotesList.remove(model);
-//   notifyListeners();
-//   var body = {"state": state.toUpperCase()};
-//   try {
-//     // await Future.delayed(Duration(seconds: 3));
-//     // throw "some";
-//     await activityRepo.submitSelection(id: model.id ?? 0, body: body);
-//     await localService.put(model);
-//     ackSessionNoteVM.setSessionNote(model);
-//   } catch (e) {
-//     if (e is HTTPStatusCodeException) {
-//       log("message : ${e.response.statusCode.toString()}");
-//       log("message : ${e.response.body.toString()}");
-//     }
-//     log("state : ${model.state}");
-//     sessionNotesList.add(previousModel);
-//     notifyListeners();
-//     log("error updating session note: ${e.toString()}");
-//   }
-// }
+  Future<void> setSessionNote(
+      {required ActivityModel model, required String state}) async {
+    var previousModel = model.copyWith();
+    model.selection = state;
+    var index = activities.indexOf(model);
+    notifyListeners();
+    try {
+      // await Future.delayed(Duration(seconds: 3));
+      // throw "some";
+      await activityRepo.submitSelection(id: model.id ?? 0, body: {});
+      await localService.put(model);
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("message : ${e.response.statusCode.toString()}");
+        log("message : ${e.response.body.toString()}");
+      }
+      activities.add(previousModel);
+      notifyListeners();
+      log("error updating session note: ${e.toString()}");
+    }
+  }
 //
 // void sortByRecentOrder() {
 //   sessionNotesList.sortByRecentOrder(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
@@ -62,41 +63,60 @@ class ActivityWidget extends StatelessWidget {
             _user.description,
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
-          if (type == PostType.image)
-            Padding(
-              padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image(
-                  image: NetworkImage(_user.universityImage),
-                  width: 333.w,
+          Padding(
+            padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: AspectRatio(
+                aspectRatio: 0.89,
+                // child: Image(
+                //   image: NetworkImage(controller.attachment),
+                //   fit: BoxFit.cover,
+                // ),
+                child: CachedNetworkImage(
+                  imageUrl: "controller.attachment",
                   fit: BoxFit.cover,
-                  height: 221.h,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
-            )
-          else
-            Padding(
-              padding: EdgeInsets.only(top: 20.h),
-              child: Column(
-                children: [
-                  // PollWidget(
-                  //   selected: selected,
-                  //   isSelected: true,
-                  //   value: "1",
-                  //   percentage: .67,
-                  // ),
-                  // PollWidget(
-                  //   selected: selected,
-                  //   value: "2",
-                  //   isSelected: false,
-                  //   percentage: .4,
-                  // ),
-                ],
-              ),
             ),
+          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
+          //   child: ClipRRect(
+          //     borderRadius: BorderRadius.circular(20),
+          //     child: Image(
+          //       image: NetworkImage(_user.universityImage),
+          //       width: 333.w,
+          //       fit: BoxFit.cover,
+          //       height: 221.h,
+          //     ),
+          //   ),
+          // )
+          // else
+          //   Padding(
+          //     padding: EdgeInsets.only(top: 20.h),
+          //     child: Column(
+          //       children: [
+          //         // PollWidget(
+          //         //   selected: selected,
+          //         //   isSelected: true,
+          //         //   value: "1",
+          //         //   percentage: .67,
+          //         // ),
+          //         // PollWidget(
+          //         //   selected: selected,
+          //         //   value: "2",
+          //         //   isSelected: false,
+          //         //   percentage: .4,
+          //         // ),
+          //       ],
+          //     ),
+          //   ),
           Row(
-            children:  [
+            children: [
               ActivityStatusWidget(
                 iconPath: SvgIcons.tickSquare,
                 title: AppStrings.attending,
