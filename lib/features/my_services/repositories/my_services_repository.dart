@@ -51,7 +51,7 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
   @override
   Future<Map<String, int>> getServicesStatus() async {
     var approvedUrl = apiEndPoint.withCount.withApprovedState;
-    var pendingUrl = apiEndPoint.withCount.withPendingState;
+    var pendingUrl = apiEndPoint.withCount.withPendingStatus;
     var rejectedUrl = apiEndPoint.withCount.withRejectedState;
     var responses = await Future.wait([
       apiService.get(url: approvedUrl),

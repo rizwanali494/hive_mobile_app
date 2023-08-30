@@ -3,12 +3,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/models/data/session_note_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
+import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_note_widget.dart';
+import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
+import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_widget_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -86,63 +91,41 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                         child: MultiProvider(
                           providers: [
                             ChangeNotifierProvider(
-                              create: (context) => SessionNoteWidgetVM(
-                                endPoint:
-                                    AppStrings.sessionNote.withNotPendingState,
-                              ),
+                              create: (context) => AckSessionNoteVM(),
                               key: Key("ack"),
-                              lazy: false,
                             ),
                             ChangeNotifierProvider(
-                              create: (context) => SessionNoteWidgetVM(
-                                endPoint:
-                                    AppStrings.sessionNote.withPendingState,
-                              ),
+                              create: (context) => PendingSessionNoteVM(),
                               key: Key("pending"),
-                              lazy: false,
                             ),
                           ],
                           child: TabBarView(
                             physics: NeverScrollableScrollPhysics(),
                             children: [
-                              Consumer<SessionNoteWidgetVM>(
+                              Consumer<AckSessionNoteVM>(
                                 key: Key("ack"),
                                 builder: (context, provider, child) {
-                                  log("key ::: ${provider.endPoint}");
-                                  return ListView.separated(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 18.h),
-                                    itemBuilder: (context, index) {
-                                      return SessionNoteWidget(
-                                        isPending: false,
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return 14.verticalSpace;
-                                    },
-                                    itemCount: 20,
-                                  );
+                                  return buildListView(
+                                      isLoading: provider.isLoading,
+                                      hasError: provider.hasError,
+                                      list: provider.sessionNotes,
+                                      listCount: provider.listCount,
+                                      controller: provider.scrollController,
+                                      onRefresh: provider.refreshSessionNotes,
+                                      isGettingMore: provider.isGettingMore);
                                 },
                               ),
-                              Consumer<SessionNoteWidgetVM>(
+                              Consumer<PendingSessionNoteVM>(
                                 key: Key("pending"),
                                 builder: (context, provider, child) {
-                                  log("key ::: ${provider.endPoint}");
-                                  return ListView.separated(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 14.h),
-                                    itemBuilder: (context, index) {
-                                      return SessionNoteWidget(
-                                        isPending: true,
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return 14.verticalSpace;
-                                    },
-                                    itemCount: 20,
-                                  );
+                                  return buildListView(
+                                      isLoading: provider.isLoading,
+                                      hasError: provider.hasError,
+                                      list: provider.sessionNotesList,
+                                      listCount: provider.listCount,
+                                      controller: provider.scrollController,
+                                      onRefresh: provider.refreshSessionNotes,
+                                      isGettingMore: provider.isGettingMore);
                                 },
                               ),
                             ],
@@ -157,6 +140,70 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget buildListView({
+    required bool isLoading,
+    required bool isGettingMore,
+    required bool hasError,
+    required List<SessionNoteModel> list,
+    required int listCount,
+    required ScrollController controller,
+    required Future<void> Function() onRefresh,
+  }) {
+    if (isLoading) {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 19.w,
+        ),
+        child: ListView.separated(
+          padding: EdgeInsets.symmetric(
+            vertical: 27.h,
+          ),
+          separatorBuilder: (context, index) {
+            return 20.verticalSpace;
+          },
+          itemBuilder: (context, index) {
+            return NotificationShimmerWidget();
+          },
+          itemCount: 12,
+        ),
+      );
+    } else {
+      if (hasError) {
+        return ErrorTextWidget(
+          onRefresh: onRefresh,
+        );
+      } else {
+        if (list.isNotEmpty) {
+          return ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: 18.h),
+            itemBuilder: (context, index) {
+              if (index == list.length) {
+                if (isGettingMore) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return SizedBox.shrink();
+              }
+
+              return SessionNoteWidget(
+                isPending: list[index].isPending,
+                controller: SessionNoteWidgetVM(
+                  model: list[index],
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return 14.verticalSpace;
+            },
+            itemCount: listCount,
+          );
+        }
+      }
+    }
+    return Center(
+      child: Text("No Session Note Found"),
     );
   }
 }

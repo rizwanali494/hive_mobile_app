@@ -1,3 +1,4 @@
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:isar/isar.dart';
 
 part 'session_note_model.g.dart';
@@ -90,6 +91,14 @@ class SessionNoteModel {
     map['owner'] = owner;
     map['student'] = student;
     return map;
+  }
+
+  @ignore
+  bool get isPending {
+    if (state?.toLowerCase() == AppStrings.pending.toLowerCase()) {
+      return true;
+    }
+    return false;
   }
 
   @override

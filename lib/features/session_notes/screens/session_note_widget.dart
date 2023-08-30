@@ -6,13 +6,16 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/features/session_notes/view_models/session_note_widget_vm.dart';
 
 class SessionNoteWidget extends StatelessWidget {
   final bool isPending;
+  final SessionNoteWidgetVM controller;
 
   const SessionNoteWidget({
     super.key,
     required this.isPending,
+    required this.controller,
   });
 
   @override
@@ -34,7 +37,7 @@ class SessionNoteWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  AppStrings.subjectTitle,
+                  controller.title,
                   style: styles.inter12w400,
                 ),
               ),
@@ -42,29 +45,32 @@ class SessionNoteWidget extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Text(
-                  AppStrings.loremPorum * 2,
+                  controller.content,
                   style: styles.inter12w400,
                 ),
               ),
               if (isPending)
-                Column(
-                  children: [
-                    SvgPicture.asset(
-                      SvgIcons.tickSquare,
-                      colorFilter: ColorFilter.mode(
-                        styles.yellowGreen,
-                        BlendMode.srcIn,
+                Padding(
+                  padding: EdgeInsets.only(left: 10.w),
+                  child: Column(
+                    children: [
+                      SvgPicture.asset(
+                        SvgIcons.tickSquare,
+                        colorFilter: ColorFilter.mode(
+                          styles.yellowGreen,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                    ),
-                    6.verticalSpace,
-                    SvgPicture.asset(
-                      SvgIcons.undecided,
-                      colorFilter: ColorFilter.mode(
-                        styles.red,
-                        BlendMode.srcIn,
+                      6.verticalSpace,
+                      SvgPicture.asset(
+                        SvgIcons.undecided,
+                        colorFilter: ColorFilter.mode(
+                          styles.red,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
             ],
           ),

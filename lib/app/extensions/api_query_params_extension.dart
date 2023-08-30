@@ -90,11 +90,15 @@ extension ApiFieldExpandExtension on String {
   }
 
   String get withPendingState {
+    return _appendQueryParameter("state=PENDING");
+  }
+
+  String get withPendingStatus {
     return _appendQueryParameter("status=PENDING");
   }
 
   String get withNotPendingState {
-    return _appendQueryParameter("status__ne=PENDING");
+    return _appendQueryParameter("state__ne=PENDING");
   }
 
   String get withRejectedState {

@@ -24,22 +24,21 @@ class SessionNotesRepositoryImpl extends SessionNotesRepo {
 
   @override
   Future<List<SessionNoteModel>> getInitialSessionNotes({int? limit}) async {
+    log(endPoint.withLimit(limit));
     var response = await apiService.get(
-      url: endpoint.withLimit(limit),
+      url: endPoint.withLimit(limit),
     );
-    log(endpoint.withLimit(limit));
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
     return list.map((e) => SessionNoteModel.fromJson(e)).toList();
   }
 
-  String get endpoint => endpoint;
 
   @override
   Future<List<SessionNoteModel>> getNextSessionNotes(
       {int? offSet, int? limit}) async {
     var response = await apiService.get(
-      url: endpoint.withLimit(limit).withOffSet(offSet),
+      url: endPoint.withLimit(limit).withOffSet(offSet),
     );
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
