@@ -1,7 +1,9 @@
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:isar/isar.dart';
 
+@collection
 class ActivityModel {
   ActivityModel({
     this.id,
@@ -31,7 +33,7 @@ class ActivityModel {
     skepticalStudents = json['skeptical_students'];
     selection = json['selection'];
     banner =
-        json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
+    json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
     owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
@@ -128,4 +130,17 @@ class ActivityModel {
     map['bio'] = bio;
     return map;
   }
+
+  @ignore
+  ActivityStatus get getSelection {
+    if (selection == AppStrings.attending.toLowerCase()) {
+      return ActivityStatus.Attending;
+    }
+    if (selection == AppStrings.maybe.toLowerCase()) {
+      return ActivityStatus.Maybe;
+    }
+    return ActivityStatus.Undecided;
+  }
 }
+
+enum ActivityStatus { Attending, Maybe, Undecided }

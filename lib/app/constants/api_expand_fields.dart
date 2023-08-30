@@ -3,6 +3,7 @@ class ApiExpandField {
   static String polls = "polls";
   static String owner = "owner";
   static String attachments = "attachments";
+  static String banner = "banner";
   static String university = "university";
   static String documents = "documents";
   static String subjects = "subjects";

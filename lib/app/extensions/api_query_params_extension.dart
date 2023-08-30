@@ -13,6 +13,10 @@ extension ApiFieldExpandExtension on String {
     return _appendExpandField(ApiExpandField.attachments);
   }
 
+  String get withBanner {
+    return _appendExpandField(ApiExpandField.banner);
+  }
+
   String get withResultFile {
     return _appendExpandField(ApiExpandField.result_file);
   }
