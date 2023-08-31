@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
-import 'package:hive_mobile/features/activities/models/activity_model.dart';
 
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';

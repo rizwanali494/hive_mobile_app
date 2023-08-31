@@ -5,7 +5,6 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/gradeInfoWidget.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_detail_widget.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
-import 'package:hive_mobile/features/external_grading/widgets/grade_info_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 
 class GradeDetailsScreen extends StatelessWidget {

@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
-import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
 class ActivityWidgetVM {
   final ActivityModel model;

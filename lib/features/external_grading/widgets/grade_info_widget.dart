@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';

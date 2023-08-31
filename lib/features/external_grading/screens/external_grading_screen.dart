@@ -11,7 +11,6 @@ import 'package:hive_mobile/features/external_grading/widgets/external_grade_shi
 import 'package:hive_mobile/features/external_grading/widgets/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/widgets/grading_title_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
-import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:provider/provider.dart';
 

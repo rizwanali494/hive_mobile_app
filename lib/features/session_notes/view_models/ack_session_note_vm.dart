@@ -8,7 +8,6 @@ import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/features/session_notes/repositories/session_note_repo.dart';
