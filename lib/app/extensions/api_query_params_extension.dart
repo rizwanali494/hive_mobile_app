@@ -89,8 +89,12 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("_count=true");
   }
 
-  String get withApprovedState {
+  String get withApprovedStatus {
     return _appendQueryParameter("status=APPROVED");
+  }
+
+  String get withApprovedState {
+    return _appendQueryParameter("state=APPROVED");
   }
 
   String get withPendingState {
@@ -105,8 +109,12 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("state__ne=PENDING");
   }
 
-  String get withRejectedState {
+  String get withRejectedStatus {
     return _appendQueryParameter("status=REJECTED");
+  }
+
+  String get withRejectedState {
+    return _appendQueryParameter("state=REJECTED");
   }
 
   String get withNotApprovedApplications {

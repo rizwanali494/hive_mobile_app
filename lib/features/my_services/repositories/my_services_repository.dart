@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
@@ -51,8 +52,11 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
   @override
   Future<Map<String, int>> getServicesStatus() async {
     var approvedUrl = apiEndPoint.withCount.withApprovedState;
-    var pendingUrl = apiEndPoint.withCount.withPendingStatus;
+    var pendingUrl = apiEndPoint.withCount.withPendingState;
     var rejectedUrl = apiEndPoint.withCount.withRejectedState;
+    log(approvedUrl);
+    log(pendingUrl);
+    log(rejectedUrl);
     var responses = await Future.wait([
       apiService.get(url: approvedUrl),
       apiService.get(url: pendingUrl),
@@ -61,6 +65,9 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
     var approvedResponse = jsonDecode(responses[0].body);
     var pendingResponse = jsonDecode(responses[1].body);
     var rejectedResponse = jsonDecode(responses[2].body);
+    for (var res in responses) {
+      log(res.body.toString());
+    }
     Map<String, int> map = {};
     map[AppStrings.approved.toLowerCase()] =
         approvedResponse[AppStrings.count] ?? 0;

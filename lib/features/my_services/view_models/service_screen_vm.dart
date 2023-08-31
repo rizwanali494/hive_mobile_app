@@ -49,7 +49,7 @@ class ServiceScreenVM extends ChangeNotifier {
     myServicesRepository = MyServicesRepositoryImpl(apiService: apiService);
     setIsarInstance();
     getInitialServicesList();
-    getServicesStatus();
+    // getServicesStatus();
   }
 
   Future<void> getInitialServicesList() async {
