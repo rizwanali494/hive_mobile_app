@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
@@ -49,12 +50,9 @@ class ActivityScreenVM extends ChangeNotifier {
   }
 
   Future<void> getInitialSessionList() async {
-    var localList = await getLocalList();
-
-    activities.addAll(localList);
-    if (localList.isNotEmpty) {
-      notifyListeners();
-    }
+    // if (localList.isNotEmpty) {
+    //   notifyListeners();
+    // }
     _isLoading = true;
     notifyListeners();
     final request = () async {
@@ -73,9 +71,11 @@ class ActivityScreenVM extends ChangeNotifier {
             .setOffset((paginationController.offset) + list.length);
       }
       activities.addAll(list);
-      activities = activities.toSet().toList();
       await localService.saveAll(list);
       paginationController.addListener();
+      var localList = await getLocalList();
+      activities.addAll(localList);
+      activities = activities.toSet().toList();
       return;
     };
     await performRequest(request: request);
@@ -183,28 +183,37 @@ class ActivityScreenVM extends ChangeNotifier {
   Future<void> setSessionNote(
       {required ActivityModel model, required String state}) async {
     var previousModel = model.copyWith();
-    model.selection = state;
+    model.selection = state.toUpperCase();
     var index = activities.indexOf(model);
+    log("current model index : $index");
+    if (index > -1) {
+      activities[index] = model;
+    }
     notifyListeners();
     try {
-      // await Future.delayed(Duration(seconds: 3));
-      // throw "some";
-      await activityRepo.submitSelection(id: model.id ?? 0, body: {});
+      await activityRepo.submitSelection(
+          id: model.id ?? 0, body: {}, state: state);
       await localService.put(model);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("message : ${e.response.statusCode.toString()}");
         log("message : ${e.response.body.toString()}");
       }
-      activities.add(previousModel);
-      notifyListeners();
-      log("error updating session note: ${e.toString()}");
+      await Future.delayed(Duration(seconds: 1));
+      log("error updating activity: ${e.toString()}");
+      var index = activities.indexOf(previousModel);
+      log("previous model index : $index");
+      if (index > -1) {
+        activities[index] = previousModel;
+        notifyListeners();
+        log("error updating activity: ${e.toString()}");
+      }
     }
-  }
 //
 // void sortByRecentOrder() {
 //   sessionNotesList.sortByRecentOrder(
 //     getDateAdded: (item) =>
 //         DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
 //   );
+  }
 }

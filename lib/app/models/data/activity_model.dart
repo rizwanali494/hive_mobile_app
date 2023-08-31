@@ -137,15 +137,25 @@ class ActivityModel {
     return map;
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ActivityModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   @ignore
   ActivityStatus? get getSelection {
-    if (selection == AppStrings.attending.toLowerCase()) {
+    if (selection?.toLowerCase() == AppStrings.attending.toLowerCase()) {
       return ActivityStatus.Attending;
     }
-    if (selection == AppStrings.maybe.toLowerCase()) {
+    if (selection?.toLowerCase() == AppStrings.maybe.toLowerCase()) {
       return ActivityStatus.Maybe;
     }
-    if (selection == AppStrings.undecided.toLowerCase()) {
+    if (selection?.toLowerCase() == AppStrings.undecided.toLowerCase()) {
       return ActivityStatus.Undecided;
     }
     return null;

@@ -7,11 +7,13 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 class ActivityStatusWidget extends StatelessWidget {
   final String iconPath;
   final String title;
+  final bool isSelected;
 
   const ActivityStatusWidget({
     super.key,
     required this.iconPath,
     required this.title,
+    required this.isSelected,
   });
 
   @override
@@ -23,6 +25,7 @@ class ActivityStatusWidget extends StatelessWidget {
       height: 29.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
+        color: isSelected ? styles.paleBlue : null,
         border: Border.all(
           color: styles.skyBlue,
         ),

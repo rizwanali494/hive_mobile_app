@@ -152,20 +152,20 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                     padding: EdgeInsets.symmetric(vertical: 27.h),
                     child: Row(
                       children: [
-                        ActivityStatusWidget(
-                          iconPath: SvgIcons.tickSquare,
-                          title: AppStrings.attending,
-                        ),
-                        6.17.horizontalSpace,
-                        ActivityStatusWidget(
-                          iconPath: SvgIcons.maybe,
-                          title: AppStrings.maybe,
-                        ),
-                        6.17.horizontalSpace,
-                        ActivityStatusWidget(
-                          iconPath: SvgIcons.undecided,
-                          title: AppStrings.undecided,
-                        ),
+                        // ActivityStatusWidget(
+                        //   iconPath: SvgIcons.tickSquare,
+                        //   title: AppStrings.attending,
+                        // ),
+                        // 6.17.horizontalSpace,
+                        // ActivityStatusWidget(
+                        //   iconPath: SvgIcons.maybe,
+                        //   title: AppStrings.maybe,
+                        // ),
+                        // 6.17.horizontalSpace,
+                        // ActivityStatusWidget(
+                        //   iconPath: SvgIcons.undecided,
+                        //   title: AppStrings.undecided,
+                        // ),
                       ],
                     ),
                   ),

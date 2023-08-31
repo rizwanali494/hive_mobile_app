@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class ActivityRepo {
@@ -16,7 +17,8 @@ abstract class ActivityRepo {
 
   Future<List<ActivityModel>> getNextActivities({int? offSet, int? limit});
 
-  Future<void> submitSelection({required int id, required Map body});
+  Future<void> submitSelection(
+      {required int id, required Map body, required String state});
 }
 
 class ActivityRepositoryImpl extends ActivityRepo {
@@ -47,9 +49,21 @@ class ActivityRepositoryImpl extends ActivityRepo {
   }
 
   @override
-  Future<void> submitSelection({required int id, required Map body}) async {
-    var url = endPoint.withId(id);
+  Future<void> submitSelection(
+      {required int id, required Map body, required String state}) async {
+    var url = getEndpoint(id, state);
+    log(url.toString());
     var response = await apiService.post(url: url, body: {});
     return;
+  }
+
+  String getEndpoint(int id, String state) {
+    if (state.toLowerCase() == AppStrings.attending.toLowerCase()) {
+      return "${ApiEndpoints.activity}${id}/attend/";
+    }
+    if (state.toLowerCase() == AppStrings.maybe.toLowerCase()) {
+      return "${ApiEndpoints.activity}${id}/skeptical/";
+    }
+    return "${ApiEndpoints.activity}${id}/not_attend/";
   }
 }

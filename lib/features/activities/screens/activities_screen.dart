@@ -42,7 +42,7 @@ class ActivitiesScreen extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 19.w,
+                        horizontal: 1.w,
                       ),
                       child: ListView.separated(
                         padding: EdgeInsets.symmetric(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 
@@ -19,7 +21,7 @@ class ActivityWidgetVM {
     return time.formattedTime;
   }
 
-  bool isSelected(ActivityStatus status) {
+  bool isSelected(ActivityStatus? status) {
     return status == model.getSelection;
   }
 }

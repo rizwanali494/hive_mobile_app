@@ -2,14 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/enums/university_application_eums.dart';
+import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
+import 'package:provider/provider.dart';
 
 class ActivityWidget extends StatelessWidget {
   final ActivityWidgetVM controller;
@@ -27,6 +31,7 @@ class ActivityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+    final activityProvider = context.read<ActivityScreenVM>();
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
@@ -143,19 +148,42 @@ class ActivityWidget extends StatelessWidget {
           //   ),
           Row(
             children: [
-              ActivityStatusWidget(
-                iconPath: SvgIcons.tickSquare,
-                title: AppStrings.attending,
+              GestureDetector(
+                onTap: () {
+                  activityProvider.setSessionNote(
+                      model: controller.model, state: AppStrings.attending);
+                },
+                child: ActivityStatusWidget(
+                  iconPath: SvgIcons.tickSquare,
+                  title: AppStrings.attending,
+                  isSelected: controller.isSelected(
+                    ActivityStatus.Attending,
+                  ),
+                ),
               ),
               6.17.horizontalSpace,
-              ActivityStatusWidget(
-                iconPath: SvgIcons.maybe,
-                title: AppStrings.maybe,
+              GestureDetector(
+                onTap: () {
+                  activityProvider.setSessionNote(
+                      model: controller.model, state: AppStrings.maybe);
+                },
+                child: ActivityStatusWidget(
+                  iconPath: SvgIcons.maybe,
+                  title: AppStrings.maybe,
+                  isSelected: controller.isSelected(ActivityStatus.Maybe),
+                ),
               ),
               6.17.horizontalSpace,
-              ActivityStatusWidget(
-                iconPath: SvgIcons.undecided,
-                title: AppStrings.undecided,
+              GestureDetector(
+                onTap: () {
+                  activityProvider.setSessionNote(
+                      model: controller.model, state: AppStrings.undecided);
+                },
+                child: ActivityStatusWidget(
+                  iconPath: SvgIcons.undecided,
+                  title: AppStrings.undecided,
+                  isSelected: controller.isSelected(ActivityStatus.Undecided),
+                ),
               ),
             ],
           ),
