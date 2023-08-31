@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,18 +8,17 @@ import 'package:hive_mobile/features/activities/models/activity_model.dart';
 
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/activities/widgets/activity_detail_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
-class ActivityDetailScreen extends StatefulWidget {
-  const ActivityDetailScreen({Key? key}) : super(key: key);
+class ActivityDetailScreen extends StatelessWidget {
+  final ActivityWidgetVM controller;
+
+  const ActivityDetailScreen({Key? key, required this.controller})
+      : super(key: key);
   static const route = '/ActivityDetailScreen';
 
-  @override
-  State<ActivityDetailScreen> createState() => _ActivityDetailScreenState();
-}
-
-class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -26,95 +26,131 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            width: 393.w,
-            height: 385.h,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(_activity.imageUrl), fit: BoxFit.cover),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+          CachedNetworkImage(
+            imageUrl: controller.bannerImageUrl!,
+            placeholder: (context, url) => Container(
+              width: 393.w,
+              height: 385.h,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
               ),
             ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 18.w, right: 25.w, bottom: 31.h),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              context.pop();
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              color: styles.white,
-                            ),
-                          ),
-                          20.horizontalSpace,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  _activity.title,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: styles.inter20w700
-                                      .copyWith(color: styles.white),
+            imageBuilder: (context, imageProvider) => Container(
+              width: 393.w,
+              height: 385.h,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(controller.bannerImageUrl!),
+                  fit: BoxFit.cover,
+                ),
+                gradient: LinearGradient(colors: [
+                  styles.white,
+                  styles.black,
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+              ),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                    gradient: LinearGradient(
+                        colors: [
+                          styles.black.withOpacity(0),
+                          styles.black.withOpacity(0.9),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter)),
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(left: 18.w, right: 25.w, bottom: 31.h),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  context.pop();
+                                },
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: styles.white,
                                 ),
-                                Text(
-                                  _activity.dayTime,
-                                  maxLines: 1,
-                                  style: styles.inter16w400
-                                      .copyWith(color: styles.white),
+                              ),
+                              20.horizontalSpace,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      controller.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: styles.inter20w700
+                                          .copyWith(color: styles.white),
+                                    ),
+                                    Text(
+                                      "${controller.eventDay} ${AppStrings.at} ${controller.eventTime}",
+                                      maxLines: 1,
+                                      style: styles.inter16w400
+                                          .copyWith(color: styles.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IntrinsicHeight(
+                          child: IntrinsicWidth(
+                            child: Stack(
+                              children: [
+                                SvgPicture.asset(
+                                  SvgIcons.calenderBorder,
+                                ),
+                                Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      10.horizontalSpace,
+                                      Text(
+                                        controller.dateOnly,
+                                        style: styles.inter12w400
+                                            .copyWith(color: styles.white),
+                                      ),
+                                      Text(
+                                        controller.monthOnly,
+                                        style: styles.inter8w400
+                                            .copyWith(color: styles.white),
+                                      ),
+                                      5.horizontalSpace,
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    IntrinsicHeight(
-                      child: IntrinsicWidth(
-                        child: Stack(
-                          children: [
-                            SvgPicture.asset(
-                              SvgIcons.calenderBorder,
-                            ),
-                            Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  10.horizontalSpace,
-                                  Text(
-                                    _activity.date,
-                                    style: styles.inter12w400
-                                        .copyWith(color: styles.white),
-                                  ),
-                                  Text(
-                                    _activity.month,
-                                    style: styles.inter8w400
-                                        .copyWith(color: styles.white),
-                                  ),
-                                  5.horizontalSpace,
-                                ],
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           20.verticalSpace,
           Expanded(
@@ -131,12 +167,13 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                             iconPath: SvgIcons.campusLocation,
                           ),
                           ActivityDetailWidget(
-                            title: "${AppStrings.eventBy}: ${_activity.eventBy}",
+                            title:
+                                "${AppStrings.eventBy}: ${_activity.eventBy}",
                             iconPath: SvgIcons.userBlue,
                           ),
                           ActivityDetailWidget(
                             title:
-                            "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
+                                "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
                             iconPath: SvgIcons.archiveTick,
                           ),
                           12.verticalSpace,

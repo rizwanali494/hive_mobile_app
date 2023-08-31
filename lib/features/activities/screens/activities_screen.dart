@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
+import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/activities/widgets/activity_widget.dart';
@@ -91,7 +92,14 @@ class ActivitiesScreen extends StatelessWidget {
                           }
                           return GestureDetector(
                             onTap: () {
-                              context.push("/ActivityDetailScreen");
+                              context.push(
+                                ActivityDetailScreen.route,
+                                extra: {
+                                  "controller": ActivityWidgetVM(
+                                    model: provider.activities[index],
+                                  ),
+                                },
+                              );
                             },
                             child: ActivityWidget(
                               type:

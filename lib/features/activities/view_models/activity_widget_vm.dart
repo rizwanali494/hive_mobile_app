@@ -21,6 +21,28 @@ class ActivityWidgetVM {
     return time.formattedTime;
   }
 
+  String get name => model.name ?? "";
+
+  String get eventDay {
+    var eventDay = DateTime.tryParse(model.date ?? "") ?? DateTime.now();
+    return eventDay.dayOnly;
+  }
+
+  String get eventTime {
+    var eventDay = DateTime.tryParse(model.date ?? "") ?? DateTime.now();
+    return eventDay.timeOnly;
+  }
+
+  String get dateOnly {
+    var eventDay = DateTime.tryParse(model.date ?? "") ?? DateTime.now();
+    return eventDay.dateOnly;
+  }
+
+  String get monthOnly {
+    var eventDay = DateTime.tryParse(model.date ?? "") ?? DateTime.now();
+    return eventDay.monthOnly;
+  }
+
   bool isSelected(ActivityStatus? status) {
     return status == model.getSelection;
   }

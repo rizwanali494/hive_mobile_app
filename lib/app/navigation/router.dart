@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
@@ -70,7 +71,13 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: ActivityDetailScreen.route,
       name: ActivityDetailScreen.route,
-      builder: (_, state) => const ActivityDetailScreen(),
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        ActivityWidgetVM controller = extra?["controller"];
+        return ActivityDetailScreen(
+          controller: controller,
+        );
+      },
     ),
     CustomGoRoute.cupertino(
       path: UniversityApplicationScreen.route,

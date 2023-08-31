@@ -30,4 +30,25 @@ extension DateTimeExtension on DateTime {
       return 'Just now';
     }
   }
+
+  String get dayOnly {
+    return _dayOnlyFormat.format(this);
+  }
+
+  String get timeOnly {
+    return _timeOnlyFormat.format(this);
+  }
+
+  String get dateOnly {
+    return _dateOnlyFormat.format(this);
+  }
+
+  String get monthOnly {
+    return _monthOnlyFormat.format(this);
+  }
 }
+
+var _dayOnlyFormat = DateFormat.EEEE();
+var _timeOnlyFormat = DateFormat('h:mm a');
+var _dateOnlyFormat = DateFormat('d');
+var _monthOnlyFormat = DateFormat('MMM');

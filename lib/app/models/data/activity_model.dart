@@ -34,12 +34,13 @@ class ActivityModel {
 
   ActivityModel.fromJson(dynamic json) {
     id = json['id'];
+    localId = json['id'] ?? 0;
     attendingStudents = json['attending_students'];
     nonAttendingStudents = json['non_attending_students'];
     skepticalStudents = json['skeptical_students'];
     selection = json['selection'];
     banner =
-    json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
+        json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
     owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
@@ -161,4 +162,5 @@ class ActivityModel {
     return null;
   }
 }
+
 enum ActivityStatus { Attending, Maybe, Undecided }

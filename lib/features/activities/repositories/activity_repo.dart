@@ -59,11 +59,15 @@ class ActivityRepositoryImpl extends ActivityRepo {
 
   String getEndpoint(int id, String state) {
     if (state.toLowerCase() == AppStrings.attending.toLowerCase()) {
-      return "${ApiEndpoints.activity}${id}/attend/";
+      return "${selectionEndpoint(id)}attend/";
     }
     if (state.toLowerCase() == AppStrings.maybe.toLowerCase()) {
-      return "${ApiEndpoints.activity}${id}/skeptical/";
+      return "${selectionEndpoint(id)}skeptical/";
     }
-    return "${ApiEndpoints.activity}${id}/not_attend/";
+    return "${selectionEndpoint(id)}not_attend/";
+  }
+
+  String selectionEndpoint(int id) {
+    return "${ApiEndpoints.activity}${id}/";
   }
 }

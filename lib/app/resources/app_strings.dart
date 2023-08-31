@@ -51,6 +51,7 @@ class AppStrings {
   static String applicationInformation = "Application Information";
   static String selectUniversity = "Select University";
   static String add = "Add";
+  static String at = "at";
   static String description = "Description";
   static String characterCertificate = "Character Certificate";
   static String applied = "Applied";
