@@ -153,10 +153,10 @@ class ActivityModel {
     if (selection?.toLowerCase() == AppStrings.attending.toLowerCase()) {
       return ActivityStatus.Attending;
     }
-    if (selection?.toLowerCase() == AppStrings.maybe.toLowerCase()) {
+    if (selection?.toLowerCase() == AppStrings.SKEPTICAL.toLowerCase()) {
       return ActivityStatus.Maybe;
     }
-    if (selection?.toLowerCase() == AppStrings.undecided.toLowerCase()) {
+    if (selection?.toLowerCase() == AppStrings.NON_ATTENDING.toLowerCase()) {
       return ActivityStatus.Undecided;
     }
     return null;

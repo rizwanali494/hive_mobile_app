@@ -180,7 +180,7 @@ class ActivityScreenVM extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  Future<void> setSessionNote(
+  Future<void> setActivitySelection(
       {required ActivityModel model, required String state}) async {
     var previousModel = model.copyWith();
     model.selection = state.toUpperCase();

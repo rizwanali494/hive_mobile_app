@@ -4,18 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/features/activities/models/activity_model.dart';
 
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/activities/widgets/activity_detail_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
 class ActivityDetailScreen extends StatelessWidget {
   final ActivityWidgetVM controller;
+  final ActivityScreenVM? activityProvider;
 
-  const ActivityDetailScreen({Key? key, required this.controller})
+  const ActivityDetailScreen(
+      {Key? key, required this.controller, required this.activityProvider})
       : super(key: key);
   static const route = '/ActivityDetailScreen';
 
@@ -163,17 +167,17 @@ class ActivityDetailScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           ActivityDetailWidget(
-                            title: _activity.campusName,
+                            title: controller.campusName,
                             iconPath: SvgIcons.campusLocation,
                           ),
                           ActivityDetailWidget(
                             title:
-                                "${AppStrings.eventBy}: ${_activity.eventBy}",
+                                "${AppStrings.eventBy}: ${controller.eventBy}",
                             iconPath: SvgIcons.userBlue,
                           ),
                           ActivityDetailWidget(
                             title:
-                                "${_activity.peopleNumber} ${AppStrings.peopleGoing}",
+                                "${controller.peopleGoing} ${AppStrings.peopleGoing}",
                             iconPath: SvgIcons.archiveTick,
                           ),
                           12.verticalSpace,
@@ -185,24 +189,55 @@ class ActivityDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  15.verticalSpace,
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 27.h),
+                    padding: EdgeInsets.only(bottom: 27.h),
                     child: Row(
                       children: [
-                        // ActivityStatusWidget(
-                        //   iconPath: SvgIcons.tickSquare,
-                        //   title: AppStrings.attending,
-                        // ),
-                        // 6.17.horizontalSpace,
-                        // ActivityStatusWidget(
-                        //   iconPath: SvgIcons.maybe,
-                        //   title: AppStrings.maybe,
-                        // ),
-                        // 6.17.horizontalSpace,
-                        // ActivityStatusWidget(
-                        //   iconPath: SvgIcons.undecided,
-                        //   title: AppStrings.undecided,
-                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            activityProvider?.setActivitySelection(
+                                model: controller.model,
+                                state: AppStrings.attending);
+                          },
+                          child: ActivityStatusWidget(
+                            iconPath: SvgIcons.tickSquare,
+                            title: AppStrings.attending,
+                            isSelected: controller.isSelected(
+                              ActivityStatus.Attending,
+                            ),
+                          ),
+                        ),
+                        12.17.horizontalSpace,
+                        GestureDetector(
+                          onTap: () {
+                            activityProvider?.setActivitySelection(
+                                model: controller.model,
+                                state: AppStrings.SKEPTICAL);
+                          },
+                          child: ActivityStatusWidget(
+                            iconPath: SvgIcons.maybe,
+                            title: AppStrings.maybe,
+                            isSelected: controller.isSelected(
+                              ActivityStatus.Maybe,
+                            ),
+                          ),
+                        ),
+                        12.17.horizontalSpace,
+                        GestureDetector(
+                          onTap: () {
+                            activityProvider?.setActivitySelection(
+                                model: controller.model,
+                                state: AppStrings.NON_ATTENDING);
+                          },
+                          child: ActivityStatusWidget(
+                            iconPath: SvgIcons.undecided,
+                            title: AppStrings.undecided,
+                            isSelected: controller.isSelected(
+                              ActivityStatus.Undecided,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -218,5 +253,3 @@ class ActivityDetailScreen extends StatelessWidget {
   String data() =>
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ex ut sapien bibendum, nec cursus arcu scelerisque. Mauris ac purus felis. Aenean pellentesque auctor consequat. Nulla facilisi. Cras interdum vestibulum lacus et auctor. Sed eu ante ac ante imperdiet molestie. Vestibulum a pretium risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ex ut sapien bibendum, nec cursus arcu scelerisque. Mauris ac purus felis. Aenean pellentesque auctor consequat. Nulla facilisi. Cras interdum vestibulum lacus et auctor. Sed eu ante ac ante imperdiet molestie. Vestibulum a pretium risus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ex ut sapien bibendum, nec cursus arcu scelerisque. Mauris ac purus felis. Aenean pellentesque auctor consequat. Nulla facilisi. Cras interdum vestibulum lacus et auctor. Sed eu ante ac ante imperdiet molestie. Vestibulum a pretium risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ex ut sapien bibendum, nec cursus arcu scelerisque. Mauris ac purus felis. Aenean pellentesque auctor consequat. Nulla facilisi. Cras interdum vestibulum lacus et auctor. Sed eu ante ac ante imperdiet molestie. Vestibulum a pretium risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ex ut sapien bibendum, nec cursus arcu scelerisque. Mauris ac purus felis. Aenean pellentesque auctor consequat. Nulla facilisi. Cras interdum vestibulum lacus et auctor. Sed eu ante ac ante imperdiet molestie. Vestibulum a pretium risus.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ex ut sapien bibendum, nec cursus arcu scelerisque. Mauris ac purus felis. Aenean pellentesque auctor consequat. Nulla facilisi. Cras interdum vestibulum lacus et auctor. Sed eu ante ac ante imperdiet molestie. Vestibulum a pretium risus.";
 }
-
-const _activity = ActivityModel.activity;

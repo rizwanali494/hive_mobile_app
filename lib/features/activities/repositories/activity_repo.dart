@@ -61,7 +61,7 @@ class ActivityRepositoryImpl extends ActivityRepo {
     if (state.toLowerCase() == AppStrings.attending.toLowerCase()) {
       return "${selectionEndpoint(id)}attend/";
     }
-    if (state.toLowerCase() == AppStrings.maybe.toLowerCase()) {
+    if (state.toLowerCase() == AppStrings.SKEPTICAL.toLowerCase()) {
       return "${selectionEndpoint(id)}skeptical/";
     }
     return "${selectionEndpoint(id)}not_attend/";

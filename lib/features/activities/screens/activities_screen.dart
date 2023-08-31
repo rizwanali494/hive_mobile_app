@@ -98,6 +98,7 @@ class ActivitiesScreen extends StatelessWidget {
                                   "controller": ActivityWidgetVM(
                                     model: provider.activities[index],
                                   ),
+                                  "activityController": provider,
                                 },
                               );
                             },

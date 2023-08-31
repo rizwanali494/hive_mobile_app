@@ -30,7 +30,9 @@ class AppStrings {
   static String accountSettings = "Account Settings";
   static String attending = "Attending";
   static String maybe = "Maybe";
+  static String SKEPTICAL = "SKEPTICAL";
   static String undecided = "Undecided";
+  static String NON_ATTENDING = "NON_ATTENDING";
   static String comment = "Comment";
   static String newRequest = "New Request";
   static String addExternalGrade = "Add External Grades";

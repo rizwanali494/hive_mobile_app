@@ -65,10 +65,6 @@ class ActivityWidget extends StatelessWidget {
                     const UserPlaceHolderWidget(),
               ),
 
-              // CircleAvatar(
-              //   backgroundImage: NetworkImage(_user.userAvatar),
-              //   radius: 25,
-              // ),
               12.horizontalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,10 +94,6 @@ class ActivityWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: AspectRatio(
                   aspectRatio: 0.89,
-                  // child: Image(
-                  //   image: NetworkImage(controller.attachment),
-                  //   fit: BoxFit.cover,
-                  // ),
                   child: CachedNetworkImage(
                     imageUrl: controller.bannerImageUrl!,
                     fit: BoxFit.cover,
@@ -114,43 +106,11 @@ class ActivityWidget extends StatelessWidget {
             )
           else
             33.verticalSpace,
-          // Padding(
-          //   padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
-          //   child: ClipRRect(
-          //     borderRadius: BorderRadius.circular(20),
-          //     child: Image(
-          //       image: NetworkImage(_user.universityImage),
-          //       width: 333.w,
-          //       fit: BoxFit.cover,
-          //       height: 221.h,
-          //     ),
-          //   ),
-          // )
-          // else
-          //   Padding(
-          //     padding: EdgeInsets.only(top: 20.h),
-          //     child: Column(
-          //       children: [
-          //         // PollWidget(
-          //         //   selected: selected,
-          //         //   isSelected: true,
-          //         //   value: "1",
-          //         //   percentage: .67,
-          //         // ),
-          //         // PollWidget(
-          //         //   selected: selected,
-          //         //   value: "2",
-          //         //   isSelected: false,
-          //         //   percentage: .4,
-          //         // ),
-          //       ],
-          //     ),
-          //   ),
           Row(
             children: [
               GestureDetector(
                 onTap: () {
-                  activityProvider.setSessionNote(
+                  activityProvider.setActivitySelection(
                       model: controller.model, state: AppStrings.attending);
                 },
                 child: ActivityStatusWidget(
@@ -164,8 +124,8 @@ class ActivityWidget extends StatelessWidget {
               6.17.horizontalSpace,
               GestureDetector(
                 onTap: () {
-                  activityProvider.setSessionNote(
-                      model: controller.model, state: AppStrings.maybe);
+                  activityProvider.setActivitySelection(
+                      model: controller.model, state: AppStrings.SKEPTICAL);
                 },
                 child: ActivityStatusWidget(
                   iconPath: SvgIcons.maybe,
@@ -176,8 +136,8 @@ class ActivityWidget extends StatelessWidget {
               6.17.horizontalSpace,
               GestureDetector(
                 onTap: () {
-                  activityProvider.setSessionNote(
-                      model: controller.model, state: AppStrings.undecided);
+                  activityProvider.setActivitySelection(
+                      model: controller.model, state: AppStrings.NON_ATTENDING);
                 },
                 child: ActivityStatusWidget(
                   iconPath: SvgIcons.undecided,
