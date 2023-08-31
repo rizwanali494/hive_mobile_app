@@ -3,6 +3,12 @@ import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:isar/isar.dart';
 
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_data_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_extra_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+
+part 'activity_model.g.dart';
+
 @collection
 class ActivityModel {
   ActivityModel({
@@ -132,15 +138,17 @@ class ActivityModel {
   }
 
   @ignore
-  ActivityStatus get getSelection {
+  ActivityStatus? get getSelection {
     if (selection == AppStrings.attending.toLowerCase()) {
       return ActivityStatus.Attending;
     }
     if (selection == AppStrings.maybe.toLowerCase()) {
       return ActivityStatus.Maybe;
     }
-    return ActivityStatus.Undecided;
+    if (selection == AppStrings.undecided.toLowerCase()) {
+      return ActivityStatus.Undecided;
+    }
+    return null;
   }
 }
-
 enum ActivityStatus { Attending, Maybe, Undecided }

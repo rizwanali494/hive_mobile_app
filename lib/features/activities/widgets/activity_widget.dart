@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 
 class ActivityWidget extends StatelessWidget {
+  final ActivityWidgetVM controller;
+
   const ActivityWidget({
     super.key,
     required this.type,
     required this.selected,
+    required this.controller,
   });
 
   final PostType type;
@@ -37,21 +42,39 @@ class ActivityWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(_user.userAvatar),
-                radius: 25,
+              CachedNetworkImage(
+                imageUrl: controller.ownerImageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 45.h,
+                  height: 45.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => const UserPlaceHolderWidget(),
+                errorWidget: (context, url, error) =>
+                    const UserPlaceHolderWidget(),
               ),
+
+              // CircleAvatar(
+              //   backgroundImage: NetworkImage(_user.userAvatar),
+              //   radius: 25,
+              // ),
               12.horizontalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _user.name,
+                    controller.ownerName,
                     style: styles.inter16w600
                         .copyWith(color: styles.darkSlateGrey),
                   ),
                   Text(
-                    _user.time,
+                    controller.postedTime,
                     style: styles.inter8w400.copyWith(color: styles.darkGrey),
                   ),
                 ],
@@ -60,29 +83,32 @@ class ActivityWidget extends StatelessWidget {
           ),
           16.verticalSpace,
           Text(
-            _user.description,
+            controller.description,
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: AspectRatio(
-                aspectRatio: 0.89,
-                // child: Image(
-                //   image: NetworkImage(controller.attachment),
-                //   fit: BoxFit.cover,
-                // ),
-                child: CachedNetworkImage(
-                  imageUrl: "controller.attachment",
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+          if (controller.bannerImageUrl != null)
+            Padding(
+              padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: AspectRatio(
+                  aspectRatio: 0.89,
+                  // child: Image(
+                  //   image: NetworkImage(controller.attachment),
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: CachedNetworkImage(
+                    imageUrl: controller.bannerImageUrl!,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
                 ),
               ),
-            ),
-          ),
+            )
+          else
+            33.verticalSpace,
           // Padding(
           //   padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
           //   child: ClipRRect(

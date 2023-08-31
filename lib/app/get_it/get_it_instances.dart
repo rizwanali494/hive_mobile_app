@@ -4,7 +4,7 @@ import 'package:hive_mobile/app/get_it/isar_get_it_instance.dart';
 
 final _getIt = GetIt.instance;
 
-void getItSetup() {
+Future<void> getItSetup() async {
   _getIt.allowReassignment = true;
-  registerIsarInstance();
+  await registerIsarInstance();
 }

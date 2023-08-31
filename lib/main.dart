@@ -6,9 +6,9 @@ import 'package:hive_mobile/app/navigation/router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  getItSetup();
+  await getItSetup();
   runApp(const MyApp());
 }
 
