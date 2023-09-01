@@ -5,10 +5,10 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class CleanCalendarController extends ChangeNotifier {
   /// Obrigatory: The mininimum date to show
-  final DateTime minDate;
+   DateTime minDate;
 
   /// Obrigatory: The maximum date to show
-  final DateTime maxDate;
+  DateTime maxDate;
 
   /// If the range is enabled
   final bool rangeMode;
@@ -64,14 +64,7 @@ class CleanCalendarController extends ChangeNotifier {
     final x = weekdayStart - 1;
     weekdayEnd = x == 0 ? 7 : x;
 
-    DateTime currentDate = DateTime(minDate.year, minDate.month);
-    months.add(currentDate);
-
-    while (!(currentDate.year == maxDate.year &&
-        currentDate.month == maxDate.month)) {
-      currentDate = DateTime(currentDate.year, currentDate.month + 1);
-      months.add(currentDate);
-    }
+    setAlldays();
 
     if (initialDateSelected != null &&
         (initialDateSelected!.isAfter(minDate) ||
@@ -83,6 +76,18 @@ class CleanCalendarController extends ChangeNotifier {
         (endDateSelected!.isBefore(maxDate) ||
             endDateSelected!.isSameDay(maxDate))) {
       onDayClick(endDateSelected!, update: false);
+    }
+  }
+
+  void setAlldays() {
+    months = [];
+    DateTime currentDate = DateTime(minDate.year, minDate.month);
+    months.add(currentDate);
+
+    while (!(currentDate.year == maxDate.year &&
+        currentDate.month == maxDate.month)) {
+      currentDate = DateTime(currentDate.year, currentDate.month + 1);
+      months.add(currentDate);
     }
   }
 
@@ -217,5 +222,12 @@ class CleanCalendarController extends ChangeNotifier {
     final month =
         ((date.year - minDate.year) * 12) - minDate.month + date.month;
     itemScrollController.jumpTo(index: month, alignment: alignment);
+  }
+
+  void setDate(int value) {
+    minDate = DateTime(value);
+    maxDate = DateTime(value, 12);
+    setAlldays();
+    notifyListeners();
   }
 }

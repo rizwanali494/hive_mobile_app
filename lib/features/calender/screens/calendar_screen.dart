@@ -25,8 +25,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CleanCalendarController(
-        minDate: DateTime(2023), maxDate: DateTime(2030), readOnly: true);
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return ChangeNotifierProvider(
@@ -130,7 +128,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
               Expanded(
                 child: ScrollableCleanCalendar(
-                  calendarController: controller,
+                  calendarController: provider.controller,
                   scrollController: scrollController,
                   layout: Layout.BEAUTY,
                   calendarCrossAxisSpacing: 0,
