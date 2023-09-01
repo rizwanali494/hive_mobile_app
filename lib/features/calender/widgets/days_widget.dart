@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
 import 'package:hive_mobile/features/calender/models/day_values_model.dart';
 import 'package:hive_mobile/features/calender/utils/enums.dart';
@@ -42,7 +45,6 @@ class DaysWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // Start weekday - Days per week - The first weekday of this month
     // 7 - 7 - 1 = -1 = 1
     // 6 - 7 - 1 = -2 = 2
@@ -66,13 +68,26 @@ class DaysWidget extends StatelessWidget {
       crossAxisCount: DateTime.daysPerWeek,
       physics: const NeverScrollableScrollPhysics(),
       addRepaintBoundaries: false,
-      padding: EdgeInsets.zero,
-      crossAxisSpacing: calendarCrossAxisSpacing,
-      mainAxisSpacing: calendarMainAxisSpacing,
+      padding: EdgeInsets.symmetric(
+        horizontal: 5.w,
+      ),
+      crossAxisSpacing: 0,
+      mainAxisSpacing: 0,
       shrinkWrap: true,
+      childAspectRatio: 0.7,
       children: List.generate(
           DateTime(month.year, month.month + 1, 0).day + start, (index) {
-        if (index < start) return const SizedBox.shrink();
+        if (index < start)
+          return Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                border: Border(
+              bottom: buildBorderSide(),
+              right: buildBorderSide(),
+              // top: BorderSide(width: 0.5,color: Colors.black,),
+            )),
+            child: SizedBox.shrink(),
+          );
         final day = DateTime(month.year, month.month, (index + 1 - start));
         final text = (index + 1 - start).toString();
 
@@ -135,6 +150,11 @@ class DaysWidget extends StatelessWidget {
       }),
     );
   }
+
+  BorderSide buildBorderSide() => BorderSide(
+        width: 0.5,
+        color: Colors.black,
+      );
 
   Widget _pattern(BuildContext context, DayValues values) {
     Color bgColor = backgroundColor ?? Theme.of(context).colorScheme.surface;
@@ -215,65 +235,151 @@ class DaysWidget extends StatelessWidget {
 
   Widget _beauty(BuildContext context, DayValues values) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-
     BorderRadiusGeometry? borderRadius;
     Color bgColor = Colors.transparent;
-
-    if (values.isSelected) {
-      if (values.isFirstDayOfWeek) {
-        borderRadius = BorderRadius.only(
-          topLeft: Radius.circular(radius),
-          bottomLeft: Radius.circular(radius),
-        );
-      } else if (values.isLastDayOfWeek) {
-        borderRadius = BorderRadius.only(
-          topRight: Radius.circular(radius),
-          bottomRight: Radius.circular(radius),
-        );
-      }
-
-      if ((values.selectedMinDate != null &&
-              values.day.isSameDay(values.selectedMinDate!)) ||
-          (values.selectedMaxDate != null &&
-              values.day.isSameDay(values.selectedMaxDate!))) {
-        bgColor =
-            selectedBackgroundColor ?? Theme.of(context).colorScheme.primary;
-
-        if (values.selectedMinDate == values.selectedMaxDate) {
-          borderRadius = BorderRadius.circular(radius);
-        } else if (values.selectedMinDate != null &&
-            values.day.isSameDay(values.selectedMinDate!)) {
-          borderRadius = BorderRadius.only(
-            topLeft: Radius.circular(radius),
-            bottomLeft: Radius.circular(radius),
-          );
-        } else if (values.selectedMaxDate != null &&
-            values.day.isSameDay(values.selectedMaxDate!)) {
-          borderRadius = BorderRadius.only(
-            topRight: Radius.circular(radius),
-            bottomRight: Radius.circular(radius),
-          );
-        }
-      } else {
-        bgColor = selectedBackgroundColorBetween ??
-            Theme.of(context).colorScheme.primary.withOpacity(.3);
-      }
-    } else if (values.day.isSameDay(values.minDate)) {
-    } else if (values.day.isBefore(values.minDate) ||
-        values.day.isAfter(values.maxDate)) {
+    Border? border;
+    bool isEven = (int.tryParse(values.text))?.toInt().isEven ?? false;
+    if (values.isFirstDayOfWeek) {
+      border = Border(
+        // left: values.text!="1"?buildBorderSide():BorderSide.none,
+        bottom: buildBorderSide(),
+        right: buildBorderSide(),
+      );
+      return Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: borderRadius,
+          border: Border(
+            // left: values.text!="1"?buildBorderSide():BorderSide.none,
+            bottom: buildBorderSide(),
+            right: buildBorderSide(),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              values.text,
+              textAlign: TextAlign.center,
+              style: styles.inter12w400,
+            ),
+            // Text(
+            //   "Music Concert",
+            //   textAlign: TextAlign.center,
+            //   style: styles.inter10w400,
+            // ),
+          ],
+        ),
+      );
     }
+    if (values.isLastDayOfWeek) {
+      border = Border(
+        // left: values.text!="1"?buildBorderSide():BorderSide.none,
+        bottom: buildBorderSide(),
+        // right: buildBorderSide(),
+      );
 
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: borderRadius,
-      ),
-      child: Text(
-        values.text,
-        textAlign: TextAlign.center,
-        style: styles.inter12w400,
+      return Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: borderRadius,
+            border: Border(
+              // left: values.text!="1"?buildBorderSide():BorderSide.none,
+              bottom: buildBorderSide(),
+              // right: buildBorderSide(),
+            )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              values.text,
+              textAlign: TextAlign.center,
+              style: styles.inter12w400,
+            ),
+            // Text(
+            //   "Music Concert",
+            //   textAlign: TextAlign.center,
+            //   style: styles.inter10w400,
+            // ),
+          ],
+        ),
+      );
+    }
+    border = Border(
+      // left: values.text!="1"?buildBorderSide():BorderSide.none,
+      bottom: buildBorderSide(),
+      right: buildBorderSide(),
+    );
+
+    return GestureDetector(
+      onTap: () {
+        context.push(ActivityDetailScreen.route);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: isEven ? Color(0xffA2C73B) : null,
+          borderRadius: borderRadius,
+          border: border,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              values.text,
+              textAlign: TextAlign.center,
+              style: styles.inter12w400.copyWith(
+                color: isEven ? styles.white : null,
+              ),
+            ),
+            if (isEven)
+              Text(
+                "Music Concert",
+                textAlign: TextAlign.center,
+                style: styles.inter10w400.copyWith(
+                  color: isEven ? styles.white : null,
+                ),
+              ),
+          ],
+        ),
       ),
     );
+    // return GestureDetector(
+    //   onTap: () {
+    //     context.push(ActivityDetailScreen.route);
+    //   },
+    //   child: Container(
+    //     alignment: Alignment.center,
+    //     decoration: BoxDecoration(
+    //         color: isEven ? Color(0xffA2C73B) : null,
+    //         borderRadius: borderRadius,
+    //         border: Border(
+    //           // left: values.text!="1"?buildBorderSide():BorderSide.none,
+    //           bottom: buildBorderSide(),
+    //           right: buildBorderSide(),
+    //         )),
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         Text(
+    //           values.text,
+    //           textAlign: TextAlign.center,
+    //           style: styles.inter12w400.copyWith(
+    //             color: isEven ? styles.white : null,
+    //           ),
+    //         ),
+    //         Text(
+    //           "Music Concert",
+    //           textAlign: TextAlign.center,
+    //           style: styles.inter10w400.copyWith(
+    //             color: isEven ? styles.white : null,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

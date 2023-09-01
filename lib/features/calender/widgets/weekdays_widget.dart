@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
 import 'package:hive_mobile/features/calender/utils/enums.dart';
@@ -30,7 +31,9 @@ class WeekdaysWidget extends StatelessWidget {
       crossAxisCount: DateTime.daysPerWeek,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.symmetric(
+        horizontal: 7.w,
+      ),
       children: List.generate(DateTime.daysPerWeek, (index) {
         final weekDay = cleanCalendarController.getDaysOfWeek(locale)[index];
 

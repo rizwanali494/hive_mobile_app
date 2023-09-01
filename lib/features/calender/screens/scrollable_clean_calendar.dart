@@ -107,9 +107,9 @@ class ScrollableCleanCalendar extends StatefulWidget {
     this.dayRadius = 6,
     required this.calendarController,
   }) : assert(layout != null ||
-      (monthBuilder != null &&
-          weekdayBuilder != null &&
-          dayBuilder != null));
+            (monthBuilder != null &&
+                weekdayBuilder != null &&
+                dayBuilder != null));
 
   @override
   State<ScrollableCleanCalendar> createState() =>
@@ -145,8 +145,8 @@ class _ScrollableCleanCalendarState extends State<ScrollableCleanCalendar> {
   Widget listViewCalendar() {
     return ListView.separated(
       controller: widget.scrollController,
-      padding: widget.padding ??
-          const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+      padding:
+          widget.padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 5.h),
       separatorBuilder: (_, __) =>
           SizedBox(height: widget.spaceBetweenCalendars),
       itemCount: widget.calendarController.months.length,
@@ -196,7 +196,7 @@ class _ScrollableCleanCalendarState extends State<ScrollableCleanCalendar> {
         12.verticalSpace,
         Column(
           children: [
-            DecoratedBox(
+            Container(
               decoration: BoxDecoration(
                 color: styles.lightCyan,
                 borderRadius: BorderRadius.circular(
@@ -225,7 +225,7 @@ class _ScrollableCleanCalendarState extends State<ScrollableCleanCalendar> {
                   backgroundColor: widget.dayBackgroundColor,
                   selectedBackgroundColor: widget.daySelectedBackgroundColor,
                   selectedBackgroundColorBetween:
-                  widget.daySelectedBackgroundColorBetween,
+                      widget.daySelectedBackgroundColorBetween,
                   disableBackgroundColor: widget.dayDisableBackgroundColor,
                   dayDisableColor: widget.dayDisableColor,
                   radius: widget.dayRadius,
