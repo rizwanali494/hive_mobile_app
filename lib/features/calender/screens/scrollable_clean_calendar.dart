@@ -146,7 +146,7 @@ class _ScrollableCleanCalendarState extends State<ScrollableCleanCalendar> {
     return ListView.separated(
       controller: widget.scrollController,
       padding:
-          widget.padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 5.h),
+          widget.padding ?? EdgeInsets.symmetric(horizontal: 16, vertical: 8.h),
       separatorBuilder: (_, __) =>
           SizedBox(height: widget.spaceBetweenCalendars),
       itemCount: widget.calendarController.months.length,

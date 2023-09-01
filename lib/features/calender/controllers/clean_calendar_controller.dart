@@ -64,7 +64,7 @@ class CleanCalendarController extends ChangeNotifier {
     final x = weekdayStart - 1;
     weekdayEnd = x == 0 ? 7 : x;
 
-    setAlldays();
+    setAllDays();
 
     if (initialDateSelected != null &&
         (initialDateSelected!.isAfter(minDate) ||
@@ -79,7 +79,7 @@ class CleanCalendarController extends ChangeNotifier {
     }
   }
 
-  void setAlldays() {
+   void setAllDays() {
     months = [];
     DateTime currentDate = DateTime(minDate.year, minDate.month);
     months.add(currentDate);
@@ -227,7 +227,7 @@ class CleanCalendarController extends ChangeNotifier {
   void setDate(int value) {
     minDate = DateTime(value);
     maxDate = DateTime(value, 12);
-    setAlldays();
+    setAllDays();
     notifyListeners();
   }
 }
