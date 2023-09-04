@@ -45,7 +45,7 @@ class ActivityWidgetVM {
 
   String get monthOnly {
     var eventDay = DateTime.tryParse(model.date ?? "") ?? DateTime.now();
-    return eventDay.monthOnly;
+    return eventDay.monthOnlyShort;
   }
 
   bool isSelected(ActivityStatus? status) {

@@ -14,7 +14,9 @@ class CalendarVM extends ChangeNotifier {
   int? selectedValue = _startYear;
   static const _totalYears = 5;
   final calendarController = CleanCalendarController(
-      minDate: DateTime(2024), maxDate: DateTime(2024, 12), readOnly: true);
+      minDate: DateTime(_startYear),
+      maxDate: DateTime(_startYear, 12),
+      readOnly: true);
 
   List<String> monthNames = DateFormat.MMMM().dateSymbols.MONTHS;
   List<int> years = [
@@ -23,7 +25,15 @@ class CalendarVM extends ChangeNotifier {
       (index) => (_startYear + index),
     ),
   ];
-  List<String> shortWeekDays = DateFormat.MMMM().dateSymbols.SHORTWEEKDAYS;
+  List<String> shortWeekDays = [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+  ];
 
   void setYear(int? val) {
     selectedValue = val;

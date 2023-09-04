@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
@@ -7,8 +9,7 @@ class DayBuilderNew extends StatelessWidget {
   final DateTime month;
   final CleanCalendarController cleanCalendarController;
 
-  const DayBuilderNew(
-      {super.key, required this.month, required this.cleanCalendarController});
+  const DayBuilderNew({super.key, required this.month, required this.cleanCalendarController});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,8 @@ class DayBuilderNew extends StatelessWidget {
         ? monthPositionStartDay - DateTime.daysPerWeek
         : monthPositionStartDay;
     final styles = Theme.of(context).extension<AppTheme>()!;
-
-    final start = monthPositionStartDay == 7 ? 0 : monthPositionStartDay;
-
+    final start = (monthPositionStartDay == 7 ? 0 : monthPositionStartDay);
+    log("month : ${month} start: $start ");
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
@@ -34,16 +34,16 @@ class DayBuilderNew extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border(
                 bottom: buildBorderSide(),
-                right: buildBorderSide(),
-                // top: BorderSide(width: 0.5,color: Colors.black,),
-              )),
+                    right: buildBorderSide(),
+                    // top: BorderSide(width: 0.5,color: Colors.black,),
+                  )),
               child: SizedBox.shrink(),
             );
           }
           final values = DayValues(
             day: day,
             isFirstDayOfWeek:
-                day.weekday == cleanCalendarController.weekdayStart,
+            day.weekday == cleanCalendarController.weekdayStart,
             isLastDayOfWeek: day.weekday == cleanCalendarController.weekdayEnd,
             isSelected: false,
             maxDate: cleanCalendarController.maxDate,
@@ -174,7 +174,7 @@ class DayBuilderNew extends StatelessWidget {
   }
 
   BorderSide buildBorderSide() => BorderSide(
-        width: 0.5,
-        color: Colors.black,
-      );
+    width: 0.5,
+    color: Colors.black,
+  );
 }

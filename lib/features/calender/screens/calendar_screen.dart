@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
@@ -11,7 +12,7 @@ import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'day_builder_new.dart';
+import 'package:hive_mobile/features/calender/screens/day_builder_new.dart';
 
 class CalendarScreen extends StatefulWidget {
   static const route = "/Calendar";
@@ -108,11 +109,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           i < provider.calendarController.months.length;
                           i++) ...[
                         SliverToBoxAdapter(
-                          child: Text("${DateFormat(
-                            'MMMM',
-                          ).format(DateTime(provider.calendarController.months[i].year, provider.calendarController.months[i].month)).capitalize()}"),
+                          child: Text(
+                            DateTime(provider.calendarController.months[i].year,
+                                    provider.calendarController.months[i].month)
+                                .monthOnly,
+                            style: styles.inter20w700,
+                          ),
                         ),
-                        SliverToBoxAdapter(child: 12.verticalSpace),
+                        SliverToBoxAdapter(child: 8.verticalSpace),
                         SliverToBoxAdapter(
                           child: Container(
                             padding: EdgeInsets.symmetric(
@@ -128,7 +132,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                   (index) => Expanded(
                                     child: Center(
                                       child: Text(
-                                          "${provider.shortWeekDays[index]}"),
+                                        "${provider.shortWeekDays[index]}",
+                                        style: styles.inter12w400,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -140,7 +146,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           month: provider.calendarController.months[i],
                           cleanCalendarController: provider.calendarController,
                         ),
-                        SliverToBoxAdapter(child: 88.verticalSpace),
+                        SliverToBoxAdapter(child: 40.verticalSpace),
                       ],
                       // SliverGrid(
                       //   delegate: SliverChildBuilderDelegate(
