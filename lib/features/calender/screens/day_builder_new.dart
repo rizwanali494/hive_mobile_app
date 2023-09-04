@@ -162,6 +162,7 @@ class DayBuilderNew extends StatelessWidget {
             ),
           );
         },
+        childCount: DateTime(month.year, month.month + 1, 0).day + start,
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: DateTime.daysPerWeek,

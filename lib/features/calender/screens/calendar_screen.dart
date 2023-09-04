@@ -98,61 +98,90 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
               10.verticalSpace,
               Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    for (int i = 0;
-                        i < provider.calendarController.months.length;
-                        i++) ...[
-                      SliverToBoxAdapter(
-                        child: Text("${DateFormat(
-                          'MMMM',
-                        ).format(DateTime(provider.calendarController.months[i].year, provider.calendarController.months[i].month)).capitalize()}"),
-                      ),
-                      DayBuilderNew(
-                        month: provider.calendarController.months[i],
-                        cleanCalendarController: provider.calendarController,
-                      ),
-                      SliverToBoxAdapter(child: 88.verticalSpace),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                  ),
+                  child: CustomScrollView(
+                    slivers: [
+                      for (int i = 0;
+                          i < provider.calendarController.months.length;
+                          i++) ...[
+                        SliverToBoxAdapter(
+                          child: Text("${DateFormat(
+                            'MMMM',
+                          ).format(DateTime(provider.calendarController.months[i].year, provider.calendarController.months[i].month)).capitalize()}"),
+                        ),
+                        SliverToBoxAdapter(child: 12.verticalSpace),
+                        SliverToBoxAdapter(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 5.h,
+                            ),
+                            decoration: BoxDecoration(
+                                color: styles.lightCyan,
+                                borderRadius: BorderRadius.circular(25.r)),
+                            child: Row(
+                              children: [
+                                ...List.generate(
+                                  provider.shortWeekDays.length,
+                                  (index) => Expanded(
+                                    child: Center(
+                                      child: Text(
+                                          "${provider.shortWeekDays[index]}"),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        DayBuilderNew(
+                          month: provider.calendarController.months[i],
+                          cleanCalendarController: provider.calendarController,
+                        ),
+                        SliverToBoxAdapter(child: 88.verticalSpace),
+                      ],
+                      // SliverGrid(
+                      //   delegate: SliverChildBuilderDelegate(
+                      //     (context, index) {
+                      //       if (index < 7) {
+                      //         return Container(
+                      //           alignment: Alignment.center,
+                      //           decoration: BoxDecoration(
+                      //               border: Border(
+                      //             bottom: buildBorderSide(),
+                      //             right: buildBorderSide(),
+                      //             // top: BorderSide(width: 0.5,color: Colors.black,),
+                      //           )),
+                      //           child: SizedBox.shrink(),
+                      //         );
+                      //       }
+                      //       return Container(
+                      //         alignment: Alignment.center,
+                      //         decoration: BoxDecoration(
+                      //           border: Border(
+                      //             right: buildBorderSide(),
+                      //             left: buildBorderSide(),
+                      //             bottom: buildBorderSide(),
+                      //           ),
+                      //         ),
+                      //         child: Text("data $index",style: styles.inter12w400.copyWith(
+                      //           color: styles.black,
+                      //         ),),
+                      //       );
+                      //     },
+                      //     childCount: 31,
+                      //   ),
+                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //     crossAxisCount: 7,
+                      //     crossAxisSpacing: 0,
+                      //     mainAxisSpacing: 0,
+                      //     childAspectRatio: 0.7,
+                      //   ),
+                      // ),
                     ],
-                    // SliverGrid(
-                    //   delegate: SliverChildBuilderDelegate(
-                    //     (context, index) {
-                    //       if (index < 7) {
-                    //         return Container(
-                    //           alignment: Alignment.center,
-                    //           decoration: BoxDecoration(
-                    //               border: Border(
-                    //             bottom: buildBorderSide(),
-                    //             right: buildBorderSide(),
-                    //             // top: BorderSide(width: 0.5,color: Colors.black,),
-                    //           )),
-                    //           child: SizedBox.shrink(),
-                    //         );
-                    //       }
-                    //       return Container(
-                    //         alignment: Alignment.center,
-                    //         decoration: BoxDecoration(
-                    //           border: Border(
-                    //             right: buildBorderSide(),
-                    //             left: buildBorderSide(),
-                    //             bottom: buildBorderSide(),
-                    //           ),
-                    //         ),
-                    //         child: Text("data $index",style: styles.inter12w400.copyWith(
-                    //           color: styles.black,
-                    //         ),),
-                    //       );
-                    //     },
-                    //     childCount: 31,
-                    //   ),
-                    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //     crossAxisCount: 7,
-                    //     crossAxisSpacing: 0,
-                    //     mainAxisSpacing: 0,
-                    //     childAspectRatio: 0.7,
-                    //   ),
-                    // ),
-                  ],
+                  ),
                 ),
               )
 
