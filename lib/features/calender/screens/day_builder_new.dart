@@ -188,7 +188,7 @@ class DayBuilderNew extends StatelessWidget {
   }
 
   BorderSide buildBorderSide() => BorderSide(
-    width: 0.5,
-    color: Colors.black,
-  );
+    width: 0.2,
+        color: Colors.black,
+      );
 }

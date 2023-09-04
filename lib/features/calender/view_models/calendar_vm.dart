@@ -59,10 +59,12 @@ class CalendarVM extends ChangeNotifier {
   Future<void> getAllEvents() async {
     isLoading = true;
     notifyListeners();
+    activities = [];
     final request = () async {
       var list = await calendarRepo.getAllEvents(
-          startDate: DateTime(selectedValue),
-          endDate: DateTime(selectedValue, 12, 31));
+        startDate: DateTime(selectedValue),
+        endDate: DateTime(selectedValue, 12, 31),
+      );
       activities.addAll(list);
     };
     await performRequest(request: request);
