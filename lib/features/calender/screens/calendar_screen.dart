@@ -34,14 +34,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
           return Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 19.w,
-                ),
-                child: AppBarWidget(
-                  color: styles.black,
-                  title: AppStrings.calendar,
-                ),
+              AppBarWidget(
+                color: styles.black,
+                title: AppStrings.calendar,
               ),
               10.verticalSpace,
               Align(

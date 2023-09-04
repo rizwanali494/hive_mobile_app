@@ -60,9 +60,6 @@ class DayBuilderNew extends StatelessWidget {
           Border? border;
           final calendarProvider = context.read<CalendarVM>();
           var event = calendarProvider.getEvent(values.day);
-          if (event != null) {
-            log("event: ${event?.date} index : $index");
-          }
           bool hasEvent = event != null;
           if (values.isFirstDayOfWeek) {
             border = Border(
