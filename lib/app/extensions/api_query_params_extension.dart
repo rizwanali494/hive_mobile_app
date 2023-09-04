@@ -41,6 +41,14 @@ extension ApiFieldExpandExtension on String {
     return _appendPaginationParameter("limit", limit);
   }
 
+  String withStartDate(String date) {
+    return _appendQueryParameter("date_added__gte=$date");
+  }
+
+  String withEndDate(String date) {
+    return _appendQueryParameter("date_added__lte=$date");
+  }
+
   String update(int id) {
     return "${this}$id/";
   }

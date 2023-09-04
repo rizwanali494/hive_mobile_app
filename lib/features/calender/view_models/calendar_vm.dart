@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 
 class CalendarVM extends ChangeNotifier {
   static const _startYear = 2023;
-  int? selectedValue = _startYear;
+  int selectedValue = _startYear;
   static const _totalYears = 5;
   final calendarController = CleanCalendarController(
       minDate: DateTime(_startYear),
@@ -36,9 +36,10 @@ class CalendarVM extends ChangeNotifier {
   ];
 
   void setYear(int? val) {
-    selectedValue = val;
+    selectedValue = val ?? 0;
     calendarController.setDate(val ?? 0);
     notifyListeners();
+    getAllEvents();
   }
 
   final apiService = GetIt.instance.get<ApiService>();
@@ -48,13 +49,26 @@ class CalendarVM extends ChangeNotifier {
 
   CalendarVM() {
     calendarRepo = CalendarRepoImpl(apiService: apiService);
+    getAllEvents();
   }
 
   List<ActivityModel> activities = [];
   LocalService<ActivityModel> localService = LocalService();
   late CalendarRepo calendarRepo;
 
-  Future<void> getAllEvents() async {}
+  Future<void> getAllEvents() async {
+    isLoading = true;
+    notifyListeners();
+    final request = () async {
+      var list = await calendarRepo.getAllEvents(
+          startDate: DateTime(selectedValue),
+          endDate: DateTime(selectedValue, 12, 31));
+      activities.addAll(list);
+    };
+    await performRequest(request: request);
+    isLoading = false;
+    notifyListeners();
+  }
 
   Future<void> performRequest({required Function request}) async {
     try {
@@ -64,5 +78,21 @@ class CalendarVM extends ChangeNotifier {
       log("Error occurred : $e");
     }
     notifyListeners();
+  }
+
+  ActivityModel? getEvent(DateTime dt) {
+    var list = activities.where((element) {
+      var activityDate =
+          DateTime.tryParse(element.date ?? "") ?? DateTime.now();
+      var formattedDate =
+          DateTime(activityDate.year, activityDate.month, activityDate.day);
+      // log("left date = ${formattedDate}");
+      // log("right date = ${dt}");
+      return formattedDate == dt;
+    }).toList();
+    if (list.isEmpty) {
+      return null;
+    }
+    return list[0];
   }
 }

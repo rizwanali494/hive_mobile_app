@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
@@ -10,7 +12,8 @@ abstract class CalendarRepo {
 
   CalendarRepo({required this.apiService});
 
-  Future<List<ActivityModel>> getAllEvents();
+  Future<List<ActivityModel>> getAllEvents(
+      {required DateTime startDate, required DateTime endDate});
 }
 
 class CalendarRepoImpl extends CalendarRepo {
@@ -19,8 +22,13 @@ class CalendarRepoImpl extends CalendarRepo {
   CalendarRepoImpl({required super.apiService});
 
   @override
-  Future<List<ActivityModel>> getAllEvents() async {
-    var url = ApiEndpoints.activity.withLimit(limit);
+  Future<List<ActivityModel>> getAllEvents(
+      {required DateTime startDate, required DateTime endDate}) async {
+    var url = ApiEndpoints.activity.withBanner.withOwnerObject
+        .withLimit(limit)
+        .withStartDate(startDate.yearMonthDay)
+        .withEndDate(endDate.yearMonthDay);
+    log("link : $url");
     var response = await apiService.get(url: url);
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];

@@ -50,9 +50,14 @@ extension DateTimeExtension on DateTime {
   String get monthOnly {
     return _monthOnlyFormat.format(this);
   }
+
+  String get yearMonthDay {
+    return _yearMonthDateFormat.format(this);
+  }
 }
 
 var _dayOnlyFormat = DateFormat.EEEE();
+var _yearMonthDateFormat = DateFormat("yyyy-MM-dd");
 var _timeOnlyFormat = DateFormat('h:mm a');
 var _dateOnlyFormat = DateFormat('d');
 var _monthShortOnlyFormat = DateFormat('MMM');

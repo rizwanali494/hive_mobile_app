@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
 import 'package:hive_mobile/features/calender/models/day_values_model.dart';
+import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
+import 'package:provider/provider.dart';
 
 class DayBuilderNew extends StatelessWidget {
   final DateTime month;
   final CleanCalendarController cleanCalendarController;
 
-  const DayBuilderNew({super.key, required this.month, required this.cleanCalendarController});
+  const DayBuilderNew(
+      {super.key, required this.month, required this.cleanCalendarController});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,6 @@ class DayBuilderNew extends StatelessWidget {
         : monthPositionStartDay;
     final styles = Theme.of(context).extension<AppTheme>()!;
     final start = (monthPositionStartDay == 7 ? 0 : monthPositionStartDay);
-    log("month : ${month} start: $start ");
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
@@ -56,20 +58,23 @@ class DayBuilderNew extends StatelessWidget {
           BorderRadiusGeometry? borderRadius;
           Color bgColor = Colors.transparent;
           Border? border;
-          bool isEven = (int.tryParse(values.text))?.toInt().isEven ?? false;
+          final calendarProvider = context.read<CalendarVM>();
+          var event = calendarProvider.getEvent(values.day);
+          if (event != null) {
+            log("event: ${event?.date} index : $index");
+          }
+          bool hasEvent = event != null;
           if (values.isFirstDayOfWeek) {
             border = Border(
-              // left: values.text!="1"?buildBorderSide():BorderSide.none,
               bottom: buildBorderSide(),
               right: buildBorderSide(),
             );
             return Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: bgColor,
+                color: hasEvent ? Color(0xffA2C73B) : null,
                 borderRadius: borderRadius,
                 border: Border(
-                  // left: values.text!="1"?buildBorderSide():BorderSide.none,
                   bottom: buildBorderSide(),
                   right: buildBorderSide(),
                 ),
@@ -80,20 +85,24 @@ class DayBuilderNew extends StatelessWidget {
                   Text(
                     values.text,
                     textAlign: TextAlign.center,
-                    style: styles.inter12w400,
+                    style: styles.inter12w400
+                        .copyWith(color: hasEvent ? styles.white : null),
                   ),
-                  // Text(
-                  //   "Music Concert",
-                  //   textAlign: TextAlign.center,
-                  //   style: styles.inter10w400,
-                  // ),
+                  if (hasEvent)
+                    Text(
+                      event.name ?? "",
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: styles.inter10w400.copyWith(
+                        color: hasEvent ? styles.white : null,
+                      ),
+                    ),
                 ],
               ),
             );
           }
           if (values.isLastDayOfWeek) {
             border = Border(
-              // left: values.text!="1"?buildBorderSide():BorderSide.none,
               bottom: buildBorderSide(),
               // right: buildBorderSide(),
             );
@@ -101,10 +110,9 @@ class DayBuilderNew extends StatelessWidget {
             return Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: bgColor,
+                  color: hasEvent ? Color(0xffA2C73B) : null,
                   borderRadius: borderRadius,
                   border: Border(
-                    // left: values.text!="1"?buildBorderSide():BorderSide.none,
                     bottom: buildBorderSide(),
                     // right: buildBorderSide(),
                   )),
@@ -114,13 +122,18 @@ class DayBuilderNew extends StatelessWidget {
                   Text(
                     values.text,
                     textAlign: TextAlign.center,
-                    style: styles.inter12w400,
+                    style: styles.inter12w400
+                        .copyWith(color: hasEvent ? styles.white : null),
                   ),
-                  // Text(
-                  //   "Music Concert",
-                  //   textAlign: TextAlign.center,
-                  //   style: styles.inter10w400,
-                  // ),
+                  if (hasEvent)
+                    Text(
+                      event.name ?? "",
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: styles.inter10w400.copyWith(
+                        color: hasEvent ? styles.white : null,
+                      ),
+                    ),
                 ],
               ),
             );
@@ -135,7 +148,7 @@ class DayBuilderNew extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: isEven ? Color(0xffA2C73B) : null,
+                color: hasEvent ? Color(0xffA2C73B) : null,
                 borderRadius: borderRadius,
                 border: border,
               ),
@@ -146,15 +159,16 @@ class DayBuilderNew extends StatelessWidget {
                     values.text,
                     textAlign: TextAlign.center,
                     style: styles.inter12w400.copyWith(
-                      color: isEven ? styles.white : null,
+                      color: hasEvent ? styles.white : null,
                     ),
                   ),
-                  if (isEven)
+                  if (hasEvent)
                     Text(
-                      "Music Concert",
+                      event!.name ?? "",
+                      maxLines: 2,
                       textAlign: TextAlign.center,
                       style: styles.inter10w400.copyWith(
-                        color: isEven ? styles.white : null,
+                        color: hasEvent ? styles.white : null,
                       ),
                     ),
                 ],
