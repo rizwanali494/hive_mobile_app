@@ -13,7 +13,7 @@ class CalendarVM extends ChangeNotifier {
   static const _startYear = 2023;
   int? selectedValue = _startYear;
   static const _totalYears = 5;
-  final controller = CleanCalendarController(
+  final calendarController = CleanCalendarController(
       minDate: DateTime(2024), maxDate: DateTime(2024, 12), readOnly: true);
 
   List<String> monthNames = DateFormat.MMMM().dateSymbols.MONTHS;
@@ -27,7 +27,7 @@ class CalendarVM extends ChangeNotifier {
 
   void setYear(int? val) {
     selectedValue = val;
-    controller.setDate(val ?? 0);
+    calendarController.setDate(val ?? 0);
     notifyListeners();
   }
 

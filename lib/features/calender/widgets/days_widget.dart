@@ -77,7 +77,7 @@ class DaysWidget extends StatelessWidget {
       childAspectRatio: 0.7,
       children: List.generate(
           DateTime(month.year, month.month + 1, 0).day + start, (index) {
-        if (index < start)
+        if (index < start) {
           return Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -88,6 +88,7 @@ class DaysWidget extends StatelessWidget {
             )),
             child: SizedBox.shrink(),
           );
+        }
         final day = DateTime(month.year, month.month, (index + 1 - start));
         final text = (index + 1 - start).toString();
 

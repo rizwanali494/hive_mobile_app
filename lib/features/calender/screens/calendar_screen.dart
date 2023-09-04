@@ -6,8 +6,12 @@ import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/calender/controllers/clean_calendar_controller.dart';
 import 'package:hive_mobile/features/calender/screens/scrollable_clean_calendar.dart';
 import 'package:hive_mobile/features/calender/utils/enums.dart';
+import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import 'day_builder_new.dart';
 
 class CalendarScreen extends StatefulWidget {
   static const route = "/Calendar";
@@ -43,24 +47,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   title: AppStrings.calendar,
                 ),
               ),
-              // Expanded(
-              //   child: ListView.separated(
-              //     padding: EdgeInsets.symmetric(
-              //       vertical: 20.h,
-              //     ),
-              //     itemBuilder: (context, index) {
-              //       return ChangeNotifierProvider(
-              //         create: (BuildContext context) =>
-              //             WeekDayVM(month: index + 1, year: 2024),
-              //         child: CalendarWidget(
-              //           monthName: provider.monthNames[index],
-              //         ),
-              //       );
-              //     },
-              //     separatorBuilder: (context, index) => 39.verticalSpace,
-              //     itemCount: provider.monthNames.length,
-              //   ),
-              // ),\
               10.verticalSpace,
               Align(
                 alignment: Alignment.topRight,
@@ -111,19 +97,82 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
               ),
               10.verticalSpace,
-
               Expanded(
-                child: ScrollableCleanCalendar(
-                  calendarController: provider.controller,
-                  scrollController: scrollController,
-                  layout: Layout.BEAUTY,
-                  calendarCrossAxisSpacing: 0,
+                child: CustomScrollView(
+                  slivers: [
+                    for (int i = 0;
+                        i < provider.calendarController.months.length;
+                        i++) ...[
+                      SliverToBoxAdapter(
+                        child: Text("${DateFormat(
+                          'MMMM',
+                        ).format(DateTime(provider.calendarController.months[i].year, provider.calendarController.months[i].month)).capitalize()}"),
+                      ),
+                      DayBuilderNew(
+                        month: provider.calendarController.months[i],
+                        cleanCalendarController: provider.calendarController,
+                      ),
+                      SliverToBoxAdapter(child: 88.verticalSpace),
+                    ],
+                    // SliverGrid(
+                    //   delegate: SliverChildBuilderDelegate(
+                    //     (context, index) {
+                    //       if (index < 7) {
+                    //         return Container(
+                    //           alignment: Alignment.center,
+                    //           decoration: BoxDecoration(
+                    //               border: Border(
+                    //             bottom: buildBorderSide(),
+                    //             right: buildBorderSide(),
+                    //             // top: BorderSide(width: 0.5,color: Colors.black,),
+                    //           )),
+                    //           child: SizedBox.shrink(),
+                    //         );
+                    //       }
+                    //       return Container(
+                    //         alignment: Alignment.center,
+                    //         decoration: BoxDecoration(
+                    //           border: Border(
+                    //             right: buildBorderSide(),
+                    //             left: buildBorderSide(),
+                    //             bottom: buildBorderSide(),
+                    //           ),
+                    //         ),
+                    //         child: Text("data $index",style: styles.inter12w400.copyWith(
+                    //           color: styles.black,
+                    //         ),),
+                    //       );
+                    //     },
+                    //     childCount: 31,
+                    //   ),
+                    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    //     crossAxisCount: 7,
+                    //     crossAxisSpacing: 0,
+                    //     mainAxisSpacing: 0,
+                    //     childAspectRatio: 0.7,
+                    //   ),
+                    // ),
+                  ],
                 ),
               )
+
+              // Expanded(
+              //   child: ScrollableCleanCalendar(
+              //     calendarController: provider.controller,
+              //     scrollController: scrollController,
+              //     layout: Layout.BEAUTY,
+              //     calendarCrossAxisSpacing: 0,
+              //   ),
+              // )
             ],
           );
         },
       ),
     );
   }
+
+  BorderSide buildBorderSide() => BorderSide(
+        width: 0.5,
+        color: Colors.black,
+      );
 }
