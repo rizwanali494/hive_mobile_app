@@ -86,6 +86,9 @@ class _UniversityApplicationScreenState extends State<UniversityApplicationScree
                                     ShowMoreButton(
                                       styles: styles,
                                       hasAll: provider.hasAllAccepted,
+                                      onTap: (){
+                                        provider.getNextAcceptedApplications();
+                                      },
                                       isLoading: provider.isGettingMoreAccepted,
                                     ),
                                   SliverToBoxAdapter(child: 20.verticalSpace),

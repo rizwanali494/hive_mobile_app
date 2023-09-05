@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/user_model.dart';
 
 class ProfileScreenVM extends ChangeNotifier {
+
   UserModel get userModel {
     return GetIt.instance.get<UserModel>();
   }
@@ -34,4 +35,7 @@ class ProfileScreenVM extends ChangeNotifier {
   List get hobbies {
     return userModel.accountData?.hobbies ?? <String>[];
   }
+
+
+
 }
