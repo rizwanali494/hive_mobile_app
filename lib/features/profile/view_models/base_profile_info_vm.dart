@@ -27,14 +27,7 @@ abstract class BaseProfileInfoVM<T> with ChangeNotifier {
       this.items = items;
     };
     await performRequest(request: request);
-    if (items.length < 10) {
-      log("hasAll");
-      uiState = UiState.hasAll();
-    } else {
-      log("loaded");
-
-      uiState = UiState.loaded();
-    }
+    setUISate();
     notifyListeners();
   }
 
@@ -47,6 +40,11 @@ abstract class BaseProfileInfoVM<T> with ChangeNotifier {
       items.addAll(list);
     };
     await performRequest(request: request);
+    setUISate();
+    notifyListeners();
+  }
+
+  void setUISate() {
     if (items.length < 10) {
       log("has all");
       uiState = UiState.hasAll();
@@ -54,7 +52,6 @@ abstract class BaseProfileInfoVM<T> with ChangeNotifier {
       log("loaded");
       uiState = UiState.loaded();
     }
-    notifyListeners();
   }
 
   Future<void> performRequest({required Function request}) async {

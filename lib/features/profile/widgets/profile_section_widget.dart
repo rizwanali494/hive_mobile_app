@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ProfileSectionWidget extends StatelessWidget {
   final Widget? icon;
+  final Function()? onTap;
   final UiState uiState;
   final List<String> wrapChildren;
   final String heading;
@@ -17,6 +18,7 @@ class ProfileSectionWidget extends StatelessWidget {
     required this.heading,
     this.icon,
     required this.uiState,
+    this.onTap,
   });
 
   @override
@@ -53,9 +55,10 @@ class ProfileSectionWidget extends StatelessWidget {
               )
             else if (!uiState.hasAll)
               TextButton(
-                onPressed: () {},
-                child: Text("Show More...",
-                    style: styles.inter12w400.copyWith(color: styles.skyBlue),
+                onPressed: onTap,
+                child: Text(
+                  "Show More...",
+                  style: styles.inter12w400.copyWith(color: styles.skyBlue),
                 ),
               ),
           ],

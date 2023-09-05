@@ -192,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         17.verticalSpace,
                         ProfileSectionWidget(
                           wrapChildren: _user.subjects,
-                          uiState: UiState.loaded(),
+                          uiState: UiState.hasAll(),
                           heading: AppStrings.subjects,
                         ),
                         17.verticalSpace,
@@ -203,6 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             builder: (context, provider, child) {
                               return ProfileSectionWidget(
                                 wrapChildren: provider.items,
+                                // onTap: provider.fetchNextItems,
                                 heading: AppStrings.acceptedUniversities,
                                 uiState: provider.uiState,
                               );
@@ -219,6 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 wrapChildren: provider.items,
                                 icon: SvgPicture.asset(SvgIcons.star),
                                 heading: AppStrings.achievementsAwards,
+                                onTap: provider.fetchNextItems,
                                 uiState: provider.uiState,
                               );
                             },
