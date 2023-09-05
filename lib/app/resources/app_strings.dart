@@ -114,4 +114,6 @@ class AppStrings {
   static String votes = "votes";
   static String count = "count";
   static String noUniFound = "No University Found";
+  static String noItemsFound = "No Items Found";
+  static String showMore = "Show More";
 }

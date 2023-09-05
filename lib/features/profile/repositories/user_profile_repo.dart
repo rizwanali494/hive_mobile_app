@@ -47,8 +47,10 @@ class UserProfileRepoImpl extends UserProfileRepo {
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
-    var list = List<AwardsModel>.generate(
-        15, (index) => AwardsModel(awardName: "Award ${index + 1}"));
-    return list;
+    // var list = List<AwardsModel>.generate(
+    //     15, (index) => AwardsModel(awardName: "Award ${index + 1}"));
+    return  result
+        .map((item) => AwardsModel.fromJson(item))
+        .toList();;
   }
 }
