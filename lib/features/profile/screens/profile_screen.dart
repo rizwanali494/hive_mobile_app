@@ -10,6 +10,8 @@ import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
+import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
+import 'package:hive_mobile/features/profile/view_models/base_profile_info_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
@@ -72,27 +74,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CachedNetworkImage(
                             imageUrl: controller.userImage,
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: 90.h,
-                              height: 90.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
+                            imageBuilder: (context, imageProvider) =>
+                                Container(
+                                  width: 90.h,
+                                  height: 90.w,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
                             placeholder: (context, url) =>
                                 UserPlaceHolderWidget(
-                              width: 90.w,
-                              height: 90.h,
-                            ),
+                                  width: 90.w,
+                                  height: 90.h,
+                                ),
                             errorWidget: (context, url, error) =>
                                 UserPlaceHolderWidget(
-                              width: 90.w,
-                              height: 90.h,
-                            ),
+                                  width: 90.w,
+                                  height: 90.h,
+                                ),
                           ),
                           // CircleAvatar(
                           //   backgroundImage: NetworkImage(
@@ -190,9 +193,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           heading: AppStrings.subjects,
                         ),
                         17.verticalSpace,
-                        ProfileSectionWidget(
-                          wrapChildren: _user.acceptedUniversities,
-                          heading: AppStrings.acceptedUniversities,
+                        ChangeNotifierProvider<BaseProfileInfoVM>(
+                          create: (BuildContext context) => AcceptedApplicationVM(),
+                          lazy: false,
+                          child: Consumer<BaseProfileInfoVM>(
+                            builder: (context, provider, child) {
+                              return ProfileSectionWidget(
+                                wrapChildren: provider.items,
+                                heading: AppStrings.acceptedUniversities,
+                              );
+                            },
+                          ),
                         ),
                         17.verticalSpace,
                         ProfileSectionWidget(

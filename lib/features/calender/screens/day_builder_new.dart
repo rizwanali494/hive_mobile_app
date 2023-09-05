@@ -161,7 +161,7 @@ class DayBuilderNew extends StatelessWidget {
                   ),
                   if (hasEvent)
                     Text(
-                      event!.name ?? "",
+                      event.name ?? "",
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       style: styles.inter10w400.copyWith(

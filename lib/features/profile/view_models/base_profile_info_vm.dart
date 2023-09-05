@@ -13,9 +13,16 @@ abstract class BaseProfileInfoVM<T> with ChangeNotifier {
 
   List<String> items = [];
 
+  BaseProfileInfoVM() {
+    setRepoInstance();
+    fetchInitialElements();
+  }
+
   Future<List<String>> getInitialElements();
 
   Future<List<String>> getNextElements();
+
+  void setRepoInstance();
 
   Future<void> fetchInitialElements() async {
     final request = () async {
