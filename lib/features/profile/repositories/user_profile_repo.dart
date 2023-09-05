@@ -13,6 +13,8 @@ abstract class UserProfileRepo {
 
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet});
+
+  
 }
 
 class UserProfileRepoImpl extends UserProfileRepo {
