@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/models/data/awards_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
@@ -14,7 +15,7 @@ abstract class UserProfileRepo {
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet});
 
-  
+  Future<List<AwardsModel>> getAwards({int? limit, int? offSet});
 }
 
 class UserProfileRepoImpl extends UserProfileRepo {
@@ -37,5 +38,17 @@ class UserProfileRepoImpl extends UserProfileRepo {
     return result
         .map((item) => UniversityApplicationModel.fromJson(item))
         .toList();
+  }
+
+  @override
+  Future<List<AwardsModel>> getAwards({int? limit, int? offSet}) async {
+    var url = ApiEndpoints.award.withLimit(limit).withOffSet(offSet);
+    log(url);
+    var response = await apiService.get(url: url);
+    var body = jsonDecode(response.body);
+    List result = body["results"] ?? [];
+    var list = List<AwardsModel>.generate(
+        5, (index) => AwardsModel(awardName: "Award ${index + 1}"));
+    return list;
   }
 }

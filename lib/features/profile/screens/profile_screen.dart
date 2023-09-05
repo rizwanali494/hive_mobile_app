@@ -13,6 +13,7 @@ import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart
 import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/base_profile_info_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
+import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
 import 'package:provider/provider.dart';
@@ -74,28 +75,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CachedNetworkImage(
                             imageUrl: controller.userImage,
-                            imageBuilder: (context, imageProvider) =>
-                                Container(
-                                  width: 90.h,
-                                  height: 90.w,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: 90.h,
+                              height: 90.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
                                 ),
+                              ),
+                            ),
                             placeholder: (context, url) =>
                                 UserPlaceHolderWidget(
-                                  width: 90.w,
-                                  height: 90.h,
-                                ),
+                              width: 90.w,
+                              height: 90.h,
+                            ),
                             errorWidget: (context, url, error) =>
                                 UserPlaceHolderWidget(
-                                  width: 90.w,
-                                  height: 90.h,
-                                ),
+                              width: 90.w,
+                              height: 90.h,
+                            ),
                           ),
                           // CircleAvatar(
                           //   backgroundImage: NetworkImage(
@@ -194,8 +194,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         17.verticalSpace,
                         ChangeNotifierProvider<BaseProfileInfoVM>(
-                          create: (BuildContext context) => AcceptedApplicationVM(),
-                          lazy: false,
+                          create: (BuildContext context) =>
+                              AcceptedApplicationVM(),
                           child: Consumer<BaseProfileInfoVM>(
                             builder: (context, provider, child) {
                               return ProfileSectionWidget(
@@ -206,10 +206,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         17.verticalSpace,
-                        ProfileSectionWidget(
-                          wrapChildren: _user.achievementsAwards,
-                          icon: SvgPicture.asset(SvgIcons.star),
-                          heading: AppStrings.achievementsAwards,
+                        ChangeNotifierProvider<BaseProfileInfoVM>(
+                          create: (BuildContext context) => UserAwardsVM(),
+                          child: Consumer<BaseProfileInfoVM>(
+                            builder: (context, provider, child) {
+                              return ProfileSectionWidget(
+                                // wrapChildren: _user.achievementsAwards,
+                                wrapChildren: provider.items,
+                                icon: SvgPicture.asset(SvgIcons.star),
+                                heading: AppStrings.achievementsAwards,
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
