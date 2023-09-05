@@ -48,7 +48,7 @@ class UserProfileRepoImpl extends UserProfileRepo {
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
     var list = List<AwardsModel>.generate(
-        5, (index) => AwardsModel(awardName: "Award ${index + 1}"));
+        15, (index) => AwardsModel(awardName: "Award ${index + 1}"));
     return list;
   }
 }

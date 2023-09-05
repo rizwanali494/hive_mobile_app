@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
@@ -185,11 +186,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         15.verticalSpace,
                         ProfileSectionWidget(
                           wrapChildren: _user.hobbies,
+                          uiState: UiState.hasAll(),
                           heading: AppStrings.hobbies,
                         ),
                         17.verticalSpace,
                         ProfileSectionWidget(
                           wrapChildren: _user.subjects,
+                          uiState: UiState.loaded(),
                           heading: AppStrings.subjects,
                         ),
                         17.verticalSpace,
@@ -201,6 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               return ProfileSectionWidget(
                                 wrapChildren: provider.items,
                                 heading: AppStrings.acceptedUniversities,
+                                uiState: provider.uiState,
                               );
                             },
                           ),
@@ -215,6 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 wrapChildren: provider.items,
                                 icon: SvgPicture.asset(SvgIcons.star),
                                 heading: AppStrings.achievementsAwards,
+                                uiState: provider.uiState,
                               );
                             },
                           ),

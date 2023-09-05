@@ -2,15 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/models/ui_state_model.dart';
 
 abstract class BaseProfileInfoVM<T> with ChangeNotifier {
   final limit = 10;
   int offset = 0;
-  bool hasAll = false;
-  bool isGettingMore = false;
-  bool iLoading = true;
-  bool hasError = false;
-
+  UiState uiState = UiState.loading();
   List<String> items = [];
 
   BaseProfileInfoVM() {
@@ -27,26 +24,36 @@ abstract class BaseProfileInfoVM<T> with ChangeNotifier {
   Future<void> fetchInitialElements() async {
     final request = () async {
       var items = await getInitialElements();
-      if (items.length < 10) {
-        hasAll = true;
-      }
       this.items = items;
     };
     await performRequest(request: request);
-    iLoading = false;
+    if (items.length < 10) {
+      log("hasAll");
+      uiState = UiState.hasAll();
+    } else {
+      log("loaded");
+
+      uiState = UiState.loaded();
+    }
     notifyListeners();
   }
 
   Future<void> fetchNextItems() async {
+    uiState = UiState.fetchingMore();
+    notifyListeners();
     final request = () async {
       var list = await getInitialElements();
-      if (list.length < 10) {
-        hasAll = true;
-      }
       offset += list.length;
       items.addAll(list);
     };
     await performRequest(request: request);
+    if (items.length < 10) {
+      log("has all");
+      uiState = UiState.hasAll();
+    } else {
+      log("loaded");
+      uiState = UiState.loaded();
+    }
     notifyListeners();
   }
 
@@ -54,7 +61,7 @@ abstract class BaseProfileInfoVM<T> with ChangeNotifier {
     try {
       await request();
     } catch (e) {
-      hasError = true;
+      uiState = UiState.error();
       if (e is HTTPStatusCodeException) {
         log("Error occurred : ${e.response.body}");
         log("Error occurred : ${e.response.statusCode}");
