@@ -6,10 +6,12 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class HobbyChipWidget extends StatelessWidget {
   final String text;
+  final Function(String value) onRemove;
 
   const HobbyChipWidget({
     super.key,
     required this.text,
+    required this.onRemove,
   });
 
   @override
@@ -21,6 +23,9 @@ class HobbyChipWidget extends StatelessWidget {
         badgeColor: styles.greyWhite,
       ),
       position: badges.BadgePosition.topEnd(end: -5),
+      onTap: () {
+        onRemove(text);
+      },
       badgeContent: Icon(
         Icons.close,
         size: 10,

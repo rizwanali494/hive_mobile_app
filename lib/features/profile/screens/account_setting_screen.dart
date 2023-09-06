@@ -35,101 +35,124 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
           create: (BuildContext context) => AccountSettingVM(),
           child: Consumer<AccountSettingVM>(
             builder: (context, provider, child) {
-              return Column(
-                children: [
-                  DividerAppBar(title: AppStrings.accountSettings),
-                  28.verticalSpace,
-                  if (provider.image != null)
-                    CircleAvatar(
-                      backgroundImage: FileImage(provider.image!),
-                      radius: 40,
-                    )
-                  else
-                    CachedNetworkImage(
-                      imageUrl: provider.userImageUrl,
-                      imageBuilder: (context, imageProvider) => Container(
-                        width: 80.h,
-                        height: 80.w,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    DividerAppBar(title: AppStrings.accountSettings),
+                    28.verticalSpace,
+                    if (provider.image != null)
+                      CircleAvatar(
+                        backgroundImage: FileImage(provider.image!),
+                        radius: 40,
+                      )
+                    else
+                      CachedNetworkImage(
+                        imageUrl: provider.userImageUrl,
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 80.h,
+                          height: 80.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      placeholder: (context, url) => UserPlaceHolderWidget(
-                        height: 80.h,
-                      ),
-                      errorWidget: (context, url, error) =>
-                          UserPlaceHolderWidget(
-                        height: 80.h,
-                      ),
-                    ),
-                  // const CircleAvatar(
-                  //   backgroundImage: NetworkImage(NetworkImages.userUrl),
-                  //   radius: 30,
-                  // ),
-                  11.verticalSpace,
-                  GestureDetector(
-                    onTap: () {
-                      provider.setImage(context);
-                    },
-                    child: Text(
-                      AppStrings.editProfilePicture,
-                      style: styles.inter14w600
-                          .copyWith(color: styles.darkSlateGrey),
-                    ),
-                  ),
-                  30.verticalSpace,
-                  TitleTextField(
-                    hintText: AppStrings.editBios,
-                  ),
-                  14.verticalSpace,
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25.w),
-                    // margin: EdgeInsets.symmetric(horizontal: 19.w),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: styles.black.withOpacity(.3),
-                      ),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Column(
-                      children: [
-                        5.verticalSpace,
-                        TitleTextField(
-                          hintText: AppStrings.editHobbies,
-                          textFieldOnly: true,
+                        placeholder: (context, url) => UserPlaceHolderWidget(
+                          height: 80.h,
                         ),
-                        35.verticalSpace,
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Wrap(
-                            runSpacing: 12.w,
-                            spacing: 8,
+                        errorWidget: (context, url, error) =>
+                            UserPlaceHolderWidget(
+                          height: 80.h,
+                        ),
+                      ),
+                    11.verticalSpace,
+                    GestureDetector(
+                      onTap: () {
+                        provider.setImage(context);
+                      },
+                      child: Text(
+                        AppStrings.editProfilePicture,
+                        style: styles.inter14w600
+                            .copyWith(color: styles.darkSlateGrey),
+                      ),
+                    ),
+                    30.verticalSpace,
+                    TitleTextField(
+                      hintText: AppStrings.editBios,
+                      controller: provider.biosCtrl,
+                    ),
+                    14.verticalSpace,
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      // margin: EdgeInsets.symmetric(horizontal: 19.w),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: styles.black.withOpacity(.3),
+                        ),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Column(
+                        children: [
+                          10.verticalSpace,
+                          Row(
                             children: [
-                              ...List.generate(
-                                hobbies.length,
-                                (index) =>
-                                    HobbyChipWidget(text: hobbies[index]),
+                              Expanded(
+                                child: TitleTextField(
+                                  hintText: AppStrings.editHobbies,
+                                  controller: provider.hobbiesCtrl,
+                                  textFieldOnly: true,
+                                  enabled: !provider.hobbiesMaxed,
+                                ),
                               ),
+                              GestureDetector(
+                                  onTap: () {
+                                    provider.setHobby();
+                                  },
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 20,
+                                    color: styles.skyBlue,
+                                  )),
                             ],
                           ),
-                        ),
-                        20.verticalSpace,
-                      ],
+                          35.verticalSpace,
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Wrap(
+                              runSpacing: 12.w,
+                              spacing: 8,
+                              children: [
+                                ...List.generate(
+                                  provider.hobbies.length,
+                                  (index) => HobbyChipWidget(
+                                    text: provider.hobbies[index],
+                                    onRemove: (String value) {
+                                      provider.removeHobby(value);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          20.verticalSpace,
+                        ],
+                      ),
                     ),
-                  ),
-                  24.verticalSpace,
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: BlueElevatedButton(
-                      text: AppStrings.saveChanges,
-                      onTap: () {},
-                    ),
-                  )
-                ],
+                    24.verticalSpace,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: BlueElevatedButton(
+                        text: AppStrings.saveChanges,
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          provider.saveChanges();
+                        },
+                      ),
+                    )
+                  ],
+                ),
               );
             },
           ),

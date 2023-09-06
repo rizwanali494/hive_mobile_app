@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 class TitleTextField extends StatelessWidget {
   final String? title;
   final int? maxLength;
+  final bool enabled;
   final String hintText;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
@@ -25,6 +26,7 @@ class TitleTextField extends StatelessWidget {
     this.inputFormatters,
     this.keyboardType,
     this.maxLength,
+    this.enabled = true,
   });
 
   @override
@@ -42,6 +44,7 @@ class TitleTextField extends StatelessWidget {
         decoration: InputDecoration(
             border: InputBorder.none,
             isDense: true,
+            enabled: enabled,
             hintStyle: hintStyle,
             hintText: hintText),
       );
@@ -80,6 +83,7 @@ class TitleTextField extends StatelessWidget {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
+                enabled: enabled,
                 hintStyle: hintStyle,
                 hintText: hintText),
           ),

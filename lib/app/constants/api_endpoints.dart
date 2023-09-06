@@ -2,6 +2,7 @@ class ApiEndpoints {
   static String baseUrl = "http://34.65.200.85";
   static String apiUrl = "${baseUrl}/api/v1/";
   static String authUrl = "${apiUrl}auth/";
+  static String me = "${authUrl}me/";
   static String googleLogin = "${authUrl}google_login_mobile/";
   static String upload = "${apiUrl}upload/";
   static String communication = "${apiUrl}communication/";
@@ -13,6 +14,8 @@ class ApiEndpoints {
   static String externalGrade = "${administrative}external_grade/";
   static String sessionNote = "${administrative}session_note/";
   static String award = "${administrative}award/";
+  static String studentUser = "${apiUrl}user/student/";
+  static String hobby = "${studentUser}hobby/bulk_create/";
   static String event = "${apiUrl}event/";
   static String activity = "${event}activity/";
   static String universityApplication =

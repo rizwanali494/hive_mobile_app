@@ -39,7 +39,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<http.Response> post(
       {required String url,
-      required Map body,
+      required Object body,
       Map<String, String>? headers,
       String? queryParameters}) async {
     http.Response response;
@@ -58,7 +58,7 @@ class ApiServiceImpl extends ApiService {
   @override
   Future<http.Response> patch(
       {required String url,
-      required Map body,
+      required Object body,
       Map<String, String>? headers,
       String? queryParameters}) async {
     http.Response response;
@@ -84,7 +84,6 @@ class ApiServiceImpl extends ApiService {
   Future<http.Response> uploadSingleFile({
     required File file,
     required String purpose,
-    required String url,
     Map<String, String>? headers,
   }) async {
     var postUri = Uri.parse(ApiEndpoints.upload);

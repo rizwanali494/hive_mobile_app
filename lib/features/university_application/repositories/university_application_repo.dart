@@ -79,11 +79,10 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
 
   @override
   Future<Attachments> uploadUniversityDocumentFile({required File file}) async {
-    var url = ApiEndpoints.universities;
     var response = await apiService.uploadSingleFile(
-        file: file,
-        purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
-        url: ApiEndpoints.upload);
+      file: file,
+      purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
+    );
     var body = jsonDecode(response.body);
     return Attachments.fromJson(body);
   }

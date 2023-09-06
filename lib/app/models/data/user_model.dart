@@ -1,4 +1,5 @@
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+import 'package:hive_mobile/app/models/data/hobbies_model.dart';
 
 class UserModel {
   UserModel({
@@ -137,7 +138,7 @@ class AccountData {
   dynamic bio;
   dynamic backupEmail;
   int? owner;
-  List<dynamic>? hobbies;
+  List<HobbiesModel>? hobbies;
 
   AccountData copyWith({
     int? id,
@@ -151,7 +152,7 @@ class AccountData {
     dynamic bio,
     dynamic backupEmail,
     int? owner,
-    List<dynamic>? hobbies,
+    List<HobbiesModel>? hobbies,
   }) =>
       AccountData(
         id: id ?? this.id,
@@ -165,7 +166,8 @@ class AccountData {
         bio: bio ?? this.bio,
         backupEmail: backupEmail ?? this.backupEmail,
         owner: owner ?? this.owner,
-        hobbies: hobbies ?? this.hobbies,
+        hobbies: hobbies?.map((e) => e.copyWith()).toList() ??
+            this.hobbies?.map((e) => e.copyWith()).toList(),
       );
 
   Map<String, dynamic> toJson() {
@@ -328,4 +330,3 @@ class Extra {
     return map;
   }
 }
-
