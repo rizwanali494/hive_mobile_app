@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/user_model.dart';
@@ -60,7 +61,8 @@ class AccountSettingVM extends ChangeNotifier {
     }
   }
 
-  Future<void> saveChanges() async {
+  Future<void> saveChanges(BuildContext context) async {
+    UtilFunctions().showLoaderDialog(context);
     try {
       String? imageId = userModel.picture?.id;
       if (image != null) {
@@ -76,7 +78,7 @@ class AccountSettingVM extends ChangeNotifier {
       var imageBody = {"picture": imageId};
       var model = await userProfileRepo.updateUserProfile(map: imageBody);
       log("profile updated ${model.picture?.id} Hobbies : ${model.accountData?.hobbies?.length}");
-      // registerUserModel(model);
+      registerUserModel(model);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("error : ${e.response.statusCode}");
@@ -84,5 +86,7 @@ class AccountSettingVM extends ChangeNotifier {
       }
       log("${e.toString()}");
     }
+    context.pop();
+    context.pop();
   }
 }

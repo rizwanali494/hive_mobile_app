@@ -3,7 +3,7 @@ import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
 import 'package:images_picker/images_picker.dart';
 
 class UtilFunctions {
-  showLoaderDialog(BuildContext context, {String text = 'Loading'}) {
+   showLoaderDialog(BuildContext context, {String text = 'Loading'}) {
     AlertDialog alert = AlertDialog(
       elevation: 0,
       backgroundColor: Colors.transparent,

@@ -82,6 +82,8 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                     TitleTextField(
                       hintText: AppStrings.editBios,
                       controller: provider.biosCtrl,
+                      keyboardType: TextInputType.multiline,
+                      maxLength: 150,
                     ),
                     14.verticalSpace,
                     Container(
@@ -103,6 +105,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                                   hintText: AppStrings.editHobbies,
                                   controller: provider.hobbiesCtrl,
                                   textFieldOnly: true,
+                                  maxLength: 50,
                                   enabled: !provider.hobbiesMaxed,
                                 ),
                               ),
@@ -147,7 +150,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                         text: AppStrings.saveChanges,
                         onTap: () {
                           FocusManager.instance.primaryFocus?.unfocus();
-                          provider.saveChanges();
+                          provider.saveChanges(context);
                         },
                       ),
                     )
