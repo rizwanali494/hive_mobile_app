@@ -10,13 +10,14 @@ class TitleTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final TextStyle? hintStyle;
-
+  final bool textFieldOnly;
   final TextEditingController? controller;
   final int? maxLines;
 
   const TitleTextField({
     super.key,
     this.title,
+    this.textFieldOnly = false,
     required this.hintText,
     this.maxLines,
     this.controller,
@@ -29,6 +30,22 @@ class TitleTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+
+    if (textFieldOnly) {
+      return TextFormField(
+        style: styles.inter12w400,
+        inputFormatters: inputFormatters,
+        keyboardType: keyboardType,
+        maxLength: maxLength,
+        controller: controller,
+        maxLines: maxLines ?? 1,
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            isDense: true,
+            hintStyle: hintStyle,
+            hintText: hintText),
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

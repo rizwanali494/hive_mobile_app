@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
+import 'package:images_picker/images_picker.dart';
 
 class UtilFunctions {
   showLoaderDialog(BuildContext context, {String text = 'Loading'}) {
@@ -33,5 +35,43 @@ class UtilFunctions {
         return alert;
       },
     );
+  }
+
+  static Future<List<Media>?> openImageTypeDialog(BuildContext context,
+      {int imageCount = 1}) async {
+    var selection = await showModalBottomSheet(
+      context: context,
+      builder: (context) => const ImageSelection(),
+    );
+    if (selection != null) {
+      if (selection == 0) {
+        return imageFromGallery(imageCount: imageCount);
+      }
+      if (selection == 1) {
+        return imageFromCamera();
+      }
+    }
+    return null;
+  }
+
+  static Future<List<Media>?> imageFromGallery({int imageCount = 1}) async {
+    var file = await ImagesPicker.pick(
+      maxSize: 300,
+      quality: 0.6,
+      pickType: PickType.image,
+      count: imageCount,
+      cropOpt: CropOption(),
+    );
+    return file;
+  }
+
+  static Future<List<Media>?> imageFromCamera() async {
+    var file = await ImagesPicker.openCamera(
+      maxSize: 300,
+      quality: 0.6,
+      pickType: PickType.image,
+      cropOpt: CropOption(),
+    );
+    return file;
   }
 }
