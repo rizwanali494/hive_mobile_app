@@ -97,7 +97,7 @@ class SessionNoteWidget extends StatelessWidget {
 
   void setSessionNote(BuildContext context, String state) {
     final pendingSSProvider = context.read<PendingSessionNoteVM>();
-    final ackSSProvider = context.read<AckSessionNoteVM>();
+    final ackSSProvider = context.read<ACKSessionNoteVM>();
     pendingSSProvider.setSessionNote(
         model: controller.model, state: state, ackSessionNoteVM: ackSSProvider);
   }

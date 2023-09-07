@@ -11,7 +11,6 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
 import 'package:images_picker/images_picker.dart';
-import 'package:provider/provider.dart';
 
 class AccountSettingVM extends ChangeNotifier {
   final userModel = GetIt.instance.get<UserModel>();

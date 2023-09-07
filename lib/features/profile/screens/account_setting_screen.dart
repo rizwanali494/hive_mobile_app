@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/constants/network_images.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
-import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/profile/view_models/account_setting_vm.dart';
 import 'package:hive_mobile/features/profile/widgets/hobbie_chip_widget.dart';
