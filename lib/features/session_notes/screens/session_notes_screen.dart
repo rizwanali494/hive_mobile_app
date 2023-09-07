@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_note_widget.dart';
+import 'package:hive_mobile/features/session_notes/view_models/base_session_controller.dart';
 import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
@@ -88,8 +89,8 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 21.w),
                         child: MultiProvider(
                           providers: [
-                            ChangeNotifierProvider(
-                              create: (context) => AckSessionNoteVM(),
+                            ChangeNotifierProvider<BaseApiVM<SessionNoteModel>>(
+                              create: (context) => ACKSessionNoteVM(),
                               key: Key("ack"),
                             ),
                             ChangeNotifierProvider(
@@ -100,13 +101,13 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                           child: TabBarView(
                             physics: NeverScrollableScrollPhysics(),
                             children: [
-                              Consumer<AckSessionNoteVM>(
+                              Consumer<BaseApiVM<SessionNoteModel>>(
                                 key: Key("ack"),
                                 builder: (context, provider, child) {
                                   return buildListView(
-                                      isLoading: provider.isLoading,
-                                      hasError: provider.hasError,
-                                      list: provider.sessionNotes,
+                                      isLoading: provider.uiState.isLoading,
+                                      hasError: provider.uiState.hasError,
+                                      list: provider.items,
                                       listCount: provider.listCount,
                                       controller: provider.scrollController,
                                       onRefresh: provider.refreshSessionNotes,

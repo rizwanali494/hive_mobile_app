@@ -194,8 +194,6 @@ class PendingSessionNoteVM with ChangeNotifier {
     notifyListeners();
     var body = {"state": state.toUpperCase()};
     try {
-      // await Future.delayed(Duration(seconds: 3));
-      // throw "some";
       await sessionNotesRepo.ackSessionNode(id: model.id ?? 0, body: body);
       await localService.put(model);
       ackSessionNoteVM.setSessionNote(model);
