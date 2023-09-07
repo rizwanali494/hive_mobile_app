@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:hive_mobile/app/models/pagination_state_model.dart';
 
 class PaginationController {
   late ScrollController _scrollController;
@@ -8,6 +9,7 @@ class PaginationController {
   late Function onScroll;
   bool _isGettingMore = false;
   bool isLastPage = false;
+  PaginationState state = PaginationState.Loaded();
 
   int get offset => _offset;
 

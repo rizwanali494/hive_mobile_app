@@ -16,12 +16,6 @@ class PendingSessionNoteVM extends BaseSessionNoteVM {
   PendingSessionNoteVM()
       : super(endPoint: ApiEndpoints.sessionNote.withPendingState);
 
-  @override
-  void setRepoInstance() {
-    sessionNotesRepo = SessionNotesRepositoryImpl(
-        apiService: apiService,
-        endPoint: ApiEndpoints.sessionNote.withPendingState);
-  }
 
   @override
   Future<void> setSessionNote(

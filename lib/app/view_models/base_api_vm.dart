@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
+import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
 
@@ -78,29 +79,33 @@ abstract class BaseApiVM<T> with ChangeNotifier {
   }
 
   Future<void> getNextItems() async {
-    paginationController.toggleIsGettingMore(true);
+    paginationController.state = PaginationState.GettingMore();
+    // paginationController.toggleIsGettingMore(true);
     notifyListeners();
     final request = () async {
       var list = await fetchNextItems();
       if (list.length < limit) {
-        paginationController.isLastPage = true;
+        paginationController.state = PaginationState.LastPage();
+        // paginationController.isLastPage = true;
       } else {
+        paginationController.state = PaginationState.Loaded();
         paginationController
             .setOffset((paginationController.offset) + list.length);
       }
       items.addAll(list);
-      paginationController.toggleIsGettingMore(false);
+      // paginationController.toggleIsGettingMore(false);
       return;
     };
     await performRequest(request: request);
     notifyListeners();
   }
 
-  Future<void> refreshSessionNotes() async {
+  Future<void> refreshList() async {
     final request = () async {
       uiState = UiState.refreshing();
-      paginationController.toggleIsGettingMore(false);
-      paginationController.toggleLastPage(false);
+      paginationController.state = PaginationState.Loaded();
+      // paginationController.toggleIsGettingMore(false);
+      // paginationController.toggleLastPage(false);
       paginationController.setOffset(0);
       var list = await fetchInitialItems();
       if (list.length < limit) {
@@ -134,8 +139,9 @@ abstract class BaseApiVM<T> with ChangeNotifier {
     } else {
       uiState = UiState.loaded();
     }
-    paginationController.toggleIsGettingMore(false);
-    paginationController.isLastPage = false;
+    paginationController.state = PaginationState.Loaded();
+    // paginationController.toggleIsGettingMore(false);
+    // paginationController.isLastPage = false;
     paginationController.removeListener();
     notifyListeners();
   }

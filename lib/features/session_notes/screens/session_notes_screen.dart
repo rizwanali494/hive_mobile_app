@@ -109,7 +109,7 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                                       list: provider.items,
                                       listCount: provider.listCount,
                                       controller: provider.scrollController,
-                                      onRefresh: provider.refreshSessionNotes,
+                                      onRefresh: provider.refreshList,
                                       isGettingMore: provider.isGettingMore);
                                 },
                               ),
@@ -122,7 +122,7 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
                                       list: provider.items,
                                       listCount: provider.listCount,
                                       controller: provider.scrollController,
-                                      onRefresh: provider.refreshSessionNotes,
+                                      onRefresh: provider.refreshList,
                                       isGettingMore: provider.isGettingMore);
                                 },
                               ),
