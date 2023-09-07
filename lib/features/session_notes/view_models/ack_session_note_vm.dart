@@ -8,31 +8,13 @@ import 'package:hive_mobile/features/session_notes/repositories/session_note_rep
 import 'package:hive_mobile/features/session_notes/view_models/base_session_note_controller.dart';
 
 class ACKSessionNoteVM extends BaseSessionNoteVM {
-  @override
-  Future<List<SessionNoteModel>> fetchInitialItems() async {
-    return await sessionNotesRepo.getInitialSessionNotes(limit: limit);
-  }
+  ACKSessionNoteVM()
+      : super(endPoint: ApiEndpoints.sessionNote.withNotPendingState);
 
   @override
   Future<List<SessionNoteModel>> fetchLocalList() async {
     var list = await localService.findAll();
     return list.where((element) => !element.isPending).toList();
-  }
-
-  @override
-  Future<List<SessionNoteModel>> fetchNextItems() async {
-    return await sessionNotesRepo.getNextSessionNotes(
-        limit: limit, offSet: offSet);
-  }
-
-  final apiService = GetIt.instance.get<ApiService>();
-  late SessionNotesRepo sessionNotesRepo;
-
-  @override
-  void setRepoInstance() {
-    sessionNotesRepo = SessionNotesRepositoryImpl(
-        apiService: apiService,
-        endPoint: ApiEndpoints.sessionNote.withNotPendingState);
   }
 
   void setSSNote(SessionNoteModel model) {

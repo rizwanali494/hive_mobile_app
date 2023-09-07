@@ -13,6 +13,9 @@ import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_
 import 'package:hive_mobile/features/session_notes/view_models/base_session_note_controller.dart';
 
 class PendingSessionNoteVM extends BaseSessionNoteVM {
+  PendingSessionNoteVM()
+      : super(endPoint: ApiEndpoints.sessionNote.withPendingState);
+
   @override
   void setRepoInstance() {
     sessionNotesRepo = SessionNotesRepositoryImpl(
@@ -46,5 +49,11 @@ class PendingSessionNoteVM extends BaseSessionNoteVM {
       notifyListeners();
       log("error updating session note: ${e.toString()}");
     }
+  }
+
+  @override
+  Future<List<SessionNoteModel>> fetchLocalList() async {
+    var list = await localService.findAll();
+    return list.where((element) => element.isPending).toList();
   }
 }
