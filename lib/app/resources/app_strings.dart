@@ -118,4 +118,5 @@ class AppStrings {
   static String noUniFound = "No University Found";
   static String noItemsFound = "No Items Found";
   static String showMore = "Show More";
+  static String update = "Update";
 }

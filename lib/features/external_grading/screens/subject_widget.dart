@@ -5,6 +5,8 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
+import 'package:provider/provider.dart';
 
 class GradeWidget extends StatelessWidget {
   final SubjectVM gradeVM;
@@ -76,10 +78,15 @@ class GradeWidget extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () {
+                      final gradeAddingProvider = context.read<GradeAddingVM>();
+                      FocusManager.instance.primaryFocus?.unfocus();
                       showDialog(
                         context: context,
-                        builder: (context) =>
-                            SubjectEditDialog(subjectVM: gradeVM),
+                        builder: (context) => SubjectEditDialog(
+                          subjectVM: gradeVM,
+                          onUpdate: gradeAddingProvider.updateVM,
+                          onDelete: gradeAddingProvider.deleteSubject,
+                        ),
                       );
                     },
                     child: Row(

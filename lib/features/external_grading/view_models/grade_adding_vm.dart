@@ -64,4 +64,18 @@ class GradeAddingVM extends ChangeNotifier {
     subjectCtrl.clear();
     notifyListeners();
   }
+
+  void deleteSubject(SubjectVM subjectVM) {
+    subjectsVM.remove(subjectVM);
+    notifyListeners();
+  }
+
+  void updateVM(SubjectVM updateVM) {
+    int indexOf = subjectsVM.indexOf(updateVM);
+    log("index of $indexOf ${updateVM.id}");
+    if (indexOf > -1) {
+      subjectsVM[indexOf] = updateVM;
+      notifyListeners();
+    }
+  }
 }

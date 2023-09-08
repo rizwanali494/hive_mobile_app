@@ -1,17 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/subject_edit_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
 
 class SubjectEditDialog extends StatelessWidget {
+  final Function(SubjectVM value) onUpdate;
+  final Function(SubjectVM value) onDelete;
   final SubjectVM subjectVM;
 
-  const SubjectEditDialog({super.key, required this.subjectVM});
+  const SubjectEditDialog(
+      {super.key,
+      required this.subjectVM,
+      required this.onUpdate,
+      required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -19,35 +29,58 @@ class SubjectEditDialog extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (BuildContext context) => SubjectEditVM(subjectVM: subjectVM),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 34.w,
-        ),
-        child: Consumer<SubjectEditVM>(
-          builder: (context, provider, child) {
-            return MaterialApp(
-              home: Column(
+      child: Consumer<SubjectEditVM>(
+        builder: (context, provider, child) {
+          return Dialog(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 34.w,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  46.verticalSpace,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppStrings.edit,
-                        style: styles.inter16w600,
-                      ),
-                      Text(
-                        AppStrings.edit,
-                        style: styles.inter16w600,
-                      ),
-                    ],
+                  30.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 5.w,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppStrings.edit,
+                          style:
+                              styles.inter16w600.copyWith(color: styles.black),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            context.pop();
+                            onDelete(this.subjectVM);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 24.w,
+                              vertical: 4.h,
+                            ),
+                            decoration: BoxDecoration(
+                                color: styles.lightPink,
+                                borderRadius: BorderRadius.circular(36.r)),
+                            child: Text(
+                              AppStrings.delete,
+                              style: styles.inter12w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  11.verticalSpace,
+                  15.verticalSpace,
                   TitleTextField(
                     hintText: "",
                     controller: provider.subjectCtrl,
                   ),
+                  16.verticalSpace,
                   Padding(
                     padding: EdgeInsets.only(left: 4.w),
                     child: Text(
@@ -83,9 +116,9 @@ class SubjectEditDialog extends StatelessWidget {
                       items: provider.grades
                           .map(
                             (value) => DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
+                          value: value,
+                          child: Text(
+                            value,
                                 style: styles.inter12w400,
                               ),
                             ),
@@ -96,11 +129,26 @@ class SubjectEditDialog extends StatelessWidget {
                       },
                     ),
                   ),
+                  21.verticalSpace,
+                  SizedBox(
+                    width: double.infinity,
+                    child: BlueElevatedButton(
+                      text: AppStrings.update,
+                      onTap: () {
+                        context.pop();
+                        log(provider.subjectVM.id.toString());
+                        onUpdate(provider.subjectVM.copyWith(
+                            grade: provider.selectedGrade ?? "",
+                            name: provider.subjectCtrl.text));
+                      },
+                    ),
+                  ),
+                  50.verticalSpace,
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
