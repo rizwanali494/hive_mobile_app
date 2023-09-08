@@ -50,11 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
     registerApiServiceInstance();
     Future.delayed(const Duration(seconds: 3)).then((value) {
       context.pushReplacement(kIsWeb ? HomeScreen.route : SignInScreen.route);
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => const HomeScreen(),
-      //     ));
     });
   }
 }

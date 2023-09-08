@@ -125,7 +125,9 @@ abstract class BaseApiVM<T> with ChangeNotifier {
 
   Future<List<T>> fetchNextItems();
 
-  Future<List<T>> fetchLocalList();
+  Future<List<T>> fetchLocalList() async {
+    return await localService.findAll();
+  }
 
   void addScrollListeners() {
     if (!scrollController.hasListeners) {

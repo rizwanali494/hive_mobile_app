@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
@@ -26,39 +27,38 @@ class GradeInfoWidget extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 21.w),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GradingTitleWidget(
                 title: controller.degree,
               ),
-              GradingTitleWidget(
-                title: controller.institute,
-                // flex: 2,
-              ),
-              GradingTitleWidget(
-                title: controller.subject,
-              ),
-              GradingTitleWidget(
-                title: controller.grade,
-              ),
-              SizedBox(
-                width: 35.w,
-                height: 20.h,
+              Padding(
+                padding: EdgeInsets.only(
+                  right: 15.w,
+                ),
                 child: GestureDetector(
                   onTap: () {
                     context.push(GradeDetailsScreen.route,
                         extra: {"controller": controller});
                   },
-                  child: SvgPicture.asset(SvgIcons.eye),
+                  child: Row(
+                    children: [
+                      GradingTitleWidget(
+                        title: AppStrings.view,
+                      ),
+                      SizedBox(
+                        width: 35.w,
+                        height: 20.h,
+                        child: SvgPicture.asset(SvgIcons.eye),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              // GestureDetector(
-              //     onTap: () {
-              //       context.push(GradeDetailsScreen.route);
-              //     }, child: Expanded(child: SvgPicture.asset(SvgIcons.eye)))
             ],
           ),
         ),
-        10.verticalSpace,
+        5.verticalSpace,
         Divider(
           color: styles.black.withOpacity(.2),
         )

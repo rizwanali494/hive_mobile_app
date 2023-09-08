@@ -51,7 +51,7 @@ class ExternalGradingScreen extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(
-                      vertical: 12.h,
+                      vertical: 9.h,
                     ),
                     decoration: BoxDecoration(
                       color: styles.lightCyan,
@@ -60,24 +60,28 @@ class ExternalGradingScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(left: 21.w),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          GradingTitleWidget(
-                            title: AppStrings.degree,
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: GradingTitleWidget(
+                              title: AppStrings.degree,
+                            ),
                           ),
-                          GradingTitleWidget(
-                            title: AppStrings.institute,
-                            // flex: 2,
-                          ),
-                          GradingTitleWidget(
-                            title: AppStrings.subjects,
-                          ),
-                          GradingTitleWidget(
-                            title: AppStrings.grade,
-                          ),
-                          SizedBox(
-                            width: 35.w,
-                            height: 13.h,
-                          ),
+                          // GradingTitleWidget(
+                          //   title: AppStrings.institute,
+                          //   // flex: 2,
+                          // ),
+                          // GradingTitleWidget(
+                          //   title: AppStrings.subjects,
+                          // ),
+                          // GradingTitleWidget(
+                          //   title: AppStrings.grade,
+                          // ),
+                          // SizedBox(
+                          //   width: 35.w,
+                          //   height: 13.h,
+                          // ),
                         ],
                       ),
                     ),
@@ -103,16 +107,17 @@ class ExternalGradingScreen extends StatelessWidget {
                         ),
                       ),
                     )
-                  else if (provider.hasError)
+                  else
+                    if (provider.hasError)
                     Expanded(
                       child: ErrorTextWidget(
-                        onRefresh: provider.refreshGradesList,
+                        onRefresh: provider.refreshList,
                       ),
                     )
-                  else if (provider.gradesList.isNotEmpty)
+                  else if (provider.items.isNotEmpty)
                     Expanded(
                       child: RefreshIndicator(
-                        onRefresh: provider.refreshGradesList,
+                        onRefresh: provider.refreshList,
                         backgroundColor: styles.white,
                         child: ListView.separated(
                           controller: provider.scrollController,
@@ -127,7 +132,7 @@ class ExternalGradingScreen extends StatelessWidget {
                             return 10.verticalSpace;
                           },
                           itemBuilder: (context, index) {
-                            if (index == provider.gradesList.length) {
+                            if (index == provider.items.length) {
                               if (provider.isGettingMore) {
                                 return Center(
                                     child: CircularProgressIndicator());
@@ -136,7 +141,7 @@ class ExternalGradingScreen extends StatelessWidget {
                             }
                             return GradeInfoWidget(
                               controller: GradeInfoVM(
-                                model: provider.gradesList[index],
+                                model: provider.items[index],
                               ),
                             );
                           },

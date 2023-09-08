@@ -55,6 +55,7 @@ class AuthVM extends ChangeNotifier
         context.pushReplacement(HomeScreen.route);
         return;
       } catch (e) {
+        log(e.toString());
         handleException(e);
       }
       if (context.mounted) {

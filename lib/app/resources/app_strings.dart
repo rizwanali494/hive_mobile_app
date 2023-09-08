@@ -112,6 +112,7 @@ class AppStrings {
   static String somethingWentWrong = "Something went wrong";
   static String pollsClosed = "Poll Closed";
   static String votes = "votes";
+  static String view = "View";
   static String count = "count";
   static String noUniFound = "No University Found";
   static String noItemsFound = "No Items Found";

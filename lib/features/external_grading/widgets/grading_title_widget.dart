@@ -15,14 +15,11 @@ class GradingTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return Expanded(
-      flex: flex,
-      child: Center(
-        child: Text(
-          title,
-          style: styles.inter12w400,
-          textAlign: TextAlign.center,
-        ),
+    return Center(
+      child: Text(
+        title,
+        style: styles.inter12w400,
+        textAlign: TextAlign.center,
       ),
     );
   }
