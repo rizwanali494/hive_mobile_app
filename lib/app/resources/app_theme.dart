@@ -9,6 +9,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final TextStyle inter7w400;
   final TextStyle inter9w400;
   final TextStyle inter10w400;
+  final TextStyle inter10w600;
   final TextStyle inter12w400;
   final TextStyle inter12w400Italic;
   final TextStyle inter12w400Underline;
@@ -45,6 +46,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color paleWhite;
   final Color paleBlue;
   final Color lightBlue;
+  final Color azure;
   final Color deepSkyBlue;
   final Color lavender;
   final Color darkGrey;
@@ -61,12 +63,14 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color lightPink;
   final Color smokeWhite;
   final Color whiteSmoke;
+  final Color alabaster;
 
   const AppTheme({
     required this.inter8w400,
     required this.inter7w400,
     required this.inter9w400,
     required this.inter10w400,
+    required this.inter10w600,
     required this.inter12w400,
     required this.inter12w400Underline,
     required this.inter12w400Italic,
@@ -94,6 +98,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.skyBlue,
     required this.paleBlue,
     required this.lightBlue,
+    required this.azure,
     required this.lavender,
     required this.darkGrey,
     required this.greayShade300,
@@ -111,6 +116,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.smokeWhite,
     required this.paleWhite,
     required this.whiteSmoke,
+    required this.alabaster,
   });
 
   @override
@@ -124,6 +130,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       inter7w400: TextStyle.lerp(inter7w400, other.inter7w400, t)!,
       inter9w400: TextStyle.lerp(inter9w400, other.inter9w400, t)!,
       inter10w400: TextStyle.lerp(inter10w400, other.inter10w400, t)!,
+      inter10w600: TextStyle.lerp(inter10w600, other.inter10w600, t)!,
       inter12w400: TextStyle.lerp(inter12w400, other.inter12w400, t)!,
       inter12w400Italic:
           TextStyle.lerp(inter12w400Italic, other.inter12w400Italic, t)!,
@@ -172,6 +179,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
       smokeWhite: Color.lerp(smokeWhite, other.smokeWhite, t)!,
       paleWhite: Color.lerp(paleWhite, other.paleWhite, t)!,
       whiteSmoke: Color.lerp(whiteSmoke, other.whiteSmoke, t)!,
+      azure: Color.lerp(azure, other.azure, t)!,
+      alabaster: Color.lerp(alabaster, other.alabaster, t)!,
     );
   }
 
@@ -342,12 +351,20 @@ class AppTheme extends ThemeExtension<AppTheme> {
     smokeWhite: const Color(0xffF2F2F2),
     paleWhite: const Color(0xffE9FAB9),
     whiteSmoke: const Color(0xffEEEEEE),
+    azure: const Color(0xff0D9AE0),
+    alabaster: const Color(0xffFBFBFB),
     inter12w400Italic: TextStyle(
       fontFamily: 'Inter',
       fontSize: 12.sp,
       fontWeight: FontWeight.w700,
       fontStyle: FontStyle.italic,
       color: const Color(0xff464646).withOpacity(0.5),
+    ),
+    inter10w600: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 10.sp,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
     ),
   );
 
@@ -356,6 +373,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     TextStyle? inter7w400,
     TextStyle? inter9w400,
     TextStyle? inter10w400,
+    TextStyle? inter10w600,
     TextStyle? inter12w400,
     TextStyle? inter12w400Underline,
     TextStyle? inter12w400Italic,
@@ -382,6 +400,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? black,
     Color? skyBlue,
     Color? lightBlue,
+    Color? azure,
     Color? paleBlue,
     Color? deepSkyBlue,
     Color? lavender,
@@ -400,6 +419,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? smokeWhite,
     Color? paleWhite,
     Color? whiteSmoke,
+    Color? alabaster,
   }) {
     return AppTheme(
       inter8w400: inter8w400 ?? this.inter8w400,
@@ -452,6 +472,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
       smokeWhite: smokeWhite ?? this.smokeWhite,
       paleWhite: paleWhite ?? this.paleWhite,
       whiteSmoke: whiteSmoke ?? this.whiteSmoke,
+      alabaster: alabaster ?? this.alabaster,
+      inter10w600: inter10w600 ?? this.inter10w600,
+      azure: azure ?? this.azure,
     );
   }
 }

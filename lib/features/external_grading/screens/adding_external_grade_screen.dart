@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
@@ -11,15 +13,17 @@ import 'package:provider/provider.dart';
 
 class AddExternalGradeScreen extends StatelessWidget {
   static const route = "/AddExternalGrade";
+  final List<String> addedGrades;
 
-  const AddExternalGradeScreen({Key? key}) : super(key: key);
+  const AddExternalGradeScreen({Key? key, this.addedGrades = const []})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GradeAddingVM(),
+      create: (BuildContext context) => GradeAddingVM(degrees: addedGrades),
       child: Consumer<GradeAddingVM>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -29,15 +33,60 @@ class AddExternalGradeScreen extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DividerAppBar(
                       title: AppStrings.addExternalGrade,
                       titleStyle: styles.inter20w700,
                     ),
                     26.verticalSpace,
-                    TitleTextField(
-                      title: AppStrings.degree,
-                      hintText: "",
+                    Text(
+                      AppStrings.degree,
+                      style: styles.inter14w600.copyWith(
+                        color: styles.darkSlateGrey,
+                      ),
+                    ),
+                    11.verticalSpace,
+                    Container(
+                      margin: EdgeInsets.only(
+                        right: 10.w,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          25,
+                        ),
+                        border: Border.all(
+                          color: styles.black.withOpacity(
+                            0.2,
+                          ),
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 19.w,
+                        vertical: 10.h,
+                      ),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        value: provider.selectedDegree,
+                        isDense: true,
+                        icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                        dropdownColor: styles.white,
+                        underline: const SizedBox(),
+                        items: provider.degrees
+                            .map(
+                              (item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: styles.inter12w400,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          provider.selectDegree(value);
+                        },
+                      ),
                     ),
                     20.verticalSpace,
                     TitleTextField(
@@ -86,8 +135,8 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 child: DropdownButton<String>(
                                   value: provider.selectedGrade,
                                   isExpanded: true,
-                                  icon:
-                                      const Icon(Icons.keyboard_arrow_down_sharp),
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_sharp),
                                   dropdownColor: styles.white,
                                   underline: const SizedBox(),
                                   items: provider.grades
@@ -99,7 +148,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                             style: styles.inter12w400,
                                           ),
                                         ),
-                                      )
+                                  )
                                       .toList(),
                                   onChanged: (value) {
                                     provider.setGrade(value);
@@ -115,8 +164,8 @@ class AddExternalGradeScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.topRight,
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5.h, horizontal: 30.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.h, horizontal: 30.w),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(28.r),
                             border: Border.all(
@@ -130,7 +179,116 @@ class AddExternalGradeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    24.verticalSpace,
+                    26.verticalSpace,
+                    Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 9.h,
+                          ),
+                          decoration: BoxDecoration(
+                              color: styles.azure,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.r),
+                                topRight: Radius.circular(10.r),
+                              )),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 21.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    AppStrings.subjects,
+                                    style: styles.inter10w600
+                                        .copyWith(color: styles.white),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    AppStrings.grade,
+                                    style: styles.inter10w600
+                                        .copyWith(color: styles.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: styles.alabaster,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 21.w,
+                                    bottom: 12.h,
+                                    top: 12.h,
+                                  ),
+                                  child: Text(
+                                    "Chemistry",
+                                    style: styles.inter12w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            1.horizontalSpace,
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: styles.alabaster,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 14.w,
+                                    bottom: 12.h,
+                                    top: 12.h,
+                                  ),
+                                  child: Text(
+                                    "A+",
+                                    style: styles.inter12w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            1.horizontalSpace,
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 20.w,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "Edit",
+                                        style: styles.inter12w400,
+                                      ),
+                                      10.horizontalSpace,
+                                      SvgPicture.asset(
+                                        SvgIcons.edit,
+                                        width: 25.w,
+                                        height: 25.h,
+                                        colorFilter: ColorFilter.mode(
+                                            styles.azure, BlendMode.srcIn),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    33.verticalSpace,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
