@@ -18,6 +18,8 @@ class GradeAddingVM extends ChangeNotifier {
   }
 
   String? selectedDegree;
+  final subjectCtrl = TextEditingController();
+  final institute = TextEditingController();
 
   List<String> degrees = [
     "A1",
@@ -46,9 +48,20 @@ class GradeAddingVM extends ChangeNotifier {
 
   List<SubjectVM> subjectsVM = [];
 
-  void addSubject(String subjectName, String grade) {
-    final subject = SubjectVM(grade: grade, name: subjectName);
-    subjectsVM.add(subject);
+  void addSubject() {
+    final subjectName = subjectCtrl.text.trim();
+    final hasSubject = subjectsVM
+        .map((e) => e.name.toLowerCase())
+        .toList()
+        .contains(subjectName.toLowerCase());
+    if (subjectName.isEmpty) {
+      return;
+    }
+    if (!hasSubject) {
+      final subject = SubjectVM(grade: selectedGrade!, name: subjectName);
+      subjectsVM.add(subject);
+    }
+    subjectCtrl.clear();
     notifyListeners();
   }
 }

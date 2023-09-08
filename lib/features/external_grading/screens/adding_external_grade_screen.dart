@@ -90,6 +90,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                     20.verticalSpace,
                     TitleTextField(
                       title: AppStrings.institute,
+                      controller: provider.institute,
                       hintText: "",
                     ),
                     23.verticalSpace,
@@ -99,6 +100,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                         Expanded(
                           child: TitleTextField(
                             title: AppStrings.subjects,
+                            controller: provider.subjectCtrl,
                             hintText: "",
                           ),
                         ),
@@ -130,9 +132,11 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 ),
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 19.w,
+                                  vertical: 10.h,
                                 ),
                                 child: DropdownButton<String>(
                                   value: provider.selectedGrade,
+                                  isDense: true,
                                   isExpanded: true,
                                   icon: const Icon(
                                       Icons.keyboard_arrow_down_sharp),
@@ -162,18 +166,23 @@ class AddExternalGradeScreen extends StatelessWidget {
                     27.verticalSpace,
                     Align(
                       alignment: Alignment.topRight,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 5.h, horizontal: 30.w),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(28.r),
-                            border: Border.all(
+                      child: GestureDetector(
+                        onTap: () {
+                          provider.addSubject();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 5.h, horizontal: 30.w),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28.r),
+                              border: Border.all(
+                                color: styles.skyBlue,
+                              )),
+                          child: Text(
+                            "+ ${AppStrings.add} ${AppStrings.subjects}",
+                            style: styles.inter12w400.copyWith(
                               color: styles.skyBlue,
-                            )),
-                        child: Text(
-                          "+ ${AppStrings.add} ${AppStrings.subjects}",
-                          style: styles.inter12w400.copyWith(
-                            color: styles.skyBlue,
+                            ),
                           ),
                         ),
                       ),

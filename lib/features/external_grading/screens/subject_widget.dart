@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 
 class GradeWidget extends StatelessWidget {
@@ -64,7 +65,7 @@ class GradeWidget extends StatelessWidget {
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(
-                vertical: 8.h,
+                vertical: 11.h,
               ),
               decoration: BoxDecoration(color: styles.alabaster),
               child: Align(
@@ -73,22 +74,31 @@ class GradeWidget extends StatelessWidget {
                   padding: EdgeInsets.only(
                     right: 20.w,
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Edit",
-                        style: styles.inter12w400,
-                      ),
-                      10.horizontalSpace,
-                      SvgPicture.asset(
-                        SvgIcons.edit,
-                        width: 25.w,
-                        height: 25.h,
-                        colorFilter:
-                            ColorFilter.mode(styles.azure, BlendMode.srcIn),
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            SubjectEditDialog(subjectVM: gradeVM),
+                      );
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Edit",
+                          style: styles.inter12w400,
+                        ),
+                        10.horizontalSpace,
+                        SvgPicture.asset(
+                          SvgIcons.edit,
+                          width: 20.w,
+                          height: 20.h,
+                          colorFilter:
+                              ColorFilter.mode(styles.azure, BlendMode.srcIn),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

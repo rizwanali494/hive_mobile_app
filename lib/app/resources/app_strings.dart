@@ -107,6 +107,7 @@ class AppStrings {
   static String sendRequest = "Send Request";
   static String uploadResult = "Upload Result";
   static String editBios = "Edit Bios";
+  static String edit = "Edit";
   static String documentName = "Document Name";
   static String typeMessagesHere = "Type message here...";
   static String somethingWentWrong = "Something went wrong";
