@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
+import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/widgets/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
-import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class AddExternalGradeScreen extends StatelessWidget {
@@ -180,115 +179,50 @@ class AddExternalGradeScreen extends StatelessWidget {
                       ),
                     ),
                     26.verticalSpace,
-                    Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 9.h,
+                    if (provider.subjectsVM.isNotEmpty) ...[
+                      Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 9.h,
+                            ),
+                            decoration: BoxDecoration(
+                                color: styles.azure,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.r),
+                                  topRight: Radius.circular(10.r),
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 21.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      AppStrings.subjects,
+                                      style: styles.inter10w600
+                                          .copyWith(color: styles.white),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      AppStrings.grade,
+                                      style: styles.inter10w600
+                                          .copyWith(color: styles.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          decoration: BoxDecoration(
-                              color: styles.azure,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10.r),
-                                topRight: Radius.circular(10.r),
-                              )),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 21.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    AppStrings.subjects,
-                                    style: styles.inter10w600
-                                        .copyWith(color: styles.white),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    AppStrings.grade,
-                                    style: styles.inter10w600
-                                        .copyWith(color: styles.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: styles.alabaster,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 21.w,
-                                    bottom: 12.h,
-                                    top: 12.h,
-                                  ),
-                                  child: Text(
-                                    "Chemistry",
-                                    style: styles.inter12w400,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            1.horizontalSpace,
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: styles.alabaster,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 14.w,
-                                    bottom: 12.h,
-                                    top: 12.h,
-                                  ),
-                                  child: Text(
-                                    "A+",
-                                    style: styles.inter12w400,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            1.horizontalSpace,
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 20.w,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        "Edit",
-                                        style: styles.inter12w400,
-                                      ),
-                                      10.horizontalSpace,
-                                      SvgPicture.asset(
-                                        SvgIcons.edit,
-                                        width: 25.w,
-                                        height: 25.h,
-                                        colorFilter: ColorFilter.mode(
-                                            styles.azure, BlendMode.srcIn),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    33.verticalSpace,
+                        ],
+                      ),
+                      for (var subject in provider.subjectsVM)
+                        GradeWidget(gradeVM: subject),
+                      33.verticalSpace,
+                    ],
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

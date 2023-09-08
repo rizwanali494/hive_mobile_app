@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 
 class GradeAddingVM extends ChangeNotifier {
   final grades = [
@@ -40,6 +41,14 @@ class GradeAddingVM extends ChangeNotifier {
 
   void setGrade(String? value) {
     this.selectedGrade = value;
+    notifyListeners();
+  }
+
+  List<SubjectVM> subjectsVM = [];
+
+  void addSubject(String subjectName, String grade) {
+    final subject = SubjectVM(grade: grade, name: subjectName);
+    subjectsVM.add(subject);
     notifyListeners();
   }
 }
