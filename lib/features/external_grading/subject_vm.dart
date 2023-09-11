@@ -2,12 +2,10 @@ class SubjectVM {
   int? id;
   String name;
   String grade;
+  bool isLocal;
 
-  SubjectVM({
-    required this.grade,
-    required this.name,
-    int? id,
-  }) {
+  SubjectVM(
+      {required this.grade, required this.name, int? id, this.isLocal = true}) {
     this.id = id ?? DateTime.now().millisecondsSinceEpoch;
   }
 
@@ -23,11 +21,13 @@ class SubjectVM {
     int? id,
     String? name,
     String? grade,
+    bool? isLocal,
   }) {
     return SubjectVM(
       id: id ?? this.id,
       name: name ?? this.name,
       grade: grade ?? this.grade,
+      isLocal: isLocal ?? this.isLocal,
     );
   }
 }

@@ -53,6 +53,10 @@ extension ApiFieldExpandExtension on String {
     return "${this}$id/";
   }
 
+  String externalGrade(int id) {
+    return _appendQueryParameter("external_grade=$id");
+  }
+
   String _appendPaginationParameter(String para, int? value) {
     if (value == null) {
       return this;

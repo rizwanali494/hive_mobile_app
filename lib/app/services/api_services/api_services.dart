@@ -11,6 +11,8 @@ abstract class ApiService {
   Future<Response> patch(
       {required String url, required Object body, String? queryParameters});
 
+  Future<Response> delete({required String url, String? queryParameters});
+
   Future<Response> getResponse({required Response response});
 
   Future<Response> uploadSingleFile({

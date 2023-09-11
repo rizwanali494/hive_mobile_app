@@ -85,7 +85,7 @@ class GradeWidget extends StatelessWidget {
                         builder: (context) => SubjectEditDialog(
                           subjectVM: gradeVM,
                           onUpdate: gradeAddingProvider.updateVM,
-                          onDelete: gradeAddingProvider.deleteSubject,
+                          onDelete: gradeAddingProvider.removeSubject,
                         ),
                       );
                     },

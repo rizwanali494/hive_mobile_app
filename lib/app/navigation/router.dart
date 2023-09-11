@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
+import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
@@ -139,7 +140,15 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: AddExternalGradeScreen.route,
       name: AddExternalGradeScreen.route,
-      builder: (_, state) => const AddExternalGradeScreen(),
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        List<String> addedGrades = extra?["addedGrades"] ?? [];
+        ExternalGradeModel? model = extra?["editModel"];
+        return AddExternalGradeScreen(
+          addedGrades: addedGrades,
+          editModel: model,
+        );
+      },
     ),
     CustomGoRoute.cupertino(
       path: ExternalGradingScreen.route,

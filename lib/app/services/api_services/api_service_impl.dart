@@ -101,4 +101,20 @@ class ApiServiceImpl extends ApiService {
     var response = await http.Response.fromStream(streamedResponse);
     return getResponse(response: response);
   }
+
+  @override
+  Future<http.Response> delete(
+      {required String url,
+      Map<String, String>? headers,
+      String? queryParameters}) async {
+    http.Response response;
+    url = "$url${queryParameters ?? ""}";
+    try {
+      response =
+          await http.get(url.parsedUri, headers: headers ?? this._headers);
+      return getResponse(response: response);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

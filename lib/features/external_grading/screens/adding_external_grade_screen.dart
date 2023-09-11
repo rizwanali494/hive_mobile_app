@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
@@ -13,8 +14,10 @@ import 'package:provider/provider.dart';
 class AddExternalGradeScreen extends StatelessWidget {
   static const route = "/AddExternalGrade";
   final List<String> addedGrades;
+  final ExternalGradeModel? editModel;
 
-  const AddExternalGradeScreen({Key? key, this.addedGrades = const []})
+  const AddExternalGradeScreen(
+      {Key? key, this.addedGrades = const [], this.editModel})
       : super(key: key);
 
   @override
@@ -22,7 +25,8 @@ class AddExternalGradeScreen extends StatelessWidget {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return ChangeNotifierProvider(
-      create: (BuildContext context) => GradeAddingVM(degrees: addedGrades),
+      create: (BuildContext context) =>
+          GradeAddingVM(degrees: addedGrades, editModel: editModel),
       child: Consumer<GradeAddingVM>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -82,9 +86,11 @@ class AddExternalGradeScreen extends StatelessWidget {
                               ),
                             )
                             .toList(),
-                        onChanged: (value) {
-                          provider.selectDegree(value);
-                        },
+                        onChanged: provider.editModel == null
+                            ? (value) {
+                                provider.selectDegree(value);
+                              }
+                            : null,
                       ),
                     ),
                     20.verticalSpace,
