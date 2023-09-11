@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/constants/file_upload_purpose.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
+import 'package:hive_mobile/app/models/data/subject_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
@@ -22,6 +23,8 @@ abstract class ExternalGradesRepo {
   Future<Attachments> uploadResultFile({required File file});
 
   Future<ExternalGradeModel> uploadExternalGrade({required Map map});
+
+  Future<SubjectModel> uploadSubject({required Map map});
 }
 
 class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
@@ -68,5 +71,13 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
     var response = await apiService.post(url: url, body: map);
     var body = jsonDecode(response.body);
     return ExternalGradeModel.fromJson(body);
+  }
+
+  @override
+  Future<SubjectModel> uploadSubject({required Map map}) async {
+    var url = ApiEndpoints.subject;
+    var response = await apiService.post(url: url, body: map);
+    var body = jsonDecode(jsonDecode(response.body));
+    return SubjectModel.fromJson(body);
   }
 }

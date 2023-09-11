@@ -12,6 +12,7 @@ class ApiEndpoints {
   static String administrative = "${apiUrl}administrative/";
   static String serviceRequest = "${administrative}service_request/";
   static String externalGrade = "${administrative}external_grade/";
+  static String subject = "${externalGrade}subject/";
   static String sessionNote = "${administrative}session_note/";
   static String award = "${administrative}award/";
   static String studentUser = "${apiUrl}user/student/";

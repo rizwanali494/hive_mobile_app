@@ -68,7 +68,7 @@ const ExternalGradeModelSchema = CollectionSchema(
       id: 9,
       name: r'subjects',
       type: IsarType.objectList,
-      target: r'Subjects',
+      target: r'SubjectModel',
     )
   },
   estimateSize: _externalGradeModelEstimateSize,
@@ -79,7 +79,7 @@ const ExternalGradeModelSchema = CollectionSchema(
   indexes: {},
   links: {},
   embeddedSchemas: {
-    r'Subjects': SubjectsSchema,
+    r'SubjectModel': SubjectModelSchema,
     r'Attachments': AttachmentsSchema
   },
   getId: _externalGradeModelGetId,
@@ -137,10 +137,11 @@ int _externalGradeModelEstimateSize(
     if (list != null) {
       bytesCount += 3 + list.length * 3;
       {
-        final offsets = allOffsets[Subjects]!;
+        final offsets = allOffsets[SubjectModel]!;
         for (var i = 0; i < list.length; i++) {
           final value = list[i];
-          bytesCount += SubjectsSchema.estimateSize(value, offsets, allOffsets);
+          bytesCount +=
+              SubjectModelSchema.estimateSize(value, offsets, allOffsets);
         }
       }
     }
@@ -168,10 +169,10 @@ void _externalGradeModelSerialize(
     object.resultFile,
   );
   writer.writeString(offsets[8], object.state);
-  writer.writeObjectList<Subjects>(
+  writer.writeObjectList<SubjectModel>(
     offsets[9],
     allOffsets,
-    SubjectsSchema.serialize,
+    SubjectModelSchema.serialize,
     object.subjects,
   );
 }
@@ -196,11 +197,11 @@ ExternalGradeModel _externalGradeModelDeserialize(
       allOffsets,
     ),
     state: reader.readStringOrNull(offsets[8]),
-    subjects: reader.readObjectList<Subjects>(
+    subjects: reader.readObjectList<SubjectModel>(
       offsets[9],
-      SubjectsSchema.deserialize,
+      SubjectModelSchema.deserialize,
       allOffsets,
-      Subjects(),
+      SubjectModel(),
     ),
   );
   return object;
@@ -236,11 +237,11 @@ P _externalGradeModelDeserializeProp<P>(
     case 8:
       return (reader.readStringOrNull(offset)) as P;
     case 9:
-      return (reader.readObjectList<Subjects>(
+      return (reader.readObjectList<SubjectModel>(
         offset,
-        SubjectsSchema.deserialize,
+        SubjectModelSchema.deserialize,
         allOffsets,
-        Subjects(),
+        SubjectModel(),
       )) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1510,7 +1511,7 @@ extension ExternalGradeModelQueryObject
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      subjectsElement(FilterQuery<Subjects> q) {
+      subjectsElement(FilterQuery<SubjectModel> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'subjects');
     });
@@ -1891,7 +1892,7 @@ extension ExternalGradeModelQueryProperty
     });
   }
 
-  QueryBuilder<ExternalGradeModel, List<Subjects>?, QQueryOperations>
+  QueryBuilder<ExternalGradeModel, List<SubjectModel>?, QQueryOperations>
       subjectsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'subjects');

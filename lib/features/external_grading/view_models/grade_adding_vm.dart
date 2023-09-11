@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
+import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
@@ -152,19 +153,41 @@ class GradeAddingVM extends ChangeNotifier {
       return;
     }
     var resultFile = await uploadDocuments();
-    log("message : ${resultFile?.first.id}");
+    log("message : ${resultFile?.id}");
     var institutionName = institute.text.trim();
     var degree = selectedDegree ?? "";
     var body = {
       "institution_name": institute,
       "degree": degree,
-      "result_file": resultFile?.map((e) => e.id ?? "").toList(),
+      "result_file": resultFile?.id,
     };
+    var model = await externalGradeRepo.uploadExternalGrade(map: body);
+    await uploadSubjects(model);
   }
 
-  Future<List<Attachments>?> uploadDocuments() async {
+  Future<void> uploadSubjects(ExternalGradeModel model) async {
+    var subjectNames = subjectsVM.map((e) => e.name).toList();
+    var subjectGrades = subjectsVM.map((e) => e.grade).toList();
+    List<Map> bodies = [];
+    bodies = List.generate(
+      subjectsVM.length,
+      (index) => {
+        "name": "${subjectNames[index]}",
+        "grade": "${subjectGrades[index]}",
+        "external_grade": "${model.id}",
+      },
+    );
+    var futures = await Future.wait(
+      [
+        for (int i = 0; i < subjectsVM.length; i++)
+          externalGradeRepo.uploadSubject(map: bodies[i])
+      ],
+    );
+  }
+
+  Future<Attachments?> uploadDocuments() async {
     var fileModel =
         await externalGradeRepo.uploadResultFile(file: documentFile!);
-    return [fileModel];
+    return fileModel;
   }
 }

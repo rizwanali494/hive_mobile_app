@@ -25,7 +25,7 @@ class ExternalGradeModel {
     if (json['subjects'] != null) {
       subjects = [];
       json['subjects'].forEach((v) {
-        subjects?.add(Subjects.fromJson(v));
+        subjects?.add(SubjectModel.fromJson(v));
       });
     }
     dateAdded = json['date_added'];
@@ -41,7 +41,7 @@ class ExternalGradeModel {
 
   int? id;
   late Id localId;
-  List<Subjects>? subjects;
+  List<SubjectModel>? subjects;
   String? dateAdded;
   String? dateLastModified;
   int? branchId;
@@ -53,7 +53,7 @@ class ExternalGradeModel {
   ExternalGradeModel copyWith({
     int? id,
     int? localId,
-    List<Subjects>? subjects,
+    List<SubjectModel>? subjects,
     String? dateAdded,
     String? dateLastModified,
     int? branchId,
