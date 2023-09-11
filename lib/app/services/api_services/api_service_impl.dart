@@ -111,7 +111,7 @@ class ApiServiceImpl extends ApiService {
     url = "$url${queryParameters ?? ""}";
     try {
       response =
-          await http.get(url.parsedUri, headers: headers ?? this._headers);
+          await http.delete(url.parsedUri, headers: headers ?? this._headers);
       return getResponse(response: response);
     } catch (e) {
       throw e;
