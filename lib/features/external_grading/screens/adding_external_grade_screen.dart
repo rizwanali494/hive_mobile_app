@@ -244,7 +244,10 @@ class AddExternalGradeScreen extends StatelessWidget {
                         ),
                         14.verticalSpace,
                         DocumentUploadWidget(
-                          isDownloading: false,
+                          onTap: provider.pickFile,
+                          onRemove: provider.removeFile,
+                          documentName: provider.documentName,
+                          isDownloading: provider.fileDownloading,
                         ),
                       ],
                     ),
@@ -253,7 +256,8 @@ class AddExternalGradeScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          context.pop();
+                          // context.pop();
+                          provider.uploadExternalGrade();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: styles.skyBlue,
