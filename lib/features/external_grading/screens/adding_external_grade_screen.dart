@@ -257,7 +257,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           // context.pop();
-                          provider.uploadExternalGrade();
+                          provider.uploadExternalGrade(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: styles.skyBlue,

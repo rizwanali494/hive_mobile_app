@@ -116,9 +116,9 @@ class SubjectEditDialog extends StatelessWidget {
                       items: provider.grades
                           .map(
                             (value) => DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
+                              value: value,
+                              child: Text(
+                                value,
                                 style: styles.inter12w400,
                               ),
                             ),
@@ -136,10 +136,12 @@ class SubjectEditDialog extends StatelessWidget {
                       text: AppStrings.update,
                       onTap: () {
                         context.pop();
-                        log(provider.subjectVM.id.toString());
+                        var enteredName = provider.subjectCtrl.text.trim();
+                        var name = enteredName.isEmpty
+                            ? provider.subjectVM.name
+                            : enteredName;
                         onUpdate(provider.subjectVM.copyWith(
-                            grade: provider.selectedGrade ?? "",
-                            name: provider.subjectCtrl.text));
+                            grade: provider.selectedGrade ?? "", name: name));
                       },
                     ),
                   ),

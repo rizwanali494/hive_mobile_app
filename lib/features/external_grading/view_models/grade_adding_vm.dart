@@ -5,14 +5,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
 
-class GradeAddingVM extends ChangeNotifier {
+class GradeAddingVM extends ChangeNotifier with UtilFunctions {
   final grades = [
     "A",
     "B+",
@@ -34,10 +37,10 @@ class GradeAddingVM extends ChangeNotifier {
   final apiService = GetIt.instance.get<ApiService>();
 
   List<String> degrees = [
-    "A1",
-    "A2",
-    "O1",
     "O2",
+    "O3",
+    "AS1",
+    "AS2",
   ];
 
   void setDegrees(List<String> deg) {
@@ -148,21 +151,33 @@ class GradeAddingVM extends ChangeNotifier {
     return true;
   }
 
-  Future<void> uploadExternalGrade() async {
+  Future<void> uploadExternalGrade(BuildContext context) async {
     if (!validateData()) {
       return;
     }
-    var resultFile = await uploadDocuments();
-    log("message : ${resultFile?.id}");
-    var institutionName = institute.text.trim();
-    var degree = selectedDegree ?? "";
-    var body = {
-      "institution_name": institute,
-      "degree": degree,
-      "result_file": resultFile?.id,
-    };
-    var model = await externalGradeRepo.uploadExternalGrade(map: body);
-    await uploadSubjects(model);
+    showLoaderDialog(context);
+    try {
+      var resultFile = await uploadDocuments();
+      log("message : ${resultFile?.id}");
+      var institutionName = institute.text.trim();
+      var degree = selectedDegree ?? "";
+      var body = {
+        "institution_name": institutionName,
+        "degree": degree,
+        "result_file": resultFile?.id,
+      };
+      var model = await externalGradeRepo.uploadExternalGrade(map: body);
+      await uploadSubjects(model);
+      context.pop(model);
+      context.pop(model);
+      return;
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("${e.response.statusCode}");
+        log("${e.response.body}");
+      }
+    }
+    context.pop();
   }
 
   Future<void> uploadSubjects(ExternalGradeModel model) async {
