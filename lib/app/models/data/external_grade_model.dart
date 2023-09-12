@@ -39,6 +39,17 @@ class ExternalGradeModel {
         : null;
   }
 
+  ExternalGradeModel.createJson(dynamic json) {
+    id = json['id'];
+    localId = id ?? 0;
+    dateAdded = json['date_added'];
+    dateLastModified = json['date_last_modified'];
+    branchId = json['branch_id'];
+    institutionName = json['institution_name'];
+    degree = json['degree'];
+    state = json['state'];
+  }
+
   int? id;
   late Id localId;
   List<SubjectModel>? subjects;

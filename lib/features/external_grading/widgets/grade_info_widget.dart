@@ -10,7 +10,7 @@ import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.
 import 'package:hive_mobile/features/external_grading/widgets/grading_title_widget.dart';
 
 class GradeInfoWidget extends StatelessWidget {
-  final GradeInfoVM controller;
+  final GradeDetailVM controller;
 
   const GradeInfoWidget({
     super.key,
@@ -39,7 +39,7 @@ class GradeInfoWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     context.push(GradeDetailsScreen.route,
-                        extra: {"controller": controller});
+                        extra: {"model": controller.model});
                   },
                   child: Row(
                     children: [

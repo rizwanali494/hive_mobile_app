@@ -160,10 +160,10 @@ final goRouter = GoRouter(
       name: GradeDetailsScreen.route,
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>?;
-        GradeInfoVM controller;
-        controller = extra?["controller"];
+        ExternalGradeModel model;
+        model = extra?["model"];
         return GradeDetailsScreen(
-          controller: controller,
+          model: model,
         );
       },
     ),

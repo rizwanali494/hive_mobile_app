@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
+import 'package:hive_mobile/app/models/data/subject_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
@@ -161,10 +162,18 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     return true;
   }
 
-  Future<void> uploadExternalGrade(BuildContext context) async {
+  void addUpdate(BuildContext context) {
     if (!validateData()) {
       return;
     }
+    if (editModel == null) {
+      uploadExternalGrade(context);
+      return;
+    }
+    updateExternalGrade(context);
+  }
+
+  Future<void> uploadExternalGrade(BuildContext context) async {
     showLoaderDialog(context);
     try {
       var resultFile = await uploadDocuments();
@@ -177,20 +186,24 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
         "result_file": resultFile?.id,
       };
       var model = await externalGradeRepo.uploadExternalGrade(map: body);
-      await uploadSubjects(model, subjectsVM);
-      context.pop(model);
-      context.pop(model);
+      log("popped 1");
+      var subjects = await uploadSubjects(model, subjectsVM);
+      log("popped 2");
+      model.copyWith(resultFile: resultFile);
+      context.pop();
+      context.pop();
       return;
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
         log("${e.response.body}");
       }
+      log(e.toString());
     }
     context.pop();
   }
 
-  Future<void> uploadSubjects(
+  Future<List<SubjectModel>> uploadSubjects(
       ExternalGradeModel model, List<SubjectVM> list) async {
     var subjectNames = list.map((e) => e.name).toList();
     var subjectGrades = list.map((e) => e.grade).toList();
@@ -203,10 +216,66 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
         "external_grade": "${model.id}",
       },
     );
-    var futures = await Future.wait(
+    var subjects = await Future.wait(
       [
         for (int i = 0; i < list.length; i++)
           externalGradeRepo.uploadSubject(map: bodies[i])
+      ],
+    );
+    return subjects;
+  }
+
+  Future<void> updateExternalGrade(BuildContext context) async {
+    if (editModel == null) {
+      return;
+    }
+    showLoaderDialog(context);
+    try {
+      var file = editModel!.resultFile;
+      if (hasDocumentChanged) {
+        file = await uploadDocuments();
+      }
+      await updateSubjects();
+      var institutionName = institute.text.trim();
+      var degree = selectedDegree ?? "";
+      var body = {
+        "institution_name": institutionName,
+        "degree": degree,
+        "result_file": file?.id,
+      };
+      var model = await externalGradeRepo.updateExternalGrade(
+          map: body, id: editModel?.id ?? 0);
+      model.copyWith(
+          resultFile: file, degree: degree, institutionName: institutionName);
+      context.pop();
+      context.pop(model);
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("${e.response.statusCode}");
+        log("${e.response.body}");
+      }
+    }
+    context.pop();
+  }
+
+  Future<void> updateSubjects() async {
+    var localList = subjectsVM.where((element) => element.isLocal).toList();
+    // await uploadSubjects(editModel!, localList);
+    var list = subjectsVM.where((element) => !element.isLocal).toList();
+    var ids = list.map((e) => e.id).toList();
+    List<Map> bodies = [];
+    bodies = List.generate(
+      ids.length,
+      (index) => {
+        "name": "${list[index]}",
+        "grade": "${list[index]}",
+      },
+    );
+    await Future.wait(
+      [
+        for (int i = 0; i < ids.length; i++)
+          externalGradeRepo.updateSubject(map: bodies[i], id: ids[i] ?? 0),
+        uploadSubjects(editModel!, localList)
       ],
     );
   }
@@ -238,6 +307,7 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       (index) => SubjectVM(
           name: list[index].name ?? "",
           grade: list[index].grade ?? '',
+          isLocal: false,
           id: list[index].id),
     );
   }
@@ -249,35 +319,5 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     return;
   }
 
-  Future<void> updateExternalGrade() async {
-    if (editModel == null) {
-      return;
-    }
-    var file = editModel!.resultFile;
-    if (hasDocumentChanged) {
-      file = await uploadDocuments();
-    }
-  }
 
-  Future<void> updateSubjects() async {
-    var localList = subjectsVM.where((element) => element.isLocal).toList();
-    // await uploadSubjects(editModel!, localList);
-    var list = subjectsVM.where((element) => !element.isLocal).toList();
-    var ids = list.map((e) => e.id).toList();
-    List<Map> bodies = [];
-    bodies = List.generate(
-      ids.length,
-      (index) => {
-        "name": "${list[index]}",
-        "grade": "${list[index]}",
-      },
-    );
-    await Future.wait(
-      [
-        for (int i = 0; i < ids.length; i++)
-          externalGradeRepo.updateSubject(map: bodies[i], id: ids[i] ?? 0),
-        uploadSubjects(editModel!, localList)
-      ],
-    );
-  }
 }

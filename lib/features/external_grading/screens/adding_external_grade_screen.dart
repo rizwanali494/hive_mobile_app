@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
@@ -235,7 +236,20 @@ class AddExternalGradeScreen extends StatelessWidget {
                         ],
                       ),
                       for (var subject in provider.subjectsVM)
-                        GradeWidget(gradeVM: subject),
+                        GradeWidget(
+                          gradeVM: subject,
+                          onEdit: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            showDialog(
+                              context: context,
+                              builder: (context) => SubjectEditDialog(
+                                subjectVM: subject,
+                                onUpdate: provider.updateVM,
+                                onDelete: provider.removeSubject,
+                              ),
+                            );
+                          },
+                        ),
                       33.verticalSpace,
                     ],
                     Column(

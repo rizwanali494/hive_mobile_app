@@ -10,10 +10,12 @@ import 'package:provider/provider.dart';
 
 class GradeWidget extends StatelessWidget {
   final SubjectVM gradeVM;
+  final Function() onEdit;
 
   const GradeWidget({
     super.key,
     required this.gradeVM,
+    required this.onEdit,
   });
 
   @override
@@ -77,18 +79,7 @@ class GradeWidget extends StatelessWidget {
                     right: 20.w,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      final gradeAddingProvider = context.read<GradeAddingVM>();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      showDialog(
-                        context: context,
-                        builder: (context) => SubjectEditDialog(
-                          subjectVM: gradeVM,
-                          onUpdate: gradeAddingProvider.updateVM,
-                          onDelete: gradeAddingProvider.removeSubject,
-                        ),
-                      );
-                    },
+                    onTap: onEdit,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

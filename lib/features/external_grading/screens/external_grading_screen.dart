@@ -140,7 +140,7 @@ class ExternalGradingScreen extends StatelessWidget {
                               return SizedBox.shrink();
                             }
                             return GradeInfoWidget(
-                              controller: GradeInfoVM(
+                              controller: GradeDetailVM(
                                 model: provider.items[index],
                               ),
                             );
