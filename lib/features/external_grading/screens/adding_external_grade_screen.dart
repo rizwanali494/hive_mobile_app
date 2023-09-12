@@ -40,7 +40,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DividerAppBar(
-                      title: AppStrings.addExternalGrade,
+                      title: titleText(),
                       titleStyle: styles.inter20w700,
                       actionButton: provider.editModel == null
                           ? null
@@ -207,7 +207,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 color: styles.skyBlue,
                               )),
                           child: Text(
-                            "+ ${AppStrings.add} ${AppStrings.subjects}",
+                            "+ ${buttonText()} ${AppStrings.subjects}",
                             style: styles.inter12w400.copyWith(
                               color: styles.skyBlue,
                             ),
@@ -304,7 +304,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                           backgroundColor: styles.skyBlue,
                         ),
                         child: Text(
-                          AppStrings.add,
+                          buttonText(),
                           style: styles.inter12w400.copyWith(
                             color: styles.white,
                           ),
@@ -319,5 +319,19 @@ class AddExternalGradeScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  String buttonText() {
+    if (editModel == null) {
+      return AppStrings.add;
+    }
+    return AppStrings.update;
+  }
+
+  String titleText() {
+    if (editModel == null) {
+      return AppStrings.addExternalGrade;
+    }
+    return AppStrings.editExternalGrade;
   }
 }

@@ -197,9 +197,9 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       log("popped 1");
       var subjects = await uploadSubjects(model, subjectsVM);
       log("popped 2");
-      model.copyWith(resultFile: resultFile);
+      model = model.copyWith(resultFile: resultFile);
       context.pop();
-      context.pop();
+      context.pop(model);
       return;
     } catch (e) {
       if (e is HTTPStatusCodeException) {
@@ -244,7 +244,6 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       if (hasDocumentChanged) {
         file = await uploadDocuments();
       }
-
       await updateSubjects();
       var institutionName = institute.text.trim();
       var degree = selectedDegree ?? "";
@@ -273,9 +272,9 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
 
   Future<void> updateSubjects() async {
     var localList = subjectsVM.where((element) => element.isLocal).toList();
-    // await uploadSubjects(editModel!, localList);
     var list = subjectsVM.where((element) => !element.isLocal).toList();
     var ids = list.map((e) => e.id).toList();
+    log(ids.toString());
     List<Map> bodies = [];
     bodies = List.generate(
       ids.length,
@@ -316,15 +315,22 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
   bool gettingSubjects = true;
 
   Future<void> getAllSubjects(int id) async {
-    var list = await externalGradeRepo.getAllSubjects(id: id);
-    subjectsVM = List.generate(
-      list.length,
-      (index) => SubjectVM(
-          name: list[index].name ?? "",
-          grade: list[index].grade ?? '',
-          isLocal: false,
-          id: list[index].id),
-    );
+    try {
+      var list = await externalGradeRepo.getAllSubjects(id: id);
+      subjectsVM = List.generate(
+        list.length,
+        (index) => SubjectVM(
+            name: list[index].name ?? "",
+            grade: list[index].grade ?? '',
+            isLocal: false,
+            id: list[index].id),
+      );
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("message : ${e.response.statusCode}");
+        log("message : ${e.response.body}");
+      }
+    }
   }
 
   Future<void> deleteAllSubjects(List<int> ids) async {

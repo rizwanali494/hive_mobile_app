@@ -35,7 +35,9 @@ class AppStrings {
   static String NON_ATTENDING = "NON_ATTENDING";
   static String comment = "Comment";
   static String newRequest = "New Request";
-  static String addExternalGrade = "Add External Grades";
+  static String externalGrade = "External Grades";
+  static String addExternalGrade = "Add $externalGrade";
+  static String editExternalGrade = "Edit ${externalGrade}";
   static String reportView = "Report View";
   static String academicYear = "Academic Year";
   static String student = "Student";

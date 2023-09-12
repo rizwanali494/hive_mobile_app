@@ -34,6 +34,8 @@ abstract class ExternalGradesRepo {
   Future<List<SubjectModel>> getAllSubjects({required int id});
 
   Future<void> deleteSubject({required int id});
+
+  Future<void> deleteExternalGrade({required int id});
 }
 
 class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
@@ -121,5 +123,12 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
     var response = await apiService.patch(url: url, body: map);
     var body = jsonDecode(response.body);
     return ExternalGradeModel.createJson(body);
+  }
+
+  @override
+  Future<void> deleteExternalGrade({required int id}) async {
+    var url = ApiEndpoints.externalGrade.withId(id);
+    var response = await apiService.delete(url: url);
+    return;
   }
 }
