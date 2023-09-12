@@ -34,6 +34,12 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     }
   }
 
+  void setAvailableDegrees(List<String> list) {
+    for (var element in list) {
+      degrees.remove(element);
+    }
+  }
+
   String? selectedDegree;
   final subjectCtrl = TextEditingController();
   final institute = TextEditingController();
@@ -327,6 +333,4 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     ]);
     return;
   }
-
-
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
 import 'package:images_picker/images_picker.dart';
 
 class UtilFunctions {
-   showLoaderDialog(BuildContext context, {String text = 'Loading'}) {
+  showLoaderDialog(BuildContext context, {String text = 'Loading'}) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
     AlertDialog alert = AlertDialog(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -12,11 +15,8 @@ class UtilFunctions {
           return false;
         },
         child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           width: double.infinity,
+          height: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

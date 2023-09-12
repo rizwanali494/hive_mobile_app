@@ -164,9 +164,12 @@ final goRouter = GoRouter(
         model = extra?["model"];
         Function(ExternalGradeModel? model) onChange =
             extra?["onChange"] ?? (m) {};
+        Function(ExternalGradeModel? model) onDelete =
+            extra?["onDelete"] ?? (m) {};
         return GradeDetailsScreen(
           model: model,
           onChange: onChange,
+          onDelete: onDelete,
         );
       },
     ),

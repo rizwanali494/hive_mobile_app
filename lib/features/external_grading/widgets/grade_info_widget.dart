@@ -44,11 +44,14 @@ class GradeInfoWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     final provider = context.read<ExternalGradeVM>();
-                    context.push<ExternalGradeModel>(GradeDetailsScreen.route,
+                    var model = await context.push<ExternalGradeModel>(
+                        GradeDetailsScreen.route,
                         extra: {
                           "model": controller.model,
                           "onChange": provider.updateItem,
+                          "onDelete": provider.removeExternalGrade,
                         });
+                    provider.removeExternalGrade(model);
                   },
                   child: Row(
                     children: [

@@ -18,10 +18,14 @@ import 'package:provider/provider.dart';
 class GradeDetailsScreen extends StatelessWidget {
   final ExternalGradeModel model;
   final Function(ExternalGradeModel? model) onChange;
+  final Function(ExternalGradeModel? model) onDelete;
   static const route = "/GradeDetails";
 
   const GradeDetailsScreen(
-      {Key? key, required this.model, required this.onChange})
+      {Key? key,
+      required this.model,
+      required this.onChange,
+      required this.onDelete})
       : super(key: key);
 
   @override

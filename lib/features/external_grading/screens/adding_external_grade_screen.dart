@@ -42,6 +42,27 @@ class AddExternalGradeScreen extends StatelessWidget {
                     DividerAppBar(
                       title: AppStrings.addExternalGrade,
                       titleStyle: styles.inter20w700,
+                      actionButton: provider.editModel == null
+                          ? null
+                          : GestureDetector(
+                              onTap: () {
+                                context.pop();
+                                context.pop(provider.editModel);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 24.w,
+                                  vertical: 4.h,
+                                ),
+                                decoration: BoxDecoration(
+                                    color: styles.lightPink,
+                                    borderRadius: BorderRadius.circular(36.r)),
+                                child: Text(
+                                  AppStrings.delete,
+                                  style: styles.inter12w400,
+                                ),
+                              ),
+                            ),
                     ),
                     26.verticalSpace,
                     Text(

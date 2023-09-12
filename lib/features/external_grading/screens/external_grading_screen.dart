@@ -44,8 +44,11 @@ class ExternalGradingScreen extends StatelessWidget {
                   27.verticalSpace,
                   BlueActionButton(
                     title: AppStrings.addExternalGrade,
-                    onTap: () {
-                      context.push(AddExternalGradeScreen.route);
+                    onTap: () async {
+                      var model = await context.push<ExternalGradeModel>(
+                          AddExternalGradeScreen.route,
+                          extra: {"addedGrades": provider.addedGrades});
+                      provider.addExternalGrade(model);
                     },
                   ),
                   20.verticalSpace,
@@ -107,6 +110,7 @@ class ExternalGradingScreen extends StatelessWidget {
                         backgroundColor: styles.white,
                         child: ListView.separated(
                           controller: provider.scrollController,
+                          physics: AlwaysScrollableScrollPhysics(),
                           padding: EdgeInsets.symmetric(vertical: 8.h),
                           // padding: EdgeInsets.symmetric(
                           //   vertical: 27.h,

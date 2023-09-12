@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -39,4 +41,25 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
   bool get isLoading => uiState.isLoading;
 
   bool get hasError => uiState.hasError;
+
+  List<String> get addedGrades {
+    return items.map((e) => e.degree ?? "").toList();
+  }
+
+  void addExternalGrade(ExternalGradeModel? model) {
+    if (model == null) {
+      return;
+    }
+    items.add(model);
+    notifyListeners();
+  }
+
+  void removeExternalGrade(ExternalGradeModel? model) {
+    log("removing---");
+    if (model == null) {
+      return;
+    }
+    items.remove(model);
+    notifyListeners();
+  }
 }
