@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/gradeInfoWidget.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_detail_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
@@ -35,6 +39,26 @@ class GradeDetailsScreen extends StatelessWidget {
                   DividerAppBar(
                     title: AppStrings.viewDetails,
                     titleStyle: styles.inter20w700,
+                    actionButton: Padding(
+                      padding: EdgeInsets.only(left: 5.w),
+                      child: GestureDetector(
+                        onTap: () {
+                          context.push(
+                            AddExternalGradeScreen.route,
+                            extra: {
+                              "editModel": provider.model,
+                            },
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          SvgIcons.edit,
+                          width: 25.w,
+                          height: 25.h,
+                          colorFilter:
+                              ColorFilter.mode(styles.azure, BlendMode.srcIn),
+                        ),
+                      ),
+                    ),
                   ),
                   26.verticalSpace,
                   Row(

@@ -17,7 +17,7 @@ class SubjectVM {
   @override
   int get hashCode => id.hashCode;
 
-  SubjectVM copyWith({
+   SubjectVM copyWith({
     int? id,
     String? name,
     String? grade,

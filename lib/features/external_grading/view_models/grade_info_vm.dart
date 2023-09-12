@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
@@ -60,7 +61,18 @@ class GradeDetailVM extends ChangeNotifier {
   }
 
   void removeSubject(SubjectVM subjectVM) {
+    var previous = subjectVM.copyWith();
     subjectsVM.remove(subjectVM);
     notifyListeners();
+    try {
+      externalGradeRepo.deleteSubject(id: subjectVM.id ?? 0);
+    } catch (e) {
+      if (e is HTTPStatusCodeException) {
+        log("message: ${e.response.statusCode}");
+        log("message: ${e.response.body}");
+      }
+      subjectsVM.add(subjectVM);
+      notifyListeners();
+    }
   }
 }
