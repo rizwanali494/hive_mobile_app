@@ -7,7 +7,7 @@ import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
-import 'package:hive_mobile/features/external_grading/screens/gradeInfoWidget.dart';
+import 'package:hive_mobile/features/external_grading/screens/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_detail_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
@@ -17,9 +17,12 @@ import 'package:provider/provider.dart';
 
 class GradeDetailsScreen extends StatelessWidget {
   final ExternalGradeModel model;
+  final Function(ExternalGradeModel? model) onChange;
   static const route = "/GradeDetails";
 
-  const GradeDetailsScreen({Key? key, required this.model}) : super(key: key);
+  const GradeDetailsScreen(
+      {Key? key, required this.model, required this.onChange})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +45,14 @@ class GradeDetailsScreen extends StatelessWidget {
                     actionButton: Padding(
                       padding: EdgeInsets.only(left: 5.w),
                       child: GestureDetector(
-                        onTap: () {
-                          context.push(
+                        onTap: () async {
+                          var model = await context.push<ExternalGradeModel>(
                             AddExternalGradeScreen.route,
                             extra: {
                               "editModel": provider.model,
                             },
                           );
+                          onChange(model);
                         },
                         child: SvgPicture.asset(
                           SvgIcons.edit,
@@ -123,11 +127,12 @@ class GradeDetailsScreen extends StatelessWidget {
                             vertical: 9.h,
                           ),
                           decoration: BoxDecoration(
-                              color: styles.azure,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10.r),
-                                topRight: Radius.circular(10.r),
-                              )),
+                            color: styles.azure,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              topRight: Radius.circular(10.r),
+                            ),
+                          ),
                           child: Padding(
                             padding: EdgeInsets.only(left: 21.w),
                             child: Row(
@@ -171,15 +176,6 @@ class GradeDetailsScreen extends StatelessWidget {
                       ),
                     33.verticalSpace,
                   ],
-
-                  // Align(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: ApplicationStatusWidget(
-                  //     color: styles.lightPink,
-                  //     title: AppStrings.delete,
-                  //     iconPath: SvgIcons.undecided,
-                  //   ),
-                  // ),
                 ],
               );
             },

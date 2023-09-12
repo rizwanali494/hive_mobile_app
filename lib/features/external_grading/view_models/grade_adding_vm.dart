@@ -175,6 +175,8 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
 
   Future<void> uploadExternalGrade(BuildContext context) async {
     showLoaderDialog(context);
+    log("add external grade");
+
     try {
       var resultFile = await uploadDocuments();
       log("message : ${resultFile?.id}");
@@ -229,12 +231,14 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     if (editModel == null) {
       return;
     }
+    log("updating external grade");
     showLoaderDialog(context);
     try {
       var file = editModel!.resultFile;
       if (hasDocumentChanged) {
         file = await uploadDocuments();
       }
+
       await updateSubjects();
       var institutionName = institute.text.trim();
       var degree = selectedDegree ?? "";
@@ -243,10 +247,13 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
         "degree": degree,
         "result_file": file?.id,
       };
+      log(body.toString());
       var model = await externalGradeRepo.updateExternalGrade(
           map: body, id: editModel?.id ?? 0);
-      model.copyWith(
+      model = model.copyWith(
           resultFile: file, degree: degree, institutionName: institutionName);
+      log("file model : ${model}");
+      log("file : ${model.resultFile.toString()}");
       context.pop();
       context.pop(model);
     } catch (e) {
@@ -267,8 +274,8 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     bodies = List.generate(
       ids.length,
       (index) => {
-        "name": "${list[index]}",
-        "grade": "${list[index]}",
+        "name": "${list[index].name}",
+        "grade": "${list[index].grade}",
       },
     );
     await Future.wait(
@@ -294,8 +301,10 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       selectedDegree = degree.first;
     }
     institute.text = model.institutionName ?? "";
+    log("${model.resultFile?.file}");
     _downloadFile(model.resultFile?.file ?? "", model.resultFile?.label ?? "");
     getAllSubjects(model.id ?? 0);
+    editModel = model;
   }
 
   bool gettingSubjects = true;

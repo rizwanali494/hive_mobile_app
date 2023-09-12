@@ -25,6 +25,17 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
     externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
   }
 
+  void updateItem(ExternalGradeModel? model) {
+    if (model == null) {
+      return;
+    }
+    var index = items.indexOf(model);
+    if (index > -1) {
+      items[index] = model;
+      notifyListeners();
+    }
+  }
+
   bool get isLoading => uiState.isLoading;
 
   bool get hasError => uiState.hasError;

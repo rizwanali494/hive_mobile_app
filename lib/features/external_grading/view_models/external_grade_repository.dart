@@ -93,6 +93,7 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
   @override
   Future<List<SubjectModel>> getAllSubjects({required int id}) async {
     var url = ApiEndpoints.subject.externalGrade(id);
+    log(url.toString());
     var response = await apiService.get(url: url);
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
@@ -116,7 +117,7 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
   @override
   Future<ExternalGradeModel> updateExternalGrade(
       {required Map map, required int id}) async {
-    var url = ApiEndpoints.subject.withId(id);
+    var url = ApiEndpoints.externalGrade.withId(id);
     var response = await apiService.patch(url: url, body: map);
     var body = jsonDecode(response.body);
     return ExternalGradeModel.createJson(body);

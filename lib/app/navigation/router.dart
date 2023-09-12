@@ -162,8 +162,11 @@ final goRouter = GoRouter(
         var extra = state.extra as Map<String, dynamic>?;
         ExternalGradeModel model;
         model = extra?["model"];
+        Function(ExternalGradeModel? model) onChange =
+            extra?["onChange"] ?? (m) {};
         return GradeDetailsScreen(
           model: model,
+          onChange: onChange,
         );
       },
     ),

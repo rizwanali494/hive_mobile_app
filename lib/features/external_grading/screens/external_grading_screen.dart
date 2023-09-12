@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
@@ -68,20 +69,6 @@ class ExternalGradingScreen extends StatelessWidget {
                               title: AppStrings.degree,
                             ),
                           ),
-                          // GradingTitleWidget(
-                          //   title: AppStrings.institute,
-                          //   // flex: 2,
-                          // ),
-                          // GradingTitleWidget(
-                          //   title: AppStrings.subjects,
-                          // ),
-                          // GradingTitleWidget(
-                          //   title: AppStrings.grade,
-                          // ),
-                          // SizedBox(
-                          //   width: 35.w,
-                          //   height: 13.h,
-                          // ),
                         ],
                       ),
                     ),
@@ -107,8 +94,7 @@ class ExternalGradingScreen extends StatelessWidget {
                         ),
                       ),
                     )
-                  else
-                    if (provider.hasError)
+                  else if (provider.hasError)
                     Expanded(
                       child: ErrorTextWidget(
                         onRefresh: provider.refreshList,
@@ -143,6 +129,9 @@ class ExternalGradingScreen extends StatelessWidget {
                               controller: GradeDetailVM(
                                 model: provider.items[index],
                               ),
+                              onChange: (ExternalGradeModel? model) {
+                                provider.updateItem(model);
+                              },
                             );
                           },
                           itemCount: provider.listCount,
