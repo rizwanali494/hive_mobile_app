@@ -173,6 +173,7 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     if (!validateData()) {
       return;
     }
+    FocusManager.instance.primaryFocus?.unfocus();
     if (editModel == null) {
       uploadExternalGrade(context);
       return;
@@ -209,6 +210,8 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
         log("${e.response.body}");
       }
       log(e.toString());
+      UtilFunctions.showToast(
+          msg: AppStrings.somethingWentWrong, context: context);
     }
     context.pop();
   }
@@ -270,6 +273,8 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
         log("${e.response.statusCode}");
         log("${e.response.body}");
       }
+      UtilFunctions.showToast(
+          msg: AppStrings.somethingWentWrong, context: context);
     }
     context.pop();
   }

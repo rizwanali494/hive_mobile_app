@@ -34,6 +34,7 @@ class ExternalGradingScreen extends StatelessWidget {
           create: (BuildContext context) => ExternalGradeVM(),
           child: Consumer<ExternalGradeVM>(
             builder: (context, provider, child) {
+              provider.context ??= context;
               return Column(
                 children: [
                   AppBarWidget(
@@ -114,33 +115,32 @@ class ExternalGradingScreen extends StatelessWidget {
                         // padding: EdgeInsets.symmetric(
                         //   vertical: 27.h,
                         // ),
-                          separatorBuilder: (context, index) {
-                            if (index == provider.listCount) {
-                              return const SizedBox.shrink();
+                        separatorBuilder: (context, index) {
+                          if (index == provider.listCount) {
+                            return const SizedBox.shrink();
+                          }
+                          return 10.verticalSpace;
+                        },
+                        itemBuilder: (context, index) {
+                          if (index == provider.items.length) {
+                            if (provider.isGettingMore) {
+                              return Center(child: CircularProgressIndicator());
                             }
-                            return 10.verticalSpace;
-                          },
-                          itemBuilder: (context, index) {
-                            if (index == provider.items.length) {
-                              if (provider.isGettingMore) {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              return SizedBox.shrink();
-                            }
-                            return GradeInfoWidget(
-                              controller: GradeDetailVM(
-                                model: provider.items[index],
-                              ),
-                              onChange: (ExternalGradeModel? model) {
-                                provider.updateItem(model);
-                              },
-                            );
-                          },
-                          itemCount: provider.listCount,
-                        ),
+                            return SizedBox.shrink();
+                          }
+                          return GradeInfoWidget(
+                            controller: GradeDetailVM(
+                              model: provider.items[index],
+                            ),
+                            onChange: (ExternalGradeModel? model) {
+                              provider.updateItem(model);
+                            },
+                          );
+                        },
+                        itemCount: provider.listCount,
                       ),
                     ),
+                  ),
 
                   // Expanded(
                   //   child: ListView.separated(

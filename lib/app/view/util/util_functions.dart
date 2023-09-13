@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
+import 'package:hive_mobile/main.dart';
 import 'package:images_picker/images_picker.dart';
 
 class UtilFunctions {
@@ -56,7 +57,9 @@ class UtilFunctions {
     return null;
   }
 
-  static Future<List<Media>?> imageFromGallery({int imageCount = 1}) async {
+  static Future<List<Media>?> imageFromGallery({
+    int imageCount = 1,
+  }) async {
     var file = await ImagesPicker.pick(
       maxSize: 300,
       quality: 0.6,
@@ -77,7 +80,12 @@ class UtilFunctions {
     return file;
   }
 
-  static void showToast({String? msg, BuildContext? context}) {
+  static void showToast(
+      {String? msg,
+      BuildContext? context,
+      List<Widget> actionButtons = const []}) {
+    // context = context ?? navigatorKey.currentContext;
+
     if (context == null) {
       Fluttertoast.showToast(
         msg: msg ?? AppStrings.somethingWentWrong,
@@ -127,7 +135,8 @@ class UtilFunctions {
                   "Dismiss",
                   style: TextStyle(color: Colors.white),
                 ),
-              )
+              ),
+              ...actionButtons
             ],
           ),
         ],
