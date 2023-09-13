@@ -66,6 +66,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
         paginationController.setOffset(list.length);
       }
       items.addAll(list);
+      await localService.clearCollection();
       await localService.saveAll(list);
       paginationController.addListener();
       return;

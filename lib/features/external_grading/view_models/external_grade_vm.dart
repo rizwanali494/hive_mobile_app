@@ -52,14 +52,20 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
     }
     items.add(model);
     notifyListeners();
+    if (items.length < 10) {
+      localService.put(model);
+    }
   }
 
-  void removeExternalGrade(ExternalGradeModel? model) {
+  void removeExternalGrade(ExternalGradeModel? model) async {
     if (model == null) {
       return;
     }
     items.remove(model);
     notifyListeners();
-    externalGradeRepo.deleteExternalGrade(id: model.id ?? 0);
+    try {
+      await externalGradeRepo.deleteExternalGrade(id: model.id ?? 0);
+      localService.put(model);
+    } catch (e) {}
   }
 }
