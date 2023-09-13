@@ -25,23 +25,22 @@ class AuthVM extends ChangeNotifier
     apiService = getIt.get<ApiService>();
   }
 
+  bool loggingIn = false;
+
   Future googleSignIn(BuildContext context) async {
+    if (loggingIn) {
+      return;
+    }
+    loggingIn = true;
     AuthService authService = GoogleAuthService();
-    // if (kDebugMode) {
-    //   var token =
-    //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjUzOTQ3LCJpYXQiOjE2OTEwNDkxNDcsImp0aSI6IjM0NDY2YWZhZWM4NTRmNjU4ZWI2MTQzNjJmZDY2ODAxIiwidXNlcl9pZCI6NDJ9.i17BGv146sPKStEb9vG20lgRiwtqxV_SA-k9V501qYc";
-    //   registerApiServiceInstance(token: token);
-    //   context.pushReplacement(HomeScreen.route);
-    //   return;
-    // }
     await authService.logOut();
+    showLoaderDialog(context);
     var user = await authService.logIn();
     if (user is GoogleSignInAccount) {
       var body = {
         "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
       };
       try {
-        showLoaderDialog(context);
         var response = await apiService.post(
           url: ApiEndpoints.googleLogin,
           body: body,
@@ -56,19 +55,12 @@ class AuthVM extends ChangeNotifier
         return;
       } catch (e) {
         log(e.toString());
-        handleException(e);
+        handleException(e, context: context);
       }
       if (context.mounted) {
         context.pop();
       }
-      // if (kDebugMode || kProfileMode) {
-      //   context.pushReplacement(HomeScreen.route);
-      //   return;
-      // }
-      // var user = await authService.logIn();
-      // if ((context.mounted && user != null)) {
-      //   context.pushReplacement(HomeScreen.route);
-      // }
     }
+    loggingIn = false;
   }
 }

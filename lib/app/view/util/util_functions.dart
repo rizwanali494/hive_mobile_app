@@ -137,7 +137,7 @@ class UtilFunctions {
       child: toast,
       gravity: ToastGravity.BOTTOM,
       fadeDuration: Duration(milliseconds: 400),
-      toastDuration: Duration(seconds: 2),
+      toastDuration: Duration(seconds: 3),
     );
   }
 }
