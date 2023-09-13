@@ -10,6 +10,7 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/data/subject_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
@@ -200,6 +201,7 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       model = model.copyWith(resultFile: resultFile);
       context.pop();
       context.pop(model);
+      UtilFunctions.showToast(msg: AppStrings.externalGradeUploaded);
       return;
     } catch (e) {
       if (e is HTTPStatusCodeException) {
@@ -261,6 +263,8 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       log("file : ${model.resultFile.toString()}");
       context.pop();
       context.pop(model);
+      UtilFunctions.showToast(
+          msg: AppStrings.externalGradeUpdated, context: context);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");

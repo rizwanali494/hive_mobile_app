@@ -48,7 +48,6 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
 
   void addExternalGrade(ExternalGradeModel? model) {
     if (model == null) {
-      log("message nulll");
       return;
     }
     items.add(model);
@@ -56,7 +55,6 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
   }
 
   void removeExternalGrade(ExternalGradeModel? model) {
-    log("removing---");
     if (model == null) {
       return;
     }

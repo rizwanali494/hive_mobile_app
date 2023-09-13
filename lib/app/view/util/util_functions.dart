@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
-import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
 import 'package:images_picker/images_picker.dart';
 
@@ -78,15 +77,67 @@ class UtilFunctions {
     return file;
   }
 
-  showToast({String? msg}) {
-    Fluttertoast.showToast(
-      msg: msg ?? AppStrings.somethingWentWrong,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: 12.0,
+  static void showToast({String? msg, BuildContext? context}) {
+    if (context == null) {
+      Fluttertoast.showToast(
+        msg: msg ?? AppStrings.somethingWentWrong,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 12.0,
+      );
+      return;
+    }
+    FToast fToast = FToast();
+
+    fToast.init(context);
+    Widget toast = Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+      decoration: BoxDecoration(
+        // borderRadius: BorderRadius.circular(25.0),
+        color: Colors.black,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Something went wrong",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 12.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  fToast.removeCustomToast();
+                },
+                child: Text(
+                  "Dismiss",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      fadeDuration: Duration(milliseconds: 400),
+      toastDuration: Duration(seconds: 2),
     );
   }
 }

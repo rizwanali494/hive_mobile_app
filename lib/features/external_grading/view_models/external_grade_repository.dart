@@ -8,7 +8,6 @@ import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/data/subject_model.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class ExternalGradesRepo {
