@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
 import 'package:images_picker/images_picker.dart';
@@ -74,5 +76,17 @@ class UtilFunctions {
       cropOpt: CropOption(),
     );
     return file;
+  }
+
+  showToast({String? msg}) {
+    Fluttertoast.showToast(
+      msg: msg ?? AppStrings.somethingWentWrong,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 12.0,
+    );
   }
 }
