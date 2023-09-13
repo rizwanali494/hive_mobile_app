@@ -86,7 +86,7 @@ class UtilFunctions {
       List<Widget> actionButtons = const []}) {
     // context = context ?? navigatorKey.currentContext;
 
-    if (context == null) {
+    if (context == null || !(context.mounted)) {
       Fluttertoast.showToast(
         msg: msg ?? AppStrings.somethingWentWrong,
         toastLength: Toast.LENGTH_LONG,
