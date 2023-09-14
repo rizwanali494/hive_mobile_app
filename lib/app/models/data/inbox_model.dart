@@ -67,4 +67,9 @@ class InboxModel {
     map['date'] = date;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'InboxModel{id: $id, localId: $localId, email: $email, accountType: $accountType, picture: $picture, content: $content, date: $date}';
+  }
 }

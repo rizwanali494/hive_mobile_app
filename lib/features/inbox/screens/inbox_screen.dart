@@ -108,7 +108,7 @@ class InboxScreen extends StatelessWidget {
                       vertical: 19.h,
                     ),
                     itemBuilder: (context, index) {
-                      if (false) {
+                      if (provider.isLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
@@ -128,7 +128,7 @@ class InboxScreen extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      if (false) {
+                      if (provider.isLoading) {
                         return const SizedBox.shrink();
                       }
                       return Padding(

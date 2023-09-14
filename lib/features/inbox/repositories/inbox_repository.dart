@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
+import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 
 abstract class InboxRepository {
@@ -9,39 +10,20 @@ abstract class InboxRepository {
 
   InboxRepository({required this.apiService});
 
-  Future<List> getInitialInboxList({int? limit});
-
-  Future<List> getNextInboxList({int? offSet, int? limit});
-
-  Future<void> read();
+  Future<List<InboxModel>> getInitialInboxList({int? limit, int? offset});
 }
 
 class InboxRepositoryImpl extends InboxRepository {
   InboxRepositoryImpl({required super.apiService});
 
   @override
-  Future<List> getInitialInboxList({int? limit}) async {
+  Future<List<InboxModel>> getInitialInboxList(
+      {int? limit, int? offset}) async {
     var response = await apiService.get(
-      url: ApiEndpoints.inbox.withOwnerObject.withPolls.withAttachments
-          .withLimit(limit),
+      url: ApiEndpoints.inbox.withLimit(limit).withOffSet(offset),
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
-    return Future.value([]);
+    return items.map((e) => InboxModel.fromJson(e)).toList();
   }
-
-  @override
-  Future<List> getNextInboxList({int? offSet, int? limit}) async {
-    var response = await apiService.get(
-      url: ApiEndpoints.inbox.withOwnerObject.withPolls.withAttachments
-          .withLimit(limit)
-          .withOffSet(offSet),
-    );
-    var result = jsonDecode(response.body);
-
-    return Future.value([]);
-  }
-
-  @override
-  Future<void> read() async {}
 }

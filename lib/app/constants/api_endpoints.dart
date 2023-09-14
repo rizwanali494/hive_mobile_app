@@ -7,7 +7,6 @@ class ApiEndpoints {
   static String upload = "${apiUrl}upload/";
   static String communication = "${apiUrl}communication/";
   static String announcementPost = "${communication}announcement_post/";
-  static String inbox = "${communication}message/";
   static String notification = "${communication}notification/";
   static String administrative = "${apiUrl}administrative/";
   static String serviceRequest = "${administrative}service_request/";
@@ -15,7 +14,9 @@ class ApiEndpoints {
   static String subject = "${externalGrade}subject/";
   static String sessionNote = "${administrative}session_note/";
   static String award = "${administrative}award/";
-  static String studentUser = "${apiUrl}user/student/";
+  static String user = "${apiUrl}user/";
+  static String studentUser = "${user}student/";
+  static String inbox = "${user}inbox";
   static String hobby = "${studentUser}hobby/bulk_create/";
   static String event = "${apiUrl}event/";
   static String activity = "${event}activity/";
