@@ -116,7 +116,7 @@ class UtilFunctions {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Something went wrong",
+                msg ?? AppStrings.somethingWentWrong,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -132,7 +132,7 @@ class UtilFunctions {
                   fToast.removeCustomToast();
                 },
                 child: Text(
-                  "Dismiss",
+                  AppStrings.dismiss,
                   style: TextStyle(color: Colors.white),
                 ),
               ),

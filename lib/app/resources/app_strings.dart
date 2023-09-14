@@ -123,4 +123,5 @@ class AppStrings {
   static String update = "Update";
   static String externalGradeUploaded = "External Grade Uploaded";
   static String externalGradeUpdated = "External Grade Updated";
+  static String dismiss = "Dismiss";
 }
