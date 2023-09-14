@@ -37,6 +37,10 @@ extension ApiFieldExpandExtension on String {
     return _appendPaginationParameter("offset", offSet);
   }
 
+  String withReceiverId(int? id) {
+    return _appendPaginationParameter("receiver", id);
+  }
+
   String withLimit(int? limit) {
     return _appendPaginationParameter("limit", limit);
   }
