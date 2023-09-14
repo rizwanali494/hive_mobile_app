@@ -72,4 +72,12 @@ class InboxModel {
   String toString() {
     return 'InboxModel{id: $id, localId: $localId, email: $email, accountType: $accountType, picture: $picture, content: $content, date: $date}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is InboxModel && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

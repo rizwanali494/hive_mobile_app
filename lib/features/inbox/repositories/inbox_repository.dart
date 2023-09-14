@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
@@ -24,6 +25,7 @@ class InboxRepositoryImpl extends InboxRepository {
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
+    log("messeage count : ${items.length}");
     return items.map((e) => InboxModel.fromJson(e)).toList();
   }
 }

@@ -37,13 +37,18 @@ const InboxModelSchema = CollectionSchema(
       name: r'email',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 4,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 5,
       name: r'id',
       type: IsarType.long,
     ),
     r'picture': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'picture',
       type: IsarType.object,
       target: r'Attachments',
@@ -114,9 +119,10 @@ void _inboxModelSerialize(
   writer.writeString(offsets[1], object.content);
   writer.writeString(offsets[2], object.date);
   writer.writeString(offsets[3], object.email);
-  writer.writeLong(offsets[4], object.id);
+  writer.writeLong(offsets[4], object.hashCode);
+  writer.writeLong(offsets[5], object.id);
   writer.writeObject<Attachments>(
-    offsets[5],
+    offsets[6],
     allOffsets,
     AttachmentsSchema.serialize,
     object.picture,
@@ -134,10 +140,10 @@ InboxModel _inboxModelDeserialize(
     content: reader.readStringOrNull(offsets[1]),
     date: reader.readStringOrNull(offsets[2]),
     email: reader.readStringOrNull(offsets[3]),
-    id: reader.readLongOrNull(offsets[4]),
+    id: reader.readLongOrNull(offsets[5]),
     localId: id,
     picture: reader.readObjectOrNull<Attachments>(
-      offsets[5],
+      offsets[6],
       AttachmentsSchema.deserialize,
       allOffsets,
     ),
@@ -161,8 +167,10 @@ P _inboxModelDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
+      return (reader.readLongOrNull(offset)) as P;
+    case 6:
       return (reader.readObjectOrNull<Attachments>(
         offset,
         AttachmentsSchema.deserialize,
@@ -864,6 +872,60 @@ extension InboxModelQueryFilter
     });
   }
 
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition> hashCodeEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition> hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition> hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1085,6 +1147,18 @@ extension InboxModelQuerySortBy
     });
   }
 
+  QueryBuilder<InboxModel, InboxModel, QAfterSortBy> sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InboxModel, InboxModel, QAfterSortBy> sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<InboxModel, InboxModel, QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1148,6 +1222,18 @@ extension InboxModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<InboxModel, InboxModel, QAfterSortBy> thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InboxModel, InboxModel, QAfterSortBy> thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<InboxModel, InboxModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1203,6 +1289,12 @@ extension InboxModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<InboxModel, InboxModel, QDistinct> distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
   QueryBuilder<InboxModel, InboxModel, QDistinct> distinctById() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id');
@@ -1239,6 +1331,12 @@ extension InboxModelQueryProperty
   QueryBuilder<InboxModel, String?, QQueryOperations> emailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'email');
+    });
+  }
+
+  QueryBuilder<InboxModel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 
