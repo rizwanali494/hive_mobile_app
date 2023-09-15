@@ -46,45 +46,48 @@ class _ChatScreenState extends State<ChatScreen> {
               return Column(
                 children: [
                   DividerAppBar(title: _user.name),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: provider.controller,
-                      itemCount: provider.messages.length,
-                      itemBuilder: (context, index) {
-                        if (provider.messages.isNotEmpty) {
-                          WidgetsBinding.instance
-                              .addPostFrameCallback((timeStamp) {
-                            provider.controller.jumpTo(
-                                provider.controller.position.maxScrollExtent);
-                          });
-                        }
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                buildDivider(styles),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
-                                  child: Text(
-                                    provider.messages[index].dateAdded ?? "",
-                                    style: styles.inter9w400,
+                  if (provider.messages.isNotEmpty)
+                    Expanded(
+                      child: ListView.builder(
+                        controller: provider.controller,
+                        itemCount: provider.messages.length,
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          // if (provider.messages.isNotEmpty&& !provider.scrollCheck) {
+                          //   provider.scrollCheck = true;
+                          //   WidgetsBinding.instance
+                          //       .addPostFrameCallback((timeStamp) {
+                          //     provider.controller.jumpTo(
+                          //         provider.controller.position.maxScrollExtent);
+                          //   });
+                          // }
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                children: [
+                                  buildDivider(styles),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.w),
+                                    child: Text(
+                                      provider.messages[index].dateAdded ?? "",
+                                      style: styles.inter9w400,
+                                    ),
                                   ),
-                                ),
-                                buildDivider(styles),
-                              ],
-                            ),
-                            34.verticalSpace,
-                            const ChatWidget(),
-                            8.verticalSpace,
-                            const ChatWidget(),
-                            25.verticalSpace,
-                          ],
-                        );
-                      },
+                                  buildDivider(styles),
+                                ],
+                              ),
+                              34.verticalSpace,
+                              const ChatWidget(),
+                              8.verticalSpace,
+                              const ChatWidget(),
+                              25.verticalSpace,
+                            ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
                   12.verticalSpace,
                   Row(
                     children: [
