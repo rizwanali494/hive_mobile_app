@@ -185,7 +185,13 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: ChatScreen.route,
       name: ChatScreen.route,
-      builder: (_, state) => const ChatScreen(),
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        int receiverId = extra?["receiverId"] ?? 0;
+        return ChatScreen(
+          receiverId: receiverId,
+        );
+      },
     ),
     // CustomGoRoute.cupertino(
     //   path: '/${IncompleteIdentificationScreen.route}',

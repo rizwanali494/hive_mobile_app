@@ -22,8 +22,13 @@ class MessageRepositoryImpl extends MessageRepository {
   @override
   Future<List<MessageModel>> getMessages(
       {int? limit, int? offset, required int receiverId}) async {
+    var url = ApiEndpoints.message
+        .withLimit(limit)
+        .withOffSet(offset)
+        .withReceiverId(receiverId);
+    log(url);
     var response = await apiService.get(
-      url: ApiEndpoints.message.withLimit(limit).withOffSet(offset),
+      url: url,
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];

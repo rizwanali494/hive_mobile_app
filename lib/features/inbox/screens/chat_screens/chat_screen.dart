@@ -4,15 +4,30 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/inbox/view_models/chat_screen_vm.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/inbox/widgets/chat_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
+import 'package:provider/provider.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
+  final int receiverId;
+
   static const route = "/ChatScreen";
 
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({Key? key, required this.receiverId}) : super(key: key);
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,88 +37,84 @@ class ChatScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 19.w,
         ),
-        child: Column(
-          children: [
-            DividerAppBar(title: _user.name),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          buildDivider(styles),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: Text(
-                              "Wednesday - 12:45PM",
-                              style: styles.inter9w400,
+        child: ChangeNotifierProvider(
+          create: (BuildContext context) =>
+              ChatScreenVM(receiverId: widget.receiverId),
+          lazy: false,
+          child: Consumer<ChatScreenVM>(
+            builder: (context, provider, child) {
+              return Column(
+                children: [
+                  DividerAppBar(title: _user.name),
+                  Expanded(
+                    child: ListView.builder(
+                      controller: provider.controller,
+                      itemCount: provider.messages.length,
+                      itemBuilder: (context, index) {
+                        if (provider.messages.isNotEmpty) {
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((timeStamp) {
+                            provider.controller.jumpTo(
+                                provider.controller.position.maxScrollExtent);
+                          });
+                        }
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                buildDivider(styles),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.w),
+                                  child: Text(
+                                    provider.messages[index].dateAdded ?? "",
+                                    style: styles.inter9w400,
+                                  ),
+                                ),
+                                buildDivider(styles),
+                              ],
                             ),
-                          ),
-                          buildDivider(styles),
-                        ],
-                      ),
-                      34.verticalSpace,
-                      const ChatWidget(),
-                      8.verticalSpace,
-                      const ChatWidget(),
-                      // 14.verticalSpace,
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: Container(
-                      //         decoration: BoxDecoration(
-                      //             color: styles.greyWhite,
-                      //             border: Border.all(color: styles.skyBlue),
-                      //             borderRadius: BorderRadius.circular(36.r)),
-                      //         child: Padding(
-                      //           padding: EdgeInsets.symmetric(
-                      //             horizontal: 26.w,
-                      //           ),
-                      //           child: TextFieldWidget(
-                      //             hintText: AppStrings.typeMessagesHere,
-                      //             styles: styles,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     11.horizontalSpace,
-                      //     SvgPicture.asset(SvgIcons.send)
-                      //   ],
-                      // ),
-                      25.verticalSpace,
-                    ],
-                  );
-                },
-              ),
-            ),
-            12.verticalSpace,
-            Row(
-              children: [
-                Expanded(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: styles.greyWhite,
-                      border: Border.all(color: styles.skyBlue),
-                      borderRadius: BorderRadius.circular(36.r),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 26.w,
-                      ),
-                      child: TitleTextField(
-                        hintText: AppStrings.typeMessagesHere,
-                      ),
+                            34.verticalSpace,
+                            const ChatWidget(),
+                            8.verticalSpace,
+                            const ChatWidget(),
+                            25.verticalSpace,
+                          ],
+                        );
+                      },
                     ),
                   ),
-                ),
-                11.horizontalSpace,
-                SvgPicture.asset(SvgIcons.send)
-              ],
-            ),
-            12.verticalSpace,
-          ],
+                  12.verticalSpace,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: styles.greyWhite,
+                            border: Border.all(color: styles.skyBlue),
+                            borderRadius: BorderRadius.circular(36.r),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 26.w,
+                            ),
+                            child: TitleTextField(
+                              hintText: AppStrings.typeMessagesHere,
+                              textFieldOnly: true,
+                            ),
+                          ),
+                        ),
+                      ),
+                      11.horizontalSpace,
+                      SvgPicture.asset(SvgIcons.send)
+                    ],
+                  ),
+                  12.verticalSpace,
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

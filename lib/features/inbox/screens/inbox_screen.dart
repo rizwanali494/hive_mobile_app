@@ -62,6 +62,7 @@ class InboxScreen extends StatelessWidget {
                 ),
                 child: TitleTextField(
                   hintText: AppStrings.searchMessagesHere,
+                  textFieldOnly: true,
                 ),
               ),
               if (provider.isLoading)
@@ -119,9 +120,16 @@ class InboxScreen extends StatelessWidget {
                           children: [
                             InboxListTile(
                               onTap: () {
-                                context.push(ChatScreen.route);
+                                context.push(
+                                  ChatScreen.route,
+                                  extra: {
+                                    "receiverId": provider.items[index].id
+                                  },
+                                );
                               },
-                              controller: InboxTileWidgetVM(),
+                              controller: InboxTileWidgetVM(
+                                model: provider.items[index],
+                              ),
                             ),
                           ],
                         ),

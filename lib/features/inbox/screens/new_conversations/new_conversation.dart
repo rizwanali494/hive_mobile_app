@@ -47,14 +47,14 @@ class NewConversationScreen extends StatelessWidget {
                         // final record = records[index];
                         return Column(
                           children: [
-                            InboxListTile(
-                              contentPadding: EdgeInsets.only(
-                                top: 20.h,
-                                bottom: 20.h,
-                              ),
-                              onTap: () {},
-                              controller: InboxTileWidgetVM(),
-                            ),
+                            // InboxListTile(
+                            //   contentPadding: EdgeInsets.only(
+                            //     top: 20.h,
+                            //     bottom: 20.h,
+                            //   ),
+                            //   onTap: () {},
+                            //   controller: InboxTileWidgetVM(),
+                            // ),
                           ],
                         );
                       },

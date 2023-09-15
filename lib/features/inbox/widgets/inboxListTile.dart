@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/network_images.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 
 class InboxListTile extends StatelessWidget {
@@ -36,11 +38,27 @@ class InboxListTile extends StatelessWidget {
             top: 5.h,
             bottom: 5.h,
           ),
-      leading: const CircleAvatar(
-        backgroundImage: NetworkImage(
-          NetworkImages.userUrl,
+      // leading: const CircleAvatar(
+      //   backgroundImage: NetworkImage(
+      //     NetworkImages.userUrl,
+      //   ),
+      //   radius: 23,
+      // ),
+      leading: CachedNetworkImage(
+        imageUrl: controller.userImage,
+        imageBuilder: (context, imageProvider) => Container(
+          width: 45.h,
+          height: 45.w,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-        radius: 23,
+        placeholder: (context, url) => const UserPlaceHolderWidget(),
+        errorWidget: (context, url, error) => const UserPlaceHolderWidget(),
       ),
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -53,6 +71,8 @@ class InboxListTile extends StatelessWidget {
           3.verticalSpace,
           Text(
             controller.content,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: styles.inter10w400.copyWith(
               color: styles.darkGrey,
             ),

@@ -1,11 +1,16 @@
-import 'package:hive_mobile/app/constants/network_images.dart';
+import 'package:hive_mobile/app/models/data/inbox_model.dart';
+import 'package:hive_mobile/app/extensions/string_extension.dart';
 
 class InboxTileWidgetVM {
-  String get userImage => NetworkImages.userUrl;
+  final InboxModel model;
 
-  String get time => '2:45PM';
+  InboxTileWidgetVM({required this.model}) {}
 
-  String get name => "Awais Ali";
+  String get userImage => model.picture?.file ?? "";
 
-  String get content => "Awais Ali Khan Lorem ipsum dolor sit amet";
+  String get time => model.date?.timeAdded ?? "";
+
+  String get name => model.email ?? "";
+
+  String get content => model.content ?? "";
 }

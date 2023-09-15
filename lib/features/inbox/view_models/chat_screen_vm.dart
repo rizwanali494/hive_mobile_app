@@ -17,7 +17,7 @@ class ChatScreenVM extends ChangeNotifier {
   final apiService = GetIt.instance.get<ApiService>();
   late MessageRepository messageRepository;
   late RevPaginationController paginationController;
-  final controller = ScrollController();
+  final controller = ScrollController(initialScrollOffset: 1);
 
   ChatScreenVM({required this.receiverId}) {
     messageRepository = MessageRepositoryImpl(apiService: apiService);
@@ -40,11 +40,16 @@ class ChatScreenVM extends ChangeNotifier {
       messages.addAll(latestMessages);
     };
     await performRequest(request: request);
+    log("messages ---- ${messages.length}");
     uiState = UiState.loaded();
     notifyListeners();
+    await Future.delayed(Duration(seconds: 1));
+    // scrollToMax();
   }
 
-  Future<void> performRequest({required Function request}) async {}
+  Future<void> performRequest({required Function request}) async {
+    await request();
+  }
 
   Future<List<MessageModel>> getLocalMessages() async {
     var list = await localService
@@ -53,6 +58,11 @@ class ChatScreenVM extends ChangeNotifier {
         .receiverEqualTo(receiverId)
         .findAll();
     return list;
+  }
+
+  void scrollToMax() {
+    controller.jumpTo(controller.position.maxScrollExtent);
+    // controller.animateTo(controller.position.maxScrollExtent, duration: Duration(seconds: 5), curve: Curves.easeIn);
   }
 }
 
