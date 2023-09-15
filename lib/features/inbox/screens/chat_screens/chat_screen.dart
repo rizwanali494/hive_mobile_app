@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/inbox/view_models/chat_screen_vm.dart';
+import 'package:hive_mobile/features/inbox/view_models/chat_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:hive_mobile/features/inbox/widgets/chat_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
@@ -46,7 +47,12 @@ class _ChatScreenState extends State<ChatScreen> {
               return Column(
                 children: [
                   DividerAppBar(title: _user.name),
-                  if (provider.messages.isNotEmpty)
+                  if (provider.uiState.isLoading)
+                    Expanded(
+                        child: Center(
+                      child: CircularProgressIndicator(),
+                    ))
+                  else
                     Expanded(
                       child: ListView.builder(
                         controller: provider.controller,
@@ -79,10 +85,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ],
                               ),
                               34.verticalSpace,
-                              const ChatWidget(),
+                              ChatWidget(
+                                controller: ChatWidgetVM(
+                                    model: provider.messages[index]),
+                              ),
                               8.verticalSpace,
-                              const ChatWidget(),
-                              25.verticalSpace,
+                              //  ChatWidget(),
+                              // 25.verticalSpace,
                             ],
                           );
                         },

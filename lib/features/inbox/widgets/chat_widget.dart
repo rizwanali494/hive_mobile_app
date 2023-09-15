@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/inbox/view_models/chat_widget_vm.dart';
 
 class ChatWidget extends StatelessWidget {
-  const ChatWidget({Key? key}) : super(key: key);
+  final ChatWidgetVM controller;
+
+  const ChatWidget({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class ChatWidget extends StatelessWidget {
                 bottomLeft: buildRadius()),
           ),
           child: Text(
-            AppStrings.loremPorum * 3,
+            controller.content,
             style: styles.inter16w400,
           ),
         ),
