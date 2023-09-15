@@ -10,4 +10,8 @@ extension StringExtension on String {
       DateTime.tryParse(this) ?? DateTime.now(),
     );
   }
+
+  DateTime get toDatetime {
+    return DateTime.tryParse(this) ?? DateTime.now();
+  }
 }

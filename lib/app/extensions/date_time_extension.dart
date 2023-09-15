@@ -8,7 +8,7 @@ extension DateTimeExtension on DateTime {
     );
   }
 
-  String notificationFormattedTime({bool numericDates = false}) {
+  String formattedDate({bool numericDates = false}) {
     final date2 = DateTime.now();
     final difference = date2.difference(this);
     final DateFormat dateFormat = DateFormat("M/d/y");

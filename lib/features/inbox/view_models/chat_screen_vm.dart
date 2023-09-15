@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/message_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
+import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
+import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:hive_mobile/features/inbox/repositories/message_repository.dart';
 import 'package:isar/isar.dart';
+import 'package:hive_mobile/app/extensions/string_extension.dart';
+import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 
 class ChatScreenVM extends ChangeNotifier {
   int receiverId;
   List<MessageModel> messages = [];
   final apiService = GetIt.instance.get<ApiService>();
   late MessageRepository messageRepository;
-  late PaginationController paginationController;
+  late RevPaginationController paginationController;
   final controller =
       ScrollController(initialScrollOffset: 0.7, keepScrollOffset: true);
 
   ChatScreenVM({required this.receiverId}) {
     messageRepository = MessageRepositoryImpl(apiService: apiService);
     paginationController =
-        PaginationController(controller: controller, onScroll: () {});
+        RevPaginationController(controller: controller, onScroll: onScroll);
     getMessages();
   }
 
   Future<void> onScroll() async {
-    log("called");
-    messages.add(MessageModel(content: "asdsdas"));
+    paginationController.toggleIsGettingMore(true);
+    await Future.delayed(Duration(milliseconds: 500));
+    messages = [
+      ...List.filled(
+          10,
+          MessageModel(
+              content: DateTime.now().toString(),
+              dateAdded: DateTime.now().toString())),
+      ...messages
+    ];
+    notifyListeners();
+    paginationController.toggleIsGettingMore(false);
+    if (messages.length > 100) {
+      paginationController.toggleLastPage(true);
+    }
   }
 
   void addScrollListener() {
@@ -48,8 +66,11 @@ class ChatScreenVM extends ChangeNotifier {
     log("messages ---- ${messages.length}");
     uiState = UiState.loaded();
     notifyListeners();
+    // await Future.delayed(Duration(seconds: 1));
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+          controller.jumpTo(controller.position.maxScrollExtent),
+        });
     addScrollListener();
-    await Future.delayed(Duration(seconds: 1));
     // scrollToMax();
   }
 
@@ -72,5 +93,72 @@ class ChatScreenVM extends ChangeNotifier {
     controller.jumpTo(controller.position.maxScrollExtent);
     // controller.animateTo(controller.position.maxScrollExtent, duration: Duration(seconds: 5), curve: Curves.easeIn);
   }
+
+  DateTime? messageDate;
+
+  String? getDate(MessageModel model) {
+    final date = model.dateAdded?.toDatetime;
+    log("date : ${date}");
+    bool isSameDay = (messageDate?.isSameDay(date ?? DateTime.now()) ?? false);
+    log("is Same : pre : ${messageDate} Date :  ${date}  ${isSameDay}");
+    if (isSameDay) {
+      return date?.formattedDate();
+    }
+    messageDate = date;
+    return null;
+  }
 }
 
+class RevPaginationController {
+  late ScrollController _scrollController;
+  int _offset = 10;
+  late Function onScroll;
+  bool _isGettingMore = false;
+  bool isLastPage = false;
+  PaginationState state = PaginationState.Loaded();
+
+  int get offset => _offset;
+
+  RevPaginationController(
+      {required ScrollController controller, required this.onScroll}) {
+    _scrollController = controller;
+  }
+
+  void addListener() {
+    _scrollController.addListener(() {
+      final nextPageTrigger = 20 + _scrollController.position.minScrollExtent;
+      if (_scrollController.position.pixels < nextPageTrigger) {
+        log("message pixels : ${_scrollController.position.pixels} : ${nextPageTrigger} ");
+        if (_isGettingMore || isLastPage) {
+          log("not getting last page : ${isLastPage}  isGettingMore : ${_isGettingMore}");
+          return;
+        }
+        onScroll();
+      }
+    });
+  }
+
+  void resetOffset() {
+    _offset = 0;
+  }
+
+  void setOffset(int value) {
+    _offset = value;
+  }
+
+  void toggleLastPage([bool? value]) {
+    isLastPage = value ?? !isLastPage;
+  }
+
+  void toggleIsGettingMore([bool? value]) {
+    _isGettingMore = value ?? !_isGettingMore;
+  }
+
+  bool get isGettingMore {
+    return _isGettingMore;
+  }
+
+  void removeListener() {
+    _scrollController.removeListener(() {});
+  }
+}

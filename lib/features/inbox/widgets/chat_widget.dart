@@ -17,21 +17,24 @@ class ChatWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 29.w,
-            vertical: 29.h,
-          ),
-          decoration: BoxDecoration(
-            color: styles.paleWhite,
-            borderRadius: BorderRadius.only(
-                topLeft: buildRadius(),
-                topRight: buildRadius(),
-                bottomLeft: buildRadius()),
-          ),
-          child: Text(
-            controller.content,
-            style: styles.inter16w400,
+        Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 29.w,
+              vertical: 29.h,
+            ),
+            decoration: BoxDecoration(
+              color: styles.paleWhite,
+              borderRadius: BorderRadius.only(
+                  topLeft: buildRadius(),
+                  topRight: buildRadius(),
+                  bottomLeft: buildRadius()),
+            ),
+            child: Text(
+              controller.content,
+              style: styles.inter16w400,
+            ),
           ),
         ),
         12.verticalSpace,

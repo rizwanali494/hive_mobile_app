@@ -13,6 +13,6 @@ class NotificationTileVM {
     if (formattedTime == null) {
       return "a while ago";
     }
-    return formattedTime.notificationFormattedTime();
+    return formattedTime.formattedDate();
   }
 }

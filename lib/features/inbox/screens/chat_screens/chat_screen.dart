@@ -57,16 +57,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: ListView.builder(
                         controller: provider.controller,
                         itemCount: provider.messages.length,
-                        reverse: true,
+                        // reverse: true,
                         itemBuilder: (context, index) {
-                          // if (provider.messages.isNotEmpty&& !provider.scrollCheck) {
-                          //   provider.scrollCheck = true;
-                          //   WidgetsBinding.instance
-                          //       .addPostFrameCallback((timeStamp) {
-                          //     provider.controller.jumpTo(
-                          //         provider.controller.position.maxScrollExtent);
-                          //   });
-                          // }
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -77,7 +69,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 8.w),
                                     child: Text(
-                                      provider.messages[index].dateAdded ?? "",
+                                      provider.getDate(
+                                              provider.messages[index]) ??
+                                          "",
                                       style: styles.inter9w400,
                                     ),
                                   ),
@@ -87,7 +81,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               34.verticalSpace,
                               ChatWidget(
                                 controller: ChatWidgetVM(
-                                    model: provider.messages[index]),
+                                  model: provider.messages[index],
+                                ),
                               ),
                               8.verticalSpace,
                               //  ChatWidget(),
