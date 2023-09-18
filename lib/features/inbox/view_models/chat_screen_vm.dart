@@ -11,13 +11,17 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:hive_mobile/features/inbox/repositories/message_repository.dart';
+import 'package:hive_mobile/features/inbox/view_models/date_message_class.dart';
 import 'package:isar/isar.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 
+import 'date_message_class.dart';
+
 class ChatScreenVM extends ChangeNotifier {
   int receiverId;
   List<MessageModel> messages = [];
+
   final apiService = GetIt.instance.get<ApiService>();
   late MessageRepository messageRepository;
   late RevPaginationController paginationController;
@@ -107,6 +111,22 @@ class ChatScreenVM extends ChangeNotifier {
     messageDate = date;
     return null;
   }
+
+  List<DateMessage> messageData() {
+    final list = <DateMessage>[];
+    for (final element in messages) {
+      final mDate =
+      (DateTime.tryParse(element.dateAdded ?? "") ?? DateTime.now())
+          .formattedDate();
+      if (!list.contains(DateMessage.Data(mDate))) {
+        list.add(DateMessage.Data(mDate));
+      }
+      list.add(DateMessage.Message(element));
+    }
+    return list;
+  }
+
+
 }
 
 class RevPaginationController {
@@ -128,9 +148,7 @@ class RevPaginationController {
     _scrollController.addListener(() {
       final nextPageTrigger = 20 + _scrollController.position.minScrollExtent;
       if (_scrollController.position.pixels < nextPageTrigger) {
-        log("message pixels : ${_scrollController.position.pixels} : ${nextPageTrigger} ");
         if (_isGettingMore || isLastPage) {
-          log("not getting last page : ${isLastPage}  isGettingMore : ${_isGettingMore}");
           return;
         }
         onScroll();
@@ -161,4 +179,5 @@ class RevPaginationController {
   void removeListener() {
     _scrollController.removeListener(() {});
   }
+
 }
