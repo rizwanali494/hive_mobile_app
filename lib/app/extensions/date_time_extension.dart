@@ -12,9 +12,13 @@ extension DateTimeExtension on DateTime {
     final date2 = DateTime.now();
     final difference = date2.difference(this);
     final DateFormat dateFormat = DateFormat("M/d/y");
-    if (difference.inDays >= 2) {
+    if (difference.inDays >= 7) {
       return dateFormat.format(this);
-    } else if (difference.inDays >= 1) {
+    }
+    else if( difference.inDays >= 2 ){
+      return _dayOnlyFormat.format(this);
+    }
+    else if (difference.inDays >= 1) {
       return (numericDates) ? '1 day ago' : 'Yesterday';
     } else if (difference.inHours >= 2) {
       return '${difference.inHours} hours ago';
@@ -62,3 +66,4 @@ var _timeOnlyFormat = DateFormat('h:mm a');
 var _dateOnlyFormat = DateFormat('d');
 var _monthShortOnlyFormat = DateFormat('MMM');
 var _monthOnlyFormat = DateFormat('MMMM');
+var _monthDayYear = DateFormat('MMMM dd, yyyy');

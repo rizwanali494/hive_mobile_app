@@ -8,7 +8,7 @@ class InboxTileWidgetVM {
 
   String get userImage => model.picture?.file ?? "";
 
-  String get time => model.date?.timeAdded ?? "";
+  String get time => model.date?.timeAgoAdded ?? "";
 
   String get name => model.email ?? "";
 

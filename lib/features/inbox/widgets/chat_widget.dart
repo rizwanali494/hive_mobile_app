@@ -41,7 +41,8 @@ class ChatWidget extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: Text(
-            "Sent - 2:45PM",
+            // "Sent - 2:45PM",
+            controller.timeSent,
             style: styles.inter10w400,
           ),
         ),

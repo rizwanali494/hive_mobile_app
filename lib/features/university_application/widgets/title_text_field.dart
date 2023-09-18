@@ -14,6 +14,7 @@ class TitleTextField extends StatelessWidget {
   final bool textFieldOnly;
   final TextEditingController? controller;
   final int? maxLines;
+  final void Function()? onTap;
 
   const TitleTextField({
     super.key,
@@ -26,7 +27,7 @@ class TitleTextField extends StatelessWidget {
     this.inputFormatters,
     this.keyboardType,
     this.maxLength,
-    this.enabled = true,
+    this.enabled = true, this.onTap,
   });
 
   @override
@@ -38,6 +39,7 @@ class TitleTextField extends StatelessWidget {
         style: styles.inter12w400,
         inputFormatters: inputFormatters,
         keyboardType: keyboardType,
+        onTap:onTap ,
         maxLength: maxLength,
         controller: controller,
         maxLines: maxLines ?? 1,

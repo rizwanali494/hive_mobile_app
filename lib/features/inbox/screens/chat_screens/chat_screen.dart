@@ -80,7 +80,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                   ],
                                 ),
                                 34.verticalSpace,
-                              ] else if (element is MessageData) ...[
+                              ]
+                              else if (element is MessageData) ...[
                                 ChatWidget(
                                   controller: ChatWidgetVM(
                                     model: element.model,
