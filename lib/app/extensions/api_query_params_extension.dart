@@ -100,6 +100,9 @@ extension ApiFieldExpandExtension on String {
   String get withMostRecentOrder {
     return _appendQueryParameter("ordering=-date_added");
   }
+  String get withLeastRecentOrder {
+    return _appendQueryParameter("ordering=date_added");
+  }
 
   String get withCount {
     return _appendQueryParameter("_count=true");

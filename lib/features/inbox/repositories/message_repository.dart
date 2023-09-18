@@ -25,14 +25,14 @@ class MessageRepositoryImpl extends MessageRepository {
     var url = ApiEndpoints.message
         .withLimit(limit)
         .withOffSet(offset)
-        .withReceiverId(receiverId);
+        .withReceiverId(receiverId).withMostRecentOrder;
     log(url);
     var response = await apiService.get(
       url: url,
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
-    log("messeage spe count : ${items.length}");
-    return items.map((e) => MessageModel.fromJson(e)).toList();
+
+    return items.map((e) => MessageModel.fromJson(e)).toList().reversed.toList();
   }
 }

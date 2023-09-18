@@ -57,10 +57,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: ListView.builder(
                         controller: provider.controller,
-                        itemCount: provider.messageData().length,
+                        itemCount: provider.messageData.length,
                         // reverse: true,
                         itemBuilder: (context, index) {
-                          var element = provider.messageData()[index];
+                          final list = provider.messageData;
+                          var element = list[index];
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

@@ -34,6 +34,24 @@ extension DateTimeExtension on DateTime {
       return 'Just now';
     }
   }
+  String chatFormattedDate({bool numericDates = false}) {
+    final date2 = DateTime.now();
+    final difference = date2.difference(this);
+    final DateFormat dateFormat = DateFormat("M/d/y");
+    if (difference.inDays >= 7) {
+      return dateFormat.format(this);
+    }
+    else if( difference.inDays >= 2 ){
+      return _dayOnlyFormat.format(this);
+    }
+    else if (difference.inDays == 1) {
+      return (numericDates) ? '1 day ago' : 'Yesterday';
+    }
+    else {
+      return 'Today';
+    }
+  }
+
 
   String get dayOnly {
     return _dayOnlyFormat.format(this);

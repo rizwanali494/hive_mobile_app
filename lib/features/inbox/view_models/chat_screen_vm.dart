@@ -16,7 +16,7 @@ import 'package:isar/isar.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 
-import 'date_message_class.dart';
+import 'package:hive_mobile/features/inbox/view_models/date_message_class.dart';
 
 class ChatScreenVM extends ChangeNotifier {
   int receiverId;
@@ -35,22 +35,30 @@ class ChatScreenVM extends ChangeNotifier {
     getMessages();
   }
 
+  int offset = 0;
+  final limit = 10;
+
   Future<void> onScroll() async {
-    paginationController.toggleIsGettingMore(true);
-    await Future.delayed(Duration(milliseconds: 500));
-    messages = [
-      ...List.filled(
-          10,
-          MessageModel(
-              content: DateTime.now().toString(),
-              dateAdded: DateTime.now().toString())),
-      ...messages
-    ];
-    notifyListeners();
-    paginationController.toggleIsGettingMore(false);
-    if (messages.length > 100) {
-      paginationController.toggleLastPage(true);
-    }
+    // return;
+    final request = () async {
+      paginationController.toggleIsGettingMore(true);
+      var latestMessages = await messageRepository.getMessages(
+          receiverId: receiverId, limit: limit, offset: offset);
+      messages = [
+        ...latestMessages,
+        ...messages,
+      ];
+      messages.forEach((element) {
+        log("message : ${element.id}");
+      });
+      offset += latestMessages.length;
+      paginationController.toggleIsGettingMore(false);
+      if( latestMessages.length < limit ){
+        paginationController.toggleLastPage(true);
+      }
+    };
+    await performRequest(request: request);
+    setMessageSData();
   }
 
   void addScrollListener() {
@@ -62,19 +70,25 @@ class ChatScreenVM extends ChangeNotifier {
 
   Future<void> getMessages() async {
     final request = () async {
-      var latestMessages =
-          await messageRepository.getMessages(receiverId: receiverId);
+      var latestMessages = await messageRepository.getMessages(
+          receiverId: receiverId, limit: limit);
+      offset = latestMessages.length;
       messages.addAll(latestMessages);
     };
     await performRequest(request: request);
     log("messages ---- ${messages.length}");
     uiState = UiState.loaded();
+    setMessageSData();
     notifyListeners();
     // await Future.delayed(Duration(seconds: 1));
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           controller.jumpTo(controller.position.maxScrollExtent),
         });
+    messages.forEach((element) {
+      log("message : ${element.id}");
+    });
     addScrollListener();
+
     // scrollToMax();
   }
 
@@ -112,21 +126,25 @@ class ChatScreenVM extends ChangeNotifier {
     return null;
   }
 
-  List<DateMessage> messageData() {
-    final list = <DateMessage>[];
+  List<DateMessage> messagesData = [];
+
+  void setMessageSData() {
+    messagesData = [];
     for (final element in messages) {
       final mDate =
-      (DateTime.tryParse(element.dateAdded ?? "") ?? DateTime.now())
-          .formattedDate();
-      if (!list.contains(DateMessage.Data(mDate))) {
-        list.add(DateMessage.Data(mDate));
+          (DateTime.tryParse(element.dateAdded ?? "") ?? DateTime.now())
+              .chatFormattedDate();
+      if (!messagesData.contains(DateMessage.Data(mDate))) {
+        messagesData.add(DateMessage.Data(mDate));
       }
-      list.add(DateMessage.Message(element));
+      messagesData.add(DateMessage.Message(element));
     }
-    return list;
+    notifyListeners();
   }
 
-
+  List<DateMessage> get messageData {
+    return messagesData;
+  }
 }
 
 class RevPaginationController {
@@ -146,7 +164,7 @@ class RevPaginationController {
 
   void addListener() {
     _scrollController.addListener(() {
-      final nextPageTrigger = 20 + _scrollController.position.minScrollExtent;
+      final nextPageTrigger = 50 + _scrollController.position.minScrollExtent;
       if (_scrollController.position.pixels < nextPageTrigger) {
         if (_isGettingMore || isLastPage) {
           return;
@@ -179,5 +197,4 @@ class RevPaginationController {
   void removeListener() {
     _scrollController.removeListener(() {});
   }
-
 }
