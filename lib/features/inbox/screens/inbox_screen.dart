@@ -40,8 +40,11 @@ class InboxScreen extends StatelessWidget {
                 titleStyle: styles.inter40w700,
                 actions: [
                   IconButton(
-                    onPressed: () =>
-                        context.pushNamed(NewConversationScreen.route),
+                    onPressed: () {
+                      context.pushNamed(NewConversationScreen.route, extra: {
+                        "list": provider.newConversation,
+                      });
+                    },
                     icon: SvgPicture.asset(SvgIcons.messageAdd),
                   )
                 ],

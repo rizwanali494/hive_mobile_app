@@ -166,7 +166,7 @@ class ChatScreenVM extends ChangeNotifier {
     messageCtrl.clear();
     var map = {
       "content": msg,
-      "receiverId": receiverId,
+      "receiver": receiverId,
     };
     try {
       var message = await messageRepository.sendMessage(map: map);

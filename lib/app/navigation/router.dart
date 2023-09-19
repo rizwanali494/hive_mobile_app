@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
+import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
@@ -180,7 +181,13 @@ final goRouter = GoRouter(
     CustomGoRoute.cupertino(
       path: NewConversationScreen.route,
       name: NewConversationScreen.route,
-      builder: (_, state) => const NewConversationScreen(),
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        List<InboxModel> list = extra?["list"] ?? [];
+        return NewConversationScreen(
+          conversation: list,
+        );
+      },
     ),
     CustomGoRoute.cupertino(
       path: ChatScreen.route,

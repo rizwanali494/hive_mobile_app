@@ -32,4 +32,8 @@ class InboxScreenVM extends BaseApiVM<InboxModel> {
   bool get hasError => uiState.hasError;
 
   bool get isLoading => uiState.isLoading;
+
+  List<InboxModel> get newConversation {
+    return items.where((element) => element.content != null).toList();
+  }
 }
