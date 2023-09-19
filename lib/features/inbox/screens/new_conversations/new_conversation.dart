@@ -37,7 +37,7 @@ class NewConversationScreen extends StatelessWidget {
                   DividerAppBar(title: AppStrings.newConversation),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: 20,
+                      itemCount: provider.conversations.length,
                       padding: EdgeInsets.symmetric(
                         vertical: 10.h,
                       ),

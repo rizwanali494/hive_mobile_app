@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/message_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
@@ -75,13 +76,17 @@ class ChatScreenVM extends ChangeNotifier {
           receiverId: receiverId, limit: limit);
       offset = latestMessages.length;
       messages.addAll(latestMessages);
+      saveMessagesToLocal();
     };
-    await performRequest(request: request);
-    log("messages ---- ${messages.length}");
+    final onError = () async {
+      final list = await getLocalMessages();
+      messages = list;
+      setMessageSData();
+    };
+    await performRequest(request: request,onError: onError);
     uiState = UiState.loaded();
     setMessageSData();
     notifyListeners();
-    // await Future.delayed(Duration(seconds: 1));
     WidgetsBinding.instance.addPostFrameCallback((_) => {
           controller.jumpTo(controller.position.maxScrollExtent),
         });
@@ -89,12 +94,18 @@ class ChatScreenVM extends ChangeNotifier {
       log("message : ${element.id}");
     });
     addScrollListener();
-
-    // scrollToMax();
   }
 
-  Future<void> performRequest({required Function request}) async {
-    await request();
+  Future<void> performRequest(
+      {required Function request, Function? onError}) async {
+    try {
+      await request();
+    } catch (e) {
+      if (onError != null) {
+        onError();
+      }
+      // TODO
+    }
   }
 
   Future<List<MessageModel>> getLocalMessages() async {
@@ -103,7 +114,26 @@ class ChatScreenVM extends ChangeNotifier {
         .filter()
         .receiverEqualTo(receiverId)
         .findAll();
-    return list;
+    list.sortByRecentOrder(
+      getDateAdded: (item) =>
+          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+    );
+    return list.reversed.toList();
+  }
+
+  void saveMessagesToLocal() async {
+    List<MessageModel> list = [];
+    if (messages.length > 10) {
+      int value = messages.length - 10;
+      int length = messages.length;
+      for (int i = value; i < length; i++) {
+        list.add(messages[i]);
+      }
+    } else {
+      list = messages;
+    }
+    await localService.clearCollection();
+    localService.saveAll(list);
   }
 
   bool scrollCheck = false;
@@ -173,13 +203,13 @@ class ChatScreenVM extends ChangeNotifier {
       messages.remove(messageModel);
       messages.add(message);
       setMessageSData();
+      saveMessagesToLocal();
     } catch (e) {
       removeMessage(messageModel);
       addMessage(messageModel.copyWith(messageState: MessageState.hasError()));
     }
     notifyListeners();
   }
-
 
   void addMessage(MessageModel model) {
     messages.add(model);
@@ -191,7 +221,7 @@ class ChatScreenVM extends ChangeNotifier {
     setMessageSData();
   }
 
-  void retryMessage( MessageModel model ) async {
+  void retryMessage(MessageModel model) async {
     removeMessage(model);
     addMessage(model.copyWith(messageState: MessageState.Sending()));
     var map = {
@@ -209,5 +239,4 @@ class ChatScreenVM extends ChangeNotifier {
     }
     notifyListeners();
   }
-
 }
