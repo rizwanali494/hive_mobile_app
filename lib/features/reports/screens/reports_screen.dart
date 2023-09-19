@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/drop_down/dropdown_button2.dart';
@@ -7,11 +9,17 @@ import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/report_list_tile.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
+import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
-class ReportsScreen extends StatelessWidget {
+class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ReportsScreen> createState() => _ReportsScreenState();
+}
+
+class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -19,151 +27,47 @@ class ReportsScreen extends StatelessWidget {
       create: (BuildContext context) => ReportsScreenVM(),
       child: Consumer<ReportsScreenVM>(
         builder: (context, provider, child) {
-          return DefaultTabController(
-            length: 2, // Specify the number of tabs
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 19.w,
+            ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppBarWidget(
-                  color: styles.black,
-                  horizontalPadding: 19.w,
-                  title: AppStrings.reports,
-                  titleStyle: styles.inter40w700,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 19.w),
-                  child: TabBarWidget(
-                    onTap: (index) {
-                      provider.setIndex(index);
-                    },
-                    selectedIndex: provider.selectedIndex,
-                    tab1Title: AppStrings.academicReport,
-                    tab2Title: AppStrings.attendance,
-                  ),
-                ),
-                15.verticalSpace,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 19.w),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                      isExpanded: true,
-
-                      hint: Row(
+                DividerAppBar(title: AppStrings.reports),
+                27.verticalSpace,
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Image(
+                        width: 138.w,
+                        height: 54.h,
+                        image: AssetImage(SvgIcons.bcpCollegeIcon),
+                      ),
+                      VerticalDivider(
+                        color: styles.black,
+                        thickness: 0.5,
+                      ),
+                      Row(
                         children: [
-                          Text(
-                            AppStrings.overAll,
-                            style: styles.inter12w400,
-                            overflow: TextOverflow.ellipsis,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textColumn("ID","01234567"),
+                              textColumn("Name","Abdul Rehman"),
+                              textColumn("Academic Year","Aug,2020 - July,2021"),
+                            ],
+                          ),
+                          29.horizontalSpace,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textColumn("Class","CAIE A LEVEL - Year 1"),
+                              textColumn("ID","01234567"),
+                              textColumn("ID","01234567"),
+                            ],
                           ),
                         ],
                       ),
-                      items: provider.items
-                          .map(
-                            (item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: styles.inter12w400,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                      value: provider.selectedValue,
-                      onChanged: (value) {
-                        provider.setSelectedValue(value!);
-                      },
-                      buttonStyleData: ButtonStyleData(
-                        height: 29.h,
-                        width: 99.w,
-                        padding: EdgeInsets.only(left: 13.w, right: 14.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: styles.black,
-                          ),
-                          color: styles.white,
-                        ),
-                        elevation: 0,
-                      ),
-                      iconStyleData: IconStyleData(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                        ),
-                        iconSize: 14,
-                        iconEnabledColor: styles.black,
-                        iconDisabledColor: styles.black,
-                      ),
-                      dropdownStyleData: DropdownStyleData(
-                        maxHeight: 200,
-                        width: 200,
-                        padding: null,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: styles.smokeWhite,
-                        ),
-                        elevation: 8,
-                        offset: const Offset(-20, 0),
-                        scrollbarTheme: ScrollbarThemeData(
-                          radius: const Radius.circular(40),
-                          thickness: MaterialStateProperty.all<double>(6),
-                          thumbVisibility:
-                              MaterialStateProperty.all<bool>(true),
-                        ),
-                      ),
-                      menuItemStyleData: const MenuItemStyleData(
-                        height: 40,
-                        padding: EdgeInsets.only(left: 14, right: 14),
-                      ),
-                    ),
-                  ),
-                ),
-                23.verticalSpace,
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 19.w),
-                  height: 29.h,
-                  decoration: BoxDecoration(
-                    color: styles.skyBlue.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            AppStrings.name,
-                            style: styles.inter10w400,
-                          ),
-                        ),
-                        // 137.horizontalSpace,
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            AppStrings.date,
-                            style: styles.inter10w400,
-                          ),
-                        ),
-                        // 78.horizontalSpace,
-                        Expanded(
-                          child: Text(
-                            AppStrings.action,
-                            style: styles.inter10w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      _buildRecordsList(provider.tab1Records, context),
-                      _buildRecordsList(provider.tab2Records, context),
                     ],
                   ),
                 ),
@@ -175,55 +79,26 @@ class ReportsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecordsList(List<Record> records, BuildContext context) {
+  Widget textColumn(String heading,String description) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    return ListView.separated(
-      itemCount: records.length,
-      padding: EdgeInsets.symmetric(vertical: 20.h),
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 19.w),
-                child: ReportListTile(
-                  onTap: () {},
-                  date: '14-3-2023',
-                  title: records[index].title,
-                  trailing: Container(
-                    height: 21.h,
-                    width: 21.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: styles.yellowGreen,
-                    ),
-                    child: Icon(
-                      Icons.arrow_downward_sharp,
-                      size: 15,
-                      color: styles.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: 2.5.h,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            heading,
+            style: styles.inter8w600,
           ),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20.w,
-            vertical: 20.h,
+          Text(
+            description,
+            style: styles.inter8w400,
           ),
-          child:  Divider(
-            color: styles.black.withOpacity(
-              0.2
-            ),
-            height: 0,
-          ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

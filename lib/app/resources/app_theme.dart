@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTheme extends ThemeExtension<AppTheme> {
   //w400
   final TextStyle inter8w400;
+  final TextStyle inter8w600;
   final TextStyle inter7w400;
   final TextStyle inter9w400;
   final TextStyle inter10w400;
@@ -67,6 +68,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
   const AppTheme({
     required this.inter8w400,
+    required this.inter8w600,
     required this.inter7w400,
     required this.inter9w400,
     required this.inter10w400,
@@ -127,6 +129,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     }
     return AppTheme(
       inter8w400: TextStyle.lerp(inter8w400, other.inter8w400, t)!,
+      inter8w600: TextStyle.lerp(inter8w600, other.inter8w600, t)!,
       inter7w400: TextStyle.lerp(inter7w400, other.inter7w400, t)!,
       inter9w400: TextStyle.lerp(inter9w400, other.inter9w400, t)!,
       inter10w400: TextStyle.lerp(inter10w400, other.inter10w400, t)!,
@@ -191,6 +194,12 @@ class AppTheme extends ThemeExtension<AppTheme> {
       fontFamily: 'Inter',
       fontSize: 8.sp,
       fontWeight: FontWeight.w400,
+      color: Colors.black,
+    ),
+    inter8w600: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 8.sp,
+      fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     inter7w400: TextStyle(
@@ -370,6 +379,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
 
   AppTheme copyWith({
     TextStyle? inter8w400,
+    TextStyle? inter8w600,
     TextStyle? inter7w400,
     TextStyle? inter9w400,
     TextStyle? inter10w400,
@@ -423,6 +433,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   }) {
     return AppTheme(
       inter8w400: inter8w400 ?? this.inter8w400,
+      inter8w600: inter8w600 ?? this.inter8w600,
       inter7w400: inter7w400 ?? this.inter7w400,
       inter9w400: inter9w400 ?? this.inter9w400,
       inter10w400: inter10w400 ?? this.inter10w400,

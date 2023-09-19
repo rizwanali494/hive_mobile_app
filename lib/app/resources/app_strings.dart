@@ -16,7 +16,7 @@ class AppStrings {
   static String logout = "Log Out";
   static String inbox = "Inbox";
   static String notifications = "Notifications";
-  static String reports = "Reports";
+  static String reports = "Report";
   static String searchMessagesHere = "Search Messages Here";
   static String profile = "Profile";
   static String basicInfo = "Basic Info";
