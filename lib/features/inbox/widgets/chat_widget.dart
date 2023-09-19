@@ -37,15 +37,32 @@ class ChatWidget extends StatelessWidget {
             ),
           ),
         ),
-        12.verticalSpace,
-        Align(
-          alignment: Alignment.topRight,
-          child: Text(
-            // "Sent - 2:45PM",
-            controller.timeSent,
-            style: styles.inter10w400,
+        8.verticalSpace,
+        if (controller.isSending)
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Icon(Icons.access_time_sharp),
+          )
+       else if (controller.hasError)
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+                onTap: () {
+                  controller.retry(context);
+                },
+                child: Icon(
+                  Icons.error,
+                  color: styles.red,
+                )),
+          )
+        else
+          Align(
+            alignment: Alignment.topRight,
+            child: Text(
+              controller.timeSent,
+              style: styles.inter10w400,
+            ),
           ),
-        ),
       ],
     );
   }

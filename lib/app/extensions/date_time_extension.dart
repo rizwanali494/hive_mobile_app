@@ -1,3 +1,4 @@
+import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -37,6 +38,7 @@ extension DateTimeExtension on DateTime {
   String chatFormattedDate({bool numericDates = false}) {
     final date2 = DateTime.now();
     final difference = date2.difference(this);
+    final sameDay = isSameDay(date2);
     final DateFormat dateFormat = DateFormat("M/d/y");
     if (difference.inDays >= 7) {
       return dateFormat.format(this);
@@ -44,7 +46,7 @@ extension DateTimeExtension on DateTime {
     else if( difference.inDays >= 2 ){
       return _dayOnlyFormat.format(this);
     }
-    else if (difference.inDays == 1) {
+    else if (difference.inDays == 1 || !sameDay) {
       return (numericDates) ? '1 day ago' : 'Yesterday';
     }
     else {

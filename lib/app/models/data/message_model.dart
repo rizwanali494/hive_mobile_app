@@ -16,6 +16,7 @@ class MessageModel {
     this.isRead,
     this.owner,
     this.receiver,
+    this.messageState = const MessageState.Sent(),
   });
 
   MessageModel.fromJson(dynamic json) {
@@ -43,6 +44,8 @@ class MessageModel {
   bool? isRead;
   int? owner;
   int? receiver;
+  @ignore
+  MessageState messageState = const MessageState.Sent();
 
   MessageModel copyWith({
     int? id,
@@ -56,6 +59,7 @@ class MessageModel {
     bool? isRead,
     int? owner,
     int? receiver,
+    MessageState? messageState,
   }) =>
       MessageModel(
         id: id ?? this.id,
@@ -69,6 +73,7 @@ class MessageModel {
         isRead: isRead ?? this.isRead,
         owner: owner ?? this.owner,
         receiver: receiver ?? this.receiver,
+        messageState: messageState ?? this.messageState,
       );
 
   Map<String, dynamic> toJson() {
@@ -85,4 +90,35 @@ class MessageModel {
     map['receiver'] = receiver;
     return map;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MessageModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+}
+
+class MessageState {
+  final bool isSent;
+  final bool hasError;
+  final bool isSending;
+
+  const MessageState.Sent()
+      : isSent = true,
+        hasError = false,
+        isSending = false;
+
+  const MessageState.Sending()
+      : isSent = false,
+        hasError = false,
+        isSending = true;
+
+  const MessageState.hasError()
+      : isSent = false,
+        hasError = true,
+        isSending = false;
 }

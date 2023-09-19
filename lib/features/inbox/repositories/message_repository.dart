@@ -14,6 +14,8 @@ abstract class MessageRepository {
 
   Future<List<MessageModel>> getMessages(
       {int? limit, int? offset, required int receiverId});
+
+  Future<MessageModel> sendMessage({required Map map});
 }
 
 class MessageRepositoryImpl extends MessageRepository {
@@ -25,7 +27,8 @@ class MessageRepositoryImpl extends MessageRepository {
     var url = ApiEndpoints.message
         .withLimit(limit)
         .withOffSet(offset)
-        .withReceiverId(receiverId).withMostRecentOrder;
+        .withReceiverId(receiverId)
+        .withMostRecentOrder;
     log(url);
     var response = await apiService.get(
       url: url,
@@ -33,6 +36,20 @@ class MessageRepositoryImpl extends MessageRepository {
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
 
-    return items.map((e) => MessageModel.fromJson(e)).toList().reversed.toList();
+    return items
+        .map((e) => MessageModel.fromJson(e))
+        .toList()
+        .reversed
+        .toList();
+  }
+
+  @override
+  Future<MessageModel> sendMessage(
+      {required Map map}) async {
+    var url = ApiEndpoints.message;
+    log("message $url $map");
+    var response = await apiService.post(url: url, body: map);
+    var body = jsonDecode(response.body);
+    return MessageModel.fromJson(body);
   }
 }

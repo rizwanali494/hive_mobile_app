@@ -81,8 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   ],
                                 ),
                                 34.verticalSpace,
-                              ]
-                              else if (element is MessageData) ...[
+                              ] else if (element is MessageData) ...[
                                 ChatWidget(
                                   controller: ChatWidgetVM(
                                     model: element.model,
@@ -113,13 +112,19 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                             child: TitleTextField(
                               hintText: AppStrings.typeMessagesHere,
+                              controller: provider.messageCtrl,
                               textFieldOnly: true,
                             ),
                           ),
                         ),
                       ),
                       11.horizontalSpace,
-                      SvgPicture.asset(SvgIcons.send)
+                      GestureDetector(
+                        onTap: () {
+                          provider.sendMessage();
+                        },
+                        child: SvgPicture.asset(SvgIcons.send),
+                      )
                     ],
                   ),
                   12.verticalSpace,

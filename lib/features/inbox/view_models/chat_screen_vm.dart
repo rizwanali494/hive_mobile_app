@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/message_model.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
+import 'package:hive_mobile/app/models/rev_pagination_controller.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
@@ -53,7 +54,7 @@ class ChatScreenVM extends ChangeNotifier {
       });
       offset += latestMessages.length;
       paginationController.toggleIsGettingMore(false);
-      if( latestMessages.length < limit ){
+      if (latestMessages.length < limit) {
         paginationController.toggleLastPage(true);
       }
     };
@@ -145,56 +146,68 @@ class ChatScreenVM extends ChangeNotifier {
   List<DateMessage> get messageData {
     return messagesData;
   }
-}
 
-class RevPaginationController {
-  late ScrollController _scrollController;
-  int _offset = 10;
-  late Function onScroll;
-  bool _isGettingMore = false;
-  bool isLastPage = false;
-  PaginationState state = PaginationState.Loaded();
+  final messageCtrl = TextEditingController();
 
-  int get offset => _offset;
-
-  RevPaginationController(
-      {required ScrollController controller, required this.onScroll}) {
-    _scrollController = controller;
+  Future<void> sendMessage() async {
+    final msg = messageCtrl.text.trim();
+    if (msg.isEmpty) {
+      return;
+    }
+    DateTime now = DateTime.now();
+    final messageModel = MessageModel(
+      content: msg,
+      messageState: MessageState.Sending(),
+      id: now.millisecondsSinceEpoch,
+      dateAdded: now.toString(),
+    );
+    messages.add(messageModel);
+    setMessageSData();
+    messageCtrl.clear();
+    var map = {
+      "content": msg,
+      "receiverId": receiverId,
+    };
+    try {
+      var message = await messageRepository.sendMessage(map: map);
+      messages.remove(messageModel);
+      messages.add(message);
+      setMessageSData();
+    } catch (e) {
+      removeMessage(messageModel);
+      addMessage(messageModel.copyWith(messageState: MessageState.hasError()));
+    }
+    notifyListeners();
   }
 
-  void addListener() {
-    _scrollController.addListener(() {
-      final nextPageTrigger = 50 + _scrollController.position.minScrollExtent;
-      if (_scrollController.position.pixels < nextPageTrigger) {
-        if (_isGettingMore || isLastPage) {
-          return;
-        }
-        onScroll();
-      }
-    });
+
+  void addMessage(MessageModel model) {
+    messages.add(model);
+    setMessageSData();
   }
 
-  void resetOffset() {
-    _offset = 0;
+  void removeMessage(MessageModel model) {
+    messages.remove(model);
+    setMessageSData();
   }
 
-  void setOffset(int value) {
-    _offset = value;
+  void retryMessage( MessageModel model ) async {
+    removeMessage(model);
+    addMessage(model.copyWith(messageState: MessageState.Sending()));
+    var map = {
+      "content": model.content,
+      "receiver": receiverId,
+    };
+    try {
+      var message = await messageRepository.sendMessage(map: map);
+      messages.remove(model);
+      messages.add(message);
+      setMessageSData();
+    } catch (e) {
+      removeMessage(model);
+      addMessage(model.copyWith(messageState: MessageState.hasError()));
+    }
+    notifyListeners();
   }
 
-  void toggleLastPage([bool? value]) {
-    isLastPage = value ?? !isLastPage;
-  }
-
-  void toggleIsGettingMore([bool? value]) {
-    _isGettingMore = value ?? !_isGettingMore;
-  }
-
-  bool get isGettingMore {
-    return _isGettingMore;
-  }
-
-  void removeListener() {
-    _scrollController.removeListener(() {});
-  }
 }
