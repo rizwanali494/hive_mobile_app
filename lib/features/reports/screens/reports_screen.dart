@@ -31,47 +31,92 @@ class _ReportsScreenState extends State<ReportsScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: 19.w,
             ),
-            child: Column(
-              children: [
-                DividerAppBar(title: AppStrings.reports),
-                27.verticalSpace,
-                IntrinsicHeight(
-                  child: Row(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  DividerAppBar(title: AppStrings.reports),
+                  17.verticalSpace,
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Image(
+                          width: 138.w,
+                          height: 54.h,
+                          image: AssetImage(SvgIcons.bcpCollegeIcon),
+                        ),
+                        VerticalDivider(
+                          color: styles.black,
+                          thickness: 0.5,
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  textColumn("ID", "01234567"),
+                                  textColumn("Name", "Abdul Rehman"),
+                                  textColumn(
+                                      "Academic Year", "Aug,2020 - July,2021"),
+                                ],
+                              ),
+                              29.horizontalSpace,
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    textColumn(
+                                        "Class", "CAIE A LEVEL - Year 1"),
+                                    textColumn("Section", "B-MANEFE-B"),
+                                    textColumn("Branch",
+                                        "Beaconhouse College Program Defence Campus, Lahore"),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  10.verticalSpace,
+                  Divider(
+                    thickness: 0.2,
+                  ),
+                  Column(
                     children: [
-                      Image(
-                        width: 138.w,
-                        height: 54.h,
-                        image: AssetImage(SvgIcons.bcpCollegeIcon),
-                      ),
-                      VerticalDivider(
-                        color: styles.black,
-                        thickness: 0.5,
-                      ),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              textColumn("ID","01234567"),
-                              textColumn("Name","Abdul Rehman"),
-                              textColumn("Academic Year","Aug,2020 - July,2021"),
-                            ],
-                          ),
-                          29.horizontalSpace,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              textColumn("Class","CAIE A LEVEL - Year 1"),
-                              textColumn("ID","01234567"),
-                              textColumn("ID","01234567"),
-                            ],
-                          ),
-                        ],
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10.h,
+                          horizontal: 9.w,
+                        ),
+                        decoration: BoxDecoration(
+                            color: styles.azure,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              topRight: Radius.circular(10.r),
+                            )),
+                        child: Row(
+                          children: [
+                            reportHeadingWidget("Subject & Teacher", flex: 2),
+                            reportHeadingWidget("Attendance"),
+                            10.horizontalSpace,
+                            reportHeadingWidget("Mid Term Assessments",
+                                flex: 2),
+                            8.horizontalSpace,
+                            reportHeadingWidget("Mid Year Exams", flex: 2),
+                            Text(
+                              "CGPA",
+                              style: styles.inter7w600
+                                  .copyWith(color: styles.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
@@ -79,12 +124,26 @@ class _ReportsScreenState extends State<ReportsScreen> {
     );
   }
 
-  Widget textColumn(String heading,String description) {
+  Widget reportHeadingWidget(String heading, {int flex = 1}) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Expanded(
+      flex: flex,
+      child: Text(
+        heading,
+        style: styles.inter7w600.copyWith(
+          color: styles.white,
+        ),
+      ),
+    );
+  }
+
+  Widget textColumn(String heading, String description) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: 2.5.h,
+        bottom: 3.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
