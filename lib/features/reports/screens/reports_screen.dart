@@ -91,19 +91,20 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           horizontal: 9.w,
                         ),
                         decoration: BoxDecoration(
-                            color: styles.azure,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.r),
-                              topRight: Radius.circular(10.r),
-                            )),
+                          color: styles.azure,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.r),
+                            topRight: Radius.circular(10.r),
+                          ),
+                        ),
                         child: Row(
                           children: [
                             reportHeadingWidget("Subject & Teacher", flex: 2),
                             reportHeadingWidget("Attendance"),
-                            10.horizontalSpace,
+                            8.horizontalSpace,
                             reportHeadingWidget("Mid Term Assessments",
                                 flex: 2),
-                            8.horizontalSpace,
+                            10.horizontalSpace,
                             reportHeadingWidget("Mid Year Exams", flex: 2),
                             Text(
                               "CGPA",
@@ -115,6 +116,65 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       ),
                     ],
                   ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 29.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: styles.alabaster,
+                          ),
+                        ),
+                      ),
+                      1.horizontalSpace,
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 29.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: styles.alabaster,
+                          ),
+                        ),
+                      ),
+                      1.horizontalSpace,
+                      Row(
+                        children: [
+                          ...List.generate(
+                              6,
+                              (index) => Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 29.h, horizontal: 5),
+                                    decoration: BoxDecoration(
+                                      color: styles.alabaster,
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      "%Age",
+                                      style: styles.inter7w600,
+                                    )),
+                                  )),
+                        ],
+                      ),
+                      1.horizontalSpace,
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 29.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: styles.alabaster,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
