@@ -66,6 +66,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color smokeWhite;
   final Color whiteSmoke;
   final Color alabaster;
+  final Color paleSkyBlue;
+  final Color peachYellow;
+  final Color lightGreen;
 
   const AppTheme({
     required this.inter8w400,
@@ -121,6 +124,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.paleWhite,
     required this.whiteSmoke,
     required this.alabaster,
+    required this.paleSkyBlue,
+    required this.peachYellow,
+    required this.lightGreen,
   });
 
   @override
@@ -187,6 +193,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
       whiteSmoke: Color.lerp(whiteSmoke, other.whiteSmoke, t)!,
       azure: Color.lerp(azure, other.azure, t)!,
       alabaster: Color.lerp(alabaster, other.alabaster, t)!,
+      paleSkyBlue: Color.lerp(paleSkyBlue, other.paleSkyBlue, t)!,
+      peachYellow: Color.lerp(peachYellow, other.peachYellow, t)!,
+      lightGreen: Color.lerp(lightGreen, other.lightGreen, t)!,
     );
   }
 
@@ -259,6 +268,19 @@ class AppTheme extends ThemeExtension<AppTheme> {
       fontFamily: 'Inter',
       fontSize: 16.sp,
       fontWeight: FontWeight.w400,
+      color: Colors.black,
+    ),
+    inter12w400Italic: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.italic,
+      color: const Color(0xff464646).withOpacity(0.5),
+    ),
+    inter10w600: TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 10.sp,
+      fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     inter12w500: TextStyle(
@@ -371,19 +393,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
     whiteSmoke: const Color(0xffEEEEEE),
     azure: const Color(0xff0D9AE0),
     alabaster: const Color(0xffFBFBFB),
-    inter12w400Italic: TextStyle(
-      fontFamily: 'Inter',
-      fontSize: 12.sp,
-      fontWeight: FontWeight.w700,
-      fontStyle: FontStyle.italic,
-      color: const Color(0xff464646).withOpacity(0.5),
-    ),
-    inter10w600: TextStyle(
-      fontFamily: 'Inter',
-      fontSize: 10.sp,
-      fontWeight: FontWeight.w600,
-      color: Colors.black,
-    ),
+    paleSkyBlue: const Color(0xffCCF0FD),
+    peachYellow: const Color(0xffFFDCA8),
+    lightGreen: const Color(0xffE9FAB9),
   );
 
   AppTheme copyWith({
@@ -440,6 +452,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? paleWhite,
     Color? whiteSmoke,
     Color? alabaster,
+    Color? paleSkyBlue,
+    Color? peachYellow,
+    Color? lightGreen,
   }) {
     return AppTheme(
       inter8w400: inter8w400 ?? this.inter8w400,
@@ -497,6 +512,9 @@ class AppTheme extends ThemeExtension<AppTheme> {
       alabaster: alabaster ?? this.alabaster,
       inter10w600: inter10w600 ?? this.inter10w600,
       azure: azure ?? this.azure,
+      paleSkyBlue: paleSkyBlue ?? this.paleSkyBlue,
+      peachYellow: peachYellow ?? this.peachYellow,
+      lightGreen: lightGreen ?? this.lightGreen,
     );
   }
 }
