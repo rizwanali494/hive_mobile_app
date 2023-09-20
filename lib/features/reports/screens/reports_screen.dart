@@ -98,14 +98,17 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           ),
                         ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             reportHeadingWidget("Subject & Teacher", flex: 2),
+                            20.horizontalSpace,
                             reportHeadingWidget("Attendance"),
-                            8.horizontalSpace,
+                            10.horizontalSpace,
                             reportHeadingWidget("Mid Term Assessments",
                                 flex: 2),
                             10.horizontalSpace,
                             reportHeadingWidget("Mid Year Exams", flex: 2),
+                            20.horizontalSpace,
                             Text(
                               "CGPA",
                               style: styles.inter7w600
@@ -116,65 +119,57 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       ),
                     ],
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 29.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: styles.alabaster,
-                          ),
-                        ),
-                      ),
-                      1.horizontalSpace,
-                      Expanded(
-                        flex: 4,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 29.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: styles.alabaster,
-                          ),
-                        ),
-                      ),
-                      1.horizontalSpace,
-                      Row(
+                  LayoutBuilder(builder: (context, boxConstraints) {
+                    final con = boxConstraints;
+                    return IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ...List.generate(
-                              6,
-                              (index) => Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 29.h, horizontal: 5),
-                                    decoration: BoxDecoration(
-                                      color: styles.alabaster,
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      "%Age",
-                                      style: styles.inter7w600,
-                                    )),
-                                  )),
+                          Container(
+                            width: con.maxWidth * 0.25,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 29.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: styles.alabaster,
+                            ),
+                          ),
+                          1.horizontalSpace,
+                          Container(
+                            width: con.maxWidth * 0.17,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 29.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: styles.alabaster,
+                            ),
+                          ),
+                          1.horizontalSpace,
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                for (int i = 0; i < 2; i++) ...[
+                                  headingWidget("%Age"),
+                                  headingWidget("Grade"),
+                                  headingWidget("GPA"),
+                                ],
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: con.maxWidth * 0.09,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 29.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: styles.alabaster,
+                            ),
+                          ),
                         ],
                       ),
-                      1.horizontalSpace,
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 29.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: styles.alabaster,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                    );
+                  })
                 ],
               ),
             ),
@@ -184,16 +179,49 @@ class _ReportsScreenState extends State<ReportsScreen> {
     );
   }
 
-  Widget reportHeadingWidget(String heading, {int flex = 1}) {
+  Expanded headingWidget(String heading) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(
+          right: 1.w,
+        ),
+        padding: EdgeInsets.symmetric(vertical: 29.h),
+        decoration: BoxDecoration(color: styles.alabaster),
+        child: Center(
+          child: Text(
+            heading,
+            style: styles.inter7w600,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget emptyContainer([int flex = 1]) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return Expanded(
       flex: flex,
-      child: Text(
-        heading,
-        style: styles.inter7w600.copyWith(
-          color: styles.white,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 29.h,
         ),
+        decoration: BoxDecoration(
+          color: styles.alabaster,
+        ),
+      ),
+    );
+  }
+
+  Widget reportHeadingWidget(String heading, {int flex = 1}) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Text(
+      heading,
+      style: styles.inter7w600.copyWith(
+        color: styles.white,
       ),
     );
   }
