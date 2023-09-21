@@ -36,317 +36,369 @@ class _ReportsScreenState extends State<ReportsScreen> {
               children: [
                 DividerAppBar(title: AppStrings.reports),
                 17.verticalSpace,
-                IntrinsicHeight(
-                  child: Row(
+                SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Image(
-                        width: 138.w,
-                        height: 54.h,
-                        image: AssetImage(SvgIcons.bcpCollegeIcon),
-                      ),
-                      VerticalDivider(
-                        color: styles.black,
-                        thickness: 0.5,
-                      ),
-                      Expanded(
+                      IntrinsicHeight(
                         child: Row(
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                textColumn("ID", "01234567"),
-                                textColumn("Name", "Abdul Rehman"),
-                                textColumn(
-                                    "Academic Year", "Aug,2020 - July,2021"),
-                              ],
+                            Image(
+                              width: 138.w,
+                              height: 54.h,
+                              image: AssetImage(SvgIcons.bcpCollegeIcon),
                             ),
-                            29.horizontalSpace,
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            VerticalDivider(
+                              color: styles.black,
+                              thickness: 0.5,
+                            ),
+                            Expanded(
+                              child: Row(
                                 children: [
-                                  textColumn("Class", "CAIE A LEVEL - Year 1"),
-                                  textColumn("Section", "B-MANEFE-B"),
-                                  textColumn("Branch",
-                                      "Beaconhouse College Program Defence Campus, Lahore"),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      textColumn("ID", "01234567"),
+                                      textColumn("Name", "Abdul Rehman"),
+                                      textColumn("Academic Year",
+                                          "Aug,2020 - July,2021"),
+                                    ],
+                                  ),
+                                  29.horizontalSpace,
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        textColumn(
+                                            "Class", "CAIE A LEVEL - Year 1"),
+                                        textColumn("Section", "B-MANEFE-B"),
+                                        textColumn("Branch",
+                                            "Beaconhouse College Program Defence Campus, Lahore"),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                10.verticalSpace,
-                Divider(
-                  thickness: 0.2,
-                ),
-                Expanded(
-                  child: LineChart(
-                    LineChartData(
-                        lineBarsData: [
-                          LineChartBarData(
-                            isCurved: true,
-                            color: styles.skyBlue,
-                            barWidth: 8,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(show: false),
-                            spots: const [
-                              FlSpot(0, 0),
-                              FlSpot(0.5, 1.5),
-                              FlSpot(1, 2),
-                              FlSpot(1.5, 1),
-                              FlSpot(1.9, 2),
-                              FlSpot(2.4, 3),
-                              FlSpot(2.9, 2),
-                              FlSpot(3.2, 4),
-                            ],
+                      10.verticalSpace,
+                      Divider(
+                        thickness: 0.2,
+                      ),
+                      10.verticalSpace,
+                      SizedBox(
+                        height: 200.h,
+                        child: Align(
+                          child: LineChart(
+                            LineChartData(
+                              gridData: FlGridData(
+                                drawVerticalLine: false,
+                                horizontalInterval: 2,
+                                getDrawingHorizontalLine: (value) =>
+                                    FlLine(strokeWidth: .2),
+                              ),
+                              borderData: FlBorderData(
+                                border: Border(
+                                  right: BorderSide.none,
+                                  left: buildBorderSide(),
+                                  bottom: buildBorderSide(),
+                                  top: buildBorderSide(),
+                                ),
+                              ),
+                              lineBarsData: [
+                                LineChartBarData(
+                                  isCurved: true,
+                                  color: styles.skyBlue,
+                                  barWidth: 8,
+                                  isStrokeCapRound: true,
+                                  dotData: FlDotData(show: false),
+                                  belowBarData: BarAreaData(show: false),
+                                  spots: const [
+                                    FlSpot(0, 0),
+                                    FlSpot(0.5, 1.5),
+                                    FlSpot(1, 2),
+                                    FlSpot(1.5, 1),
+                                    FlSpot(1.9, 2),
+                                    FlSpot(2.4, 3),
+                                    FlSpot(2.9, 2),
+                                    FlSpot(3.2, 4),
+                                  ],
+                                ),
+                                LineChartBarData(
+                                  isCurved: true,
+                                  color: styles.darkOrange,
+                                  barWidth: 8,
+                                  isStrokeCapRound: true,
+                                  dotData: FlDotData(show: false),
+                                  belowBarData: BarAreaData(show: false),
+                                  spots: const [
+                                    FlSpot(0, 0),
+                                    FlSpot(0.7, 0.5),
+                                    FlSpot(1, 0.7),
+                                    FlSpot(1.5, 0.7),
+                                    FlSpot(1.8, 0.7),
+                                    FlSpot(2, 0.9),
+                                    FlSpot(2.2, 0.9),
+                                    FlSpot(3.5, 0.9),
+                                    FlSpot(3.7, 4),
+                                  ],
+                                ),
+                              ],
+                              minX: 0,
+                              maxX: 4,
+                              maxY: 6,
+                              minY: -2,
+                              titlesData: FlTitlesData(
+                                leftTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    getTitlesWidget: leftTitleWidgets,
+                                    showTitles: true,
+                                    interval: 2,
+                                  ),
+                                ),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                            ),
+                            swapAnimationDuration: Duration(milliseconds: 150),
+                            // Optional
+                            swapAnimationCurve: Curves.linear, // Optional
                           ),
-                          LineChartBarData(
-                            isCurved: true,
-                            color: styles.darkOrange,
-                            barWidth: 8,
-                            isStrokeCapRound: true,
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(show: false),
-                            spots: const [
-                              FlSpot(0, 0),
-                              FlSpot(0.7, 0.5),
-                              FlSpot(1, 0.7),
-                              FlSpot(1.5, 0.7),
-                              FlSpot(1.8, 0.7),
-                              FlSpot(2, 0.9),
-                              FlSpot(2.2, 0.9),
-                              FlSpot(3.5, 0.9),
-                              FlSpot(4, 2),
-                              FlSpot(4, 4),
-                            ],
-                          ),
-                        ],
-                        minX: 0,
-                        maxX: 8,
-                        maxY: 6,
-                        minY: -2,
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              getTitlesWidget: leftTitleWidgets,
-                              showTitles: true,
-                              interval: 2,
-                              reservedSize: 40,
+                        ),
+                      ),
+                      30.verticalSpace,
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 5.w,
+                            ),
+                            child: Text(
+                              "CGPA",
+                              style: styles.inter8w400,
                             ),
                           ),
-                          topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                        )),
-                    swapAnimationDuration: Duration(milliseconds: 150),
-                    // Optional
-                    swapAnimationCurve: Curves.linear, // Optional
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                yearRowWidget(styles.skyBlue, "Year 1"),
+                                52.horizontalSpace,
+                                yearRowWidget(styles.darkOrange, "Year 2"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                      // LayoutBuilder(
+                      //   builder: (context, con) {
+                      //     return Container(
+                      //       padding: EdgeInsets.symmetric(
+                      //         vertical: 10.h,
+                      //         horizontal: 9.w,
+                      //       ),
+                      //       decoration: BoxDecoration(
+                      //         color: styles.azure,
+                      //         borderRadius: BorderRadius.only(
+                      //           topLeft: Radius.circular(10.r),
+                      //           topRight: Radius.circular(10.r),
+                      //         ),
+                      //       ),
+                      //       child: Row(
+                      //         children: [
+                      //           textWidget(con.maxWidth * 0.25,
+                      //               text: "Subject & Teacher"),
+                      //           textWidget(con.maxWidth * 0.16, text: "Attendance"),
+                      //           Expanded(
+                      //             child: Align(
+                      //               child: Text(
+                      //                 "Mid Year Assessment",
+                      //                 style: styles.inter7w600.copyWith(
+                      //                   color: styles.white,
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
+                      //             // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
+                      //           ),
+                      //           Expanded(
+                      //             child: Center(
+                      //               child: Text(
+                      //                 "Mid Year Exam",
+                      //                 style: styles.inter7w600.copyWith(
+                      //                   color: styles.white,
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
+                      //             // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
+                      //           ),
+                      //           Center(
+                      //             child: Text(
+                      //               "CGPA",
+                      //               style: styles.inter7w600.copyWith(
+                      //                 color: styles.white,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      // LayoutBuilder(
+                      //   builder: (context, boxConstraints) {
+                      //     final con = boxConstraints;
+                      //     return IntrinsicHeight(
+                      //       child: Row(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           Container(
+                      //             width: con.maxWidth * 0.25,
+                      //             padding: EdgeInsets.symmetric(
+                      //               vertical: 29.h,
+                      //             ),
+                      //             decoration: BoxDecoration(
+                      //               color: styles.alabaster,
+                      //             ),
+                      //           ),
+                      //           1.horizontalSpace,
+                      //           Container(
+                      //             width: con.maxWidth * 0.17,
+                      //             padding: EdgeInsets.symmetric(
+                      //               vertical: 29.h,
+                      //             ),
+                      //             decoration: BoxDecoration(
+                      //               color: styles.alabaster,
+                      //             ),
+                      //           ),
+                      //           1.horizontalSpace,
+                      //           Expanded(
+                      //             child: Row(
+                      //               mainAxisAlignment:
+                      //                   MainAxisAlignment.spaceAround,
+                      //               children: [
+                      //                 for (int i = 0; i < 2; i++) ...[
+                      //                   headingWidget("%Age"),
+                      //                   headingWidget("Grade"),
+                      //                   headingWidget("GPA"),
+                      //                 ],
+                      //               ],
+                      //             ),
+                      //           ),
+                      //           Container(
+                      //             width: con.maxWidth * 0.09,
+                      //             padding: EdgeInsets.symmetric(
+                      //               vertical: 25.h,
+                      //             ),
+                      //             decoration: BoxDecoration(
+                      //               color: styles.alabaster,
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      // 1.verticalSpace,
+                      // // values
+                      // for (int index = 0; index < subjectText.length; index++)
+                      //   LayoutBuilder(
+                      //     builder: (context, boxConstraints) {
+                      //       final con = boxConstraints;
+                      //       return IntrinsicHeight(
+                      //         child: Padding(
+                      //           padding: EdgeInsets.only(bottom: 1.h),
+                      //           child: Row(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: [
+                      //               Container(
+                      //                 width: con.maxWidth * 0.25,
+                      //                 padding: EdgeInsets.symmetric(
+                      //                   vertical: 5.h,
+                      //                 ),
+                      //                 decoration: BoxDecoration(
+                      //                   color: styles.alabaster,
+                      //                 ),
+                      //                 child: Center(
+                      //                   child: Column(
+                      //                     mainAxisAlignment:
+                      //                         MainAxisAlignment.center,
+                      //                     children: [
+                      //                       Text(
+                      //                         subjectText[index],
+                      //                         style: styles.inter12w600,
+                      //                         overflow: TextOverflow.ellipsis,
+                      //                       ),
+                      //                       Text(
+                      //                         teachers[index],
+                      //                         style: styles.inter12w400,
+                      //                         overflow: TextOverflow.ellipsis,
+                      //                       ),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               1.horizontalSpace,
+                      //               Container(
+                      //                 width: con.maxWidth * 0.17,
+                      //                 padding: EdgeInsets.symmetric(
+                      //                   vertical: 5.h,
+                      //                 ),
+                      //                 decoration: BoxDecoration(
+                      //                   color: styles.alabaster,
+                      //                 ),
+                      //                 child: Center(
+                      //                     child: Text(
+                      //                   "90%",
+                      //                   style: styles.inter12w400,
+                      //                 )),
+                      //               ),
+                      //               1.horizontalSpace,
+                      //               Expanded(
+                      //                 child: Row(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.spaceAround,
+                      //                   children: [
+                      //                     for (int i = 0; i < 2; i++) ...[
+                      //                       headingWidget("89", getColor(index)),
+                      //                       headingWidget("A+", getColor(index)),
+                      //                       headingWidget("5", getColor(index)),
+                      //                     ],
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //               Container(
+                      //                 width: con.maxWidth * 0.09,
+                      //                 padding: EdgeInsets.symmetric(
+                      //                   vertical: 5.h,
+                      //                 ),
+                      //                 decoration: BoxDecoration(
+                      //                   color: styles.alabaster,
+                      //                 ),
+                      //                 child: Center(
+                      //                   child: Text(
+                      //                     "5.0",
+                      //                     style: styles.inter12w400,
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                    ],
                   ),
-                ),
-                // LayoutBuilder(
-                //   builder: (context, con) {
-                //     return Container(
-                //       padding: EdgeInsets.symmetric(
-                //         vertical: 10.h,
-                //         horizontal: 9.w,
-                //       ),
-                //       decoration: BoxDecoration(
-                //         color: styles.azure,
-                //         borderRadius: BorderRadius.only(
-                //           topLeft: Radius.circular(10.r),
-                //           topRight: Radius.circular(10.r),
-                //         ),
-                //       ),
-                //       child: Row(
-                //         children: [
-                //           textWidget(con.maxWidth * 0.25,
-                //               text: "Subject & Teacher"),
-                //           textWidget(con.maxWidth * 0.16, text: "Attendance"),
-                //           Expanded(
-                //             child: Align(
-                //               child: Text(
-                //                 "Mid Year Assessment",
-                //                 style: styles.inter7w600.copyWith(
-                //                   color: styles.white,
-                //                 ),
-                //               ),
-                //             ),
-                //             // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
-                //             // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
-                //           ),
-                //           Expanded(
-                //             child: Center(
-                //               child: Text(
-                //                 "Mid Year Exam",
-                //                 style: styles.inter7w600.copyWith(
-                //                   color: styles.white,
-                //                 ),
-                //               ),
-                //             ),
-                //             // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
-                //             // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
-                //           ),
-                //           Center(
-                //             child: Text(
-                //               "CGPA",
-                //               style: styles.inter7w600.copyWith(
-                //                 color: styles.white,
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // ),
-                // LayoutBuilder(
-                //   builder: (context, boxConstraints) {
-                //     final con = boxConstraints;
-                //     return IntrinsicHeight(
-                //       child: Row(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Container(
-                //             width: con.maxWidth * 0.25,
-                //             padding: EdgeInsets.symmetric(
-                //               vertical: 29.h,
-                //             ),
-                //             decoration: BoxDecoration(
-                //               color: styles.alabaster,
-                //             ),
-                //           ),
-                //           1.horizontalSpace,
-                //           Container(
-                //             width: con.maxWidth * 0.17,
-                //             padding: EdgeInsets.symmetric(
-                //               vertical: 29.h,
-                //             ),
-                //             decoration: BoxDecoration(
-                //               color: styles.alabaster,
-                //             ),
-                //           ),
-                //           1.horizontalSpace,
-                //           Expanded(
-                //             child: Row(
-                //               mainAxisAlignment:
-                //                   MainAxisAlignment.spaceAround,
-                //               children: [
-                //                 for (int i = 0; i < 2; i++) ...[
-                //                   headingWidget("%Age"),
-                //                   headingWidget("Grade"),
-                //                   headingWidget("GPA"),
-                //                 ],
-                //               ],
-                //             ),
-                //           ),
-                //           Container(
-                //             width: con.maxWidth * 0.09,
-                //             padding: EdgeInsets.symmetric(
-                //               vertical: 25.h,
-                //             ),
-                //             decoration: BoxDecoration(
-                //               color: styles.alabaster,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // ),
-                // 1.verticalSpace,
-                // // values
-                // for (int index = 0; index < subjectText.length; index++)
-                //   LayoutBuilder(
-                //     builder: (context, boxConstraints) {
-                //       final con = boxConstraints;
-                //       return IntrinsicHeight(
-                //         child: Padding(
-                //           padding: EdgeInsets.only(bottom: 1.h),
-                //           child: Row(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //               Container(
-                //                 width: con.maxWidth * 0.25,
-                //                 padding: EdgeInsets.symmetric(
-                //                   vertical: 5.h,
-                //                 ),
-                //                 decoration: BoxDecoration(
-                //                   color: styles.alabaster,
-                //                 ),
-                //                 child: Center(
-                //                   child: Column(
-                //                     mainAxisAlignment:
-                //                         MainAxisAlignment.center,
-                //                     children: [
-                //                       Text(
-                //                         subjectText[index],
-                //                         style: styles.inter12w600,
-                //                         overflow: TextOverflow.ellipsis,
-                //                       ),
-                //                       Text(
-                //                         teachers[index],
-                //                         style: styles.inter12w400,
-                //                         overflow: TextOverflow.ellipsis,
-                //                       ),
-                //                     ],
-                //                   ),
-                //                 ),
-                //               ),
-                //               1.horizontalSpace,
-                //               Container(
-                //                 width: con.maxWidth * 0.17,
-                //                 padding: EdgeInsets.symmetric(
-                //                   vertical: 5.h,
-                //                 ),
-                //                 decoration: BoxDecoration(
-                //                   color: styles.alabaster,
-                //                 ),
-                //                 child: Center(
-                //                     child: Text(
-                //                   "90%",
-                //                   style: styles.inter12w400,
-                //                 )),
-                //               ),
-                //               1.horizontalSpace,
-                //               Expanded(
-                //                 child: Row(
-                //                   mainAxisAlignment:
-                //                       MainAxisAlignment.spaceAround,
-                //                   children: [
-                //                     for (int i = 0; i < 2; i++) ...[
-                //                       headingWidget("89", getColor(index)),
-                //                       headingWidget("A+", getColor(index)),
-                //                       headingWidget("5", getColor(index)),
-                //                     ],
-                //                   ],
-                //                 ),
-                //               ),
-                //               Container(
-                //                 width: con.maxWidth * 0.09,
-                //                 padding: EdgeInsets.symmetric(
-                //                   vertical: 5.h,
-                //                 ),
-                //                 decoration: BoxDecoration(
-                //                   color: styles.alabaster,
-                //                 ),
-                //                 child: Center(
-                //                   child: Text(
-                //                     "5.0",
-                //                     style: styles.inter12w400,
-                //                   ),
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //   ),
+                )
               ],
             ),
           );
@@ -354,6 +406,27 @@ class _ReportsScreenState extends State<ReportsScreen> {
       ),
     );
   }
+
+  Widget yearRowWidget(Color color, String text) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+    return Row(
+      children: [
+        Container(
+          width: 6.w,
+          height: 6.h,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        3.horizontalSpace,
+        Text(
+          text,
+          style: styles.inter10w600,
+        ),
+      ],
+    );
+  }
+
+  BorderSide buildBorderSide() =>
+      BorderSide(width: 0.5, color: Colors.black.withOpacity(0.2));
 
   Widget textWidget(double width, {required String text}) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -431,13 +504,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
     String text = value.toInt().toString();
 
-    return Text(text, style: style, textAlign: TextAlign.center);
+    return Text(text, style: styles.inter8w400, textAlign: TextAlign.center);
   }
 }
 
