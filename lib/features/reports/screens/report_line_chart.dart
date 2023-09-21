@@ -80,20 +80,20 @@ class _ReportLineChartState extends State<ReportLineChart> {
             maxX: 4,
             maxY: 6,
             minY: -2,
-            // titlesData: FlTitlesData(
-            //   leftTitles: AxisTitles(
-            //     sideTitles: SideTitles(
-            //       getTitlesWidget: leftTitleWidgets,
-            //       showTitles: true,
-            //       interval: 2,
-            //     ),
-            //   ),
-            //   topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            //   rightTitles:
-            //       AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            //   bottomTitles:
-            //       AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            // ),
+            titlesData: FlTitlesData(
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  getTitlesWidget: leftTitleWidgets,
+                  showTitles: true,
+                  interval: 2,
+                ),
+              ),
+              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles:
+                  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              bottomTitles:
+                  AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            ),
           ),
           swapAnimationDuration: Duration(milliseconds: 150),
           // Optional
