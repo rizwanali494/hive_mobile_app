@@ -187,8 +187,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
             child: SizedBox(
               height: 150.h,
               child: SfCartesianChart(
-                // margin: EdgeInsets.symmetric(
-                //   horizontal: 0.w,
+                // margin: EdgeInsets.only(
+                //   top: 10.h,
+                //   bottom: 0
                 // ),
                 borderWidth: 0.2,
                 borderColor: Colors.black,
@@ -201,7 +202,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   labelStyle: styles.inter8w400,
                   majorTickLines: MajorTickLines(size: 0),
                   plotOffset: 0,
-                  // maximumLabelWidth: 0,
+                  maximumLabelWidth: 0,
                   borderColor: Colors.amber,
                   majorGridLines: MajorGridLines(
                       dashArray: [1, 2], width: 1, color: styles.black),
