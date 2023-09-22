@@ -68,7 +68,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                 children: [
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       ReportTextColumn(
                                           context: context,
@@ -88,13 +88,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   Flexible(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         ReportTextColumn(
                                             context: context,
                                             heading: "Class",
                                             description:
-                                            "CAIE A LEVEL - Year 1"),
+                                                "CAIE A LEVEL - Year 1"),
                                         ReportTextColumn(
                                             context: context,
                                             heading: "Section",
@@ -103,7 +103,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                             context: context,
                                             heading: "Branch",
                                             description:
-                                            "Beaconhouse College Program Defence Campus, Lahore"),
+                                                "Beaconhouse College Program Defence Campus, Lahore"),
                                       ],
                                     ),
                                   ),
@@ -154,9 +154,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       AspectRatio(
                         aspectRatio: 16 / 9,
                         child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(isVisible: false),
+                          borderWidth: 0,
+                          borderColor: Colors.red,
+                          primaryXAxis: CategoryAxis(
+                            isVisible: false,
+                          ),
                           primaryYAxis: NumericAxis(
                             minimum: -2,
+                            majorTickLines: MajorTickLines(size: 0),
+                            borderWidth: 0,
+                            borderColor: Colors.amber,
+                            minorTickLines: MinorTickLines(width: 0, size: 0),
+                            axisLine: AxisLine(width: 0),
                             majorGridLines:
                                 MajorGridLines(dashArray: [1, 2], width: 1),
                             maximum: 6,
@@ -169,6 +178,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               yValueMapper: (_ChartData data, _) => data.y,
                               borderRadius: BorderRadius.horizontal(
                                 right: Radius.circular(12),
+                              ),
+                            ),
+                            BarSeries<_ChartData, String>(
+                              dataSource: data,
+                              xValueMapper: (_ChartData data, _) => data.x,
+                              yValueMapper: (_ChartData data, _) => data.y,
+                              borderRadius: BorderRadius.horizontal(
+                                left: Radius.circular(12),
                               ),
                             ),
                           ],
