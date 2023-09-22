@@ -27,7 +27,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
     data = [
       _ChartData('CHN', 5.5),
       _ChartData('GER', 2.5),
-      _ChartData('RUS', -1.5),
+      _ChartData('RUS', -2),
       _ChartData('BRZ', 3),
     ];
     super.initState();
@@ -48,156 +48,180 @@ class _ReportsScreenState extends State<ReportsScreen> {
               children: [
                 DividerAppBar(title: AppStrings.reports),
                 17.verticalSpace,
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Image(
-                              width: 138.w,
-                              height: 54.h,
-                              image: AssetImage(SvgIcons.bcpCollegeIcon),
-                            ),
-                            VerticalDivider(
-                              color: styles.black,
-                              thickness: 0.5,
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ReportTextColumn(
-                                          context: context,
-                                          heading: "ID",
-                                          description: "01234567"),
-                                      ReportTextColumn(
-                                          context: context,
-                                          heading: "Name",
-                                          description: "Abdul Rehman"),
-                                      ReportTextColumn(
-                                          context: context,
-                                          heading: "Academic Year",
-                                          description: "Aug,2020 - July,2021"),
-                                    ],
-                                  ),
-                                  29.horizontalSpace,
-                                  Flexible(
-                                    child: Column(
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Image(
+                                width: 138.w,
+                                height: 54.h,
+                                image: AssetImage(SvgIcons.bcpCollegeIcon),
+                              ),
+                              VerticalDivider(
+                                color: styles.black,
+                                thickness: 0.5,
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         ReportTextColumn(
                                             context: context,
-                                            heading: "Class",
-                                            description:
-                                                "CAIE A LEVEL - Year 1"),
+                                            heading: "ID",
+                                            description: "01234567"),
                                         ReportTextColumn(
                                             context: context,
-                                            heading: "Section",
-                                            description: "B-MANEFE-B"),
+                                            heading: "Name",
+                                            description: "Abdul Rehman"),
                                         ReportTextColumn(
                                             context: context,
-                                            heading: "Branch",
+                                            heading: "Academic Year",
                                             description:
-                                                "Beaconhouse College Program Defence Campus, Lahore"),
+                                                "Aug,2020 - July,2021"),
                                       ],
                                     ),
-                                  ),
+                                    29.horizontalSpace,
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ReportTextColumn(
+                                              context: context,
+                                              heading: "Class",
+                                              description:
+                                                  "CAIE A LEVEL - Year 1"),
+                                          ReportTextColumn(
+                                              context: context,
+                                              heading: "Section",
+                                              description: "B-MANEFE-B"),
+                                          ReportTextColumn(
+                                              context: context,
+                                              heading: "Branch",
+                                              description:
+                                                  "Beaconhouse College Program Defence Campus, Lahore"),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        10.verticalSpace,
+                        Divider(
+                          thickness: 0.2,
+                        ),
+                        10.verticalSpace,
+                        const ReportLineChart(),
+                        30.verticalSpace,
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 5.w,
+                              ),
+                              child: Text(
+                                "CGPA",
+                                style: styles.inter8w400,
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  YearRowWidget(
+                                      context: context,
+                                      color: styles.skyBlue,
+                                      text: "Year 1"),
+                                  52.horizontalSpace,
+                                  YearRowWidget(
+                                      context: context,
+                                      color: styles.darkOrange,
+                                      text: "Year 2"),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      10.verticalSpace,
-                      Divider(
-                        thickness: 0.2,
-                      ),
-                      10.verticalSpace,
-                      const ReportLineChart(),
-                      30.verticalSpace,
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 5.w,
-                            ),
-                            child: Text(
-                              "CGPA",
-                              style: styles.inter8w400,
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                YearRowWidget(
-                                    context: context,
-                                    color: styles.skyBlue,
-                                    text: "Year 1"),
-                                52.horizontalSpace,
-                                YearRowWidget(
-                                    context: context,
-                                    color: styles.darkOrange,
-                                    text: "Year 2"),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      25.verticalSpace,
-                      // values
-                      AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: SfCartesianChart(
-                          borderWidth: 0,
-                          borderColor: Colors.red,
-                          primaryXAxis: CategoryAxis(
-                            isVisible: false,
-                          ),
-                          primaryYAxis: NumericAxis(
-                            minimum: -2,
-                            majorTickLines: MajorTickLines(size: 0),
-                            borderWidth: 0,
-                            borderColor: Colors.amber,
-                            minorTickLines: MinorTickLines(width: 0, size: 0),
-                            axisLine: AxisLine(width: 0),
-                            majorGridLines:
-                                MajorGridLines(dashArray: [1, 2], width: 1),
-                            maximum: 6,
-                            interval: 2,
-                          ),
-                          series: <ChartSeries<_ChartData, String>>[
-                            BarSeries<_ChartData, String>(
-                              dataSource: data,
-                              xValueMapper: (_ChartData data, _) => data.x,
-                              yValueMapper: (_ChartData data, _) => data.y,
-                              borderRadius: BorderRadius.horizontal(
-                                right: Radius.circular(12),
-                              ),
-                            ),
-                            BarSeries<_ChartData, String>(
-                              dataSource: data,
-                              xValueMapper: (_ChartData data, _) => data.x,
-                              yValueMapper: (_ChartData data, _) => data.y,
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(12),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                        25.verticalSpace,
+                        // values
+                        barChartWidget("Mid Term\nAssessment"),
+                        barChartWidget("Mock Term\nAssessment"),
+                        barChartWidget("Mock\nExams"),
+                      ],
+                    ),
                   ),
                 )
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget barChartWidget(String heading) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              heading,
+              style: styles.inter12w500,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          11.horizontalSpace,
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              height: 150.h,
+              child: SfCartesianChart(
+                // margin: EdgeInsets.symmetric(
+                //   horizontal: 0.w,
+                // ),
+                borderWidth: 0.2,
+                borderColor: Colors.black,
+                plotAreaBorderWidth: 0,
+                primaryXAxis: CategoryAxis(
+                  isVisible: false,
+                ),
+                primaryYAxis: NumericAxis(
+                  minimum: -2,
+                  labelStyle: styles.inter8w400,
+                  majorTickLines: MajorTickLines(size: 0),
+                  plotOffset: 0,
+                  // maximumLabelWidth: 0,
+                  borderColor: Colors.amber,
+                  majorGridLines: MajorGridLines(
+                      dashArray: [1, 2], width: 1, color: styles.black),
+                  maximum: 6,
+                  interval: 2,
+                ),
+                series: <ChartSeries<_ChartData, String>>[
+                  BarSeries<_ChartData, String>(
+                    dataSource: data,
+                    xValueMapper: (_ChartData data, _) => data.x,
+                    yValueMapper: (_ChartData data, _) => data.y,
+                    // borderRadius: BorderRadius.horizontal(
+                    //   right: Radius.circular(12),
+                    // ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
