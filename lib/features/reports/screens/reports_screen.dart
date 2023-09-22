@@ -9,6 +9,7 @@ import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
@@ -18,6 +19,20 @@ class ReportsScreen extends StatefulWidget {
 }
 
 class _ReportsScreenState extends State<ReportsScreen> {
+  late List<_ChartData> data;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    data = [
+      _ChartData('CHN', 5.5),
+      _ChartData('GER', 2.5),
+      _ChartData('RUS', -1.5),
+      _ChartData('BRZ', 3),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -53,7 +68,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                 children: [
                                   Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       ReportTextColumn(
                                           context: context,
@@ -73,13 +88,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   Flexible(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         ReportTextColumn(
                                             context: context,
                                             heading: "Class",
                                             description:
-                                                "CAIE A LEVEL - Year 1"),
+                                            "CAIE A LEVEL - Year 1"),
                                         ReportTextColumn(
                                             context: context,
                                             heading: "Section",
@@ -88,7 +103,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                             context: context,
                                             heading: "Branch",
                                             description:
-                                                "Beaconhouse College Program Defence Campus, Lahore"),
+                                            "Beaconhouse College Program Defence Campus, Lahore"),
                                       ],
                                     ),
                                   ),
@@ -134,8 +149,31 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           ),
                         ],
                       ),
-                      1.verticalSpace,
+                      25.verticalSpace,
                       // values
+                      AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: SfCartesianChart(
+                          primaryXAxis: CategoryAxis(isVisible: false),
+                          primaryYAxis: NumericAxis(
+                            minimum: -2,
+                            majorGridLines:
+                                MajorGridLines(dashArray: [1, 2], width: 1),
+                            maximum: 6,
+                            interval: 2,
+                          ),
+                          series: <ChartSeries<_ChartData, String>>[
+                            BarSeries<_ChartData, String>(
+                              dataSource: data,
+                              xValueMapper: (_ChartData data, _) => data.x,
+                              yValueMapper: (_ChartData data, _) => data.y,
+                              borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(12),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -146,7 +184,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
       ),
     );
   }
-
 
   Color getColor(int index) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -172,3 +209,10 @@ final teachers = [
   "MS. Ayesha",
   "Akhtar",
 ];
+
+class _ChartData {
+  _ChartData(this.x, this.y);
+
+  final String x;
+  final double y;
+}
