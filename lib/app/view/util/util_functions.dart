@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
-import 'package:hive_mobile/main.dart';
 import 'package:images_picker/images_picker.dart';
 
 class UtilFunctions {

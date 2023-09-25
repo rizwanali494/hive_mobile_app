@@ -1,7 +1,6 @@
-import 'package:hive_mobile/app/models/data/awards_model.dart';
 import 'package:isar/isar.dart';
 
-import 'announcement_post_models/attachments_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 
 part "inbox_model.g.dart";
 

@@ -6,8 +6,6 @@ import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
-import 'package:hive_mobile/app/view/util/util_functions.dart';
-import 'package:hive_mobile/main.dart';
 
 abstract class BaseApiVM<T> with ChangeNotifier {
   UiState uiState = UiState.loading();

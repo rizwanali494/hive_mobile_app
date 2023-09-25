@@ -5,11 +5,13 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 class YearToggleWidget extends StatelessWidget {
   final BorderRadiusGeometry borderRadius;
   final bool isSelected;
+  final String text;
 
   const YearToggleWidget({
     super.key,
     required this.borderRadius,
     required this.isSelected,
+    required this.text,
   });
 
   @override
@@ -25,8 +27,8 @@ class YearToggleWidget extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            "Year 1",
-            style: styles.inter10w400
+            text,
+            style: styles.inter10w600
                 .copyWith(color: isSelected ? styles.white : styles.black),
           ),
         ),

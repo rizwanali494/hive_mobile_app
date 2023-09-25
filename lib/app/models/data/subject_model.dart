@@ -66,7 +66,7 @@ class SubjectModel {
         externalGrade: externalGrade ?? this.externalGrade,
       );
 
-  Map<String, dynamic?> toJson() {
+  Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['date_added'] = dateAdded;

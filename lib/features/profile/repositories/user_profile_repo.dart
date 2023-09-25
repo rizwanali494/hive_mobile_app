@@ -63,7 +63,6 @@ class UserProfileRepoImpl extends UserProfileRepo {
     // var list = List<AwardsModel>.generate(
     //     15, (index) => AwardsModel(awardName: "Award ${index + 1}"));
     return result.map((item) => AwardsModel.fromJson(item)).toList();
-    ;
   }
 
   @override

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/message_model.dart';
-import 'package:hive_mobile/app/models/pagination_controller.dart';
-import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/rev_pagination_controller.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -18,7 +15,6 @@ import 'package:isar/isar.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 
-import 'package:hive_mobile/features/inbox/view_models/date_message_class.dart';
 
 class ChatScreenVM extends ChangeNotifier {
   int receiverId;

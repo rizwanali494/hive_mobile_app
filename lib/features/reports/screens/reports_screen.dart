@@ -69,12 +69,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                 left: Radius.circular(50.r),
                               ),
                               isSelected: true,
+                              text: 'Year 1',
                             ),
                             YearToggleWidget(
                               borderRadius: BorderRadius.horizontal(
                                 right: Radius.circular(50.r),
                               ),
                               isSelected: false,
+                              text: 'Year 2',
                             ),
                           ],
                         ),

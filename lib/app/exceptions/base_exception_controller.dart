@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 
 class BaseExceptionController {

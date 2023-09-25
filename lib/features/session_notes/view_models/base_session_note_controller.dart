@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/session_notes/repositories/session_note_repo.dart';
 
-import 'ack_session_note_vm.dart';
+import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 
 abstract class BaseSessionNoteVM extends BaseApiVM<SessionNoteModel> {
   final String endPoint;

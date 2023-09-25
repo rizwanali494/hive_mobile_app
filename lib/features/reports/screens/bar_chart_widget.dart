@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/constants/svg_icons.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
-import 'package:hive_mobile/features/reports/screens/report_text_column.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
-import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
-import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
-import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BarChartWidget extends StatelessWidget {
