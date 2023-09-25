@@ -168,61 +168,91 @@ class _ReportsScreenState extends State<ReportsScreen> {
     );
   }
 
-  Widget barChartWidget(String heading) {
+  Widget barChartWidget(String heading, {String termText = "Term 1"}) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return IntrinsicHeight(
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              heading,
-              style: styles.inter12w500,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          11.horizontalSpace,
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              height: 150.h,
-              child: SfCartesianChart(
-                // margin: EdgeInsets.only(
-                //   top: 10.h,
-                //   bottom: 0
-                // ),
-                borderWidth: 0.2,
-                borderColor: Colors.black,
-                plotAreaBorderWidth: 0,
-                primaryXAxis: CategoryAxis(
-                  isVisible: false,
-                ),
-                primaryYAxis: NumericAxis(
-                  minimum: -2,
-                  labelStyle: styles.inter8w400,
-                  majorTickLines: MajorTickLines(size: 0),
-                  plotOffset: 0,
-                  maximumLabelWidth: 0,
-                  borderColor: Colors.amber,
-                  majorGridLines: MajorGridLines(
-                      dashArray: [1, 2], width: 1, color: styles.black),
-                  maximum: 6,
-                  interval: 2,
-                ),
-                series: <ChartSeries<_ChartData, String>>[
-                  BarSeries<_ChartData, String>(
-                    dataSource: data,
-                    xValueMapper: (_ChartData data, _) => data.x,
-                    yValueMapper: (_ChartData data, _) => data.y,
-                    // borderRadius: BorderRadius.horizontal(
-                    //   right: Radius.circular(12),
-                    // ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 10.h),
+        child: Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                termDividerWidget(styles),
+                RotatedBox(
+                  quarterTurns: 3,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.h),
+                    child: Text(
+                      "Term 1",
+                      style: styles.inter8w400,
+                    ),
                   ),
-                ],
+                ),
+                termDividerWidget(styles),
+              ],
+            ),
+            Expanded(
+              child: Text(
+                heading,
+                style: styles.inter12w500,
+                textAlign: TextAlign.center,
               ),
             ),
-          ),
-        ],
+            11.horizontalSpace,
+            Expanded(
+              flex: 2,
+              child: SizedBox(
+                height: 150.h,
+                child: SfCartesianChart(
+                  // margin: EdgeInsets.only(
+                  //   top: 10.h,
+                  //   bottom: 0
+                  // ),
+                  borderWidth: 0.2,
+                  borderColor: Colors.black,
+                  plotAreaBorderWidth: 0,
+                  primaryXAxis: CategoryAxis(
+                    isVisible: false,
+                  ),
+                  primaryYAxis: NumericAxis(
+                    minimum: -2,
+                    labelStyle: styles.inter8w400,
+                    majorTickLines: MajorTickLines(size: 0),
+                    plotOffset: 0,
+                    // maximumLabelWidth: 0,
+                    borderColor: Colors.amber,
+                    majorGridLines: MajorGridLines(
+                        dashArray: [1, 2], width: 1, color: styles.black),
+                    maximum: 6,
+                    interval: 2,
+                  ),
+                  series: <ChartSeries<_ChartData, String>>[
+                    BarSeries<_ChartData, String>(
+                      dataSource: data,
+                      xValueMapper: (_ChartData data, _) => data.x,
+                      yValueMapper: (_ChartData data, _) => data.y,
+                      // borderRadius: BorderRadius.horizontal(
+                      //   right: Radius.circular(12),
+                      // ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget termDividerWidget(AppTheme styles) {
+    return Expanded(
+      child: VerticalDivider(
+        color: styles.black.withOpacity(0.5),
+        width: 0.5.w,
+        thickness: 0.5.w,
       ),
     );
   }
