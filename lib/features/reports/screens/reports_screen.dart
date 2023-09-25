@@ -20,6 +20,7 @@ class ReportsScreen extends StatefulWidget {
 
 class _ReportsScreenState extends State<ReportsScreen> {
   late List<_ChartData> data;
+  late List<_ChartData> data2;
 
   @override
   void initState() {
@@ -27,8 +28,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
     data = [
       _ChartData('CHN', 5.5),
       _ChartData('GER', 2.5),
-      _ChartData('RUS', -2),
       _ChartData('BRZ', 3),
+    ];
+    data2 = [
+      _ChartData('CHN', -1.5),
+      _ChartData('RUS', -2),
     ];
     super.initState();
   }
@@ -249,9 +253,17 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     dataSource: data,
                     xValueMapper: (_ChartData data, _) => data.x,
                     yValueMapper: (_ChartData data, _) => data.y,
-                    // borderRadius: BorderRadius.horizontal(
-                    //   right: Radius.circular(12),
-                    // ),
+                    borderRadius: BorderRadius.horizontal(
+                      right: Radius.circular(12),
+                    ),
+                  ),
+                  BarSeries<_ChartData, String>(
+                    dataSource: data2,
+                    xValueMapper: (_ChartData data, _) => data.x,
+                    yValueMapper: (_ChartData data, _) => data.y,
+                    borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(12),
+                    ),
                   ),
                 ],
               ),
