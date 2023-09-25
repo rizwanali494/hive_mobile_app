@@ -153,9 +153,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         ),
                         25.verticalSpace,
                         // values
-                        barChartWidget("Mid Term\nAssessment"),
-                        barChartWidget("Mock Term\nAssessment"),
-                        barChartWidget("Mock\nExams"),
+                        termWidget(styles, 2, 1),
+                        termWidget(styles, 2, 2),
                       ],
                     ),
                   ),
@@ -168,12 +167,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
     );
   }
 
-  Widget barChartWidget(String heading, {String termText = "Term 1"}) {
-    final styles = Theme.of(context).extension<AppTheme>()!;
-
-    return IntrinsicHeight(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 10.h),
+  Widget termWidget(AppTheme styles, [int examsCount = 1, int term = 1]) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.h),
+      child: IntrinsicHeight(
         child: Row(
           children: [
             Column(
@@ -185,7 +182,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5.h),
                     child: Text(
-                      "Term 1",
+                      "Term $term",
                       style: styles.inter8w400,
                     ),
                   ),
@@ -194,55 +191,73 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ],
             ),
             Expanded(
-              child: Text(
-                heading,
-                style: styles.inter12w500,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            11.horizontalSpace,
-            Expanded(
-              flex: 2,
-              child: SizedBox(
-                height: 150.h,
-                child: SfCartesianChart(
-                  // margin: EdgeInsets.only(
-                  //   top: 10.h,
-                  //   bottom: 0
-                  // ),
-                  borderWidth: 0.2,
-                  borderColor: Colors.black,
-                  plotAreaBorderWidth: 0,
-                  primaryXAxis: CategoryAxis(
-                    isVisible: false,
+              child: Column(
+                children: [
+                  ...List.generate(
+                    examsCount,
+                    (index) => barChartWidget(terms[index % terms.length]),
                   ),
-                  primaryYAxis: NumericAxis(
-                    minimum: -2,
-                    labelStyle: styles.inter8w400,
-                    majorTickLines: MajorTickLines(size: 0),
-                    plotOffset: 0,
-                    // maximumLabelWidth: 0,
-                    borderColor: Colors.amber,
-                    majorGridLines: MajorGridLines(
-                        dashArray: [1, 2], width: 1, color: styles.black),
-                    maximum: 6,
-                    interval: 2,
-                  ),
-                  series: <ChartSeries<_ChartData, String>>[
-                    BarSeries<_ChartData, String>(
-                      dataSource: data,
-                      xValueMapper: (_ChartData data, _) => data.x,
-                      yValueMapper: (_ChartData data, _) => data.y,
-                      // borderRadius: BorderRadius.horizontal(
-                      //   right: Radius.circular(12),
-                      // ),
-                    ),
-                  ],
-                ),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget barChartWidget(String heading) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.h),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              heading,
+              style: styles.inter12w500,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          11.horizontalSpace,
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              height: 150.h,
+              // width: 150.h,
+              child: SfCartesianChart(
+                borderWidth: 0.2,
+                borderColor: Colors.black,
+                plotAreaBorderWidth: 0,
+                primaryXAxis: CategoryAxis(
+                  isVisible: false,
+                ),
+                primaryYAxis: NumericAxis(
+                  minimum: -2,
+                  labelStyle: styles.inter8w400,
+                  majorTickLines: MajorTickLines(size: 0),
+                  plotOffset: 0,
+                  // maximumLabelWidth: 0,
+                  borderColor: Colors.amber,
+                  majorGridLines: MajorGridLines(
+                      dashArray: [1, 2], width: 1, color: styles.black),
+                  maximum: 6,
+                  interval: 2,
+                ),
+                series: <ChartSeries<_ChartData, String>>[
+                  BarSeries<_ChartData, String>(
+                    dataSource: data,
+                    xValueMapper: (_ChartData data, _) => data.x,
+                    yValueMapper: (_ChartData data, _) => data.y,
+                    // borderRadius: BorderRadius.horizontal(
+                    //   right: Radius.circular(12),
+                    // ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -280,6 +295,10 @@ final teachers = [
   "Abrar Khan",
   "MS. Ayesha",
   "Akhtar",
+];
+final terms = [
+  "Mid Term\nAssessment",
+  "Mid Year\nExams",
 ];
 
 class _ChartData {
