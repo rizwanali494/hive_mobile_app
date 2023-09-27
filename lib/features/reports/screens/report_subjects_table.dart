@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
-class ReportLineChart extends StatefulWidget {
-  const ReportLineChart({super.key});
+class ReportSubjectsTable extends StatefulWidget {
+  const ReportSubjectsTable({super.key});
 
   @override
-  State<ReportLineChart> createState() => _ReportLineChartState();
+  State<ReportSubjectsTable> createState() => _ReportSubjectsTableState();
 }
 
-class _ReportLineChartState extends State<ReportLineChart> {
+class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
@@ -209,7 +209,112 @@ class _ReportLineChartState extends State<ReportLineChart> {
               );
             },
           ),
+        2.verticalSpace,
+        LayoutBuilder(
+          builder: (context, size) {
+            return IntrinsicHeight(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: size.maxWidth * 0.085,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    decoration: BoxDecoration(color: styles.alabaster),
+                    child: Center(
+                      child: Text(
+                        "2.6",
+                        style: styles.inter12w600,
+                      ),
+                    ),
+                  ),
+                  1.horizontalSpace,
+                  Container(
+                    width: size.maxWidth * 0.075,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    decoration: BoxDecoration(color: styles.alabaster),
+                  ),
+                  1.horizontalSpace,
+                  Container(
+                    width: size.maxWidth * 0.075,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    decoration: BoxDecoration(color: styles.alabaster),
+                  ),
+                  1.horizontalSpace,
+                  Container(
+                    width: size.maxWidth * 0.085,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    decoration: BoxDecoration(color: styles.alabaster),
+                    child: Center(
+                      child: Text(
+                        "2.6",
+                        style: styles.inter12w600,
+                      ),
+                    ),
+                  ),
+                  1.horizontalSpace,
+                  Container(
+                    width: size.maxWidth * 0.085,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    decoration: BoxDecoration(color: styles.alabaster),
+                    child: Center(
+                      child: Text(
+                        "2.6",
+                        style: styles.inter12w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        14.verticalSpace,
+        Row(
+          children: [
+            summaryWidget(
+              "Summary",
+              color: styles.alabaster,
+              borderRadius: BorderRadius.horizontal(
+                left: Radius.circular(59.r),
+              ),
+            ),
+            1.horizontalSpace,
+            summaryWidget("Mean GPA :2.4", color: styles.paleSkyBlue, flex: 2),
+            1.horizontalSpace,
+            summaryWidget("Top GPA :5", color: styles.paleWhite),
+            1.horizontalSpace,
+            summaryWidget(
+              "Bottom GPA :-1.9",
+              color: styles.peachYellow,
+              flex: 2,
+              borderRadius: BorderRadius.horizontal(
+                right: Radius.circular(59.r),
+              ),
+            ),
+          ],
+        )
       ],
+    );
+  }
+
+  Widget summaryWidget(String value,
+      {Color? color, int flex = 1, BorderRadiusGeometry? borderRadius}) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+    return Expanded(
+      flex: flex,
+      child: Container(
+        decoration: BoxDecoration(color: color, borderRadius: borderRadius),
+        padding: EdgeInsets.only(
+          left: 9.w,
+          bottom: 7.h,
+          top: 7.h,
+        ),
+        child: Text(
+          value,
+          style: styles.inter10w600,
+        ),
+      ),
     );
   }
 

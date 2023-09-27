@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/reports/screens/bar_chart_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
+import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_widget.dart';
+import 'package:hive_mobile/features/reports/screens/term_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
@@ -64,24 +67,73 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         10.verticalSpace,
                         Row(
                           children: [
-                            YearToggleWidget(
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(50.r),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  provider.selectYear(0);
+                                },
+                                child: YearToggleWidget(
+                                  borderRadius: BorderRadius.horizontal(
+                                    left: Radius.circular(50.r),
+                                  ),
+                                  isSelected: provider.selectedYear == 0,
+                                  text: 'Year 1',
+                                ),
                               ),
-                              isSelected: true,
-                              text: 'Year 1',
                             ),
-                            YearToggleWidget(
-                              borderRadius: BorderRadius.horizontal(
-                                right: Radius.circular(50.r),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  provider.selectYear(1);
+                                },
+                                child: YearToggleWidget(
+                                  borderRadius: BorderRadius.horizontal(
+                                    right: Radius.circular(50.r),
+                                  ),
+                                  isSelected: provider.selectedYear == 1,
+                                  text: 'Year 2',
+                                ),
                               ),
-                              isSelected: false,
-                              text: 'Year 2',
                             ),
                           ],
                         ),
-                        21.verticalSpace,
-                        const ReportLineChart(),
+                        15.verticalSpace,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  provider.selectTerm(0);
+                                },
+                                child: TermToggleWidget(
+                                  isSelected: provider.selectedTerm == 0,
+                                  text: 'Term 1',
+                                ),
+                              ),
+                            ),
+                            14.horizontalSpace,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  provider.selectTerm(1);
+                                },
+                                child: TermToggleWidget(
+                                  isSelected: provider.selectedTerm == 1,
+                                  text: 'Term 2',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        16.verticalSpace,
+                        ReportSubjectsTable(),
+                        30.verticalSpace,
+                        Divider(
+                          thickness: 0.5,
+                          color: styles.black.withOpacity(0.5),
+                        ),
+                        33.verticalSpace,
+                        ReportLineChart(),
                         30.verticalSpace,
                         Row(
                           children: [
@@ -112,15 +164,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             ),
                           ],
                         ),
-                        25.verticalSpace,
-                        // values
-                        ReportTermWidget(
-                            context: context,
-                            data: data,
-                            data2: data2,
-                            styles: styles,
-                            examsCount: 2,
-                            term: 1),
+                        30.verticalSpace,
+                        Divider(
+                          thickness: 0.5,
+                          color: styles.black.withOpacity(0.5),
+                        ),
+                        33.verticalSpace,
                         ReportTermWidget(
                             context: context,
                             data: data,
@@ -128,6 +177,20 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             styles: styles,
                             examsCount: 2,
                             term: 2),
+                        ReportTermWidget(
+                            context: context,
+                            data: data,
+                            data2: data2,
+                            styles: styles,
+                            examsCount: 2,
+                            term: 2),
+                        10.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            barLegendWidget("Accounting", styles.lightBlue),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -136,6 +199,28 @@ class _ReportsScreenState extends State<ReportsScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Padding barLegendWidget(String text, Color color) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Padding(
+      padding: EdgeInsets.only(right: 10.w),
+      child: Row(
+        children: [
+          Container(
+            width: 6.w,
+            height: 6.h,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          3.horizontalSpace,
+          Text(
+            text,
+            style: styles.inter10w600,
+          )
+        ],
       ),
     );
   }

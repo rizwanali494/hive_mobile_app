@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
-class YearToggleWidget extends StatelessWidget {
-  final BorderRadiusGeometry borderRadius;
+class TermToggleWidget extends StatelessWidget {
   final bool isSelected;
   final String text;
 
-  const YearToggleWidget({
+  const TermToggleWidget({
     super.key,
-    required this.borderRadius,
     required this.isSelected,
     required this.text,
   });
@@ -19,16 +17,17 @@ class YearToggleWidget extends StatelessWidget {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.h),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
-        color: isSelected ? styles.skyBlue : styles.whiteSmoke,
-        borderRadius: borderRadius,
-      ),
+          color: isSelected ? styles.paleBlue : styles.white,
+          borderRadius: BorderRadius.circular(50.r),
+          border: Border.all(color: styles.skyBlue)),
       child: Center(
         child: Text(
           text,
-          style: styles.inter10w600
-              .copyWith(color: isSelected ? styles.white : styles.black),
+          style: styles.inter10w600.copyWith(
+            color: styles.skyBlue,
+          ),
         ),
       ),
     );
