@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/screens/bar_chart_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
@@ -53,8 +54,16 @@ class _ReportsScreenState extends State<ReportsScreen> {
             ),
             child: Column(
               children: [
-                DividerAppBar(title: AppStrings.reports),
-                17.verticalSpace,
+                AppBarWidget(
+                    color: styles.black,
+                    horizontalPadding: 0,
+                    title: AppStrings.reports,
+                    titleStyle: styles.inter28w700),
+                Divider(
+                  thickness: 0.2,
+                ),
+                // DividerAppBar(title: AppStrings.reports),
+                5.verticalSpace,
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
@@ -188,9 +197,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            barLegendWidget("Accounting", styles.lightBlue),
+                            barLegendWidget("Accounting", styles.denimBlue),
+                            barLegendWidget("Mathematics", styles.gravel),
+                            barLegendWidget("Economics", styles.yellowGreen),
+                            barLegendWidget("Business", styles.paleOrange),
                           ],
                         ),
+                        10.verticalSpace,
                       ],
                     ),
                   ),
