@@ -62,7 +62,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 Divider(
                   thickness: 0.2,
                 ),
-                // DividerAppBar(title: AppStrings.reports),
                 5.verticalSpace,
                 Expanded(
                   child: SingleChildScrollView(
@@ -250,18 +249,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
   }
 }
 
-// final subjectText = [
-//   "Accounting",
-//   "Mathematics",
-//   "Economics",
-//   "Business",
-// ];
-// final teachers = [
-//   "Ahmad Ali",
-//   "Abrar Khan",
-//   "MS. Ayesha",
-//   "Akhtar",
-// ];
 
 class ChartData {
   ChartData(this.x, this.y);
