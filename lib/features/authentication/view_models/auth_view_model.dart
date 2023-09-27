@@ -37,16 +37,16 @@ class AuthVM extends ChangeNotifier
     await authService.logOut();
     showLoaderDialog(context);
     var user = await authService.logIn();
-    if (kDebugMode) {
-      var model = UserModel.fromJson(_model);
-      var token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MjI4NzQxLCJpYXQiOjE2OTU2MjM5NDEsImp0aSI6ImIwZWFmMzQ3YTU1MjQ2OTk5ZmMyMTk1MWU2YzFjYWRkIiwidXNlcl9pZCI6MX0.KhDgrlTyt602I9BfCPFRwOUMFUSBN5WB8D36xTyZh0o";
-      log(token.toString());
-      registerApiServiceInstance(token: token);
-      registerUserModel(model);
-      context.pushReplacement(HomeScreen.route);
-      return;
-    }
+    // if (kDebugMode) {
+    //   var model = UserModel.fromJson(_model);
+    //   var token =
+    //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2MjI4NzQxLCJpYXQiOjE2OTU2MjM5NDEsImp0aSI6ImIwZWFmMzQ3YTU1MjQ2OTk5ZmMyMTk1MWU2YzFjYWRkIiwidXNlcl9pZCI6MX0.KhDgrlTyt602I9BfCPFRwOUMFUSBN5WB8D36xTyZh0o";
+    //   log(token.toString());
+    //   registerApiServiceInstance(token: token);
+    //   registerUserModel(model);
+    //   context.pushReplacement(HomeScreen.route);
+    //   return;
+    // }
     if (user is GoogleSignInAccount) {
       var body = {
         "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}

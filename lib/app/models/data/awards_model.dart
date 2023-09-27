@@ -1,65 +1,121 @@
-import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
-
 class AwardsModel {
   AwardsModel({
     this.id,
+    this.achievement,
     this.dateAdded,
     this.dateLastModified,
     this.branchId,
-    this.awardName,
+    this.regionId,
+    this.cityId,
     this.description,
     this.owner,
     this.student,
-    this.attachment,
   });
 
   AwardsModel.fromJson(dynamic json) {
     id = json['id'];
+    achievement = json['achievement'] != null
+        ? Achievement.fromJson(json['achievement'])
+        : null;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
     branchId = json['branch_id'];
-    awardName = json['award_name'];
+    regionId = json['region_id'];
+    cityId = json['city_id'];
     description = json['description'];
     owner = json['owner'];
     student = json['student'];
-    if (json['attachment'] != null) {
-      attachment = [];
-      json['attachment'].forEach((v) {
-        attachment?.add(Attachments.fromJson(v));
-      });
-    }
   }
 
-  int? id;
+  num? id;
+  Achievement? achievement;
   String? dateAdded;
   String? dateLastModified;
-  int? branchId;
-  String? awardName;
+  num? branchId;
+  num? regionId;
+  dynamic cityId;
   String? description;
-  int? owner;
-  int? student;
-  List<Attachments>? attachment;
+  num? owner;
+  num? student;
 
   AwardsModel copyWith({
-    int? id,
+    num? id,
+    Achievement? achievement,
     String? dateAdded,
     String? dateLastModified,
-    int? branchId,
-    String? awardName,
+    num? branchId,
+    num? regionId,
+    dynamic cityId,
     String? description,
-    int? owner,
-    int? student,
-    List<Attachments>? attachment,
+    num? owner,
+    num? student,
   }) =>
       AwardsModel(
         id: id ?? this.id,
+        achievement: achievement ?? this.achievement,
         dateAdded: dateAdded ?? this.dateAdded,
         dateLastModified: dateLastModified ?? this.dateLastModified,
         branchId: branchId ?? this.branchId,
-        awardName: awardName ?? this.awardName,
+        regionId: regionId ?? this.regionId,
+        cityId: cityId ?? this.cityId,
         description: description ?? this.description,
         owner: owner ?? this.owner,
         student: student ?? this.student,
+      );
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    if (achievement != null) {
+      map['achievement'] = achievement?.toJson();
+    }
+    map['date_added'] = dateAdded;
+    map['date_last_modified'] = dateLastModified;
+    map['branch_id'] = branchId;
+    map['region_id'] = regionId;
+    map['city_id'] = cityId;
+    map['description'] = description;
+    map['owner'] = owner;
+    map['student'] = student;
+    return map;
+  }
+}
+
+class Achievement {
+  Achievement({
+    this.id,
+    this.dateAdded,
+    this.dateLastModified,
+    this.name,
+    this.attachment,
+  });
+
+  Achievement.fromJson(dynamic json) {
+    id = json['id'];
+    dateAdded = json['date_added'];
+    dateLastModified = json['date_last_modified'];
+    name = json['name'];
+    attachment = json['attachment'];
+  }
+
+  num? id;
+  String? dateAdded;
+  String? dateLastModified;
+  String? name;
+  String? attachment;
+
+  Achievement copyWith({
+    num? id,
+    String? dateAdded,
+    String? dateLastModified,
+    String? name,
+    String? attachment,
+  }) =>
+      Achievement(
+        id: id ?? this.id,
+        dateAdded: dateAdded ?? this.dateAdded,
+        dateLastModified: dateLastModified ?? this.dateLastModified,
+        name: name ?? this.name,
         attachment: attachment ?? this.attachment,
       );
 
@@ -68,15 +124,8 @@ class AwardsModel {
     map['id'] = id;
     map['date_added'] = dateAdded;
     map['date_last_modified'] = dateLastModified;
-    map['branch_id'] = branchId;
-    map['award_name'] = awardName;
-    map['description'] = description;
-    map['owner'] = owner;
-    map['student'] = student;
-    if (attachment != null) {
-      map['attachment'] = attachment?.map((v) => v.toJson()).toList();
-    }
+    map['name'] = name;
+    map['attachment'] = attachment;
     return map;
   }
 }
-

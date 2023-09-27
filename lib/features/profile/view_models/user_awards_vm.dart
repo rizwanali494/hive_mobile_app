@@ -10,14 +10,14 @@ class UserAwardsVM extends BaseProfileInfoVM {
   @override
   Future<List<String>> getInitialElements() async {
     var items = await userProfileRepo.getAwards(limit: limit);
-    var list = items.map((e) => e.awardName ?? "").toList();
+    var list = items.map((e) => e.achievement?.name ?? "").toList();
     return list;
   }
 
   @override
   Future<List<String>> getNextElements() async {
     var items = await userProfileRepo.getAwards(limit: limit, offSet: offset);
-    var list = items.map((e) => e.awardName ?? "").toList();
+    var list = items.map((e) => e.achievement?.name ?? "").toList();
     return list;
   }
 
