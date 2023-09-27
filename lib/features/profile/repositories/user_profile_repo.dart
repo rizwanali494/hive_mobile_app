@@ -55,13 +55,12 @@ class UserProfileRepoImpl extends UserProfileRepo {
 
   @override
   Future<List<AwardsModel>> getAwards({int? limit, int? offSet}) async {
-    var url = ApiEndpoints.award.withLimit(limit).withOffSet(offSet);
+    var url =
+        ApiEndpoints.award.withLimit(limit).withOffSet(offSet).withAchievement;
     log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
     List result = body["results"] ?? [];
-    // var list = List<AwardsModel>.generate(
-    //     15, (index) => AwardsModel(awardName: "Award ${index + 1}"));
     return result.map((item) => AwardsModel.fromJson(item)).toList();
   }
 
