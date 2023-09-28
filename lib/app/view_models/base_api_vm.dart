@@ -81,20 +81,20 @@ abstract class BaseApiVM<T> with ChangeNotifier {
 
   Future<void> getNextItems() async {
     paginationController.state = PaginationState.GettingMore();
-    // paginationController.toggleIsGettingMore(true);
+    paginationController.toggleIsGettingMore(true);
     notifyListeners();
     final request = () async {
       var list = await fetchNextItems();
       if (list.length < limit) {
         paginationController.state = PaginationState.LastPage();
-        // paginationController.isLastPage = true;
+        paginationController.isLastPage = true;
       } else {
         paginationController.state = PaginationState.Loaded();
         paginationController
             .setOffset((paginationController.offset) + list.length);
       }
       items.addAll(list);
-      // paginationController.toggleIsGettingMore(false);
+      paginationController.toggleIsGettingMore(false);
       return;
     };
     await performRequest(request: request);
@@ -105,8 +105,8 @@ abstract class BaseApiVM<T> with ChangeNotifier {
     final request = () async {
       uiState = UiState.refreshing();
       paginationController.state = PaginationState.Loaded();
-      // paginationController.toggleIsGettingMore(false);
-      // paginationController.toggleLastPage(false);
+      paginationController.toggleIsGettingMore(false);
+      paginationController.toggleLastPage(false);
       paginationController.setOffset(0);
       var list = await fetchInitialItems();
       if (list.length < limit) {
@@ -147,8 +147,8 @@ abstract class BaseApiVM<T> with ChangeNotifier {
       uiState = UiState.loaded();
     }
     paginationController.state = PaginationState.Loaded();
-    // paginationController.toggleIsGettingMore(false);
-    // paginationController.isLastPage = false;
+    paginationController.toggleIsGettingMore(false);
+    paginationController.isLastPage = false;
     paginationController.removeListener();
     notifyListeners();
   }

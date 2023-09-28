@@ -62,13 +62,13 @@ class ActivitiesScreen extends StatelessWidget {
                 else if (provider.hasError)
                   Expanded(
                     child: ErrorTextWidget(
-                      onRefresh: provider.refreshActivities,
+                      onRefresh: provider.refreshList,
                     ),
                   )
-                else if (provider.activities.isNotEmpty)
+                else if (provider.items.isNotEmpty)
                   Expanded(
                     child: RefreshIndicator(
-                      onRefresh: provider.refreshActivities,
+                      onRefresh: provider.refreshList,
                       backgroundColor: styles.white,
                       child: ListView.separated(
                         controller: provider.scrollController,
@@ -82,7 +82,7 @@ class ActivitiesScreen extends StatelessWidget {
                           return 20.verticalSpace;
                         },
                         itemBuilder: (context, index) {
-                          if (index == provider.activities.length) {
+                          if (index == provider.items.length) {
                             if (provider.isGettingMore) {
                               return Center(
                                 child: CircularProgressIndicator(),
@@ -96,7 +96,7 @@ class ActivitiesScreen extends StatelessWidget {
                                 ActivityDetailScreen.route,
                                 extra: {
                                   "controller": ActivityWidgetVM(
-                                    model: provider.activities[index],
+                                    model: provider.items[index],
                                   ),
                                   "activityController": provider,
                                 },
@@ -107,7 +107,7 @@ class ActivitiesScreen extends StatelessWidget {
                                   index.isEven ? PostType.image : PostType.poll,
                               selected: selected,
                               controller: ActivityWidgetVM(
-                                model: provider.activities[index],
+                                model: provider.items[index],
                               ),
                             ),
                           );
