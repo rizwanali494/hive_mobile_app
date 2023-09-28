@@ -60,17 +60,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 else if (provider.hasError)
                   Expanded(
                     child: ErrorTextWidget(
-                      onRefresh: provider.refreshNotificationList,
+                      onRefresh: provider.refreshList,
                     ),
                   )
-                else if (provider.notificationList.isNotEmpty)
+                else if (provider.items.isNotEmpty)
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 19.w,
                       ),
                       child: RefreshIndicator(
-                        onRefresh: provider.refreshNotificationList,
+                        onRefresh: provider.refreshList,
                         backgroundColor: styles.white,
                         child: ListView.separated(
                           controller: provider.scrollController,
@@ -78,14 +78,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             vertical: 27.h,
                           ),
                           separatorBuilder: (context, index) {
-                            // if (index == provider.listCount) {
-                            //   return const SizedBox.shrink();
-                            // }
-
                             return buildDivider();
                           },
                           itemBuilder: (context, index) {
-                            if (index == provider.notificationList.length) {
+                            if (index == provider.items.length) {
                               if (provider.isGettingMore) {
                                 return Center(
                                     child: CircularProgressIndicator());
@@ -96,7 +92,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               onTap: () {},
                               svgIconPath: svgIcons[index % svgIcons.length],
                               controller: NotificationTileVM(
-                                model: provider.notificationList[index],
+                                model: provider.items[index],
                               ),
                             );
                           },
@@ -134,6 +130,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
     SvgIcons.announcement,
     SvgIcons.newMessage,
   ];
+
+  // final svgIcons = {
+  //   "ANNOUNCEMENT_POST": SvgIcons.announcement,
+  //   "ACTIVITY": SvgIcons.game,
+  // };
+
 
   Divider buildDivider() => Divider(color: Colors.black.withOpacity(0.2));
 }
