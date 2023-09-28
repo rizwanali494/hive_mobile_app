@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
@@ -48,26 +47,28 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 if (provider.hasError) {
                   return Expanded(
                     child: LayoutBuilder(
-                      builder: (context, constraints) => RefreshIndicator(
-                        onRefresh: provider.refreshList,
-                        backgroundColor: styles.white,
-                        child: SingleChildScrollView(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                minHeight: constraints.maxHeight),
-                            child: Center(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                child: Text(
-                                  AppStrings.somethingWentWrong,
-                                  style: styles.inter20w600,
+                      builder: (context, constraints) =>
+                          RefreshIndicator(
+                            onRefresh: provider.refreshList,
+                            backgroundColor: styles.white,
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.maxHeight),
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10.w),
+                                    child: Text(
+                                      AppStrings.somethingWentWrong,
+                                      style: styles.inter20w600,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
                     ),
                   );
                 }
@@ -109,21 +110,25 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                         }
                         return GestureDetector(
                           onTap: () {
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (context) => Dialog(
-                            //     child: NewsFeedWidget(
-                            //       type: provider.announcements[index].type ==
-                            //               "POST"
-                            //           ? PostType.image
-                            //           : PostType.poll,
-                            //       horizontalPadding: 0,
-                            //       controller: NewsFeedWidgetVm(
-                            //         model: provider.announcements[index],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  Dialog(
+                                    child: ChangeNotifierProvider.value(
+                                      value: provider,
+                                      child: NewsFeedWidget(
+                                        type: provider.items[index].type ==
+                                            "POST"
+                                            ? PostType.image
+                                            : PostType.poll,
+                                        horizontalPadding: 0,
+                                        controller: NewsFeedWidgetVm(
+                                          model: provider.items[index],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            );
                           },
                           child: NewsFeedWidget(
                             type: provider.items[index].type == "POST"
