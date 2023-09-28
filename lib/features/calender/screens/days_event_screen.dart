@@ -105,6 +105,7 @@ class _DaysEventScreenState extends State<DaysEventScreen> {
                             backgroundColor: styles.white,
                             child: ListView.separated(
                               controller: provider.scrollController,
+                              physics: AlwaysScrollableScrollPhysics(),
                               padding: EdgeInsets.symmetric(
                                 vertical: 17.h,
                               ),
