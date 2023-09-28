@@ -9,13 +9,17 @@ import 'package:hive_mobile/app/services/local_services/local_service.dart';
 
 abstract class BaseApiVM<T> with ChangeNotifier {
   UiState uiState = UiState.loading();
+
+  bool get hasError => uiState.hasError;
+
+  bool get isLoading => uiState.isLoading;
+
+  bool get isGettingMore => paginationController.isGettingMore;
   LocalService<T> localService = LocalService();
   List<T> items = [];
   final limit = 10;
   final scrollController = ScrollController();
   late PaginationController paginationController;
-
-  bool get isGettingMore => paginationController.isGettingMore;
 
   int get offSet => paginationController.offset;
 
@@ -59,7 +63,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
     notifyListeners();
     final request = () async {
       var list = await fetchInitialItems();
-      sortByRecentOrder();
+      // sortByRecentOrder();
       if (list.length < limit) {
         paginationController.isLastPage = true;
       } else {
@@ -76,6 +80,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
     items.addAll(localList);
     items = items.toSet().toList();
     uiState = UiState.loaded();
+    sortByRecentOrder();
     notifyListeners();
   }
 
@@ -128,6 +133,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
 
   Future<List<T>> fetchLocalList() async {
     return await localService.findAll();
+    sortByRecentOrder();
   }
 
   void addScrollListeners() {

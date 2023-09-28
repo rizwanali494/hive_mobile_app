@@ -49,7 +49,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                   return Expanded(
                     child: LayoutBuilder(
                       builder: (context, constraints) => RefreshIndicator(
-                        onRefresh: provider.refreshNewsFeed,
+                        onRefresh: provider.refreshList,
                         backgroundColor: styles.white,
                         child: SingleChildScrollView(
                           physics: AlwaysScrollableScrollPhysics(),
@@ -92,7 +92,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 return Expanded(
                   child: RefreshIndicator(
                     // onRefresh: provider.refreshNewsFeed,
-                    onRefresh: provider.refreshNewsFeed,
+                    onRefresh: provider.refreshList,
                     backgroundColor: styles.white,
                     child: ListView.separated(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -101,8 +101,8 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       ),
                       controller: provider.scrollController,
                       itemBuilder: (context, index) {
-                        if (index == provider.announcements.length) {
-                          if (provider.isGettingMoreLoading) {
+                        if (index == provider.items.length) {
+                          if (provider.isGettingMore) {
                             return Center(child: CircularProgressIndicator());
                           }
                           return SizedBox.shrink();
@@ -126,22 +126,22 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                             // );
                           },
                           child: NewsFeedWidget(
-                            type: provider.announcements[index].type == "POST"
+                            type: provider.items[index].type == "POST"
                                 ? PostType.image
                                 : PostType.poll,
                             controller: NewsFeedWidgetVm(
-                              model: provider.announcements[index],
+                              model: provider.items[index],
                             ),
                           ),
                         );
                       },
                       separatorBuilder: (context, index) {
-                        if (index == provider.announcements.length) {
+                        if (index == provider.items.length) {
                           return SizedBox.shrink();
                         }
                         return 20.verticalSpace;
                       },
-                      itemCount: provider.announcements.length + 1,
+                      itemCount: provider.items.length + 1,
                     ),
                   ),
                 );
