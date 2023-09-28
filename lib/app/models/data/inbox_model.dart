@@ -2,25 +2,30 @@ import 'package:isar/isar.dart';
 
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 
+import 'announcement_post_models/account_data_model.dart';
+
 part "inbox_model.g.dart";
 
 @collection
 class InboxModel {
-  InboxModel({
-    this.id,
-    this.localId = 1,
-    this.email,
-    this.accountType,
-    this.picture,
-    this.content,
-    this.date,
-  });
+  InboxModel(
+      {this.id,
+      this.localId = 1,
+      this.email,
+      this.accountType,
+      this.picture,
+      this.content,
+      this.date,
+      this.accountDataModel});
 
   InboxModel.fromJson(dynamic json) {
     id = json['id'];
     localId = json['id'] ?? 0;
     email = json['email'];
     accountType = json['account_type'];
+    accountDataModel = json['account_data'] != null
+        ? AccountDataModel.fromJson(json['account_data'])
+        : null;
     picture =
         json['picture'] != null ? Attachments.fromJson(json['picture']) : null;
     content = json['content'];
@@ -31,6 +36,7 @@ class InboxModel {
   late Id? localId;
   String? email;
   String? accountType;
+  AccountDataModel? accountDataModel;
   Attachments? picture;
   String? content;
   String? date;
@@ -40,6 +46,7 @@ class InboxModel {
     int? localId,
     String? email,
     String? accountType,
+    AccountDataModel? accountDataModel,
     Attachments? picture,
     String? content,
     String? date,
@@ -47,6 +54,8 @@ class InboxModel {
       InboxModel(
         id: id ?? this.id,
         localId: localId ?? this.localId,
+        accountDataModel:
+            accountDataModel?.copyWith() ?? this.accountDataModel?.copyWith(),
         email: email ?? this.email,
         accountType: accountType ?? this.accountType,
         picture: picture ?? this.picture,

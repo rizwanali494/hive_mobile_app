@@ -106,51 +106,56 @@ class InboxScreen extends StatelessWidget {
                 )
               else if (true)
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: provider.listCount,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 19.h,
-                    ),
-                    itemBuilder: (context, index) {
-                      if (provider.isLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Column(
-                          children: [
-                            InboxListTile(
-                              onTap: () {
-                                context.push(
-                                  ChatScreen.route,
-                                  extra: {
-                                    "receiverId": provider.items[index].id
-                                  },
-                                );
-                              },
-                              controller: InboxTileWidgetVM(
-                                model: provider.items[index],
+                  child: RefreshIndicator(
+                    backgroundColor: styles.white,
+                    onRefresh: provider.refreshList,
+                    child: ListView.separated(
+                      itemCount: provider.listCount,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 19.h,
+                      ),
+                      itemBuilder: (context, index) {
+                        if (provider.isLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Column(
+                            children: [
+                              InboxListTile(
+                                onTap: () {
+                                  context.push(
+                                    ChatScreen.route,
+                                    extra: {
+                                      "receiverId": provider.items[index]
+                                    },
+                                  );
+                                },
+                                controller: InboxTileWidgetVM(
+                                  model: provider.items[index],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      if (provider.isLoading) {
-                        return const SizedBox.shrink();
-                      }
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 17.h),
-                        child: Divider(
-                          color: styles.black.withOpacity(0.3),
-                          height: 1,
-                        ),
-                      );
-                    },
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        if (provider.isLoading) {
+                          return const SizedBox.shrink();
+                        }
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 17.h),
+                          child: Divider(
+                            color: styles.black.withOpacity(0.3),
+                            height: 1,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
             ],

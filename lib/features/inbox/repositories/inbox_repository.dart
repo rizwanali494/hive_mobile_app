@@ -23,6 +23,7 @@ class InboxRepositoryImpl extends InboxRepository {
     var response = await apiService.get(
       url: ApiEndpoints.inbox.withLimit(limit).withOffSet(offset),
     );
+    log(ApiEndpoints.inbox.withLimit(limit).withOffSet(offset));
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
     log("messeage count : ${items.length}");

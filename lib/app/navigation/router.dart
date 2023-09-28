@@ -205,9 +205,9 @@ final goRouter = GoRouter(
       name: ChatScreen.route,
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>?;
-        int receiverId = extra?["receiverId"] ?? 0;
+        InboxModel model = extra?["receiverId"] ?? InboxModel();
         return ChatScreen(
-          receiverId: receiverId,
+          inboxModel: model,
         );
       },
     ),

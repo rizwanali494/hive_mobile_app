@@ -190,6 +190,9 @@ class ChatScreenVM extends ChangeNotifier {
     messages.add(messageModel);
     setMessageSData();
     messageCtrl.clear();
+    WidgetsBinding.instance.addPostFrameCallback((_) => {
+      controller.jumpTo(controller.position.maxScrollExtent),
+    });
     var map = {
       "content": msg,
       "receiver": receiverId,
@@ -200,6 +203,7 @@ class ChatScreenVM extends ChangeNotifier {
       messages.add(message);
       setMessageSData();
       saveMessagesToLocal();
+
     } catch (e) {
       removeMessage(messageModel);
       addMessage(messageModel.copyWith(messageState: MessageState.hasError()));

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/inbox/view_models/chat_screen_vm.dart';
@@ -14,11 +15,11 @@ import 'package:hive_mobile/features/university_application/widgets/title_text_f
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
-  final int receiverId;
+  final InboxModel inboxModel;
 
   static const route = "/ChatScreen";
 
-  const ChatScreen({Key? key, required this.receiverId}) : super(key: key);
+  const ChatScreen({Key? key, required this.inboxModel}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -40,14 +41,14 @@ class _ChatScreenState extends State<ChatScreen> {
           horizontal: 19.w,
         ),
         child: ChangeNotifierProvider(
-          create: (BuildContext context) =>
-              ChatScreenVM(receiverId: widget.receiverId),
+          create: (BuildContext context) => ChatScreenVM(
+              receiverId: widget.inboxModel.accountDataModel?.owner ?? 0),
           lazy: false,
           child: Consumer<ChatScreenVM>(
             builder: (context, provider, child) {
               return Column(
                 children: [
-                  DividerAppBar(title: _user.name),
+                  DividerAppBar(title: widget.inboxModel.accountDataModel?.extra?.employeeName??""),
                   if (provider.uiState.isLoading)
                     Expanded(
                         child: Center(

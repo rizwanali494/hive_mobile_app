@@ -10,7 +10,7 @@ class InboxTileWidgetVM {
 
   String get time => model.date?.timeAgoAdded ?? "";
 
-  String get name => model.email ?? "";
+  String get name => model.accountDataModel?.extra?.employeeName ?? "";
 
   String get content => model.content ?? "";
 }
