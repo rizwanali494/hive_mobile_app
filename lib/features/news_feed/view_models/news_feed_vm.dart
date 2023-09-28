@@ -10,6 +10,7 @@ import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/local_service.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
@@ -99,6 +100,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
       notifyListeners();
       localService.put(previous);
       log("Something went wrong");
+      UtilFunctions.showToast();
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
       }
@@ -135,6 +137,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
       int indexOf = items.indexOf(model);
       items[indexOf] = model;
     } catch (e) {
+      UtilFunctions.showToast();
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
       }

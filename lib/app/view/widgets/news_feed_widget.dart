@@ -135,17 +135,17 @@ class NewsFeedWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (true) ...[
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                      child: Text(
-                        "${AppStrings.pollsClosed} • ${controller.totalSelectors?.toInt()} ${AppStrings.votes}",
-                        style: styles.inter12w400Italic,
-                      ),
-                    ),
-                    15.verticalSpace,
-                  ],
+                  // if (true) ...[
+                  //   Padding(
+                  //     padding:
+                  //         EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                  //     child: Text(
+                  //       "${AppStrings.pollsClosed} • ${controller.totalSelectors?.toInt()} ${AppStrings.votes}",
+                  //       style: styles.inter12w400Italic,
+                  //     ),
+                  //   ),
+                  //   15.verticalSpace,
+                  // ],
                 ],
               ),
             ),
