@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
@@ -218,7 +219,8 @@ import 'package:hive_mobile/features/activities/repositories/activity_repo.dart'
 //   }
 // }
 
-class ActivityScreenVM extends BaseApiVM<ActivityModel> {
+class ActivityScreenVM extends BaseApiVM<ActivityModel>
+    with BaseExceptionController {
   late ActivityRepo activityRepo;
 
   @override
@@ -261,13 +263,11 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
         log("message : ${e.response.body.toString()}");
       }
       await Future.delayed(Duration(seconds: 1));
-      log("error updating activity: ${e.toString()}");
       var index = items.indexOf(previousModel);
-      log("previous model index : $index");
       if (index > -1) {
         items[index] = previousModel;
         notifyListeners();
-        log("error updating activity: ${e.toString()}");
+        handleException(e);
       }
     }
 //

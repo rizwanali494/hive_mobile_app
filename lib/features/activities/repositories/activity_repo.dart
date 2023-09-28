@@ -23,7 +23,8 @@ abstract class ActivityRepo {
 class ActivityRepositoryImpl extends ActivityRepo {
   ActivityRepositoryImpl({required super.apiService});
 
-  String endPoint = ApiEndpoints.activity.withBanner.withOwnerObject;
+  String endPoint =
+      ApiEndpoints.activity.withBanner.withOwnerObject.withMostRecentOrder;
 
   @override
   Future<List<ActivityModel>> getInitialActivities({int? limit}) async {
