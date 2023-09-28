@@ -99,6 +99,7 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
                                   ),
                                   child: DropdownButton<UniversityModel>(
                                     value: provider.selectedUniversity,
+                                    hint: Text("Select University",style: styles.inter12w400,),
                                     isExpanded: true,
                                     icon: const Icon(
                                         Icons.keyboard_arrow_down_sharp),

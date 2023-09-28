@@ -12,10 +12,11 @@ import 'package:hive_mobile/app/models/data/university_application/university_ap
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:path_provider/path_provider.dart';
 
-class UniversityAppRequestVM extends ChangeNotifier {
+class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   List<UniversityModel> universities = [];
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();
@@ -128,6 +129,7 @@ class UniversityAppRequestVM extends ChangeNotifier {
       {required String scholarshipAmount,
       required String scholarshipPercent,
       required BuildContext context}) async {
+    showLoaderDialog(context);
     try {
       var documents = await uploadDocuments();
       var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
@@ -149,11 +151,14 @@ class UniversityAppRequestVM extends ChangeNotifier {
           documents: documents,
           university: selectedUniversity,
         );
+        UtilFunctions.showToast(msg: "Upload Successful");
       } else {
         updatedModel = await updateUniversityDocument(
             scholarshipAmount: scholarshipAmount,
             scholarshipPercent: scholarshipPercent);
+        UtilFunctions.showToast(msg: "Update Successful");
       }
+      context.pop();
       context.pop(updatedModel);
     } catch (e) {
       if (e is HTTPStatusCodeException) {

@@ -72,12 +72,16 @@ class AccountSettingVM extends ChangeNotifier {
       var bioBody = {"bio": biosCtrl.text};
       await userProfileRepo.updateBio(
           map: bioBody, id: userModel.accountData?.id ?? 0);
-      log("$hobbies");
-      await userProfileRepo.updateHobbies(map: hobbies);
+      var updateHobbies =
+          await userProfileRepo.updateHobbies(map: {"hobbies": hobbies});
+      log("message : ${updateHobbies.length}");
       var imageBody = {"picture": imageId};
       var model = await userProfileRepo.updateUserProfile(map: imageBody);
       log("profile updated ${model.picture?.id} Hobbies : ${model.accountData?.hobbies?.length}");
-      registerUserModel(model);
+      registerUserModel(model.copyWith(
+          accountData: model.accountData?.copyWith(
+        hobbies: updateHobbies,
+      )));
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("error : ${e.response.statusCode}");

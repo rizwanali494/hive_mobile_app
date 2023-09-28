@@ -66,6 +66,7 @@ class AppStrings {
   static String document = "Document";
   static String delete = "Delete";
   static String selectStatus = "Select Status";
+  static String select = "Select";
   static String accepted = "Accepted";
   static String rejected = "Rejected";
   static String addDocument = "Add Document";

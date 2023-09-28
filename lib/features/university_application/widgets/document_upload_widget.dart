@@ -97,7 +97,7 @@ class DocumentUploadWidget extends StatelessWidget {
                   vertical: 6.h,
                 )),
             child: Text(
-              AppStrings.upload,
+              AppStrings.select,
               style: styles.inter12w400.copyWith(
                 color: styles.darkGrey,
               ),
