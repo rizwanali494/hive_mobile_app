@@ -57,6 +57,14 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("date_added__lte=$date");
   }
 
+  String dateLessThan(String date) {
+    return _appendQueryParameter("date__lt=$date");
+  }
+
+  String dateGreaterThan(String date) {
+    return _appendQueryParameter("date__gt=$date");
+  }
+
   String update(int id) {
     return "${this}$id/";
   }
