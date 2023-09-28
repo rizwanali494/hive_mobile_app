@@ -78,6 +78,10 @@ extension DateTimeExtension on DateTime {
   String get yearMonthDay {
     return _yearMonthDateFormat.format(this);
   }
+
+  String get eventDayFormat {
+    return _eventDayFormat.format(this);
+  }
 }
 
 var _dayOnlyFormat = DateFormat.EEEE();
@@ -87,3 +91,4 @@ var _dateOnlyFormat = DateFormat('d');
 var _monthShortOnlyFormat = DateFormat('MMM');
 var _monthOnlyFormat = DateFormat('MMMM');
 var _monthDayYear = DateFormat('MMMM dd, yyyy');
+var _eventDayFormat = DateFormat('dd MMM, yyyy');

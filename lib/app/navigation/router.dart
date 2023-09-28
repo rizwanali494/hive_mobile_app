@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
+import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
@@ -14,6 +15,7 @@ import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.d
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
+import 'package:hive_mobile/features/calender/screens/days_event_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
@@ -177,6 +179,15 @@ final goRouter = GoRouter(
       path: CalendarScreen.route,
       name: CalendarScreen.route,
       builder: (_, state) => const CalendarScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: DaysEventScreen.route,
+      name: DaysEventScreen.route,
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        DateTime model = extra?["date"] ?? DateTime.now();
+        return DaysEventScreen(date: model);
+      },
     ),
     CustomGoRoute.cupertino(
       path: NewConversationScreen.route,
