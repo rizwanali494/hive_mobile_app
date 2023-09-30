@@ -27,6 +27,7 @@ class AnnouncementPostModel {
     this.branchId,
     this.text,
     this.type,
+    this.expiryDate,
   });
 
   AnnouncementPostModel.fromJson(dynamic json) {
@@ -54,6 +55,7 @@ class AnnouncementPostModel {
     branchId = json['branch_id'];
     text = json['text'];
     type = json['type'];
+    expiryDate = json['expiry_date'];
   }
 
   int? id;
@@ -69,6 +71,7 @@ class AnnouncementPostModel {
   int? branchId;
   String? text;
   String? type;
+  String? expiryDate;
   bool? isLiked;
   bool? isDisliked;
 
@@ -86,25 +89,26 @@ class AnnouncementPostModel {
     String? dateLastModified,
     int? branchId,
     String? text,
+    String? expiryDate,
     String? type,
   }) =>
       AnnouncementPostModel(
-        id: id ?? this.id,
-        likes: likes ?? this.likes,
-        dislikes: dislikes ?? this.dislikes,
-        isLiked: isLiked ?? this.isLiked,
-        isDisliked: isDisliked ?? this.isDisliked,
-        polls: polls?.map((e) => e.copyWith()).toList() ??
-            this.polls?.map((e) => e.copyWith()).toList(),
-        localId: localId ?? this.localId,
-        attachments: attachments ?? this.attachments,
-        owner: owner ?? this.owner,
-        dateAdded: dateAdded ?? this.dateAdded,
-        dateLastModified: dateLastModified ?? this.dateLastModified,
-        branchId: branchId ?? this.branchId,
-        text: text ?? this.text,
-        type: type ?? this.type,
-      );
+          id: id ?? this.id,
+          likes: likes ?? this.likes,
+          dislikes: dislikes ?? this.dislikes,
+          isLiked: isLiked ?? this.isLiked,
+          isDisliked: isDisliked ?? this.isDisliked,
+          polls: polls?.map((e) => e.copyWith()).toList() ??
+              this.polls?.map((e) => e.copyWith()).toList(),
+          localId: localId ?? this.localId,
+          attachments: attachments ?? this.attachments,
+          owner: owner ?? this.owner,
+          dateAdded: dateAdded ?? this.dateAdded,
+          dateLastModified: dateLastModified ?? this.dateLastModified,
+          branchId: branchId ?? this.branchId,
+          text: text ?? this.text,
+          type: type ?? this.type,
+          expiryDate: expiryDate ?? this.expiryDate);
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -129,6 +133,9 @@ class AnnouncementPostModel {
     map['type'] = type;
     return map;
   }
+
+  @ignore
+  bool get isPost => type == "POST";
 
   @override
   bool operator ==(Object other) =>

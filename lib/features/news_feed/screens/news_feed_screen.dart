@@ -134,6 +134,14 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                                   ),
                             );
                           },
+                          child: NewsFeedWidget(
+                            type: provider.items[index].isPost
+                                ? PostType.image
+                                : PostType.poll,
+                            controller: NewsFeedWidgetVm(
+                              model: provider.items[index],
+                            ),
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) {

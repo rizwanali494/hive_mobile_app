@@ -13,12 +13,14 @@ import 'package:hive_mobile/app/services/local_services/local_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
+import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
 import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
 import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';
+import 'package:hive_mobile/app/extensions/string_extension.dart';
 
-
-class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionController {
+class NewsFeedVM extends BaseApiVM<AnnouncementPostModel>
+    with BaseExceptionController {
   final apiService = GetIt.instance.get<ApiService>();
 
   late NewsFeedRepository newsFeedRepo;
@@ -31,8 +33,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
 
   @override
   Future<List<AnnouncementPostModel>> fetchNextItems() async {
-    var list =
-        await newsFeedRepo.getNextNewsFeed(limit: limit, offSet: offSet);
+    var list = await newsFeedRepo.getNextNewsFeed(limit: limit, offSet: offSet);
     return list;
   }
 
@@ -42,33 +43,34 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
   }
 
   @override
-  void sortByRecentOrder(){
+  void sortByRecentOrder() {
     items.sortByRecentOrder(
         getDateAdded: (item) =>
-        DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
+            DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
   }
-
 
   PollRepository pollRepository = PollRepository();
 
   Future<void> selectPoll(Polls poll,
       {required AnnouncementPostModel model}) async {
-    if (poll.isSelected ?? false) {
+    final now = DateTime.now();
+    if (model.expiryDate?.toDatetime.isBefore(now) ?? false) {
+      UtilFunctions.showToast(msg: "Poll Has Expired");
       return;
     }
 
+    if (poll.isSelected ?? false) {
+      return;
+    }
     var previous = model.copyWith();
-
     var selectedList =
-    model.polls?.where((element) => element.isSelected ?? false);
+        model.polls?.where((element) => element.isSelected ?? false);
     if (selectedList?.isNotEmpty ?? false) {
       var selectedElement = selectedList!.first;
       selectedElement.selectors = (selectedElement.selectors ?? -1) - 1;
     }
-
     poll.isSelected = true;
     poll.selectors = (poll.selectors ?? 0) + 1;
-
     var pollIndex = model.polls?.indexOf(poll);
     if (pollIndex != null && pollIndex >= 0) {
       model.polls![pollIndex] = poll;
@@ -118,16 +120,13 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
   }
 
   Future<void> dislikePost(AnnouncementPostModel model) async {
+    var previous = model.copyWith();
     if (model.isDisliked ?? false) {
       model.dislikes = (model.dislikes ?? 1) - 1;
       model.isDisliked = false;
       int indexOf = items.indexOf(model);
       items[indexOf] = model;
-      notifyListeners();
-      return;
-    }
-    try {
-      await newsFeedRepo.disLikePost(model.id ?? 0);
+    } else {
       model.dislikes = (model.dislikes ?? 0) + 1;
       model.isDisliked = true;
       if (model.isLiked ?? false) {
@@ -136,28 +135,37 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
       }
       int indexOf = items.indexOf(model);
       items[indexOf] = model;
+    }
+    notifyListeners();
+    try {
+      await newsFeedRepo.disLikePost(model.id ?? 0);
     } catch (e) {
       UtilFunctions.showToast();
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
       }
+      handleException(e);
+      int previousIndex = items.indexOf(previous);
+      if (previousIndex >= 0) {
+        items[previousIndex] = previous;
+        localService.put(previous);
+      }
+      notifyListeners();
+      localService.put(previous);
     }
-    int indexOf = items.indexOf(model);
-    items[indexOf] = model;
-    notifyListeners();
+    // int indexOf = items.indexOf(model);
+    // items[indexOf] = model;
+    // notifyListeners();
   }
 
   Future<void> likePost(AnnouncementPostModel model) async {
+    var previous = model.copyWith();
     if (model.isLiked ?? false) {
       model.likes = (model.likes ?? 1) - 1;
       model.isLiked = false;
       int indexOf = items.indexOf(model);
       items[indexOf] = model;
-      notifyListeners();
-      return;
-    }
-    try {
-      await newsFeedRepo.likePost(model.id ?? 0);
+    } else {
       model.isLiked = true;
       model.likes = (model.likes ?? 0) + 1;
       if (model.isDisliked ?? false) {
@@ -166,16 +174,23 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> with BaseExceptionCont
       }
       int indexOf = items.indexOf(model);
       items[indexOf] = model;
+    }
+    notifyListeners();
+    try {
+      await newsFeedRepo.likePost(model.id ?? 0);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
       }
+      await Future.delayed(Duration(milliseconds: 500));
+      handleException(e);
+      int previousIndex = items.indexOf(previous);
+      if (previousIndex >= 0) {
+        items[previousIndex] = previous;
+        localService.put(previous);
+      }
+      notifyListeners();
+      localService.put(previous);
     }
-
-    notifyListeners();
   }
-
-
-
-
 }
