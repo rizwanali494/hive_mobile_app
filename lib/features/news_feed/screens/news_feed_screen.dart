@@ -116,28 +116,24 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                                   Dialog(
                                     child: ChangeNotifierProvider.value(
                                       value: provider,
-                                      child: NewsFeedWidget(
-                                        type: provider.items[index].type ==
-                                            "POST"
-                                            ? PostType.image
-                                            : PostType.poll,
-                                        horizontalPadding: 0,
-                                        controller: NewsFeedWidgetVm(
-                                          model: provider.items[index],
-                                        ),
+                                      child: Consumer<NewsFeedVM>(
+                                        builder:(context, value, child) {
+                                          return NewsFeedWidget(
+                                            type: provider.items[index].type ==
+                                                "POST"
+                                                ? PostType.image
+                                                : PostType.poll,
+                                            horizontalPadding: 0,
+                                            controller: NewsFeedWidgetVm(
+                                              model: provider.items[index],
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
                             );
                           },
-                          child: NewsFeedWidget(
-                            type: provider.items[index].type == "POST"
-                                ? PostType.image
-                                : PostType.poll,
-                            controller: NewsFeedWidgetVm(
-                              model: provider.items[index],
-                            ),
-                          ),
                         );
                       },
                       separatorBuilder: (context, index) {
