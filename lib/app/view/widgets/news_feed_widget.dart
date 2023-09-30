@@ -1,4 +1,4 @@
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,6 +32,7 @@ class NewsFeedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final newsFeedVM = context.read<NewsFeedVM>();
+ final ValueNotifier<int> count = ValueNotifier<int>(0);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -91,26 +92,77 @@ class NewsFeedWidget extends StatelessWidget {
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
           if (controller.isPost)
-            if (controller.attachment.isNotEmpty)
-              Padding(
-                padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: AspectRatio(
-                    aspectRatio: 0.89,
-                    // child: Image(
-                    //   image: NetworkImage(controller.attachment),
-                    //   fit: BoxFit.cover,
-                    // ),
-                    child: CachedNetworkImage(
-                      imageUrl: controller.attachment,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+            if (controller.attachments?.isNotEmpty ?? false)
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                            aspectRatio: 0.89,
+                            autoPlay: true,
+                            viewportFraction: 1,
+                            onPageChanged: (index, reason) {
+                              // controller.setCurrentImageIndex(index);
+                              count.value = index;
+                            },
+                            reverse: false),
+                        items: controller.attachments!.map((url) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return CachedNetworkImage(
+                                imageUrl: url ?? "",
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              );
+                            },
+                          );
+                        }).toList(),
+                        // child: AspectRatio(
+                        //   aspectRatio: 0.89,
+                        //   child: CachedNetworkImage(
+                        //     imageUrl: controller.attachment,
+                        //     fit: BoxFit.cover,
+                        //     placeholder: (context, url) =>
+                        //         Center(child: CircularProgressIndicator()),
+                        //     errorWidget: (context, url, error) => Icon(Icons.error),
+                        //   ),
+                        // ),
+                      ),
                     ),
                   ),
-                ),
+                  // ValueListenableBuilder<int>(
+                  //   valueListenable: count,
+                  //   builder: (context,value,child) {
+                  //     return Align(
+                  //       alignment: Alignment.topRight,
+                  //       child: Container(
+                  //         margin: EdgeInsets.only(
+                  //             right: 15.w,
+                  //             top: 30.w
+                  //         ),
+                  //         padding: EdgeInsets.all(6),
+                  //         decoration: BoxDecoration(
+                  //             color: styles.black.withOpacity(0.6)  ,
+                  //           borderRadius: BorderRadius.circular(8.r)
+                  //         ),
+                  //         child: Text(
+                  //           "${value}/${controller.attachments?.length}",
+                  //           style: styles.inter12w400.copyWith(
+                  //               color: styles.white
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     );
+                  //   }
+                  // ),
+
+                ],
               )
             else
               26.verticalSpace

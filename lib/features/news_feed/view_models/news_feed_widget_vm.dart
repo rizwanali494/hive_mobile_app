@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 
-class NewsFeedWidgetVm {
+class NewsFeedWidgetVm  {
   final AnnouncementPostModel model;
 
   NewsFeedWidgetVm({required AnnouncementPostModel model}) : model = model;
@@ -23,12 +24,14 @@ class NewsFeedWidgetVm {
     return model.type == "POST";
   }
 
-  String get attachment {
-    var list = model.attachments;
-    if (list?.isNotEmpty ?? false) {
-      return list?.first.file ?? "";
-    }
-    return "";
+  final ValueNotifier<int> currentImageIndex = ValueNotifier<int>(0);
+
+  void setCurrentImageIndex(int index) {
+    currentImageIndex.value = index;
+  }
+
+  List<String?>? get attachments {
+    return model.attachments?.map((e) => e.file).toList();
   }
 
   String get likes {
