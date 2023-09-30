@@ -24,11 +24,8 @@ class NewsFeedWidgetVm  {
     return model.type == "POST";
   }
 
-  final ValueNotifier<int> currentImageIndex = ValueNotifier<int>(0);
 
-  void setCurrentImageIndex(int index) {
-    currentImageIndex.value = index;
-  }
+
 
   List<String?>? get attachments {
     return model.attachments?.map((e) => e.file).toList();

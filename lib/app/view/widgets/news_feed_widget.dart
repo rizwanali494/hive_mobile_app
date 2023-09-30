@@ -16,7 +16,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:provider/provider.dart';
 
-class NewsFeedWidget extends StatelessWidget {
+class NewsFeedWidget extends StatefulWidget {
   final PostType type;
   final NewsFeedWidgetVm controller;
   final double? horizontalPadding;
@@ -29,14 +29,22 @@ class NewsFeedWidget extends StatelessWidget {
   });
 
   @override
+  State<NewsFeedWidget> createState() => _NewsFeedWidgetState();
+}
+
+class _NewsFeedWidgetState extends State<NewsFeedWidget> {
+  // int count = 0;
+  final ValueNotifier<int> count = ValueNotifier<int>(0);
+
+  @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final newsFeedVM = context.read<NewsFeedVM>();
- final ValueNotifier<int> count = ValueNotifier<int>(0);
+    print("count --- ${count.value}");
 
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: horizontalPadding?.w ?? 12.w, vertical: 12.h),
+          horizontal: widget.horizontalPadding?.w ?? 12.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: styles.white,
         borderRadius: BorderRadius.circular(
@@ -51,9 +59,9 @@ class NewsFeedWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
-              if (controller.userImage != null)
+              if (widget.controller.userImage != null)
                 CachedNetworkImage(
-                  imageUrl: controller.userImage!,
+                  imageUrl: widget.controller.userImage!,
                   imageBuilder: (context, imageProvider) => Container(
                     width: 45.h,
                     height: 45.w,
@@ -74,12 +82,12 @@ class NewsFeedWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    controller.userName,
+                    widget.controller.userName,
                     style: styles.inter16w600
                         .copyWith(color: styles.darkSlateGrey),
                   ),
                   Text(
-                    controller.postTime,
+                    widget.controller.postTime,
                     style: styles.inter8w400.copyWith(color: styles.darkGrey),
                   ),
                 ],
@@ -88,12 +96,12 @@ class NewsFeedWidget extends StatelessWidget {
           ),
           16.verticalSpace,
           Text(
-            controller.description,
+            widget.controller.description,
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
-          if (controller.isPost)
-            if (controller.attachments?.isNotEmpty ?? false)
-              Column(
+          if (widget.controller.isPost)
+            if (widget.controller.attachments?.isNotEmpty ?? false)
+              Stack(
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: 23.h, bottom: 13.h),
@@ -105,11 +113,10 @@ class NewsFeedWidget extends StatelessWidget {
                             autoPlay: true,
                             viewportFraction: 1,
                             onPageChanged: (index, reason) {
-                              // controller.setCurrentImageIndex(index);
-                              count.value = index;
+                              this.count.value = index;
                             },
                             reverse: false),
-                        items: controller.attachments!.map((url) {
+                        items: widget.controller.attachments!.map((url) {
                           return Builder(
                             builder: (BuildContext context) {
                               return CachedNetworkImage(
@@ -136,32 +143,31 @@ class NewsFeedWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // ValueListenableBuilder<int>(
-                  //   valueListenable: count,
-                  //   builder: (context,value,child) {
-                  //     return Align(
-                  //       alignment: Alignment.topRight,
-                  //       child: Container(
-                  //         margin: EdgeInsets.only(
-                  //             right: 15.w,
-                  //             top: 30.w
-                  //         ),
-                  //         padding: EdgeInsets.all(6),
-                  //         decoration: BoxDecoration(
-                  //             color: styles.black.withOpacity(0.6)  ,
-                  //           borderRadius: BorderRadius.circular(8.r)
-                  //         ),
-                  //         child: Text(
-                  //           "${value}/${controller.attachments?.length}",
-                  //           style: styles.inter12w400.copyWith(
-                  //               color: styles.white
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     );
-                  //   }
-                  // ),
-
+                  ValueListenableBuilder<int>(
+                    valueListenable: this.count,
+                    builder: (context,value,child) {
+                      return Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              right: 15.w,
+                              top: 30.w
+                          ),
+                          padding: EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                              color: styles.black.withOpacity(0.6)  ,
+                              borderRadius: BorderRadius.circular(8.r)
+                          ),
+                          child: Text(
+                            "${count.value+1}/${widget.controller.attachments?.length}",
+                            style: styles.inter12w400.copyWith(
+                                color: styles.white
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               )
             else
@@ -172,18 +178,18 @@ class NewsFeedWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  for (var element in controller.polls)
+                  for (var element in widget.controller.polls)
                     GestureDetector(
                       onTap: () async {
                         await newsFeedVM.selectPoll(element,
-                            model: controller.model);
+                            model: widget.controller.model);
                       },
                       child: PollWidget(
                         controller: PollWidgetVM(
                           poll: element,
-                          totalPolls: controller.totalSelectors ?? 0,
+                          totalPolls: widget.controller.totalSelectors ?? 0,
                           selectedPollId:
-                              newsFeedVM.selectedPollId(controller.model),
+                              newsFeedVM.selectedPollId(widget.controller.model),
                         ),
                       ),
                     ),
@@ -204,9 +210,9 @@ class NewsFeedWidget extends StatelessWidget {
           Row(
             children: [
               BlueBorderContainer(
-                isSelected: controller.isLiked,
+                isSelected: widget.controller.isLiked,
                 onTap: () {
-                  newsFeedVM.likePost(controller.model);
+                  newsFeedVM.likePost(widget.controller.model);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -215,7 +221,7 @@ class NewsFeedWidget extends StatelessWidget {
                     SvgPicture.asset(SvgIcons.like),
                     6.5.horizontalSpace,
                     Text(
-                      controller.likes,
+                      widget.controller.likes,
                       style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                   ],
@@ -223,16 +229,16 @@ class NewsFeedWidget extends StatelessWidget {
               ),
               9.horizontalSpace,
               BlueBorderContainer(
-                isSelected: controller.isDisliked,
+                isSelected: widget.controller.isDisliked,
                 onTap: () {
-                  newsFeedVM.dislikePost(controller.model);
+                  newsFeedVM.dislikePost(widget.controller.model);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      controller.dislikes,
+                      widget.controller.dislikes,
                       style: styles.inter12w400.copyWith(color: styles.skyBlue),
                     ),
                     6.5.horizontalSpace,
