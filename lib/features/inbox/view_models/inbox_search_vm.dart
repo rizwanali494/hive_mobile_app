@@ -13,9 +13,11 @@ class InboxSearchVM extends InboxScreenVM {
   @override
   Future<void> getInitialItems() async {
     final text = controller.text.trim();
-    if (text.isEmpty) {
+    if (text.isEmpty || uiState.isLoading) {
       return;
     }
+    uiState = UiState.loading();
+    notifyListeners();
     final request = () async {
       var list = await fetchInitialItems();
       if (list.length < limit) {
@@ -29,19 +31,28 @@ class InboxSearchVM extends InboxScreenVM {
     await performRequest(request: request);
     uiState = UiState.loaded();
     notifyListeners();
-    // super.getInitialItems();
   }
 
   @override
-  Future<List<InboxModel>> fetchInitialItems() {
-    // TODO: implement fetchInitialItems
-    throw UnimplementedError();
+  Future<void> getNextItems() async {
+    if (uiState.isLoading) {
+      return;
+    }
+    super.getNextItems();
   }
 
   @override
-  Future<List<InboxModel>> fetchNextItems() {
-    // TODO: implement fetchNextItems
-    throw UnimplementedError();
+  Future<List<InboxModel>> fetchInitialItems() async {
+    final text = controller.text.trim();
+    var list = await inboxRepositoryImpl.getInitialInboxList();
+    return list;
+  }
+
+  @override
+  Future<List<InboxModel>> fetchNextItems() async {
+    final text = controller.text.trim();
+    var list = await inboxRepositoryImpl.getInitialInboxList();
+    return list;
   }
 
   @override
@@ -57,6 +68,12 @@ class InboxSearchVM extends InboxScreenVM {
   final debouncer = Debouncer(milliseconds: 900);
 
   void search() {
-    debouncer.run(() {});
+    final text = controller.text.trim();
+    if (text.isEmpty) {
+      return;
+    }
+    debouncer.run(
+      () {},
+    );
   }
 }
