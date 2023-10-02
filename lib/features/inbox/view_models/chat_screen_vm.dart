@@ -7,7 +7,7 @@ import 'package:hive_mobile/app/models/data/message_model.dart';
 import 'package:hive_mobile/app/models/rev_pagination_controller.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
-import 'package:hive_mobile/app/services/local_services/local_service.dart';
+import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:hive_mobile/features/inbox/repositories/message_repository.dart';
 import 'package:hive_mobile/features/inbox/view_models/date_message_class.dart';
@@ -63,7 +63,7 @@ class ChatScreenVM extends ChangeNotifier {
     paginationController.addListener();
   }
 
-  final localService = LocalService<MessageModel>();
+  final localService = IsarService<MessageModel>();
   UiState uiState = UiState.loading();
 
   Future<void> getMessages() async {

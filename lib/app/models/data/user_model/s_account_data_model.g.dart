@@ -31,12 +31,12 @@ const StudentAccountDataSchema = Schema(
     r'cityId': PropertySchema(
       id: 3,
       name: r'cityId',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'classId': PropertySchema(
       id: 4,
       name: r'classId',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'dateAdded': PropertySchema(
       id: 5,
@@ -73,7 +73,7 @@ const StudentAccountDataSchema = Schema(
     r'regionId': PropertySchema(
       id: 11,
       name: r'regionId',
-      type: IsarType.string,
+      type: IsarType.long,
     )
   },
   estimateSize: _studentAccountDataEstimateSize,
@@ -96,18 +96,6 @@ int _studentAccountDataEstimateSize(
   }
   {
     final value = object.bio;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.cityId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.classId;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -146,12 +134,6 @@ int _studentAccountDataEstimateSize(
       }
     }
   }
-  {
-    final value = object.regionId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
   return bytesCount;
 }
 
@@ -164,8 +146,8 @@ void _studentAccountDataSerialize(
   writer.writeString(offsets[0], object.backupEmail);
   writer.writeString(offsets[1], object.bio);
   writer.writeLong(offsets[2], object.branchId);
-  writer.writeString(offsets[3], object.cityId);
-  writer.writeString(offsets[4], object.classId);
+  writer.writeLong(offsets[3], object.cityId);
+  writer.writeLong(offsets[4], object.classId);
   writer.writeString(offsets[5], object.dateAdded);
   writer.writeString(offsets[6], object.dateLastModified);
   writer.writeObject<StudentExtra>(
@@ -182,7 +164,7 @@ void _studentAccountDataSerialize(
   );
   writer.writeLong(offsets[9], object.id);
   writer.writeLong(offsets[10], object.owner);
-  writer.writeString(offsets[11], object.regionId);
+  writer.writeLong(offsets[11], object.regionId);
 }
 
 StudentAccountData _studentAccountDataDeserialize(
@@ -195,8 +177,8 @@ StudentAccountData _studentAccountDataDeserialize(
     backupEmail: reader.readStringOrNull(offsets[0]),
     bio: reader.readStringOrNull(offsets[1]),
     branchId: reader.readLongOrNull(offsets[2]),
-    cityId: reader.readStringOrNull(offsets[3]),
-    classId: reader.readStringOrNull(offsets[4]),
+    cityId: reader.readLongOrNull(offsets[3]),
+    classId: reader.readLongOrNull(offsets[4]),
     dateAdded: reader.readStringOrNull(offsets[5]),
     dateLastModified: reader.readStringOrNull(offsets[6]),
     extra: reader.readObjectOrNull<StudentExtra>(
@@ -212,7 +194,7 @@ StudentAccountData _studentAccountDataDeserialize(
     ),
     id: reader.readLongOrNull(offsets[9]),
     owner: reader.readLongOrNull(offsets[10]),
-    regionId: reader.readStringOrNull(offsets[11]),
+    regionId: reader.readLongOrNull(offsets[11]),
   );
   return object;
 }
@@ -231,9 +213,9 @@ P _studentAccountDataDeserializeProp<P>(
     case 2:
       return (reader.readLongOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
@@ -256,7 +238,7 @@ P _studentAccountDataDeserializeProp<P>(
     case 10:
       return (reader.readLongOrNull(offset)) as P;
     case 11:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -665,58 +647,49 @@ extension StudentAccountDataQueryFilter
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      cityIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       cityIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       cityIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       cityIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -725,77 +698,6 @@ extension StudentAccountDataQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'cityId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cityId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      cityIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'cityId',
-        value: '',
       ));
     });
   }
@@ -819,58 +721,49 @@ extension StudentAccountDataQueryFilter
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      classIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'classId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       classIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'classId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       classIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'classId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       classIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -879,77 +772,6 @@ extension StudentAccountDataQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'classId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'classId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'classId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'classId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'classId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      classIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'classId',
-        value: '',
       ));
     });
   }
@@ -1554,58 +1376,49 @@ extension StudentAccountDataQueryFilter
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      regionIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       regionIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       regionIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
       regionIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1614,77 +1427,6 @@ extension StudentAccountDataQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'regionId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'regionId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      regionIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'regionId',
-        value: '',
       ));
     });
   }

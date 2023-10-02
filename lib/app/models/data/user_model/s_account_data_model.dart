@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/models/data/hobbies_model.dart';
 import 'package:hive_mobile/app/models/data/user_model/s_extra_model.dart';
 import 'package:isar/isar.dart';
@@ -24,6 +26,7 @@ class StudentAccountData {
   StudentAccountData.fromJson(dynamic json) {
     id = json['id'];
     extra = json['extra'] != null ? StudentExtra.fromJson(json['extra']) : null;
+    log("extra");
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
     classId = json['class_id'];
@@ -42,9 +45,9 @@ class StudentAccountData {
   StudentExtra? extra;
   String? dateAdded;
   String? dateLastModified;
-  String? classId;
-  String? regionId;
-  String? cityId;
+  int? classId;
+  int? regionId;
+  int? cityId;
   int? branchId;
   String? bio;
   String? backupEmail;
@@ -56,9 +59,9 @@ class StudentAccountData {
     StudentExtra? extra,
     String? dateAdded,
     String? dateLastModified,
-    String? classId,
-    String? regionId,
-    String? cityId,
+    int? classId,
+    int? regionId,
+    int? cityId,
     int? branchId,
     String? bio,
     String? backupEmail,

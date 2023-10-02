@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
-class LocalService<T> {
+class IsarService<T> {
   Isar _isar = GetIt.instance.get<Isar>();
 
-  LocalService();
+  IsarService();
 
   Future<void> save(IsarLink<T> value) async {
     await _isar.writeTxn(() async {

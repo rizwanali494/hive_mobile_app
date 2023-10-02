@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
-import 'package:hive_mobile/app/services/local_services/local_service.dart';
+import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 
 abstract class BaseApiVM<T> with ChangeNotifier {
   UiState uiState = UiState.loading();
@@ -15,7 +15,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
   bool get isLoading => uiState.isLoading;
 
   bool get isGettingMore => paginationController.isGettingMore;
-  LocalService<T> localService = LocalService();
+  IsarService<T> localService = IsarService();
   List<T> items = [];
   final limit = 10;
   final scrollController = ScrollController();

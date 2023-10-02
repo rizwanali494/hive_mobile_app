@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
+import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -25,6 +26,7 @@ Future<void> registerIsarInstance() async {
     ActivityModelSchema,
     InboxModelSchema,
     MessageModelSchema,
+    UserModelSchema,
   ], directory: dir.path, name: "My Data");
   _getIt.registerSingleton<Isar>(isar);
 }

@@ -14,8 +14,10 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart';
+import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthVM extends ChangeNotifier
     with BaseExceptionController, UtilFunctions {
@@ -27,6 +29,9 @@ class AuthVM extends ChangeNotifier
   }
 
   bool loggingIn = false;
+
+  final isarService = IsarService<UserModel>();
+  final sharedPref = GetIt.instance.get<SharedPreferences>();
 
   Future googleSignIn(BuildContext context) async {
     if (loggingIn) {
@@ -52,11 +57,14 @@ class AuthVM extends ChangeNotifier
         );
         var responseBody = jsonDecode(response.body);
         var model = UserModel.fromJson(responseBody);
+        log('got it');
         var token = responseBody["token"]["access"];
         log(token.toString());
         registerApiServiceInstance(token: token);
         registerUserModel(model);
         context.pushReplacement(HomeScreen.route);
+        await sharedPref.setString("token", token);
+        await isarService.put(model);
         return;
       } catch (e) {
         log(e.toString());

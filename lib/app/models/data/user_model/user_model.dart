@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
 import 'package:hive_mobile/app/models/data/hobbies_model.dart';
 import 'package:hive_mobile/app/models/data/user_model/s_account_data_model.dart';
+import 'package:hive_mobile/app/models/data/user_model/s_extra_model.dart';
 import 'package:isar/isar.dart';
 
+part 'user_model.g.dart';
+
+@collection
 class UserModel {
   UserModel({
     this.id,
@@ -23,9 +29,11 @@ class UserModel {
     picture = json['picture'] != null
         ? AccountPicture.fromJson(json['picture'])
         : null;
+    log("picture");
     accountData = json['account_data'] != null
         ? StudentAccountData.fromJson(json['account_data'])
         : null;
+    log("account data");
     lastLogin = json['last_login'];
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
