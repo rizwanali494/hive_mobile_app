@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/navigation/extensions.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/services/local_services/shared_pref_service.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/home/view_models/drawer_widget_vm.dart';
@@ -155,6 +156,8 @@ class DrawerWidget extends StatelessWidget {
                   10.verticalSpace,
                   GestureDetector(
                     onTap: () {
+                      final sharedPref = SharedPrefService();
+                      sharedPref.sharedPref.remove("token");
                       context.pushAndRemoveUntil(SignInScreen.route);
                     },
                     child: Row(

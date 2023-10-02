@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -63,6 +65,8 @@ class _SplashScreenState extends State<SplashScreen> {
       final userModel = await isarService.findFirst();
       if (userModel != null) {
         registerUserModel(userModel);
+        navigate(context, HomeScreen.route);
+        return;
       } else {
         navigate(context, SignInScreen.route);
         return;
@@ -74,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigate(BuildContext context, String route) {
-    Future.delayed(const Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(milliseconds: 500)).then((value) {
       context.pushReplacement(kIsWeb ? HomeScreen.route : route);
     });
   }
