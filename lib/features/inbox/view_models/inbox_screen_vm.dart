@@ -13,13 +13,12 @@ class InboxScreenVM extends BaseApiVM<InboxModel> {
 
   @override
   Future<List<InboxModel>> fetchInitialItems() async {
-    return await inboxRepositoryImpl.getInitialInboxList(limit: limit);
+    return await inboxRepositoryImpl.getItems(limit: limit);
   }
 
   @override
   Future<List<InboxModel>> fetchNextItems() async {
-    return await inboxRepositoryImpl.getInitialInboxList(
-        limit: limit, offset: offSet);
+    return await inboxRepositoryImpl.getItems(limit: limit, offset: offSet);
   }
 
   @override

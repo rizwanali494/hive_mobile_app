@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/inbox_list_widget.dart';
+import 'package:hive_mobile/features/inbox/screens/inbox_search_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_list_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
@@ -61,22 +62,28 @@ class InboxScreen extends StatelessWidget {
                 ],
               ),
               19.verticalSpace,
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 20.w,
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 26.w,
-                ),
-                decoration: BoxDecoration(
-                  color: styles.greyWhite,
-                  borderRadius: BorderRadius.circular(
-                    36.r,
+              GestureDetector(
+                onTap: () {
+                  context.push(InboxSearchScreen.route);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 20.w,
                   ),
-                ),
-                child: TitleTextField(
-                  hintText: AppStrings.searchMessagesHere,
-                  textFieldOnly: true,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 26.w,
+                  ),
+                  decoration: BoxDecoration(
+                    color: styles.greyWhite,
+                    borderRadius: BorderRadius.circular(
+                      36.r,
+                    ),
+                  ),
+                  child: TitleTextField(
+                    hintText: AppStrings.searchMessagesHere,
+                    textFieldOnly: true,
+                    enabled: false,
+                  ),
                 ),
               ),
               InboxListWidget(

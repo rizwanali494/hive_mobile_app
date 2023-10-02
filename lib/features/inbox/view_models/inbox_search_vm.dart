@@ -7,17 +7,20 @@ import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 
 class InboxSearchVM extends InboxScreenVM {
   InboxScreenVM() {
-    super.uiState = UiState.loaded();
+   uiState = UiState.loaded();
   }
 
   @override
   Future<void> getInitialItems() async {
     final text = controller.text.trim();
     if (text.isEmpty || uiState.isLoading) {
+      uiState = UiState.loaded();
+      notifyListeners();
       return;
     }
     uiState = UiState.loading();
     notifyListeners();
+    items = [];
     final request = () async {
       var list = await fetchInitialItems();
       if (list.length < limit) {
@@ -44,19 +47,18 @@ class InboxSearchVM extends InboxScreenVM {
   @override
   Future<List<InboxModel>> fetchInitialItems() async {
     final text = controller.text.trim();
-    var list = await inboxRepositoryImpl.getInitialInboxList();
+    var list = await inboxRepositoryImpl.getSearchItems(text, limit: limit);
     return list;
   }
 
   @override
   Future<List<InboxModel>> fetchNextItems() async {
     final text = controller.text.trim();
-    var list = await inboxRepositoryImpl.getInitialInboxList();
+    var list = await inboxRepositoryImpl.getSearchItems(text,
+        offset: offSet, limit: limit);
     return list;
   }
 
-  @override
-  void setRepoInstance() {}
 
   @override
   Future<List<InboxModel>> fetchLocalList() async {
@@ -73,7 +75,14 @@ class InboxSearchVM extends InboxScreenVM {
       return;
     }
     debouncer.run(
-      () {},
+      () {
+        getInitialItems();
+      },
     );
+  }
+
+  @override
+  Future<void> refreshList() async {
+    return;
   }
 }

@@ -21,6 +21,7 @@ import 'package:hive_mobile/features/external_grading/screens/external_grading_s
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
+import 'package:hive_mobile/features/inbox/screens/inbox_search_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
@@ -59,6 +60,11 @@ final goRouter = GoRouter(
       path: HomeScreen.route,
       name: HomeScreen.route,
       builder: (_, state) => const HomeScreen(),
+    ),
+    CustomGoRoute.cupertino(
+      path: InboxSearchScreen.route,
+      name: InboxSearchScreen.route,
+      builder: (_, state) => const InboxSearchScreen(),
     ),
     CustomGoRoute.cupertino(
       path: AccountSettingScreen.route,

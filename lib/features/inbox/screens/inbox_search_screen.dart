@@ -38,68 +38,76 @@ class InboxSearchScreen extends StatelessWidget {
         create: (BuildContext context) => InboxSearchVM(),
         child: Consumer<InboxSearchVM>(
           builder: (context, provider, child) {
-            return Column(
-              children: [
-                Row(
+            return Padding(
+              padding: MediaQuery.of(context).padding,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 19.w,
+                ),
+                child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.pop();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                      ),
+                    19.verticalSpace,
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios,
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 26.w,
+                            ),
+                            decoration: BoxDecoration(
+                              color: styles.greyWhite,
+                              borderRadius: BorderRadius.circular(
+                                36.r,
+                              ),
+                            ),
+                            child: TitleTextField(
+                              hintText: AppStrings.searchMessagesHere,
+                              textFieldOnly: true,
+                              textFormField: TextFormField(
+                                controller: provider.controller,
+                                style: styles.inter12w400,
+                                decoration: InputDecoration(
+                                    isDense: true,
+                                    hintText: AppStrings.searchMessagesHere,
+                                    hintStyle: styles.inter12w400,
+                                    border: InputBorder.none),
+                                onChanged: (value) {
+                                  provider.search();
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    15.horizontalSpace,
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 26.w,
-                      ),
-                      decoration: BoxDecoration(
-                        color: styles.greyWhite,
-                        borderRadius: BorderRadius.circular(
-                          36.r,
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 26.w,
-                        ),
-                        decoration: BoxDecoration(
-                          color: styles.greyWhite,
-                          borderRadius: BorderRadius.circular(
-                            36.r,
-                          ),
-                        ),
-                        child: TitleTextField(
-                          hintText: AppStrings.searchMessagesHere,
-                          textFieldOnly: true,
-                          textFormField: TextFormField(
-                            controller: provider.controller,
-                            onEditingComplete: () {
-                              log("stopped");
-                            },
-                          ),
-                        ),
+                    10.verticalSpace,
+                    Divider(
+                      thickness: 0.5,
+                      color: styles.black.withOpacity(0.5),
+                    ),
+                    InboxListWidget(
+                      provider: InboxListVM(
+                        hasError: provider.hasError,
+                        isLoading: provider.isLoading,
+                        items: provider.items,
+                        listCount: provider.listCount,
+                        refreshList: provider.refreshList,
                       ),
                     ),
                   ],
                 ),
-                InboxListWidget(
-                  provider: InboxListVM(
-                      hasError: provider.hasError,
-                      isLoading: provider.isLoading,
-                      items: provider.items,
-                      listCount: provider.listCount,
-                      refreshList: provider.refreshList),
-                ),
-              ],
+              ),
             );
           },
         ),

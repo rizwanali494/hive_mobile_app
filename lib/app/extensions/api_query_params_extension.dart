@@ -41,6 +41,10 @@ extension ApiFieldExpandExtension on String {
     return _appendPaginationParameter("offset", offSet);
   }
 
+  String withSearch(String text) {
+    return _appendQueryParameter("search=$text");
+  }
+
   String withReceiverId(int? id) {
     return _appendPaginationParameter("receiver", id);
   }

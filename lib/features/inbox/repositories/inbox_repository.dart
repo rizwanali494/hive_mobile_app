@@ -11,19 +11,36 @@ abstract class InboxRepository {
 
   InboxRepository({required this.apiService});
 
-  Future<List<InboxModel>> getInitialInboxList({int? limit, int? offset});
+  Future<List<InboxModel>> getItems({int? limit, int? offset});
+
+  Future<List<InboxModel>> getSearchItems(String text,
+      {int? limit, int? offset});
 }
 
 class InboxRepositoryImpl extends InboxRepository {
   InboxRepositoryImpl({required super.apiService});
 
   @override
-  Future<List<InboxModel>> getInitialInboxList(
-      {int? limit, int? offset}) async {
+  Future<List<InboxModel>> getItems({int? limit, int? offset}) async {
     var response = await apiService.get(
       url: ApiEndpoints.inbox.withLimit(limit).withOffSet(offset),
     );
     log(ApiEndpoints.inbox.withLimit(limit).withOffSet(offset));
+    var result = jsonDecode(response.body);
+    List items = result["results"] ?? [];
+    log("messeage count : ${items.length}");
+    return items.map((e) => InboxModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<List<InboxModel>> getSearchItems(String text,
+      {int? limit, int? offset}) async {
+    var url =
+        ApiEndpoints.inbox.withLimit(limit).withOffSet(offset).withSearch(text);
+    log(url.toString());
+    var response = await apiService.get(
+      url: url,
+    );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
     log("messeage count : ${items.length}");
