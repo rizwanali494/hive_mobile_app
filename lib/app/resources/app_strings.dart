@@ -18,6 +18,7 @@ class AppStrings {
   static String notifications = "Notifications";
   static String reports = "Reports";
   static String searchMessagesHere = "Search Messages Here";
+  static String searchMessages = "Search Messages";
   static String profile = "Profile";
   static String basicInfo = "Basic Info";
   static String gender = "Gender";

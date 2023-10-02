@@ -7,7 +7,7 @@ class TitleTextField extends StatelessWidget {
   final String? title;
   final int? maxLength;
   final bool enabled;
-  final String hintText;
+  final String? hintText;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final TextStyle? hintStyle;
@@ -15,19 +15,24 @@ class TitleTextField extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLines;
   final void Function()? onTap;
+  final Function(String)? onChanged;
+  final TextFormField? textFormField;
 
   const TitleTextField({
     super.key,
     this.title,
     this.textFieldOnly = false,
-    required this.hintText,
+    this.hintText,
     this.maxLines,
     this.controller,
     this.hintStyle,
     this.inputFormatters,
     this.keyboardType,
     this.maxLength,
-    this.enabled = true, this.onTap,
+    this.enabled = true,
+    this.onTap,
+    this.onChanged,
+    this.textFormField,
   });
 
   @override
@@ -35,21 +40,7 @@ class TitleTextField extends StatelessWidget {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     if (textFieldOnly) {
-      return TextFormField(
-        style: styles.inter12w400,
-        inputFormatters: inputFormatters,
-        keyboardType: keyboardType,
-        onTap:onTap ,
-        maxLength: maxLength,
-        controller: controller,
-        maxLines: maxLines ?? 1,
-        decoration: InputDecoration(
-            border: InputBorder.none,
-            isDense: true,
-            enabled: enabled,
-            hintStyle: hintStyle,
-            hintText: hintText),
-      );
+      return buildTextFormField(styles);
     }
 
     return Column(
@@ -75,22 +66,28 @@ class TitleTextField extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(25),
           ),
-          child: TextFormField(
-            style: styles.inter12w400,
-            inputFormatters: inputFormatters,
-            keyboardType: keyboardType,
-            maxLength: maxLength,
-            controller: controller,
-            maxLines: maxLines ?? 1,
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                enabled: enabled,
-                hintStyle: hintStyle,
-                hintText: hintText),
-          ),
+          child: buildTextFormField(styles),
         ),
       ],
     );
+  }
+
+  Widget buildTextFormField(AppTheme styles) {
+    return textFormField ??
+        TextFormField(
+          onChanged: onChanged,
+          style: styles.inter12w400,
+          inputFormatters: inputFormatters,
+          keyboardType: keyboardType,
+          maxLength: maxLength,
+          controller: controller,
+          maxLines: maxLines ?? 1,
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              isDense: true,
+              enabled: enabled,
+              hintStyle: hintStyle,
+              hintText: hintText),
+        );
   }
 }
