@@ -42,28 +42,33 @@ const MessageModelSchema = CollectionSchema(
       name: r'dateLastModified',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 5,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 6,
       name: r'id',
       type: IsarType.long,
     ),
     r'isRead': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'isRead',
       type: IsarType.bool,
     ),
     r'owner': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'owner',
       type: IsarType.long,
     ),
     r'receiver': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'receiver',
       type: IsarType.long,
     ),
     r'regionId': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'regionId',
       type: IsarType.string,
     )
@@ -132,11 +137,12 @@ void _messageModelSerialize(
   writer.writeString(offsets[2], object.content);
   writer.writeString(offsets[3], object.dateAdded);
   writer.writeString(offsets[4], object.dateLastModified);
-  writer.writeLong(offsets[5], object.id);
-  writer.writeBool(offsets[6], object.isRead);
-  writer.writeLong(offsets[7], object.owner);
-  writer.writeLong(offsets[8], object.receiver);
-  writer.writeString(offsets[9], object.regionId);
+  writer.writeLong(offsets[5], object.hashCode);
+  writer.writeLong(offsets[6], object.id);
+  writer.writeBool(offsets[7], object.isRead);
+  writer.writeLong(offsets[8], object.owner);
+  writer.writeLong(offsets[9], object.receiver);
+  writer.writeString(offsets[10], object.regionId);
 }
 
 MessageModel _messageModelDeserialize(
@@ -151,12 +157,12 @@ MessageModel _messageModelDeserialize(
     content: reader.readStringOrNull(offsets[2]),
     dateAdded: reader.readStringOrNull(offsets[3]),
     dateLastModified: reader.readStringOrNull(offsets[4]),
-    id: reader.readLongOrNull(offsets[5]),
-    isRead: reader.readBoolOrNull(offsets[6]),
+    id: reader.readLongOrNull(offsets[6]),
+    isRead: reader.readBoolOrNull(offsets[7]),
     localId: id,
-    owner: reader.readLongOrNull(offsets[7]),
-    receiver: reader.readLongOrNull(offsets[8]),
-    regionId: reader.readStringOrNull(offsets[9]),
+    owner: reader.readLongOrNull(offsets[8]),
+    receiver: reader.readLongOrNull(offsets[9]),
+    regionId: reader.readStringOrNull(offsets[10]),
   );
   return object;
 }
@@ -179,14 +185,16 @@ P _messageModelDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readBoolOrNull(offset)) as P;
-    case 7:
       return (reader.readLongOrNull(offset)) as P;
+    case 7:
+      return (reader.readBoolOrNull(offset)) as P;
     case 8:
       return (reader.readLongOrNull(offset)) as P;
     case 9:
+      return (reader.readLongOrNull(offset)) as P;
+    case 10:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -977,6 +985,62 @@ extension MessageModelQueryFilter
     });
   }
 
+  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
+      hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
+      hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1520,6 +1584,18 @@ extension MessageModelQuerySortBy
     });
   }
 
+  QueryBuilder<MessageModel, MessageModel, QAfterSortBy> sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MessageModel, MessageModel, QAfterSortBy> sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<MessageModel, MessageModel, QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1645,6 +1721,18 @@ extension MessageModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<MessageModel, MessageModel, QAfterSortBy> thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MessageModel, MessageModel, QAfterSortBy> thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<MessageModel, MessageModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1755,6 +1843,12 @@ extension MessageModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<MessageModel, MessageModel, QDistinct> distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
   QueryBuilder<MessageModel, MessageModel, QDistinct> distinctById() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id');
@@ -1823,6 +1917,12 @@ extension MessageModelQueryProperty
       dateLastModifiedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateLastModified');
+    });
+  }
+
+  QueryBuilder<MessageModel, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 

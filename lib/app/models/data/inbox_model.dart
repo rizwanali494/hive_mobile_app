@@ -3,6 +3,7 @@ import 'package:isar/isar.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 
 import 'announcement_post_models/account_data_model.dart';
+import 'announcement_post_models/account_extra_model.dart';
 
 part "inbox_model.g.dart";
 

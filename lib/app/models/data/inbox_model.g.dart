@@ -17,38 +17,44 @@ const InboxModelSchema = CollectionSchema(
   name: r'InboxModel',
   id: -1536743792719854782,
   properties: {
-    r'accountType': PropertySchema(
+    r'accountDataModel': PropertySchema(
       id: 0,
+      name: r'accountDataModel',
+      type: IsarType.object,
+      target: r'AccountDataModel',
+    ),
+    r'accountType': PropertySchema(
+      id: 1,
       name: r'accountType',
       type: IsarType.string,
     ),
     r'content': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'content',
       type: IsarType.string,
     ),
     r'date': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'date',
       type: IsarType.string,
     ),
     r'email': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'email',
       type: IsarType.string,
     ),
     r'hashCode': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'hashCode',
       type: IsarType.long,
     ),
     r'id': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'id',
       type: IsarType.long,
     ),
     r'picture': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'picture',
       type: IsarType.object,
       target: r'Attachments',
@@ -61,7 +67,11 @@ const InboxModelSchema = CollectionSchema(
   idName: r'localId',
   indexes: {},
   links: {},
-  embeddedSchemas: {r'Attachments': AttachmentsSchema},
+  embeddedSchemas: {
+    r'AccountDataModel': AccountDataModelSchema,
+    r'AccountExtra': AccountExtraSchema,
+    r'Attachments': AttachmentsSchema
+  },
   getId: _inboxModelGetId,
   getLinks: _inboxModelGetLinks,
   attach: _inboxModelAttach,
@@ -74,6 +84,14 @@ int _inboxModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.accountDataModel;
+    if (value != null) {
+      bytesCount += 3 +
+          AccountDataModelSchema.estimateSize(
+              value, allOffsets[AccountDataModel]!, allOffsets);
+    }
+  }
   {
     final value = object.accountType;
     if (value != null) {
@@ -115,14 +133,20 @@ void _inboxModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.accountType);
-  writer.writeString(offsets[1], object.content);
-  writer.writeString(offsets[2], object.date);
-  writer.writeString(offsets[3], object.email);
-  writer.writeLong(offsets[4], object.hashCode);
-  writer.writeLong(offsets[5], object.id);
+  writer.writeObject<AccountDataModel>(
+    offsets[0],
+    allOffsets,
+    AccountDataModelSchema.serialize,
+    object.accountDataModel,
+  );
+  writer.writeString(offsets[1], object.accountType);
+  writer.writeString(offsets[2], object.content);
+  writer.writeString(offsets[3], object.date);
+  writer.writeString(offsets[4], object.email);
+  writer.writeLong(offsets[5], object.hashCode);
+  writer.writeLong(offsets[6], object.id);
   writer.writeObject<Attachments>(
-    offsets[6],
+    offsets[7],
     allOffsets,
     AttachmentsSchema.serialize,
     object.picture,
@@ -136,14 +160,19 @@ InboxModel _inboxModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = InboxModel(
-    accountType: reader.readStringOrNull(offsets[0]),
-    content: reader.readStringOrNull(offsets[1]),
-    date: reader.readStringOrNull(offsets[2]),
-    email: reader.readStringOrNull(offsets[3]),
-    id: reader.readLongOrNull(offsets[5]),
+    accountDataModel: reader.readObjectOrNull<AccountDataModel>(
+      offsets[0],
+      AccountDataModelSchema.deserialize,
+      allOffsets,
+    ),
+    accountType: reader.readStringOrNull(offsets[1]),
+    content: reader.readStringOrNull(offsets[2]),
+    date: reader.readStringOrNull(offsets[3]),
+    email: reader.readStringOrNull(offsets[4]),
+    id: reader.readLongOrNull(offsets[6]),
     localId: id,
     picture: reader.readObjectOrNull<Attachments>(
-      offsets[6],
+      offsets[7],
       AttachmentsSchema.deserialize,
       allOffsets,
     ),
@@ -159,7 +188,11 @@ P _inboxModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readObjectOrNull<AccountDataModel>(
+        offset,
+        AccountDataModelSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
@@ -167,10 +200,12 @@ P _inboxModelDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
+      return (reader.readLongOrNull(offset)) as P;
+    case 7:
       return (reader.readObjectOrNull<Attachments>(
         offset,
         AttachmentsSchema.deserialize,
@@ -276,6 +311,24 @@ extension InboxModelQueryWhere
 
 extension InboxModelQueryFilter
     on QueryBuilder<InboxModel, InboxModel, QFilterCondition> {
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition>
+      accountDataModelIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'accountDataModel',
+      ));
+    });
+  }
+
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition>
+      accountDataModelIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'accountDataModel',
+      ));
+    });
+  }
+
   QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition>
       accountTypeIsNull() {
     return QueryBuilder.apply(this, (query) {
@@ -1086,6 +1139,13 @@ extension InboxModelQueryFilter
 
 extension InboxModelQueryObject
     on QueryBuilder<InboxModel, InboxModel, QFilterCondition> {
+  QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition> accountDataModel(
+      FilterQuery<AccountDataModel> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'accountDataModel');
+    });
+  }
+
   QueryBuilder<InboxModel, InboxModel, QAfterFilterCondition> picture(
       FilterQuery<Attachments> q) {
     return QueryBuilder.apply(this, (query) {
@@ -1307,6 +1367,13 @@ extension InboxModelQueryProperty
   QueryBuilder<InboxModel, int, QQueryOperations> localIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'localId');
+    });
+  }
+
+  QueryBuilder<InboxModel, AccountDataModel?, QQueryOperations>
+      accountDataModelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'accountDataModel');
     });
   }
 

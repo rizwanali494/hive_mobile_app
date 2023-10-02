@@ -44,50 +44,55 @@ const AnnouncementPostModelSchema = CollectionSchema(
       name: r'dislikes',
       type: IsarType.long,
     ),
-    r'hashCode': PropertySchema(
+    r'expiryDate': PropertySchema(
       id: 5,
+      name: r'expiryDate',
+      type: IsarType.string,
+    ),
+    r'hashCode': PropertySchema(
+      id: 6,
       name: r'hashCode',
       type: IsarType.long,
     ),
     r'id': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'id',
       type: IsarType.long,
     ),
     r'isDisliked': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isDisliked',
       type: IsarType.bool,
     ),
     r'isLiked': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'isLiked',
       type: IsarType.bool,
     ),
     r'likes': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'likes',
       type: IsarType.long,
     ),
     r'owner': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'owner',
       type: IsarType.object,
       target: r'OwnerModel',
     ),
     r'polls': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'polls',
       type: IsarType.objectList,
       target: r'Polls',
     ),
     r'text': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'text',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'type',
       type: IsarType.string,
     )
@@ -146,6 +151,12 @@ int _announcementPostModelEstimateSize(
     }
   }
   {
+    final value = object.expiryDate;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.owner;
     if (value != null) {
       bytesCount += 3 +
@@ -197,25 +208,26 @@ void _announcementPostModelSerialize(
   writer.writeString(offsets[2], object.dateAdded);
   writer.writeString(offsets[3], object.dateLastModified);
   writer.writeLong(offsets[4], object.dislikes);
-  writer.writeLong(offsets[5], object.hashCode);
-  writer.writeLong(offsets[6], object.id);
-  writer.writeBool(offsets[7], object.isDisliked);
-  writer.writeBool(offsets[8], object.isLiked);
-  writer.writeLong(offsets[9], object.likes);
+  writer.writeString(offsets[5], object.expiryDate);
+  writer.writeLong(offsets[6], object.hashCode);
+  writer.writeLong(offsets[7], object.id);
+  writer.writeBool(offsets[8], object.isDisliked);
+  writer.writeBool(offsets[9], object.isLiked);
+  writer.writeLong(offsets[10], object.likes);
   writer.writeObject<OwnerModel>(
-    offsets[10],
+    offsets[11],
     allOffsets,
     OwnerModelSchema.serialize,
     object.owner,
   );
   writer.writeObjectList<Polls>(
-    offsets[11],
+    offsets[12],
     allOffsets,
     PollsSchema.serialize,
     object.polls,
   );
-  writer.writeString(offsets[12], object.text);
-  writer.writeString(offsets[13], object.type);
+  writer.writeString(offsets[13], object.text);
+  writer.writeString(offsets[14], object.type);
 }
 
 AnnouncementPostModel _announcementPostModelDeserialize(
@@ -235,24 +247,25 @@ AnnouncementPostModel _announcementPostModelDeserialize(
     dateAdded: reader.readStringOrNull(offsets[2]),
     dateLastModified: reader.readStringOrNull(offsets[3]),
     dislikes: reader.readLongOrNull(offsets[4]),
-    id: reader.readLongOrNull(offsets[6]),
-    isDisliked: reader.readBoolOrNull(offsets[7]),
-    isLiked: reader.readBoolOrNull(offsets[8]),
-    likes: reader.readLongOrNull(offsets[9]),
+    expiryDate: reader.readStringOrNull(offsets[5]),
+    id: reader.readLongOrNull(offsets[7]),
+    isDisliked: reader.readBoolOrNull(offsets[8]),
+    isLiked: reader.readBoolOrNull(offsets[9]),
+    likes: reader.readLongOrNull(offsets[10]),
     localId: id,
     owner: reader.readObjectOrNull<OwnerModel>(
-      offsets[10],
+      offsets[11],
       OwnerModelSchema.deserialize,
       allOffsets,
     ),
     polls: reader.readObjectList<Polls>(
-      offsets[11],
+      offsets[12],
       PollsSchema.deserialize,
       allOffsets,
       Polls(),
     ),
-    text: reader.readStringOrNull(offsets[12]),
-    type: reader.readStringOrNull(offsets[13]),
+    text: reader.readStringOrNull(offsets[13]),
+    type: reader.readStringOrNull(offsets[14]),
   );
   return object;
 }
@@ -280,31 +293,33 @@ P _announcementPostModelDeserializeProp<P>(
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
       return (reader.readBoolOrNull(offset)) as P;
     case 9:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 10:
+      return (reader.readLongOrNull(offset)) as P;
+    case 11:
       return (reader.readObjectOrNull<OwnerModel>(
         offset,
         OwnerModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 11:
+    case 12:
       return (reader.readObjectList<Polls>(
         offset,
         PollsSchema.deserialize,
         allOffsets,
         Polls(),
       )) as P;
-    case 12:
-      return (reader.readStringOrNull(offset)) as P;
     case 13:
+      return (reader.readStringOrNull(offset)) as P;
+    case 14:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -971,6 +986,162 @@ extension AnnouncementPostModelQueryFilter on QueryBuilder<
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'expiryDate',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'expiryDate',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'expiryDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'expiryDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'expiryDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'expiryDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'expiryDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'expiryDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+          QAfterFilterCondition>
+      expiryDateContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'expiryDate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+          QAfterFilterCondition>
+      expiryDateMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'expiryDate',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'expiryDate',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> expiryDateIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'expiryDate',
+        value: '',
       ));
     });
   }
@@ -1815,6 +1986,20 @@ extension AnnouncementPostModelQuerySortBy
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      sortByExpiryDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expiryDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      sortByExpiryDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expiryDate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
       sortByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.asc);
@@ -1972,6 +2157,20 @@ extension AnnouncementPostModelQuerySortThenBy
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      thenByExpiryDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expiryDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
+      thenByExpiryDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expiryDate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QAfterSortBy>
       thenByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.asc);
@@ -2116,6 +2315,13 @@ extension AnnouncementPostModelQueryWhereDistinct
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QDistinct>
+      distinctByExpiryDate({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'expiryDate', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel, QDistinct>
       distinctByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hashCode');
@@ -2205,6 +2411,13 @@ extension AnnouncementPostModelQueryProperty on QueryBuilder<
       dislikesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dislikes');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, String?, QQueryOperations>
+      expiryDateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'expiryDate');
     });
   }
 
