@@ -12,7 +12,6 @@ import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
-import 'package:hive_mobile/features/profile/view_models/base_profile_info_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
@@ -196,10 +195,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           heading: AppStrings.subjects,
                         ),
                         17.verticalSpace,
-                        ChangeNotifierProvider<BaseProfileInfoVM>(
+                        ChangeNotifierProvider<AcceptedApplicationVM>(
                           create: (BuildContext context) =>
                               AcceptedApplicationVM(),
-                          child: Consumer<BaseProfileInfoVM>(
+                          child: Consumer<AcceptedApplicationVM>(
                             builder: (context, provider, child) {
                               return ProfileSectionWidget(
                                 wrapChildren: provider.items,
@@ -211,9 +210,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         17.verticalSpace,
-                        ChangeNotifierProvider<BaseProfileInfoVM>(
+                        ChangeNotifierProvider<UserAwardsVM>(
                           create: (BuildContext context) => UserAwardsVM(),
-                          child: Consumer<BaseProfileInfoVM>(
+                          child: Consumer<UserAwardsVM>(
                             builder: (context, provider, child) {
                               return ProfileSectionWidget(
                                 // wrapChildren: _user.achievementsAwards,

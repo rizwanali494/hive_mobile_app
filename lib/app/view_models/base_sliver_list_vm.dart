@@ -1,23 +1,23 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 
-abstract class BaseProfileInfoVM<T> with ChangeNotifier {
+abstract class BaseSliverListVM<T> with ChangeNotifier {
   final limit = 10;
   int offset = 0;
   UiState uiState = UiState.loading();
-  List<String> items = [];
+  List<T> items = [];
 
-  BaseProfileInfoVM() {
+  BaseSliverListVM() {
     setRepoInstance();
     fetchInitialElements();
   }
 
-  Future<List<String>> getInitialElements();
+  Future<List<T>> getInitialElements();
 
-  Future<List<String>> getNextElements();
+  Future<List<T>> getNextElements();
 
   void setRepoInstance();
 

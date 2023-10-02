@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view_models/base_sliver_list_vm.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
-import 'package:hive_mobile/features/profile/view_models/base_profile_info_vm.dart';
 
-class UserAwardsVM extends BaseProfileInfoVM {
+class UserAwardsVM extends BaseSliverListVM<String> {
   final apiService = GetIt.instance.get<ApiService>();
   late UserProfileRepo userProfileRepo;
 
