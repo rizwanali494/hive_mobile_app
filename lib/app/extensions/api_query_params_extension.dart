@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/constants/api_expand_fields.dart';
 
 extension ApiFieldExpandExtension on String {
@@ -15,6 +17,18 @@ extension ApiFieldExpandExtension on String {
 
   String get withAchievement {
     return _appendExpandField(ApiExpandField.achievement);
+  }
+
+  String withAssessmentId(int id) {
+    return _appendAssessmentField(id, this);
+  }
+
+  String withAssessmentIds(List<int> ids) {
+    var values = this;
+    for (var value in ids) {
+      values = _appendAssessmentField(value, values);
+    }
+    return values;
   }
 
   String get withBanner {
@@ -97,6 +111,16 @@ extension ApiFieldExpandExtension on String {
     return "$this?${ApiExpandField.expandQueryName}=$field";
   }
 
+  String _appendAssessmentField(int field, String value) {
+    if (value.contains(ApiExpandField.assessment_id_in)) {
+      return "$value,$field";
+    }
+    if (this.contains("?")) {
+      return "$value&${ApiExpandField.assessment_id_in}=$field";
+    }
+    return "$value?${ApiExpandField.assessment_id_in}=$field";
+  }
+
   String selectPoll(int id) {
     return "${this}poll/$id/select/";
   }
@@ -116,6 +140,7 @@ extension ApiFieldExpandExtension on String {
   String get withMostRecentOrder {
     return _appendQueryParameter("ordering=-date_added");
   }
+
   String get withLeastRecentOrder {
     return _appendQueryParameter("ordering=date_added");
   }

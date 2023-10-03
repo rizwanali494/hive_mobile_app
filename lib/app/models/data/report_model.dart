@@ -28,7 +28,7 @@ class ReportModel {
   ReportModel.fromJson(dynamic json) {
     systemId = json['system_id'];
     grade = json['grade'];
-    gpa = json['gpa'];
+    gpa = double.tryParse(json['gpa'].toString());
     stdName = json['std_name'];
     branchId = json['branch_id'];
     brName = json['br_name'];
@@ -44,7 +44,7 @@ class ReportModel {
     subjectName = json['subject_name'];
     assessmentId = json['assessment_id'];
     assessmentDesc = json['assessment_desc'];
-    percentage = json['percentage'];
+    percentage = double.tryParse(json['percentage'].toString());
     teacherId = json['teacher_id'];
     serialNo = json['serial_no'];
     attStatus = json['att_status'];
@@ -53,7 +53,7 @@ class ReportModel {
 
   int? systemId;
   String? grade;
-  int? gpa;
+  double? gpa;
   String? stdName;
   int? branchId;
   String? brName;
@@ -69,7 +69,7 @@ class ReportModel {
   String? subjectName;
   int? assessmentId;
   String? assessmentDesc;
-  int? percentage;
+  double? percentage;
   int? teacherId;
   int? serialNo;
   String? attStatus;
@@ -78,7 +78,7 @@ class ReportModel {
   ReportModel copyWith({
     int? systemId,
     String? grade,
-    int? gpa,
+    double? gpa,
     String? stdName,
     int? branchId,
     String? brName,
@@ -94,7 +94,7 @@ class ReportModel {
     String? subjectName,
     int? assessmentId,
     String? assessmentDesc,
-    int? percentage,
+    double? percentage,
     int? teacherId,
     int? serialNo,
     String? attStatus,
@@ -152,5 +152,10 @@ class ReportModel {
     map['att_status'] = attStatus;
     map['entry_date'] = entryDate;
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'ReportModel{systemId: $systemId, grade: $grade, gpa: $gpa, stdName: $stdName, branchId: $branchId, brName: $brName, acadYearId: $acadYearId, acadYearTitle: $acadYearTitle, termId: $termId, termName: $termName, classId: $classId, className: $className, sectionId: $sectionId, sectionName: $sectionName, subjectId: $subjectId, subjectName: $subjectName, assessmentId: $assessmentId, assessmentDesc: $assessmentDesc, percentage: $percentage, teacherId: $teacherId, serialNo: $serialNo, attStatus: $attStatus, entryDate: $entryDate}';
   }
 }

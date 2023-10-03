@@ -48,7 +48,10 @@ class AuthVM extends ChangeNotifier
       // };
       //test email
       var body = {
-        "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
+        "payload": {
+          "email": "zunair.8831@beaconite.edu.pk",
+          "email_verified": true
+        }
       };
       try {
         var response = await apiService.post(
