@@ -7,6 +7,7 @@ import 'package:hive_mobile/features/reports/screens/bar_chart_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
+import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_widget.dart';
 import 'package:hive_mobile/features/reports/screens/term_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
@@ -59,154 +60,191 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     horizontalPadding: 0,
                     title: AppStrings.reports,
                     titleStyle: styles.inter28w700),
+                15.verticalSpace,
+                ReportHeaderWidget(styles: styles),
                 Divider(
                   thickness: 0.2,
                 ),
-                5.verticalSpace,
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ReportHeaderWidget(styles: styles),
-                        10.verticalSpace,
-                        Divider(
-                          thickness: 0.2,
+                10.verticalSpace,
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          provider.selectYear(0);
+                        },
+                        child: YearToggleWidget(
+                          borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(50.r),
+                          ),
+                          isSelected: provider.selectedYear == 0,
+                          text: 'Year 1',
                         ),
-                        10.verticalSpace,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  provider.selectYear(0);
-                                },
-                                child: YearToggleWidget(
-                                  borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(50.r),
-                                  ),
-                                  isSelected: provider.selectedYear == 0,
-                                  text: 'Year 1',
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  provider.selectYear(1);
-                                },
-                                child: YearToggleWidget(
-                                  borderRadius: BorderRadius.horizontal(
-                                    right: Radius.circular(50.r),
-                                  ),
-                                  isSelected: provider.selectedYear == 1,
-                                  text: 'Year 2',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        15.verticalSpace,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  provider.selectTerm(0);
-                                },
-                                child: TermToggleWidget(
-                                  isSelected: provider.selectedTerm == 0,
-                                  text: 'Term 1',
-                                ),
-                              ),
-                            ),
-                            14.horizontalSpace,
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  provider.selectTerm(1);
-                                },
-                                child: TermToggleWidget(
-                                  isSelected: provider.selectedTerm == 1,
-                                  text: 'Term 2',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        16.verticalSpace,
-                        ReportSubjectsTable(),
-                        30.verticalSpace,
-                        Divider(
-                          thickness: 0.5,
-                          color: styles.black.withOpacity(0.5),
-                        ),
-                        33.verticalSpace,
-                        ReportLineChart(),
-                        30.verticalSpace,
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: 5.w,
-                              ),
-                              child: Text(
-                                "CGPA",
-                                style: styles.inter8w400,
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  YearRowWidget(
-                                      context: context,
-                                      color: styles.skyBlue,
-                                      text: "Year 1"),
-                                  52.horizontalSpace,
-                                  YearRowWidget(
-                                      context: context,
-                                      color: styles.darkOrange,
-                                      text: "Year 2"),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        30.verticalSpace,
-                        Divider(
-                          thickness: 0.5,
-                          color: styles.black.withOpacity(0.5),
-                        ),
-                        33.verticalSpace,
-                        ReportTermWidget(
-                            context: context,
-                            data: data,
-                            data2: data2,
-                            styles: styles,
-                            examsCount: 2,
-                            term: 2),
-                        ReportTermWidget(
-                            context: context,
-                            data: data,
-                            data2: data2,
-                            styles: styles,
-                            examsCount: 2,
-                            term: 2),
-                        10.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            barLegendWidget("Accounting", styles.denimBlue),
-                            barLegendWidget("Mathematics", styles.gravel),
-                            barLegendWidget("Economics", styles.yellowGreen),
-                            barLegendWidget("Business", styles.paleOrange),
-                          ],
-                        ),
-                        10.verticalSpace,
-                      ],
+                      ),
                     ),
-                  ),
-                )
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          provider.selectYear(1);
+                        },
+                        child: YearToggleWidget(
+                          borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(50.r),
+                          ),
+                          isSelected: provider.selectedYear == 1,
+                          text: 'Year 2',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                15.verticalSpace,
+                Expanded(child: provider.widgets[provider.selectedYear])
+                // Expanded(
+                //   child: SingleChildScrollView(
+                //     child: Column(
+                //       children: [
+                //         ReportHeaderWidget(styles: styles),
+                //         10.verticalSpace,
+                //         Divider(
+                //           thickness: 0.2,
+                //         ),
+                //         10.verticalSpace,
+                //         Row(
+                //           children: [
+                //             Expanded(
+                //               child: GestureDetector(
+                //                 onTap: () {
+                //                   provider.selectYear(0);
+                //                 },
+                //                 child: YearToggleWidget(
+                //                   borderRadius: BorderRadius.horizontal(
+                //                     left: Radius.circular(50.r),
+                //                   ),
+                //                   isSelected: provider.selectedYear == 0,
+                //                   text: 'Year 1',
+                //                 ),
+                //               ),
+                //             ),
+                //             Expanded(
+                //               child: GestureDetector(
+                //                 onTap: () {
+                //                   provider.selectYear(1);
+                //                 },
+                //                 child: YearToggleWidget(
+                //                   borderRadius: BorderRadius.horizontal(
+                //                     right: Radius.circular(50.r),
+                //                   ),
+                //                   isSelected: provider.selectedYear == 1,
+                //                   text: 'Year 2',
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //         15.verticalSpace,
+                //         Row(
+                //           children: [
+                //             Expanded(
+                //               child: GestureDetector(
+                //                 onTap: () {
+                //                   provider.selectTerm(0);
+                //                 },
+                //                 child: TermToggleWidget(
+                //                   isSelected: provider.selectedTerm == 0,
+                //                   text: 'Term 1',
+                //                 ),
+                //               ),
+                //             ),
+                //             14.horizontalSpace,
+                //             Expanded(
+                //               child: GestureDetector(
+                //                 onTap: () {
+                //                   provider.selectTerm(1);
+                //                 },
+                //                 child: TermToggleWidget(
+                //                   isSelected: provider.selectedTerm == 1,
+                //                   text: 'Term 2',
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //         16.verticalSpace,
+                //         ReportSubjectsTable(),
+                //         30.verticalSpace,
+                //         Divider(
+                //           thickness: 0.5,
+                //           color: styles.black.withOpacity(0.5),
+                //         ),
+                //         33.verticalSpace,
+                //         ReportLineChart(),
+                //         30.verticalSpace,
+                //         Row(
+                //           children: [
+                //             Padding(
+                //               padding: EdgeInsets.only(
+                //                 left: 5.w,
+                //               ),
+                //               child: Text(
+                //                 "CGPA",
+                //                 style: styles.inter8w400,
+                //               ),
+                //             ),
+                //             Expanded(
+                //               child: Row(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: [
+                //                   YearRowWidget(
+                //                       context: context,
+                //                       color: styles.skyBlue,
+                //                       text: "Year 1"),
+                //                   52.horizontalSpace,
+                //                   YearRowWidget(
+                //                       context: context,
+                //                       color: styles.darkOrange,
+                //                       text: "Year 2"),
+                //                 ],
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //         30.verticalSpace,
+                //         Divider(
+                //           thickness: 0.5,
+                //           color: styles.black.withOpacity(0.5),
+                //         ),
+                //         33.verticalSpace,
+                //         ReportTermWidget(
+                //             context: context,
+                //             data: data,
+                //             data2: data2,
+                //             styles: styles,
+                //             examsCount: 2,
+                //             term: 2),
+                //         ReportTermWidget(
+                //             context: context,
+                //             data: data,
+                //             data2: data2,
+                //             styles: styles,
+                //             examsCount: 2,
+                //             term: 2),
+                //         10.verticalSpace,
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.end,
+                //           children: [
+                //             barLegendWidget("Accounting", styles.denimBlue),
+                //             barLegendWidget("Mathematics", styles.gravel),
+                //             barLegendWidget("Economics", styles.yellowGreen),
+                //             barLegendWidget("Business", styles.paleOrange),
+                //           ],
+                //         ),
+                //         10.verticalSpace,
+                //       ],
+                //     ),
+                //   ),
+                // )
               ],
             ),
           );
@@ -248,7 +286,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return styles.paleSkyBlue;
   }
 }
-
 
 class ChartData {
   ChartData(this.x, this.y);

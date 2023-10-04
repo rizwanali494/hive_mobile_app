@@ -11,10 +11,9 @@ class ReportRepository {
 
   ReportRepository({required this.apiService});
 
-  Future<List<ReportModel>> getReport() async {
-    var url = ApiEndpoints.assessments
-        .withAssessmentIds([1, 3, 5, 19, 9, 11, 13, 15]);
-    log("message: $url");
+  Future<List<ReportModel>> getReports({required List<int> ids}) async {
+    // var url = ApiEndpoints.assessments.withAssessmentIds([1, 3, 5, 19, 9, 11, 13, 15]);
+    var url = ApiEndpoints.assessments.withAssessmentIds(ids);
     var response = await apiService.get(url: url);
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
