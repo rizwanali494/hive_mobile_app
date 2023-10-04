@@ -7,6 +7,8 @@ import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
 import 'package:hive_mobile/features/reports/screens/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/report_year2_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
 import 'package:provider/provider.dart';
