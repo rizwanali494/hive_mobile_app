@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/view/util/debouncer_class.dart';
-import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 
 class InboxSearchVM extends InboxScreenVM {

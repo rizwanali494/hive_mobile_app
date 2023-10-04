@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
-import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';

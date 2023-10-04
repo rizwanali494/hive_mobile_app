@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -12,15 +11,10 @@ import 'package:hive_mobile/features/inbox/screens/inbox_search_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_list_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
-import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
-import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
-import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 
-import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({Key? key}) : super(key: key);

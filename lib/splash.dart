@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
-import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {

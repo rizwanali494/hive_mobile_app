@@ -1,23 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
-import 'package:hive_mobile/features/reports/screens/bar_chart_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
-import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
-import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
-import 'package:hive_mobile/features/reports/screens/report_term_widget.dart';
-import 'package:hive_mobile/features/reports/screens/term_toggle_widget.dart';
-import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
-import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class ReportsScreen extends StatefulWidget {
@@ -69,7 +60,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   thickness: 0.2,
                 ),
                 10.verticalSpace,
-
                 Row(
                   children: [
                     Expanded(
@@ -109,34 +99,20 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       ChangeNotifierProvider(
                         key: Key("1"),
                         lazy: false,
-                        create: (context) => ReportWidgetVM(
-                          reportIdModel: ReportIdModel(
-                              midTermId: 1,
-                              mockTermId: 3,
-                              midYearId: 5,
-                              mockExam: 19),
-                        ),
+                        create: (context) => ReportYear1VM(),
                       ),
                       ChangeNotifierProvider(
                         key: Key("2"),
                         lazy: false,
-                        create: (context) => ReportYear2VM(
-                          reportIdModel: ReportIdModel(
-                            midTermId: 9,
-                            mockTermId: 13,
-                            midYearId: 11,
-                            mockExam: 15,
-                          ),
-                        ),
+                        create: (context) => ReportYear2VM(),
                       ),
                     ],
                     child: PageView(
                       physics: NeverScrollableScrollPhysics(),
                       controller: provider.pageController,
                       children: [
-                        Consumer<ReportWidgetVM>(
+                        Consumer<ReportYear1VM>(
                           builder: (context, provider, child) {
-                            log("message : ${provider.reportIdModel.allIds}");
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,
@@ -146,7 +122,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         ),
                         Consumer<ReportYear2VM>(
                           builder: (context, provider, child) {
-                            log("message : ${provider.reportIdModel.allIds}");
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,

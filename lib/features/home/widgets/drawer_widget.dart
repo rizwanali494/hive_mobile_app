@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/get_it/api_service_instance.dart';
 import 'package:hive_mobile/app/navigation/extensions.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
@@ -159,6 +160,7 @@ class DrawerWidget extends StatelessWidget {
                       final sharedPref = SharedPrefService();
                       sharedPref.sharedPref.remove("token");
                       context.pushAndRemoveUntil(SignInScreen.route);
+                      registerApiServiceInstance();
                     },
                     child: Row(
                       children: [

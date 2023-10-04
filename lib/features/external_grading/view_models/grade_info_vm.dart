@@ -53,9 +53,20 @@ class GradeDetailVM extends ChangeNotifier {
 
   void updateVM(SubjectVM updateVM) {
     int indexOf = subjectsVM.indexOf(updateVM);
-    log("index of $indexOf ${updateVM.id}");
+    log("index ofaaa $indexOf ${updateVM.id}");
     if (indexOf > -1) {
       subjectsVM[indexOf] = updateVM;
+      notifyListeners();
+      try {
+        externalGradeRepo.updateSubject(id: updateVM.id ?? 0, map: {
+          "name": updateVM.name,
+          "grade": updateVM.grade,
+        }).then((value) {
+          log("updated  ");
+        });
+      } on Exception catch (e) {
+        log("message ${e.toString()}");
+      }
       notifyListeners();
     }
   }

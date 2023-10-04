@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import "package:collection/collection.dart";
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/report_model.dart';
@@ -7,7 +7,7 @@ import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
 
-class ReportWidgetVM extends ChangeNotifier {
+abstract class ReportWidgetVM extends ChangeNotifier {
   final ReportIdModel reportIdModel;
 
   final apiService = GetIt.instance.get<ApiService>();
@@ -32,6 +32,12 @@ class ReportWidgetVM extends ChangeNotifier {
       uiState = UiState.error();
     }
     uiState = UiState.loaded();
+    Map<int?, List<ReportModel>> map =
+        groupBy(reports, (item) => item.subjectId);
+    log('grouping data ===');
+    map.forEach((key, value) {
+      log("value: $key ${value.length}");
+    });
     notifyListeners();
   }
 
@@ -50,7 +56,21 @@ class ReportWidgetVM extends ChangeNotifier {
 }
 
 class ReportYear2VM extends ReportWidgetVM {
-  ReportYear2VM({required super.reportIdModel});
+  ReportYear2VM()
+      : super(
+            reportIdModel: ReportIdModel(
+          midTermId: 9,
+          mockTermId: 13,
+          midYearId: 11,
+          mockExam: 15,
+        ));
+}
+
+class ReportYear1VM extends ReportWidgetVM {
+  ReportYear1VM()
+      : super(
+            reportIdModel: ReportIdModel(
+                midTermId: 1, mockTermId: 3, midYearId: 5, mockExam: 19));
 }
 
 class ReportIdModel {
