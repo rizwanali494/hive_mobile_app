@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -12,7 +14,9 @@ import 'package:hive_mobile/features/reports/screens/report_term_widget.dart';
 import 'package:hive_mobile/features/reports/screens/term_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_toggle_widget.dart';
+import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +33,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     data = [
       ChartData('CHN', 5.5),
       ChartData('GER', 2.5),
@@ -100,7 +103,61 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   ],
                 ),
                 15.verticalSpace,
-                Expanded(child: provider.widgets[provider.selectedYear])
+                Expanded(
+                  child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        key: Key("1"),
+                        lazy: false,
+                        create: (context) => ReportWidgetVM(
+                          reportIdModel: ReportIdModel(
+                              midTermId: 1,
+                              mockTermId: 3,
+                              midYearId: 5,
+                              mockExam: 19),
+                        ),
+                      ),
+                      ChangeNotifierProvider(
+                        key: Key("2"),
+                        lazy: false,
+                        create: (context) => ReportYear2VM(
+                          reportIdModel: ReportIdModel(
+                            midTermId: 9,
+                            mockTermId: 13,
+                            midYearId: 11,
+                            mockExam: 15,
+                          ),
+                        ),
+                      ),
+                    ],
+                    child: PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: provider.pageController,
+                      children: [
+                        Consumer<ReportWidgetVM>(
+                          builder: (context, provider, child) {
+                            log("message : ${provider.reportIdModel.allIds}");
+                            return ReportTermScreen(
+                              provider: TermDetailsVM(
+                                  selectedTerm: provider.selectedTerm,
+                                  selectTerm: provider.setSelectedTerm),
+                            );
+                          },
+                        ),
+                        Consumer<ReportYear2VM>(
+                          builder: (context, provider, child) {
+                            log("message : ${provider.reportIdModel.allIds}");
+                            return ReportTermScreen(
+                              provider: TermDetailsVM(
+                                  selectedTerm: provider.selectedTerm,
+                                  selectTerm: provider.setSelectedTerm),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                )
                 // Expanded(
                 //   child: SingleChildScrollView(
                 //     child: Column(

@@ -26,16 +26,16 @@ class ReportWidgetVM extends ChangeNotifier {
   Future<void> getReports() async {
     try {
       final list = await reportRepository.getReports(ids: reportIdModel.allIds);
+      log("reportttt list::  length ${list.length}");
       reports = list;
     } catch (e) {
       uiState = UiState.error();
     }
     uiState = UiState.loaded();
-    log("reports length ::::: ${reports.length}");
     notifyListeners();
   }
 
-  int selectedTerm = 1;
+  int selectedTerm = 0;
 
   void setSelectedTerm(int index) {
     selectedTerm = index;
@@ -47,6 +47,10 @@ class ReportWidgetVM extends ChangeNotifier {
         (selectedTerm == 1 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
     return reports.where((element) => ids.contains(element)).toList();
   }
+}
+
+class ReportYear2VM extends ReportWidgetVM {
+  ReportYear2VM({required super.reportIdModel});
 }
 
 class ReportIdModel {
