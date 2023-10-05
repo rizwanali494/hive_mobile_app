@@ -11,7 +11,7 @@ import 'package:hive_mobile/features/reports/view_models/report_table_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
 
-class ReportTermScreen<T extends ReportWidgetVM> extends StatefulWidget {
+class ReportTermScreen extends StatefulWidget {
   final TermDetailsVM provider;
 
   const ReportTermScreen({super.key, required this.provider});

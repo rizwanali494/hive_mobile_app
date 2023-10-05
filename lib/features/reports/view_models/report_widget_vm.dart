@@ -41,6 +41,13 @@ abstract class ReportWidgetVM extends ChangeNotifier {
 
   int selectedTerm = 0;
 
+  List<AssessmentInfoVM> get termAssessments {
+    if (selectedTerm == 0) {
+      return _term1Assessments;
+    }
+    return _term2Assessments;
+  }
+
   void setSelectedTerm(int index) {
     selectedTerm = index;
     notifyListeners();
@@ -52,9 +59,9 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     return reports.where((element) => ids.contains(element)).toList();
   }
 
-  List<AssessmentInfoVM> term1Assessment = [];
+  List<AssessmentInfoVM> _term1Assessments = [];
 
-  List<AssessmentInfoVM> term2Assessment = [];
+  List<AssessmentInfoVM> _term2Assessments = [];
 
   sortItems() {
     log("ids : ${reportIdModel.term1Ids}");
@@ -89,9 +96,9 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       }
       AssessmentInfoVM assessmentInfoVM =
           AssessmentInfoVM(id: id, assessment1: model1, assessment2: model2);
-      term1Assessment.add(assessmentInfoVM);
+      _term1Assessments.add(assessmentInfoVM);
     });
-    for (var value1 in term1Assessment) {
+    for (var value1 in _term1Assessments) {
       log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
     }
     log("sorted term 1");
@@ -123,9 +130,9 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       }
       AssessmentInfoVM assessmentInfoVM =
           AssessmentInfoVM(id: id, assessment1: model1, assessment2: model2);
-      term1Assessment.add(assessmentInfoVM);
+      _term1Assessments.add(assessmentInfoVM);
     });
-    for (var value1 in term1Assessment) {
+    for (var value1 in _term1Assessments) {
       log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
     }
     log("sorted term 2");

@@ -244,7 +244,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     decoration: BoxDecoration(color: styles.alabaster),
                     child: Center(
                       child: Text(
-                        "2.6",
+                        controller.assessment1AvgGPA,
                         style: styles.inter12w600,
                       ),
                     ),
@@ -268,7 +268,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     decoration: BoxDecoration(color: styles.alabaster),
                     child: Center(
                       child: Text(
-                        "2.6",
+                        controller.assessment2AvgGPA,
                         style: styles.inter12w600,
                       ),
                     ),
@@ -280,7 +280,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     decoration: BoxDecoration(color: styles.alabaster),
                     child: Center(
                       child: Text(
-                        "2.6",
+                        controller.assessment2AvgGPA,
                         style: styles.inter12w600,
                       ),
                     ),
