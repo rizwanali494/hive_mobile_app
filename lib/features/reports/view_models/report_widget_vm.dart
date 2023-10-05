@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/models/data/report_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
+import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_id_model.dart';
 
 abstract class ReportWidgetVM extends ChangeNotifier {
@@ -29,8 +30,9 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       final list = await reportRepository.getReports(ids: reportIdModel.allIds);
       log("reportttt list::  length ${list.length}");
       reports = list;
-      sortTerm1Items();
+      sortItems();
     } catch (e) {
+      log("message ${e.toString()}");
       uiState = UiState.error();
     }
     uiState = UiState.loaded();
@@ -38,8 +40,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
   }
 
   int selectedTerm = 0;
-
-  void sortTerm1Items();
 
   void setSelectedTerm(int index) {
     selectedTerm = index;
@@ -51,7 +51,83 @@ abstract class ReportWidgetVM extends ChangeNotifier {
         (selectedTerm == 1 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
     return reports.where((element) => ids.contains(element)).toList();
   }
+
+  List<AssessmentInfoVM> term1Assessment = [];
+
+  List<AssessmentInfoVM> term2Assessment = [];
+
+  sortItems() {
+    log("ids : ${reportIdModel.term1Ids}");
+    log("ids : ${reportIdModel.term2Ids}");
+    sortTerm1Items();
+    sortTerm2Items();
+  }
+
+  void sortTerm1Items() {
+    var term1Reports = reports
+        .where(
+            (element) => reportIdModel.term1Ids.contains(element.assessmentId))
+        .toList();
+    Map<int?, List<ReportModel>> groupedElements =
+        groupBy(term1Reports, (item) => item.subjectId);
+    term1Reports.forEach((element) {
+      log("message 11 : ${element.subjectId}");
+    });
+    groupedElements.forEach((key, value) {
+      var id = key ?? 0;
+      log("message :::: $id");
+      ReportModel model1 = ReportModel();
+      ReportModel model2 = ReportModel();
+      for (var element in value) {
+        if (element.assessmentId == reportIdModel.midTermAssessmentId) {
+          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midTermAssessmentId}");
+          model1 = element;
+        } else if (element.assessmentId == reportIdModel.midYearId) {
+          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midYearId}");
+          model2 = element;
+        }
+      }
+      AssessmentInfoVM assessmentInfoVM =
+          AssessmentInfoVM(id: id, assessment1: model1, assessment2: model2);
+      term1Assessment.add(assessmentInfoVM);
+    });
+    for (var value1 in term1Assessment) {
+      log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
+    }
+    log("sorted term 1");
+  }
+
+  void sortTerm2Items() {
+    var term1Reports = reports
+        .where(
+            (element) => reportIdModel.term2Ids.contains(element.assessmentId))
+        .toList();
+    Map<int?, List<ReportModel>> groupedElements =
+        groupBy(term1Reports, (item) => item.subjectId);
+    term1Reports.forEach((element) {
+      log("message 11 : ${element.subjectId}");
+    });
+    groupedElements.forEach((key, value) {
+      var id = key ?? 0;
+      log("message :::: $id");
+      ReportModel model1 = ReportModel();
+      ReportModel model2 = ReportModel();
+      for (var element in value) {
+        if (element.assessmentId == reportIdModel.mockTermAssessmentId) {
+          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midTermAssessmentId}");
+          model1 = element;
+        } else if (element.assessmentId == reportIdModel.mockExam) {
+          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midYearId}");
+          model2 = element;
+        }
+      }
+      AssessmentInfoVM assessmentInfoVM =
+          AssessmentInfoVM(id: id, assessment1: model1, assessment2: model2);
+      term1Assessment.add(assessmentInfoVM);
+    });
+    for (var value1 in term1Assessment) {
+      log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
+    }
+    log("sorted term 2");
+  }
 }
-
-
-

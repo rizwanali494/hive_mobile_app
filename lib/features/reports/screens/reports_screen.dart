@@ -100,12 +100,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     providers: [
                       ChangeNotifierProvider(
                         key: Key("1"),
-                        lazy: false,
                         create: (context) => ReportYear1VM(),
                       ),
                       ChangeNotifierProvider(
                         key: Key("2"),
-                        lazy: false,
                         create: (context) => ReportYear2VM(),
                       ),
                     ],
@@ -118,7 +116,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,
-                                  selectTerm: provider.setSelectedTerm),
+                                  selectTerm: provider.setSelectedTerm,
+                                  assessments: provider.term1Assessment),
                             );
                           },
                         ),
@@ -127,7 +126,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,
-                                  selectTerm: provider.setSelectedTerm),
+                                  selectTerm: provider.setSelectedTerm,
+                                  assessments: provider.term2Assessment),
                             );
                           },
                         ),

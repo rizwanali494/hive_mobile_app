@@ -20,6 +20,7 @@ class ReportModel {
     this.assessmentDesc,
     this.percentage,
     this.teacherId,
+    this.teacherName,
     this.serialNo,
     this.attStatus,
     this.entryDate,
@@ -28,7 +29,7 @@ class ReportModel {
   ReportModel.fromJson(dynamic json) {
     systemId = json['system_id'];
     grade = json['grade'];
-    gpa = double.tryParse(json['gpa'].toString());
+    gpa = json['gpa'].toDouble();
     stdName = json['std_name'];
     branchId = json['branch_id'];
     brName = json['br_name'];
@@ -44,8 +45,9 @@ class ReportModel {
     subjectName = json['subject_name'];
     assessmentId = json['assessment_id'];
     assessmentDesc = json['assessment_desc'];
-    percentage = double.tryParse(json['percentage'].toString());
+    percentage = json['percentage'].toDouble();
     teacherId = json['teacher_id'];
+    teacherName = json['teacher_name'];
     serialNo = json['serial_no'];
     attStatus = json['att_status'];
     entryDate = json['entry_date'];
@@ -71,6 +73,7 @@ class ReportModel {
   String? assessmentDesc;
   double? percentage;
   int? teacherId;
+  String? teacherName;
   int? serialNo;
   String? attStatus;
   String? entryDate;
@@ -96,6 +99,7 @@ class ReportModel {
     String? assessmentDesc,
     double? percentage,
     int? teacherId,
+    String? teacherName,
     int? serialNo,
     String? attStatus,
     String? entryDate,
@@ -121,6 +125,7 @@ class ReportModel {
         assessmentDesc: assessmentDesc ?? this.assessmentDesc,
         percentage: percentage ?? this.percentage,
         teacherId: teacherId ?? this.teacherId,
+        teacherName: teacherName ?? this.teacherName,
         serialNo: serialNo ?? this.serialNo,
         attStatus: attStatus ?? this.attStatus,
         entryDate: entryDate ?? this.entryDate,
@@ -148,14 +153,10 @@ class ReportModel {
     map['assessment_desc'] = assessmentDesc;
     map['percentage'] = percentage;
     map['teacher_id'] = teacherId;
+    map['teacher_name'] = teacherName;
     map['serial_no'] = serialNo;
     map['att_status'] = attStatus;
     map['entry_date'] = entryDate;
     return map;
-  }
-
-  @override
-  String toString() {
-    return 'ReportModel{systemId: $systemId, grade: $grade, gpa: $gpa, stdName: $stdName, branchId: $branchId, brName: $brName, acadYearId: $acadYearId, acadYearTitle: $acadYearTitle, termId: $termId, termName: $termName, classId: $classId, className: $className, sectionId: $sectionId, sectionName: $sectionName, subjectId: $subjectId, subjectName: $subjectName, assessmentId: $assessmentId, assessmentDesc: $assessmentDesc, percentage: $percentage, teacherId: $teacherId, serialNo: $serialNo, attStatus: $attStatus, entryDate: $entryDate}';
   }
 }

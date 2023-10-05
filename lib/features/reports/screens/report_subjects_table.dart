@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/reports/view_models/report_table_vm.dart';
 
 class ReportSubjectsTable extends StatefulWidget {
-  const ReportSubjectsTable({super.key});
+  final ReportTableVM reportTableVM;
+
+  const ReportSubjectsTable({super.key, required this.reportTableVM});
 
   @override
   State<ReportSubjectsTable> createState() => _ReportSubjectsTableState();
@@ -13,6 +16,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+    final controller = widget.reportTableVM;
 
     return Column(
       children: [
@@ -124,7 +128,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
             );
           },
         ),
-        for (int index = 0; index < subjectText.length; index++)
+        for (int index = 0; index < controller.termDetails.length; index++)
           LayoutBuilder(
             builder: (context, boxConstraints) {
               final con = boxConstraints;
@@ -147,12 +151,16 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                subjectText[index],
+                                controller.termDetails[index].assessment2
+                                        ?.teacherName ??
+                                    "",
                                 style: styles.inter12w600,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                teachers[index],
+                                controller.termDetails[index].assessment2
+                                        ?.subjectName ??
+                                    "",
                                 style: styles.inter12w400,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -180,11 +188,24 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            for (int i = 0; i < 2; i++) ...[
-                              headingWidget("89", getColor(index)),
-                              headingWidget("A+", getColor(index)),
-                              headingWidget("5", getColor(index)),
-                            ],
+                            headingWidget(
+                                "${controller.termDetails[index].assessment1?.percentage}",
+                                getColor(index)),
+                            headingWidget(
+                                "${controller.termDetails[index].assessment1?.grade}",
+                                getColor(index)),
+                            headingWidget(
+                                "${controller.termDetails[index].assessment1?.gpa}",
+                                getColor(index)),
+                            headingWidget(
+                                "${(controller.termDetails[index].assessment2?.percentage ?? "-")}",
+                                getColor(index)),
+                            headingWidget(
+                                "${controller.termDetails[index].assessment2?.grade ?? "-"}",
+                                getColor(index)),
+                            headingWidget(
+                                "${controller.termDetails[index].assessment2?.gpa ?? "-"}",
+                                getColor(index)),
                           ],
                         ),
                       ),
