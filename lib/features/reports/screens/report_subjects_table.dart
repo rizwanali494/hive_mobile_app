@@ -219,7 +219,8 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                         ),
                         child: Center(
                           child: Text(
-                            "5.0",
+                            controller.termDetails[index].cgpa
+                                .toStringAsPrecision(3),
                             style: styles.inter12w400,
                           ),
                         ),
@@ -280,7 +281,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     decoration: BoxDecoration(color: styles.alabaster),
                     child: Center(
                       child: Text(
-                        controller.assessment2AvgGPA,
+                        controller.assessmentsAvgCGPA,
                         style: styles.inter12w600,
                       ),
                     ),

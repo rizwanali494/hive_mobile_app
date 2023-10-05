@@ -36,4 +36,17 @@ class ReportTableVM {
     }
     return (gpa / assessmentCount).toStringAsPrecision(3);
   }
+
+  String get assessmentsAvgCGPA {
+    double gpa = 0.0;
+    int assessmentCount = 0;
+    for (var value in termDetails) {
+      gpa += value.cgpa;
+      assessmentCount++;
+    }
+    if (assessmentCount < 1) {
+      return "0";
+    }
+    return (gpa / assessmentCount).toStringAsPrecision(3);
+  }
 }

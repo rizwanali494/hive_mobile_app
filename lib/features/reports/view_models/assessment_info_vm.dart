@@ -11,6 +11,14 @@ class AssessmentInfoVM {
     this.assessment2,
   });
 
+  double get cgpa {
+    var gpaSum = (assessment1?.gpa ?? 0) + (assessment2?.gpa ?? 0);
+    if (gpaSum < 1) {
+      return 0;
+    }
+    return (gpaSum / 2);
+  }
+
   @override
   String toString() {
     return 'AssessmentInfoVM{id: $id, assessment1: $assessment1, assessment2: $assessment2}';
