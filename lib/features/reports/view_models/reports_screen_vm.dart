@@ -8,7 +8,6 @@ class ReportsScreenVM extends ChangeNotifier {
   int selectedYear = 0;
   int selectedTerm = -1;
 
-
   ReportsScreenVM() {
     getValues();
   }

@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
 import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_id_model.dart';
+import 'package:hive_mobile/features/reports/view_models/summary_model.dart';
 
 abstract class ReportWidgetVM extends ChangeNotifier {
   final ReportIdModel reportIdModel;
@@ -30,6 +31,12 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       final list = await reportRepository.getReports(ids: reportIdModel.allIds);
       log("reportttt list::  length ${list.length}");
       reports = list;
+      var models = await Future.wait([
+        getTermSummary(reportIdModel.term1Ids),
+        getTermSummary(reportIdModel.term2Ids),
+      ]);
+      term1Summary = models.firstOrNull;
+      term2Summary = models.elementAtOrNull(1);
       sortItems();
     } catch (e) {
       log("message ${e.toString()}");
@@ -136,5 +143,13 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
     }
     log("sorted term 2");
+  }
+
+  ReportSummaryModel? term1Summary;
+  ReportSummaryModel? term2Summary;
+
+  Future<ReportSummaryModel> getTermSummary(List<int> ids) async {
+    final model = await reportRepository.getSummary(ids: ids);
+    return model;
   }
 }

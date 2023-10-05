@@ -21,7 +21,9 @@ class ApiEndpoints {
   static String hobby = "${studentUser}hobby/bulk_create/";
   static String event = "${apiUrl}event/";
   static String activity = "${event}activity/";
-  static String assessments = "${user}reports/assessments/";
+  static String report = "${user}reports/";
+  static String assessments = "${report}assessments/";
+  static String summary = "${report}summary/";
   static String universityApplication =
       "${administrative}university_application/";
   static String universities =
