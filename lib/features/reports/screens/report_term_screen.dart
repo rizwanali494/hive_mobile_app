@@ -25,107 +25,113 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
     final provider = widget.provider;
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    provider.selectTerm(0);
-                  },
-                  child: TermToggleWidget(
-                    isSelected: provider.selectedTerm == 0,
-                    text: 'Term 1',
-                  ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  provider.selectTerm(0);
+                },
+                child: TermToggleWidget(
+                  isSelected: provider.selectedTerm == 0,
+                  text: 'Term 1',
                 ),
               ),
-              14.horizontalSpace,
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    provider.selectTerm(1);
-                  },
-                  child: TermToggleWidget(
-                    isSelected: provider.selectedTerm == 1,
-                    text: 'Term 2',
-                  ),
-                ),
-              ),
-            ],
-          ),
-          16.verticalSpace,
-          ReportSubjectsTable(
-            reportTableVM: ReportTableVM(
-              termDetails: provider.assessments,
-              model: provider.assessmentSummary,
             ),
-          ),
-          ReportLineChart(),
-          30.verticalSpace,
-          Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 5.w,
-                ),
-                child: Text(
-                  "CGPA",
-                  style: styles.inter8w400,
+            14.horizontalSpace,
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  provider.selectTerm(1);
+                },
+                child: TermToggleWidget(
+                  isSelected: provider.selectedTerm == 1,
+                  text: 'Term 2',
                 ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            ),
+          ],
+        ),
+        16.verticalSpace,
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ReportSubjectsTable(
+                  reportTableVM: ReportTableVM(
+                    termDetails: provider.assessments,
+                    model: provider.assessmentSummary,
+                  ),
+                ),
+                ReportLineChart(),
+                30.verticalSpace,
+                Row(
                   children: [
-                    YearRowWidget(
-                        context: context,
-                        color: styles.skyBlue,
-                        text: "Year 1"),
-                    52.horizontalSpace,
-                    YearRowWidget(
-                        context: context,
-                        color: styles.darkOrange,
-                        text: "Year 2"),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 5.w,
+                      ),
+                      child: Text(
+                        "CGPA",
+                        style: styles.inter8w400,
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          YearRowWidget(
+                              context: context,
+                              color: styles.skyBlue,
+                              text: "Year 1"),
+                          52.horizontalSpace,
+                          YearRowWidget(
+                              context: context,
+                              color: styles.darkOrange,
+                              text: "Year 2"),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
+                30.verticalSpace,
+                Divider(
+                  thickness: 0.5,
+                  color: styles.black.withOpacity(0.5),
+                ),
+                33.verticalSpace,
+                ReportTermWidget(
+                    context: context,
+                    data: [],
+                    data2: [],
+                    styles: styles,
+                    examsCount: 2,
+                    term: 2),
+                ReportTermWidget(
+                    context: context,
+                    data: [],
+                    data2: [],
+                    styles: styles,
+                    examsCount: 2,
+                    term: 2),
+                10.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    barLegendWidget("Accounting", styles.denimBlue),
+                    barLegendWidget("Mathematics", styles.gravel),
+                    barLegendWidget("Economics", styles.yellowGreen),
+                    barLegendWidget("Business", styles.paleOrange),
+                  ],
+                ),
+                10.verticalSpace,
+              ],
+            ),
           ),
-          30.verticalSpace,
-          Divider(
-            thickness: 0.5,
-            color: styles.black.withOpacity(0.5),
-          ),
-          33.verticalSpace,
-          ReportTermWidget(
-              context: context,
-              data: [],
-              data2: [],
-              styles: styles,
-              examsCount: 2,
-              term: 2),
-          ReportTermWidget(
-              context: context,
-              data: [],
-              data2: [],
-              styles: styles,
-              examsCount: 2,
-              term: 2),
-          10.verticalSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              barLegendWidget("Accounting", styles.denimBlue),
-              barLegendWidget("Mathematics", styles.gravel),
-              barLegendWidget("Economics", styles.yellowGreen),
-              barLegendWidget("Business", styles.paleOrange),
-            ],
-          ),
-          10.verticalSpace,
-        ],
-      ),
+        ),
+      ],
     );
   }
 

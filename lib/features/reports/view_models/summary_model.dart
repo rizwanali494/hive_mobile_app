@@ -21,4 +21,9 @@ class ReportSummaryModel {
       bottomGPA: map['min_gpa'] ?? 0.0,
     );
   }
+
+  @override
+  String toString() {
+    return 'ReportSummaryModel{meanGPA: $meanGPA, topGPA: $topGPA, bottomGPA: $bottomGPA}';
+  }
 }

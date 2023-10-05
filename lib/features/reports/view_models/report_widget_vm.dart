@@ -37,6 +37,8 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       ]);
       term1Summary = models.firstOrNull;
       term2Summary = models.elementAtOrNull(1);
+      log("term1Summary :${term1Summary}");
+      log("term2Summary :${term2Summary}");
       sortItems();
     } catch (e) {
       log("message ${e.toString()}");
@@ -61,22 +63,20 @@ abstract class ReportWidgetVM extends ChangeNotifier {
   }
 
   ReportSummaryModel? get summaryByTerm {
-    return selectedTerm == 1 ? term1Summary : term2Summary;
+    return selectedTerm == 0 ? term1Summary : term2Summary;
   }
 
-  List<ReportModel> get reportByTerms {
-    final ids =
-        (selectedTerm == 1 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
-    return reports.where((element) => ids.contains(element)).toList();
-  }
+  // List<ReportModel> get reportByTerms {
+  //   final ids =
+  //       (selectedTerm == 0 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
+  //   return reports.where((element) => ids.contains(element)).toList();
+  // }
 
   List<AssessmentInfoVM> _term1Assessments = [];
 
   List<AssessmentInfoVM> _term2Assessments = [];
 
   sortItems() {
-    log("ids : ${reportIdModel.term1Ids}");
-    log("ids : ${reportIdModel.term2Ids}");
     sortTerm1Items();
     sortTerm2Items();
   }
@@ -89,7 +89,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     Map<int?, List<ReportModel>> groupedElements =
         groupBy(term1Reports, (item) => item.subjectId);
     term1Reports.forEach((element) {
-      log("message 11 : ${element.subjectId}");
     });
     groupedElements.forEach((key, value) {
       var id = key ?? 0;
@@ -98,10 +97,8 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       ReportModel model2 = ReportModel();
       for (var element in value) {
         if (element.assessmentId == reportIdModel.midTermAssessmentId) {
-          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midTermAssessmentId}");
           model1 = element;
         } else if (element.assessmentId == reportIdModel.midYearId) {
-          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midYearId}");
           model2 = element;
         }
       }
@@ -109,10 +106,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
           AssessmentInfoVM(id: id, assessment1: model1, assessment2: model2);
       _term1Assessments.add(assessmentInfoVM);
     });
-    for (var value1 in _term1Assessments) {
-      log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
-    }
-    log("sorted term 1");
   }
 
   void sortTerm2Items() {
@@ -127,15 +120,12 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     });
     groupedElements.forEach((key, value) {
       var id = key ?? 0;
-      log("message :::: $id");
       ReportModel model1 = ReportModel();
       ReportModel model2 = ReportModel();
       for (var element in value) {
         if (element.assessmentId == reportIdModel.mockTermAssessmentId) {
-          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midTermAssessmentId}");
           model1 = element;
         } else if (element.assessmentId == reportIdModel.mockExam) {
-          log("message :::: assessmentId ${element.assessmentId} midyear ${reportIdModel.midYearId}");
           model2 = element;
         }
       }
@@ -143,10 +133,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
           AssessmentInfoVM(id: id, assessment1: model1, assessment2: model2);
       _term1Assessments.add(assessmentInfoVM);
     });
-    for (var value1 in _term1Assessments) {
-      log("term1 ${value1.id} ${value1.assessment1?.assessmentId} ${value1.assessment2?.assessmentId} ");
-    }
-    log("sorted term 2");
   }
 
   ReportSummaryModel? term1Summary;
