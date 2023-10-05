@@ -302,12 +302,14 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
               ),
             ),
             1.horizontalSpace,
-            summaryWidget("Mean GPA :2.4", color: styles.paleSkyBlue, flex: 2),
+            summaryWidget("Mean GPA :${controller.meanGPA}",
+                color: styles.paleSkyBlue, flex: 2),
             1.horizontalSpace,
-            summaryWidget("Top GPA :5", color: styles.paleWhite),
+            summaryWidget("Top GPA :${controller.topGPA}",
+                color: styles.paleWhite),
             1.horizontalSpace,
             summaryWidget(
-              "Bottom GPA :-1.9",
+              "Bottom GPA :${controller.bottomGPA}",
               color: styles.peachYellow,
               flex: 2,
               borderRadius: BorderRadius.horizontal(

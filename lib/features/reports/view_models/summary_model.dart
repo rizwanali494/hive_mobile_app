@@ -16,9 +16,9 @@ class ReportSummaryModel {
 
   factory ReportSummaryModel.fromMap(Map<String, dynamic> map) {
     return ReportSummaryModel(
-      meanGPA: map['avg_gpa'] as double,
-      topGPA: map['max_gpa'] as double,
-      bottomGPA: map['min_gpa'] as double,
+      meanGPA: map['avg_gpa'] ?? 0.0,
+      topGPA: map['max_gpa'] ?? 0.0,
+      bottomGPA: map['min_gpa'] ?? 0.0,
     );
   }
 }

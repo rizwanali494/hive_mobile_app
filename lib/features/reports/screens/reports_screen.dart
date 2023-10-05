@@ -116,6 +116,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,
+                                  assessmentSummary: provider.summaryByTerm,
                                   selectTerm: provider.setSelectedTerm,
                                   assessments: provider.termAssessments),
                             );
@@ -126,6 +127,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,
+                                  assessmentSummary: provider.summaryByTerm,
                                   selectTerm: provider.setSelectedTerm,
                                   assessments: provider.termAssessments),
                             );

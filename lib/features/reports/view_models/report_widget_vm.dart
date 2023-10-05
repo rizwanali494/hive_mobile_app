@@ -60,6 +60,10 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  ReportSummaryModel? get summaryByTerm {
+    return selectedTerm == 1 ? term1Summary : term2Summary;
+  }
+
   List<ReportModel> get reportByTerms {
     final ids =
         (selectedTerm == 1 ? reportIdModel.term1Ids : reportIdModel.term2Ids);

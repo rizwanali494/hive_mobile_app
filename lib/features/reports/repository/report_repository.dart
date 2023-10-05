@@ -25,7 +25,9 @@ class ReportRepository {
   Future<ReportSummaryModel> getSummary({required List<int> ids}) async {
     var url = ApiEndpoints.summary.withAssessmentIds(ids);
     var response = await apiService.get(url: url);
+    log("ids : ${ids}");
     var result = jsonDecode(response.body);
+    log("body : ${result}");
     final model = ReportSummaryModel.fromMap(result);
     return model;
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
@@ -58,7 +57,11 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
           ),
           16.verticalSpace,
           ReportSubjectsTable(
-              reportTableVM: ReportTableVM(termDetails: provider.assessments)),
+            reportTableVM: ReportTableVM(
+              termDetails: provider.assessments,
+              model: provider.assessmentSummary,
+            ),
+          ),
           ReportLineChart(),
           30.verticalSpace,
           Row(
