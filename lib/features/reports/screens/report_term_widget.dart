@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/reports/screens/bar_chart_widget.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
-import 'package:hive_mobile/features/reports/screens/term_divider_widget.dart';
+import 'package:hive_mobile/features/reports/widgets/term_divider_widget.dart';
 
 class ReportTermWidget extends StatelessWidget {
   const ReportTermWidget({

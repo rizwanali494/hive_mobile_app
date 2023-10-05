@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/reports/screens/report_text_column.dart';
+import 'package:hive_mobile/features/reports/view_models/report_text_column.dart';
 
 class ReportHeaderWidget extends StatelessWidget {
   const ReportHeaderWidget({

@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
-import 'package:hive_mobile/features/reports/screens/year_toggle_widget.dart';
+import 'package:hive_mobile/features/reports/widgets/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year2_vm.dart';
