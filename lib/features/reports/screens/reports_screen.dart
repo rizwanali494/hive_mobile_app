@@ -118,7 +118,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   selectedTerm: provider.selectedTerm,
                                   assessmentSummary: provider.summaryByTerm,
                                   selectTerm: provider.setSelectedTerm,
-                                  assessments: provider.termAssessments),
+                                  assessments: provider.termAssessments,
+                                  reportIdModel: provider.reportIdModel),
                             );
                           },
                         ),
@@ -129,7 +130,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   selectedTerm: provider.selectedTerm,
                                   assessmentSummary: provider.summaryByTerm,
                                   selectTerm: provider.setSelectedTerm,
-                                  assessments: provider.termAssessments),
+                                  assessments: provider.termAssessments,
+                                  reportIdModel: provider.reportIdModel),
                             );
                           },
                         ),

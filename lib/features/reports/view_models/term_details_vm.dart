@@ -1,16 +1,22 @@
+import "dart:developer";
+
 import "package:collection/collection.dart";
 import "package:hive_mobile/app/models/data/report_model.dart";
 import "package:hive_mobile/features/reports/view_models/assessment_info_vm.dart";
+import "package:hive_mobile/features/reports/view_models/report_id_model.dart";
 import "package:hive_mobile/features/reports/view_models/summary_model.dart";
 
 class TermDetailsVM {
   Function(int index) selectTerm;
   final int selectedTerm;
+  final ReportIdModel reportIdModel;
   List<AssessmentInfoVM> assessments = [];
+
   ReportSummaryModel? assessmentSummary;
 
-  TermDetailsVM({
+  TermDetailsVM( {
     required this.selectTerm,
+    required this.reportIdModel,
     required this.assessmentSummary,
     required this.selectedTerm,
     this.assessments = const [],
@@ -28,5 +34,7 @@ class TermDetailsVM {
     }
     return "Mock Exams";
   }
+
+
 
 }

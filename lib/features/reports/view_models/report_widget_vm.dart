@@ -66,11 +66,13 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     return selectedTerm == 0 ? term1Summary : term2Summary;
   }
 
-  // List<ReportModel> get reportByTerms {
-  //   final ids =
-  //       (selectedTerm == 0 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
-  //   return reports.where((element) => ids.contains(element)).toList();
-  // }
+  List<AssessmentInfoVM> get reportsByAssessmentType {
+    final ids =
+        (selectedTerm == 0 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
+    var list = termAssessments.where((element) => ids.contains(element.id)).toList();
+    log("length : ${list.length}");
+    return list ;
+  }
 
   List<AssessmentInfoVM> _term1Assessments = [];
 

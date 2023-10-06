@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
+import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BarChartWidget extends StatelessWidget {
+  final BarChartVM controller;
+
   const BarChartWidget({
     super.key,
     required this.context,
     required this.data,
     required this.data2,
-    required this.heading,
+    required this.heading, required this.controller,
   });
 
   final BuildContext context;
@@ -20,6 +25,7 @@ class BarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<ReportWidgetVM>();
     final styles = Theme.of(context).extension<AppTheme>()!;
     return Padding(
       padding: EdgeInsets.only(bottom: 10.h),
