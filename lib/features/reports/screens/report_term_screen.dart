@@ -4,6 +4,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_widget.dart';
+import 'package:hive_mobile/features/reports/view_models/line_chat_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/term_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_table_vm.dart';
@@ -22,7 +23,7 @@ class ReportTermScreen extends StatefulWidget {
 class _ReportTermScreenState extends State<ReportTermScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = widget.provider;
+    final controller = widget.provider;
     final styles = Theme.of(context).extension<AppTheme>()!;
 
     return Column(
@@ -32,10 +33,10 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  provider.selectTerm(0);
+                  controller.selectTerm(0);
                 },
                 child: TermToggleWidget(
-                  isSelected: provider.selectedTerm == 0,
+                  isSelected: controller.selectedTerm == 0,
                   text: 'Term 1',
                 ),
               ),
@@ -44,10 +45,10 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  provider.selectTerm(1);
+                  controller.selectTerm(1);
                 },
                 child: TermToggleWidget(
-                  isSelected: provider.selectedTerm == 1,
+                  isSelected: controller.selectedTerm == 1,
                   text: 'Term 2',
                 ),
               ),
@@ -61,11 +62,15 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
               children: [
                 ReportSubjectsTable(
                   reportTableVM: ReportTableVM(
-                    termDetails: provider.assessments,
-                    model: provider.assessmentSummary,
+                    termDetails: controller.assessments,
+                    model: controller.assessmentSummary,
                   ),
                 ),
-                ReportLineChart(),
+                ReportLineChart(
+                  controller: LineChartVM(
+                    termDetails: controller.assessments
+                  ),
+                ),
                 30.verticalSpace,
                 Row(
                   children: [
@@ -80,17 +85,16 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                     ),
                     Expanded(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           YearRowWidget(
                               context: context,
                               color: styles.skyBlue,
-                              text: "Year 1"),
-                          52.horizontalSpace,
+                              text: "${controller.examType1}"),
                           YearRowWidget(
                               context: context,
                               color: styles.darkOrange,
-                              text: "Year 2"),
+                              text: "${controller.examType2}"),
                         ],
                       ),
                     ),

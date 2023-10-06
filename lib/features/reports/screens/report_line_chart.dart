@@ -2,10 +2,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/features/reports/view_models/line_chat_vm.dart';
 
 class ReportLineChart extends StatefulWidget {
+  final LineChartVM controller;
+
   const ReportLineChart({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -15,6 +19,7 @@ class ReportLineChart extends StatefulWidget {
 class _ReportLineChartState extends State<ReportLineChart> {
   @override
   Widget build(BuildContext context) {
+    final controller = widget.controller;
     final styles = Theme.of(context).extension<AppTheme>()!;
     final buildBorderSide =
         BorderSide(width: 0.5, color: Colors.black.withOpacity(0.2));
@@ -38,43 +43,51 @@ class _ReportLineChartState extends State<ReportLineChart> {
               ),
             ),
             lineBarsData: [
-              LineChartBarData(
-                isCurved: true,
-                color: styles.skyBlue,
-                barWidth: 8,
-                isStrokeCapRound: true,
-                dotData: FlDotData(show: false),
-                belowBarData: BarAreaData(show: false),
-                spots: const [
-                  FlSpot(0, 0),
-                  FlSpot(0.5, 1.5),
-                  FlSpot(1, 2),
-                  FlSpot(1.5, 1),
-                  FlSpot(1.9, 2),
-                  FlSpot(2.4, 3),
-                  FlSpot(2.9, 2),
-                  FlSpot(3.2, 4),
-                ],
+              if( controller.lineBarsDataTerm1 !=null )
+              controller.lineBarsDataTerm1!.copyWith(
+                color: styles.skyBlue
               ),
-              LineChartBarData(
-                isCurved: true,
-                color: styles.darkOrange,
-                barWidth: 8,
-                isStrokeCapRound: true,
-                dotData: FlDotData(show: false),
-                belowBarData: BarAreaData(show: false),
-                spots: const [
-                  FlSpot(0, 0),
-                  FlSpot(0.7, 0.5),
-                  FlSpot(1, 0.7),
-                  FlSpot(1.5, 0.7),
-                  FlSpot(1.8, 0.7),
-                  FlSpot(2, 0.9),
-                  FlSpot(2.2, 0.9),
-                  FlSpot(3.5, 0.9),
-                  FlSpot(3.7, 4),
-                ],
-              ),
+              if( controller.lineBarsDataTerm2 !=null )
+              controller.lineBarsDataTerm2!.copyWith(
+                color: styles.darkOrange
+              ) ,
+              // LineChartBarData(
+              //   isCurved: true,
+              //   color: styles.skyBlue,
+              //   barWidth: 8,
+              //   isStrokeCapRound: true,
+              //   dotData: FlDotData(show: false),
+              //   belowBarData: BarAreaData(show: false),
+              //   spots: const [
+              //     FlSpot(0, 0),
+              //     FlSpot(0.5, 1.5),
+              //     FlSpot(1, 2),
+              //     FlSpot(1.5, 1),
+              //     FlSpot(1.9, 2),
+              //     FlSpot(2.4, 3),
+              //     FlSpot(2.9, 2),
+              //     FlSpot(3.2, 4),
+              //   ],
+              // ),
+              // LineChartBarData(
+              //   isCurved: true,
+              //   color: styles.darkOrange,
+              //   barWidth: 8,
+              //   isStrokeCapRound: true,
+              //   dotData: FlDotData(show: false),
+              //   belowBarData: BarAreaData(show: false),
+              //   spots: const [
+              //     FlSpot(0, 0),
+              //     FlSpot(0.7, 0.5),
+              //     FlSpot(1, 0.7),
+              //     FlSpot(1.5, 0.7),
+              //     FlSpot(1.8, 0.7),
+              //     FlSpot(2, 0.9),
+              //     FlSpot(2.2, 0.9),
+              //     FlSpot(3.5, 0.9),
+              //     FlSpot(3.7, 4),
+              //   ],
+              // ),
             ],
             minX: 0,
             maxX: 4,
@@ -95,7 +108,7 @@ class _ReportLineChartState extends State<ReportLineChart> {
                   AxisTitles(sideTitles: SideTitles(showTitles: false)),
             ),
           ),
-          swapAnimationDuration: Duration(milliseconds: 150),
+          swapAnimationDuration: Duration(milliseconds: 500),
           // Optional
           swapAnimationCurve: Curves.linear, // Optional
         ),
