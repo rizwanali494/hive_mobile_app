@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
-import 'package:hive_mobile/features/reports/screens/report_bar_widget.dart';
+import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
 import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/line_chat_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/term_toggle_widget.dart';
@@ -107,7 +107,7 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                   color: styles.black.withOpacity(0.5),
                 ),
                 33.verticalSpace,
-                ReportBarWidget(
+                ReportBarChart(
                     context: context,
                     data: [],
                     data2: [],
@@ -118,7 +118,7 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                       context: context
                     ),
                     term: 2),
-                ReportBarWidget(
+                ReportBarChart(
                     context: context,
                     data: [],
                     data2: [],

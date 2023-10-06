@@ -15,7 +15,9 @@ class BarChartVM  {
   List<AssessmentInfoVM> assessments = [];
 
   BarChartVM({required this.context,required this.assessments}) {
+    log("Bar 1");
    barSeries1 =  setBarSeries(assessments.map((e) => e.assessment1).toList());
+    log("Bar 2");
    barSeries2 =  setBarSeries(assessments.map((e) => e.assessment2).toList());
    log("message : bar series 1: ${barSeries1.length}");
    log("message : bar series 1: ${barSeries2.length}");
@@ -23,10 +25,10 @@ class BarChartVM  {
   }
 
   List<BarSeries<ReportModel, String>> setBarSeries( List<ReportModel?> list ) {
-    log("assessments : ${list.length}");
     List<BarSeries<ReportModel, String>> barSeries = [];
     for (int index = 0;index<list.length;index++) {
       final value = list[index];
+      log("gpa : ${value?.gpa}");
       if (value != null) {
         BarSeries<ReportModel, String> series = BarSeries<ReportModel, String>(
           dataSource: [value],
