@@ -71,7 +71,7 @@ class ReportYearVM extends ChangeNotifier {
   Future<void> getAllReports() async {
     try {
       final list = await repo.getReports(ids: reportIds);
-      allReports.addAll(list);
+      allReports = list;
       uiState = UiState.loaded();
       setSubjectName();
     } catch (e) {
@@ -143,5 +143,10 @@ class ReportYearVM extends ChangeNotifier {
     }
     log("subjects :: ${list}");
     subjectNames = list.toList();
+  }
+
+  Future<void> onRefresh() async {
+    await getAllReports();
+    return;
   }
 }

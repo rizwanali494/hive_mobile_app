@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
 
 class ReportsScreenVM extends ChangeNotifier {
-  int selectedYear = -1;
+  int selectedYear = 0;
   int selectedTerm = -1;
 
   ReportsScreenVM() {
@@ -20,17 +20,16 @@ class ReportsScreenVM extends ChangeNotifier {
       ReportRepository(apiService: apiService);
 
   void inItValues() {}
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 0);
 
   void selectYear(int value) {
     if (value == selectedYear) {
-      selectedYear = -1;
-      notifyListeners();
-      return;
+      selectedYear = 0;
+    } else {
+      selectedYear = value;
     }
-    selectedYear = value;
+    pageController.jumpToPage(selectedYear);
     notifyListeners();
-    pageController.jumpToPage(value);
   }
 }
 
