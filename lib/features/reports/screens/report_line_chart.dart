@@ -90,7 +90,7 @@ class _ReportLineChartState extends State<ReportLineChart> {
               // ),
             ],
             minX: 0,
-            maxX: 4,
+            maxX: 8,
             maxY: 6,
             minY: -2,
             titlesData: FlTitlesData(

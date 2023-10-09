@@ -12,21 +12,23 @@ class BarChartVM {
   BuildContext context;
   List<BarSeries<ReportModel, String>> barSeries1 = [];
   List<BarSeries<ReportModel, String>> barSeries2 = [];
-  List<AssessmentInfoVM> assessments = [];
+  List<ReportModel?> assessments1 = [];
+  List<ReportModel?> assessments2 = [];
   String examType1;
   String examType2;
   bool showTermDetails;
 
   BarChartVM(
       {required this.context,
-      required this.assessments,
+      required this.assessments1,
+      required this.assessments2,
       required this.examType1,
       required this.examType2,
       this.showTermDetails = false}) {
     log("Bar 1");
-    barSeries1 = setBarSeries(assessments.map((e) => e.assessment1).toList());
+    barSeries1 = setBarSeries(assessments1);
     log("Bar 2");
-    barSeries2 = setBarSeries(assessments.map((e) => e.assessment2).toList());
+    barSeries2 = setBarSeries(assessments1);
   }
 
   List<BarSeries<ReportModel, String>> setBarSeries(List<ReportModel?> list) {

@@ -3,8 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
+import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
+import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
+import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/line_chat_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/report_year_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
@@ -41,8 +47,25 @@ class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => ReportsScreenVM(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          key: Key("1"),
+          create: (context) => ReportYear1VM(),
+        ),
+        ChangeNotifierProvider(
+          key: Key("2"),
+          create: (context) => ReportYear2VM(),
+        ),
+        ChangeNotifierProvider(
+          key: Key("2"),
+          create: (context) => ReportsScreenVM(),
+        ),
+        ChangeNotifierProvider(
+          key: Key("2"),
+          create: (context) => ReportYearVM(),
+        ),
+      ],
       child: Consumer<ReportsScreenVM>(
         builder: (context, provider, child) {
           return Padding(
@@ -95,18 +118,75 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   ],
                 ),
                 15.verticalSpace,
-                Expanded(
-                  child: MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider(
-                        key: Key("1"),
-                        create: (context) => ReportYear1VM(),
-                      ),
-                      ChangeNotifierProvider(
-                        key: Key("2"),
-                        create: (context) => ReportYear2VM(),
-                      ),
-                    ],
+                if (provider.selectedYear < 0)
+                  Consumer<ReportYearVM>(
+                    builder: (context, provider, child) {
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              21.verticalSpace,
+                              ReportLineChart(
+                                controller: LineChartVM(
+                                    lineBarsDataTerm1:
+                                        provider.lineBarsDataTerm1,
+                                    lineBarsDataTerm2:
+                                        provider.lineBarsDataTerm2),
+                              ),
+                              33.verticalSpace,
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 5.w,
+                                    ),
+                                    child: Text(
+                                      "CGPA",
+                                      style: styles.inter8w400,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        YearRowWidget(
+                                            context: context,
+                                            color: styles.skyBlue,
+                                            text: "${provider.examType1}"),
+                                        YearRowWidget(
+                                            context: context,
+                                            color: styles.darkOrange,
+                                            text: "${provider.examType2}"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              20.verticalSpace,
+                              Divider(
+                                thickness: 0.5,
+                                color: styles.black.withOpacity(0.5),
+                              ),
+                              32.verticalSpace,
+                              ReportBarChart(
+                                controller: BarChartVM(
+                                  assessments1: provider.year1Reports,
+                                  assessments2: provider.year2Reports,
+                                  context: context,
+                                  examType1: provider.examType1,
+                                  examType2: provider.examType2,
+                                ),
+                                term: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                else
+                  Expanded(
                     child: PageView(
                       physics: NeverScrollableScrollPhysics(),
                       controller: provider.pageController,
@@ -150,152 +230,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         ),
                       ],
                     ),
-                  ),
-                )
-                // Expanded(
-                //   child: SingleChildScrollView(
-                //     child: Column(
-                //       children: [
-                //         ReportHeaderWidget(styles: styles),
-                //         10.verticalSpace,
-                //         Divider(
-                //           thickness: 0.2,
-                //         ),
-                //         10.verticalSpace,
-                //         Row(
-                //           children: [
-                //             Expanded(
-                //               child: GestureDetector(
-                //                 onTap: () {
-                //                   provider.selectYear(0);
-                //                 },
-                //                 child: YearToggleWidget(
-                //                   borderRadius: BorderRadius.horizontal(
-                //                     left: Radius.circular(50.r),
-                //                   ),
-                //                   isSelected: provider.selectedYear == 0,
-                //                   text: 'Year 1',
-                //                 ),
-                //               ),
-                //             ),
-                //             Expanded(
-                //               child: GestureDetector(
-                //                 onTap: () {
-                //                   provider.selectYear(1);
-                //                 },
-                //                 child: YearToggleWidget(
-                //                   borderRadius: BorderRadius.horizontal(
-                //                     right: Radius.circular(50.r),
-                //                   ),
-                //                   isSelected: provider.selectedYear == 1,
-                //                   text: 'Year 2',
-                //                 ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //         15.verticalSpace,
-                //         Row(
-                //           children: [
-                //             Expanded(
-                //               child: GestureDetector(
-                //                 onTap: () {
-                //                   provider.selectTerm(0);
-                //                 },
-                //                 child: TermToggleWidget(
-                //                   isSelected: provider.selectedTerm == 0,
-                //                   text: 'Term 1',
-                //                 ),
-                //               ),
-                //             ),
-                //             14.horizontalSpace,
-                //             Expanded(
-                //               child: GestureDetector(
-                //                 onTap: () {
-                //                   provider.selectTerm(1);
-                //                 },
-                //                 child: TermToggleWidget(
-                //                   isSelected: provider.selectedTerm == 1,
-                //                   text: 'Term 2',
-                //                 ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //         16.verticalSpace,
-                //         ReportSubjectsTable(),
-                //         30.verticalSpace,
-                //         Divider(
-                //           thickness: 0.5,
-                //           color: styles.black.withOpacity(0.5),
-                //         ),
-                //         33.verticalSpace,
-                //         ReportLineChart(),
-                //         30.verticalSpace,
-                //         Row(
-                //           children: [
-                //             Padding(
-                //               padding: EdgeInsets.only(
-                //                 left: 5.w,
-                //               ),
-                //               child: Text(
-                //                 "CGPA",
-                //                 style: styles.inter8w400,
-                //               ),
-                //             ),
-                //             Expanded(
-                //               child: Row(
-                //                 mainAxisAlignment: MainAxisAlignment.center,
-                //                 children: [
-                //                   YearRowWidget(
-                //                       context: context,
-                //                       color: styles.skyBlue,
-                //                       text: "Year 1"),
-                //                   52.horizontalSpace,
-                //                   YearRowWidget(
-                //                       context: context,
-                //                       color: styles.darkOrange,
-                //                       text: "Year 2"),
-                //                 ],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //         30.verticalSpace,
-                //         Divider(
-                //           thickness: 0.5,
-                //           color: styles.black.withOpacity(0.5),
-                //         ),
-                //         33.verticalSpace,
-                //         ReportTermWidget(
-                //             context: context,
-                //             data: data,
-                //             data2: data2,
-                //             styles: styles,
-                //             examsCount: 2,
-                //             term: 2),
-                //         ReportTermWidget(
-                //             context: context,
-                //             data: data,
-                //             data2: data2,
-                //             styles: styles,
-                //             examsCount: 2,
-                //             term: 2),
-                //         10.verticalSpace,
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.end,
-                //           children: [
-                //             barLegendWidget("Accounting", styles.denimBlue),
-                //             barLegendWidget("Mathematics", styles.gravel),
-                //             barLegendWidget("Economics", styles.yellowGreen),
-                //             barLegendWidget("Business", styles.paleOrange),
-                //           ],
-                //         ),
-                //         10.verticalSpace,
-                //       ],
-                //     ),
-                //   ),
-                // )
+                  )
               ],
             ),
           );

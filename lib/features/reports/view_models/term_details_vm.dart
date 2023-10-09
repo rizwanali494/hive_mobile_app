@@ -1,6 +1,7 @@
 import "dart:developer";
 
 import "package:collection/collection.dart";
+import "package:fl_chart/fl_chart.dart";
 import "package:hive_mobile/app/models/data/report_model.dart";
 import "package:hive_mobile/features/reports/view_models/assessment_info_vm.dart";
 import "package:hive_mobile/features/reports/view_models/report_id_model.dart";
@@ -28,7 +29,7 @@ class TermDetailsVM {
   }
 
   String get examType1 {
-    if( selectedTerm ==0 ){
+    if (selectedTerm == 0) {
       return "Mid Term Assessment";
     }
     return "Mock Term Assessment";
@@ -56,5 +57,36 @@ class TermDetailsVM {
     }
     log("subjects :: ${list}");
     subjectNames = list.toList();
+  }
+
+  LineChartBarData get lineBarsDataTerm1 {
+    final list = setData(assessments.map((e) => e.assessment1).toList());
+    return list;
+  }
+
+  LineChartBarData get lineBarsDataTerm2 {
+    final list = setData(assessments.map((e) => e.assessment2).toList());
+    return list;
+  }
+
+  LineChartBarData setData(List<ReportModel?> list) {
+    List<FlSpot> spots = [];
+    for (int index = 0; index < list.length; index++) {
+      final value = list[index];
+      final spot = FlSpot(index.toDouble(), value?.gpa ?? 0.0);
+      spots.add(spot);
+    }
+    final lineBarsDataTerm = LineChartBarData(
+      isCurved: true,
+      barWidth: 8,
+      isStrokeCapRound: true,
+      dotData: FlDotData(show: false),
+      belowBarData: BarAreaData(show: false),
+      spots: spots,
+    );
+    lineBarsDataTerm.spots.forEach((element) {
+      log("line char ${element.x} ${element.y}");
+    });
+    return lineBarsDataTerm;
   }
 }

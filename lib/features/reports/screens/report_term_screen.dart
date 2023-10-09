@@ -84,8 +84,9 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                       ),
                     ),
                     ReportLineChart(
-                      controller:
-                          LineChartVM(termDetails: controller.assessments),
+                      controller: LineChartVM(
+                          lineBarsDataTerm1: controller.lineBarsDataTerm1,
+                          lineBarsDataTerm2: controller.lineBarsDataTerm2),
                     ),
                     30.verticalSpace,
                     Row(
@@ -124,7 +125,12 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                     33.verticalSpace,
                     ReportBarChart(
                       controller: BarChartVM(
-                        assessments: controller.assessments,
+                        assessments1: controller.assessments
+                            .map((e) => e.assessment1)
+                            .toList(),
+                        assessments2: controller.assessments
+                            .map((e) => e.assessment2)
+                            .toList(),
                         context: context,
                         examType1: controller.examType1,
                         examType2: controller.examType2,

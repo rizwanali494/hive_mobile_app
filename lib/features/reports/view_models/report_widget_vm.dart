@@ -99,10 +99,8 @@ abstract class ReportWidgetVM extends ChangeNotifier {
         .toList();
     Map<int?, List<ReportModel>> groupedElements =
         groupBy(term1Reports, (item) => item.subjectId);
-    term1Reports.forEach((element) {});
     groupedElements.forEach((key, value) {
       var id = key ?? 0;
-      log("message :::: $id");
       ReportModel model1 = ReportModel();
       ReportModel model2 = ReportModel();
       for (var element in value) {
