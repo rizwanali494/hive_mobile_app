@@ -119,9 +119,6 @@ class ReportBarChart extends StatelessWidget {
             child: Wrap(
               runSpacing: 10,
               spacing: 10,
-              // alignment: WrapAlignment.end,
-              // crossAxisAlignment: WrapCrossAlignment.end,
-              // runAlignment: WrapAlignment.end,
               children: [
                 for (int index = 0;
                     index < controller.subjectNames.length;

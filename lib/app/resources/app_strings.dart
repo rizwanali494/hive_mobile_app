@@ -121,6 +121,7 @@ class AppStrings {
   static String count = "count";
   static String noUniFound = "No University Found";
   static String noItemsFound = "No Items Found";
+  static String noDataFound = "No Data Found";
   static String showMore = "Show More";
   static String update = "Update";
   static String externalGradeUploaded = "External Grade Uploaded";

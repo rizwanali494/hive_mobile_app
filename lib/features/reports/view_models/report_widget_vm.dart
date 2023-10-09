@@ -26,6 +26,10 @@ abstract class ReportWidgetVM extends ChangeNotifier {
 
   UiState uiState = UiState.loading();
 
+  bool get isLoading {
+    return uiState.isLoading;
+  }
+
   Future<void> getReports() async {
     try {
       final list = await reportRepository.getReports(ids: reportIdModel.allIds);

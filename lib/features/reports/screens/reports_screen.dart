@@ -113,6 +113,12 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       children: [
                         Consumer<ReportYear1VM>(
                           builder: (context, provider, child) {
+                            if (provider.isLoading) {
+                              return Expanded(
+                                  child: Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                            }
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,
@@ -125,6 +131,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         ),
                         Consumer<ReportYear2VM>(
                           builder: (context, provider, child) {
+                            if (provider.isLoading) {
+                              return Expanded(
+                                  child: Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                            }
+
                             return ReportTermScreen(
                               provider: TermDetailsVM(
                                   selectedTerm: provider.selectedTerm,

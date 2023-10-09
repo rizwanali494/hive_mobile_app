@@ -12,7 +12,6 @@ class BarChartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-
     return SfCartesianChart(
       borderWidth: 0.2,
       borderColor: Colors.black,
@@ -29,14 +28,14 @@ class BarChartWidget extends StatelessWidget {
         plotOffset: 0,
         // maximumLabelWidth: 0,
         borderColor: Colors.amber,
-        minorGridLines: MinorGridLines(
-            dashArray: [1, 2],
-            width: 1,
-            color: styles.black),
-        majorGridLines: MajorGridLines(
-            dashArray: [1, 2],
-            width: 1,
-            color: styles.black),
+        // minorGridLines: MinorGridLines(
+        //
+        //   dashArray: [1, 2],
+        //   width: 1,
+        //   color: styles.black,
+        // ),
+        majorGridLines:
+            MajorGridLines(dashArray: [1, 2], width: 1, color: styles.black),
         maximum: 6,
         interval: 2,
       ),
