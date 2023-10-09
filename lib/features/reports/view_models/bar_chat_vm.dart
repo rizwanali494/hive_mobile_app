@@ -28,7 +28,7 @@ class BarChartVM {
     log("Bar 1");
     barSeries1 = setBarSeries(assessments1);
     log("Bar 2");
-    barSeries2 = setBarSeries(assessments1);
+    barSeries2 = setBarSeries(assessments2);
   }
 
   List<BarSeries<ReportModel, String>> setBarSeries(List<ReportModel?> list) {

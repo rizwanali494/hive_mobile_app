@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/features/reports/screens/bar_chart_legend_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
@@ -171,14 +172,45 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               32.verticalSpace,
                               ReportBarChart(
                                 controller: BarChartVM(
-                                  assessments1: provider.year1Reports,
-                                  assessments2: provider.year2Reports,
+                                  assessments1: provider.midTermReports,
+                                  assessments2: provider.midYearReports,
                                   context: context,
-                                  examType1: provider.examType1,
-                                  examType2: provider.examType2,
+                                  showTermDetails: true,
+                                  examType1: "Mid Term Assessment",
+                                  examType2: "Mid Year Exam",
+                                ),
+                                term: 1,
+                              ),
+                              10.verticalSpace,
+                              ReportBarChart(
+                                controller: BarChartVM(
+                                  assessments1: provider.mockTermReports,
+                                  assessments2: provider.mockExamReports,
+                                  context: context,
+                                  showTermDetails: true,
+                                  examType1: "Mock Term Assessment",
+                                  examType2: "Mock Exam",
                                 ),
                                 term: 2,
                               ),
+                              10.verticalSpace,
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Wrap(
+                                  runSpacing: 10,
+                                  spacing: 10,
+                                  children: [
+                                    for (int index = 0;
+                                        index < provider.subjectNames.length;
+                                        index++)
+                                      BarChartLegendWidget(
+                                          text: provider.subjectNames[index],
+                                          color: colors[index] ??
+                                              Colors.blueAccent),
+                                  ],
+                                ),
+                              ),
+                              10.verticalSpace,
                             ],
                           ),
                         ),
@@ -271,6 +303,15 @@ class _ReportsScreenState extends State<ReportsScreen> {
     }
     return styles.paleSkyBlue;
   }
+
+  late final styles = Theme.of(context).extension<AppTheme>()!;
+
+  late Map<int, Color> colors = {
+    0: styles.denimBlue,
+    1: styles.gravel,
+    2: styles.darkOrange,
+    3: styles.paleOrange,
+  };
 }
 
 class ChartData {

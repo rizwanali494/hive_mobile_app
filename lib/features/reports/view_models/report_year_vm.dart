@@ -13,6 +13,10 @@ class ReportYearVM extends ChangeNotifier {
   final reportIds = [1, 3, 5, 19, 9, 11, 13, 15];
   final year1Ids = [1, 3, 5, 19];
   final year2Ids = [9, 11, 13, 15];
+  final midTermIds = [1, 9];
+  final midYear = [3, 11];
+  final mockTerm = [5, 13];
+  final mockExam = [19, 15];
 
   ReportYearVM() {
     getAllReports();
@@ -40,37 +44,36 @@ class ReportYearVM extends ChangeNotifier {
         .toList();
   }
 
-  List<ReportModel> get year2Reports {
+  List<ReportModel> get midYearReports {
     return allReports
-        .where((element) => year2Ids.contains(element.assessmentId))
+        .where((element) => midYear.contains(element.assessmentId))
         .toList();
   }
 
-  List<ReportModel> get year2Reports {
+  List<ReportModel> get midTermReports {
     return allReports
-        .where((element) => year2Ids.contains(element.assessmentId))
+        .where((element) => midTermIds.contains(element.assessmentId))
         .toList();
   }
 
-  List<ReportModel> get year2Reports {
+  List<ReportModel> get mockExamReports {
     return allReports
-        .where((element) => year2Ids.contains(element.assessmentId))
+        .where((element) => mockExam.contains(element.assessmentId))
         .toList();
   }
 
-  List<ReportModel> get year2Reports {
+  List<ReportModel> get mockTermReports {
     return allReports
-        .where((element) => year2Ids.contains(element.assessmentId))
+        .where((element) => mockTerm.contains(element.assessmentId))
         .toList();
   }
-
-  List<ReportModel> getReportsById(List<int> ids) {}
 
   Future<void> getAllReports() async {
     try {
       final list = await repo.getReports(ids: reportIds);
       allReports.addAll(list);
       uiState = UiState.loaded();
+      setSubjectName();
     } catch (e) {
       log("Something went wrong : ${e.toString()}");
       uiState = UiState.error();
@@ -126,5 +129,19 @@ class ReportYearVM extends ChangeNotifier {
 
   String get examType2 {
     return "Mid Year Exam";
+  }
+
+  List<String> subjectNames = [];
+
+  void setSubjectName() {
+    Set<String> list = {};
+    for (final element in allReports) {
+      final name = element.subjectName;
+      if (name != null) {
+        list.add(name);
+      }
+    }
+    log("subjects :: ${list}");
+    subjectNames = list.toList();
   }
 }

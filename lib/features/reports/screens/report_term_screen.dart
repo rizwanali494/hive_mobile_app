@@ -83,6 +83,7 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                         model: controller.assessmentSummary,
                       ),
                     ),
+                    32.verticalSpace,
                     ReportLineChart(
                       controller: LineChartVM(
                           lineBarsDataTerm1: controller.lineBarsDataTerm1,
