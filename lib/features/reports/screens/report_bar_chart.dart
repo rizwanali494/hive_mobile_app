@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/models/data/report_model.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
 import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/bar_chat_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/term_divider_widget.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ReportBarChart extends StatelessWidget {
   final BarChartVM controller;
@@ -33,84 +31,131 @@ class ReportBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 10.h),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
+      child: Column(
+        children: [
+          IntrinsicHeight(
+            child: Row(
               children: [
-                TermDividerWidget(styles: styles),
-                RotatedBox(
-                  quarterTurns: 3,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.h),
-                    child: Text(
-                      "Term $term",
-                      style: styles.inter8w400,
-                    ),
+                if (controller.showTermDetails)
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TermDividerWidget(styles: styles),
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.h),
+                          child: Text(
+                            "Term $term",
+                            style: styles.inter8w400,
+                          ),
+                        ),
+                      ),
+                      TermDividerWidget(styles: styles),
+                    ],
+                  ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10.h),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                controller.examType1,
+                                style: styles.inter12w500,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            11.horizontalSpace,
+                            Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                height: 150.h,
+                                // width: 150.h,
+                                child: BarChartWidget(
+                                  barSeries: controller.barSeries1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10.h),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                controller.examType2,
+                                style: styles.inter12w500,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            11.horizontalSpace,
+                            Expanded(
+                              flex: 2,
+                              child: SizedBox(
+                                height: 150.h,
+                                // width: 150.h,
+                                child: BarChartWidget(
+                                  barSeries: controller.barSeries2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                TermDividerWidget(styles: styles),
               ],
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 10.h),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "heading",
-                            style: styles.inter12w500,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        11.horizontalSpace,
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            height: 150.h,
-                            // width: 150.h,
-                            child: BarChartWidget(
-                              barSeries: controller.barSeries1,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 10.h),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "heading",
-                            style: styles.inter12w500,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        11.horizontalSpace,
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            height: 150.h,
-                            // width: 150.h,
-                            child: BarChartWidget(
-                              barSeries: controller.barSeries2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+          ),
+          10.verticalSpace,
+          Align(
+            alignment: Alignment.topRight,
+            child: Wrap(
+              runSpacing: 10,
+              spacing: 10,
+              // alignment: WrapAlignment.end,
+              // crossAxisAlignment: WrapCrossAlignment.end,
+              // runAlignment: WrapAlignment.end,
+              children: [
+                for (int index = 0;
+                    index < controller.subjectNames.length;
+                    index++)
+                  barLegendWidget(controller.subjectNames[index],
+                      controller.colors[index] ?? Colors.blueAccent),
+              ],
             ),
-          ],
-        ),
+          ),
+          10.verticalSpace,
+        ],
+      ),
+    );
+  }
+
+  Widget barLegendWidget(String text, Color color) {
+    final styles = Theme.of(context).extension<AppTheme>()!;
+
+    return Padding(
+      padding: EdgeInsets.only(right: 0.w),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6.w,
+            height: 6.h,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          3.horizontalSpace,
+          Text(
+            text,
+            style: styles.inter10w600,
+          )
+        ],
       ),
     );
   }

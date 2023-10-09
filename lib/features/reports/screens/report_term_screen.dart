@@ -68,9 +68,7 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                   ),
                 ),
                 ReportLineChart(
-                  controller: LineChartVM(
-                    termDetails: controller.assessments
-                  ),
+                  controller: LineChartVM(termDetails: controller.assessments),
                 ),
                 30.verticalSpace,
                 Row(
@@ -115,31 +113,11 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                     examsCount: 2,
                     controller: BarChartVM(
                       assessments: controller.assessments,
-                      context: context
+                      context: context,
+                      examType1: controller.examType1,
+                      examType2: controller.examType2,
                     ),
                     term: 2),
-                ReportBarChart(
-                    context: context,
-                    data: [],
-                    data2: [],
-                    styles: styles,
-                    examsCount: 2,
-                    controller: BarChartVM(
-                        assessments: controller.assessments,
-                        context: context
-                    ),
-                    term: 2),
-                10.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    barLegendWidget("Accounting", styles.denimBlue),
-                    barLegendWidget("Mathematics", styles.gravel),
-                    barLegendWidget("Economics", styles.yellowGreen),
-                    barLegendWidget("Business", styles.paleOrange),
-                  ],
-                ),
-                10.verticalSpace,
               ],
             ),
           ),
@@ -148,25 +126,4 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
     );
   }
 
-  Padding barLegendWidget(String text, Color color) {
-    final styles = Theme.of(context).extension<AppTheme>()!;
-
-    return Padding(
-      padding: EdgeInsets.only(right: 10.w),
-      child: Row(
-        children: [
-          Container(
-            width: 6.w,
-            height: 6.h,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          3.horizontalSpace,
-          Text(
-            text,
-            style: styles.inter10w600,
-          )
-        ],
-      ),
-    );
-  }
 }
