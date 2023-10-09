@@ -27,7 +27,6 @@ class BarChartVM {
     barSeries1 = setBarSeries(assessments.map((e) => e.assessment1).toList());
     log("Bar 2");
     barSeries2 = setBarSeries(assessments.map((e) => e.assessment2).toList());
-    setSubjectName();
   }
 
   List<BarSeries<ReportModel, String>> setBarSeries(List<ReportModel?> list) {
@@ -60,16 +59,5 @@ class BarChartVM {
     3: styles.paleOrange,
   };
 
-  List<String> subjectNames = [];
 
-  void setSubjectName() {
-    Set<String> list = {};
-    for (final element in barSeries1 + barSeries2) {
-      for (var value in element.dataSource) {
-        list.add(value.subjectName ?? "");
-      }
-    }
-    log("subjects :: ${list}");
-    subjectNames = list.toList();
-  }
 }

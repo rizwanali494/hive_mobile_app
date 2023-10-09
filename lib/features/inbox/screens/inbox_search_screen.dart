@@ -102,20 +102,5 @@ class InboxSearchScreen extends StatelessWidget {
       ),
     );
 
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => InboxScreenVM(),
-      child: Consumer<InboxSearchVM>(
-        builder: (context, provider, child) {
-          return InboxListWidget(
-            provider: InboxListVM(
-                hasError: provider.hasError,
-                isLoading: provider.isLoading,
-                items: provider.items,
-                listCount: provider.listCount,
-                refreshList: provider.refreshList),
-          );
-        },
-      ),
-    );
   }
 }

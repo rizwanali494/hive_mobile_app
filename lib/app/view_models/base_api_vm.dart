@@ -133,7 +133,6 @@ abstract class BaseApiVM<T> with ChangeNotifier {
 
   Future<List<T>> fetchLocalList() async {
     return await localService.findAll();
-    sortByRecentOrder();
   }
 
   void addScrollListeners() {

@@ -11,24 +11,16 @@ class ReportBarChart extends StatelessWidget {
 
   const ReportBarChart({
     super.key,
-    required this.context,
-    required this.data,
-    required this.data2,
-    required this.styles,
-    required this.examsCount,
     required this.term,
     required this.controller,
   });
 
-  final BuildContext context;
-  final List<ChartData> data;
-  final List<ChartData> data2;
-  final AppTheme styles;
-  final int examsCount;
   final int term;
 
   @override
   Widget build(BuildContext context) {
+    late final styles = Theme.of(context).extension<AppTheme>()!;
+
     return Padding(
       padding: EdgeInsets.only(bottom: 10.h),
       child: Column(
@@ -113,49 +105,11 @@ class ReportBarChart extends StatelessWidget {
               ],
             ),
           ),
-          10.verticalSpace,
-          Align(
-            alignment: Alignment.topRight,
-            child: Wrap(
-              runSpacing: 10,
-              spacing: 10,
-              children: [
-                for (int index = 0;
-                    index < controller.subjectNames.length;
-                    index++)
-                  barLegendWidget(controller.subjectNames[index],
-                      controller.colors[index] ?? Colors.blueAccent),
-              ],
-            ),
-          ),
-          10.verticalSpace,
         ],
       ),
     );
   }
 
-  Widget barLegendWidget(String text, Color color) {
-    final styles = Theme.of(context).extension<AppTheme>()!;
-
-    return Padding(
-      padding: EdgeInsets.only(right: 0.w),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 6.w,
-            height: 6.h,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          3.horizontalSpace,
-          Text(
-            text,
-            style: styles.inter10w600,
-          )
-        ],
-      ),
-    );
-  }
 }
 
 final terms = [

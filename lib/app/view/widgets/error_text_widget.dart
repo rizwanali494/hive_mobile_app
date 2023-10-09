@@ -5,8 +5,9 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ErrorTextWidget extends StatelessWidget {
   final Future<void> Function() onRefresh;
+  final String? errorText;
 
-  const ErrorTextWidget({super.key, required this.onRefresh});
+  const ErrorTextWidget({super.key, required this.onRefresh, this.errorText});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class ErrorTextWidget extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Text(
-                  AppStrings.somethingWentWrong,
+                  errorText ?? AppStrings.somethingWentWrong,
                   style: styles.inter20w600,
                 ),
               ),

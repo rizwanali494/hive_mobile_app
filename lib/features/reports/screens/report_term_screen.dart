@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
+import 'package:hive_mobile/features/reports/screens/bar_chart_legend_widget.dart';
+import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
-import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
+import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/line_chat_vm.dart';
-import 'package:hive_mobile/features/reports/widgets/term_toggle_widget.dart';
-import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_table_vm.dart';
-import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
+import 'package:hive_mobile/features/reports/widgets/term_toggle_widget.dart';
 
 class ReportTermScreen extends StatefulWidget {
   final TermDetailsVM provider;
@@ -61,74 +62,94 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
         if (controller.assessments.isEmpty)
           Expanded(
             child: Center(
-                child: Text(
-              AppStrings.noDataFound,
-              style: styles.inter12w700,
-            )),
+              child: ErrorTextWidget(
+                onRefresh: controller.onRefresh,
+                errorText: AppStrings.noDataFound,
+              ),
+            ),
           )
         else
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ReportSubjectsTable(
-                    reportTableVM: ReportTableVM(
-                      termDetails: controller.assessments,
-                      model: controller.assessmentSummary,
+            child: RefreshIndicator(
+              onRefresh: controller.onRefresh,
+              backgroundColor: styles.white,
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    ReportSubjectsTable(
+                      reportTableVM: ReportTableVM(
+                        termDetails: controller.assessments,
+                        model: controller.assessmentSummary,
+                      ),
                     ),
-                  ),
-                  ReportLineChart(
-                    controller: LineChartVM(termDetails: controller.assessments),
-                  ),
-                  30.verticalSpace,
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 5.w,
+                    ReportLineChart(
+                      controller:
+                          LineChartVM(termDetails: controller.assessments),
+                    ),
+                    30.verticalSpace,
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 5.w,
+                          ),
+                          child: Text(
+                            "CGPA",
+                            style: styles.inter8w400,
+                          ),
                         ),
-                        child: Text(
-                          "CGPA",
-                          style: styles.inter8w400,
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              YearRowWidget(
+                                  context: context,
+                                  color: styles.skyBlue,
+                                  text: "${controller.examType1}"),
+                              YearRowWidget(
+                                  context: context,
+                                  color: styles.darkOrange,
+                                  text: "${controller.examType2}"),
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            YearRowWidget(
-                                context: context,
-                                color: styles.skyBlue,
-                                text: "${controller.examType1}"),
-                            YearRowWidget(
-                                context: context,
-                                color: styles.darkOrange,
-                                text: "${controller.examType2}"),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  30.verticalSpace,
-                  Divider(
-                    thickness: 0.5,
-                    color: styles.black.withOpacity(0.5),
-                  ),
-                  33.verticalSpace,
-                  ReportBarChart(
-                      context: context,
-                      data: [],
-                      data2: [],
-                      styles: styles,
-                      examsCount: 2,
+                      ],
+                    ),
+                    30.verticalSpace,
+                    Divider(
+                      thickness: 0.5,
+                      color: styles.black.withOpacity(0.5),
+                    ),
+                    33.verticalSpace,
+                    ReportBarChart(
                       controller: BarChartVM(
                         assessments: controller.assessments,
                         context: context,
                         examType1: controller.examType1,
                         examType2: controller.examType2,
                       ),
-                      term: 2),
-                ],
+                      term: 2,
+                    ),
+                    10.verticalSpace,
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: [
+                          for (int index = 0;
+                              index < controller.subjectNames.length;
+                              index++)
+                            BarChartLegendWidget(
+                                text: controller.subjectNames[index],
+                                color: colors[index] ?? Colors.blueAccent),
+                        ],
+                      ),
+                    ),
+                    10.verticalSpace,
+                  ],
+                ),
               ),
             ),
           ),
@@ -136,4 +157,11 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
     );
   }
 
+  late final styles = Theme.of(context).extension<AppTheme>()!;
+  late Map<int, Color> colors = {
+    0: styles.denimBlue,
+    1: styles.gravel,
+    2: styles.darkOrange,
+    3: styles.paleOrange,
+  };
 }

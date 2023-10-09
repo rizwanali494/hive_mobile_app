@@ -114,10 +114,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         Consumer<ReportYear1VM>(
                           builder: (context, provider, child) {
                             if (provider.isLoading) {
-                              return Expanded(
-                                  child: Center(
+                              return Center(
                                 child: CircularProgressIndicator(),
-                              ));
+                              );
                             }
                             return ReportTermScreen(
                               provider: TermDetailsVM(
@@ -125,17 +124,17 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   assessmentSummary: provider.summaryByTerm,
                                   selectTerm: provider.setSelectedTerm,
                                   assessments: provider.termAssessments,
-                                  reportIdModel: provider.reportIdModel),
+                                  reportIdModel: provider.reportIdModel,
+                                  onRefresh: provider.onRefresh),
                             );
                           },
                         ),
                         Consumer<ReportYear2VM>(
                           builder: (context, provider, child) {
                             if (provider.isLoading) {
-                              return Expanded(
-                                  child: Center(
+                              return Center(
                                 child: CircularProgressIndicator(),
-                              ));
+                              );
                             }
 
                             return ReportTermScreen(
@@ -143,6 +142,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   selectedTerm: provider.selectedTerm,
                                   assessmentSummary: provider.summaryByTerm,
                                   selectTerm: provider.setSelectedTerm,
+                                  onRefresh: provider.onRefresh,
                                   assessments: provider.termAssessments,
                                   reportIdModel: provider.reportIdModel),
                             );

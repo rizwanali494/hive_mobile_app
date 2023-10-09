@@ -33,7 +33,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
   Future<void> getReports() async {
     try {
       final list = await reportRepository.getReports(ids: reportIdModel.allIds);
-      log("reportttt list::  length ${list.length}");
       reports = list;
       var models = await Future.wait([
         getTermSummary(reportIdModel.term1Ids),
@@ -41,8 +40,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       ]);
       term1Summary = models.firstOrNull;
       term2Summary = models.elementAtOrNull(1);
-      log("term1Summary :${term1Summary}");
-      log("term2Summary :${term2Summary}");
       sortItems();
     } catch (e) {
       log("message ${e.toString()}");
@@ -50,6 +47,11 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     }
     uiState = UiState.loaded();
     notifyListeners();
+  }
+
+  Future<void> onRefresh() async {
+    await getReports();
+    return;
   }
 
   int selectedTerm = 0;
@@ -73,9 +75,10 @@ abstract class ReportWidgetVM extends ChangeNotifier {
   List<AssessmentInfoVM> get reportsByAssessmentType {
     final ids =
         (selectedTerm == 0 ? reportIdModel.term1Ids : reportIdModel.term2Ids);
-    var list = termAssessments.where((element) => ids.contains(element.id)).toList();
+    var list =
+        termAssessments.where((element) => ids.contains(element.id)).toList();
     log("length : ${list.length}");
-    return list ;
+    return list;
   }
 
   List<AssessmentInfoVM> _term1Assessments = [];
@@ -83,6 +86,8 @@ abstract class ReportWidgetVM extends ChangeNotifier {
   List<AssessmentInfoVM> _term2Assessments = [];
 
   sortItems() {
+    _term1Assessments = [];
+    _term2Assessments = [];
     sortTerm1Items();
     sortTerm2Items();
   }
@@ -94,8 +99,7 @@ abstract class ReportWidgetVM extends ChangeNotifier {
         .toList();
     Map<int?, List<ReportModel>> groupedElements =
         groupBy(term1Reports, (item) => item.subjectId);
-    term1Reports.forEach((element) {
-    });
+    term1Reports.forEach((element) {});
     groupedElements.forEach((key, value) {
       var id = key ?? 0;
       log("message :::: $id");
