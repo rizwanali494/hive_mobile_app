@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
 
@@ -31,5 +32,6 @@ class ReportsScreenVM extends ChangeNotifier {
     pageController.jumpToPage(selectedYear);
     notifyListeners();
   }
-}
 
+  final userModel = GetIt.instance.get<UserModel>();
+}

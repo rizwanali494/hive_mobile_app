@@ -86,6 +86,7 @@ class AppStrings {
   static String announcement = "Announcement!";
   static String academicReport = "Academic Report";
   static String name = "Name";
+  static String id = "id";
   static String date = "Date";
   static String action = "Action";
   static String overAll = "OverAll";
@@ -127,4 +128,5 @@ class AppStrings {
   static String externalGradeUploaded = "External Grade Uploaded";
   static String externalGradeUpdated = "External Grade Updated";
   static String dismiss = "Dismiss";
+  static String Class = "Class";
 }
