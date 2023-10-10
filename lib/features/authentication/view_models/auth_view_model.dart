@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/get_it/api_service_instance.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
+import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart';
@@ -30,6 +31,7 @@ class AuthVM extends ChangeNotifier
 
   final isarService = IsarService<UserModel>();
   final sharedPref = GetIt.instance.get<SharedPreferences>();
+  late final userRepository = UserRepository(apiService: apiService);
 
   Future googleSignIn(BuildContext context) async {
     if (loggingIn) {
@@ -41,9 +43,6 @@ class AuthVM extends ChangeNotifier
     showLoaderDialog(context);
     var user = await authService.logIn();
     if (user is GoogleSignInAccount) {
-      // var body = {
-      //   "payload": {"email": "${user.email}", "email_verified": true}
-      // };
       //test email
       var body = {
         "payload": {
@@ -51,11 +50,13 @@ class AuthVM extends ChangeNotifier
           "email_verified": true
         }
       };
+      // var body = {
+      //   "payload": {"email": "${user.email}", "email_verified": true}
+      // };
+
       try {
-        var response = await apiService.post(
-          url: ApiEndpoints.googleLogin,
-          body: body,
-        );
+        final response = await userRepository.login(body);
+
         var responseBody = jsonDecode(response.body);
         var model = UserModel.fromJson(responseBody);
         log('got it');
@@ -77,6 +78,8 @@ class AuthVM extends ChangeNotifier
       if (context.mounted) {
         context.pop();
       }
+    } else {
+      context.pop();
     }
     loggingIn = false;
   }
