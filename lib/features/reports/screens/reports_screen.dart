@@ -8,6 +8,7 @@ import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_line_chart.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
+import 'package:hive_mobile/features/reports/screens/report_year.dart';
 import 'package:hive_mobile/features/reports/screens/year_row_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/line_chat_vm.dart';
@@ -133,7 +134,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           }
                           return RefreshIndicator(
                             onRefresh: provider.onRefresh,
-                            backgroundColor: styles.skyBlue,
+                            backgroundColor: styles.white,
                             child: SingleChildScrollView(
                               physics: AlwaysScrollableScrollPhysics(),
                               child: Column(
@@ -182,26 +183,19 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     color: styles.black.withOpacity(0.5),
                                   ),
                                   32.verticalSpace,
-                                  ReportBarChart(
-                                    controller: BarChartVM(
-                                      assessments1: provider.allReports
-                                          .where((element) =>
-                                              element.isYear1 &&
-                                              element.isMidTermAssessment)
-                                          .toList(),
-                                      assessments2: provider.allReports
-                                          .where((element) =>
-                                              element.isYear1 &&
-                                              element.isMidYearExam)
-                                          .toList(),
-                                      context: context,
-                                      showTermDetails: true,
-                                      examType1: "Mid Term Assessment",
-                                      examType2: "Mid Year Exam",
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Year 1",
+                                      style: styles.inter10w600,
                                     ),
-                                    term: 1,
                                   ),
-                                  10.verticalSpace,
+                                  24.verticalSpace,
+                                  ReportYear(
+                                    yearReports: provider.allReports
+                                        .where((element) => element.isYear1)
+                                        .toList(),
+                                  ),
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Wrap(
@@ -210,17 +204,53 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                       children: [
                                         for (int index = 0;
                                             index <
-                                                provider.subjectNames.length;
+                                                provider.year1Subjects.length;
                                             index++)
                                           BarChartLegendWidget(
                                               text:
-                                                  provider.subjectNames[index],
+                                                  provider.year1Subjects[index],
                                               color: colors[index] ??
                                                   Colors.blueAccent),
                                       ],
                                     ),
                                   ),
-                                  10.verticalSpace,
+                                  20.verticalSpace,
+                                  Divider(
+                                    thickness: 0.5,
+                                    color: styles.black.withOpacity(0.5),
+                                  ),
+                                  20.verticalSpace,
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Year 2",
+                                      style: styles.inter10w600,
+                                    ),
+                                  ),
+                                  24.verticalSpace,
+                                  ReportYear(
+                                    yearReports: provider.allReports
+                                        .where((element) => element.isYear2)
+                                        .toList(),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Wrap(
+                                      runSpacing: 10,
+                                      spacing: 10,
+                                      children: [
+                                        for (int index = 0;
+                                            index <
+                                                provider.year2Subjects.length;
+                                            index++)
+                                          BarChartLegendWidget(
+                                              text:
+                                                  provider.year2Subjects[index],
+                                              color: colors[index] ??
+                                                  Colors.blueAccent),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

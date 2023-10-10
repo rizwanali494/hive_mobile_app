@@ -39,7 +39,15 @@ class BarChartWidget extends StatelessWidget {
         maximum: 6,
         interval: 2,
       ),
-      series: barSeries,
+      series: barSeries.isNotEmpty
+          ? barSeries
+          : <ChartSeries<ReportModel, String>>[
+              BarSeries(
+                dataSource: [ReportModel(gpa: 0.0)],
+                xValueMapper: (datum, index) => "",
+                yValueMapper: (datum, index) => 0,
+              )
+            ],
     );
   }
 }

@@ -73,7 +73,6 @@ class ReportYearVM extends ChangeNotifier {
       final list = await repo.getReports(ids: reportIds);
       allReports = list;
       uiState = UiState.loaded();
-      setSubjectName();
     } catch (e) {
       log("Something went wrong : ${e.toString()}");
       uiState = UiState.error();
@@ -131,18 +130,25 @@ class ReportYearVM extends ChangeNotifier {
     return "Mid Year Exam";
   }
 
-  List<String> subjectNames = [];
-
-  void setSubjectName() {
+  List<String> subjectNames(List<ReportModel> reports) {
     Set<String> list = {};
-    for (final element in allReports) {
+    for (final element in reports) {
       final name = element.subjectName;
       if (name != null) {
         list.add(name);
       }
     }
-    log("subjects :: ${list}");
-    subjectNames = list.toList();
+    return list.toList();
+  }
+
+  List<String> get year1Subjects {
+    final list = allReports.where((element) => element.isYear1);
+    return subjectNames(list.toList());
+  }
+
+  List<String> get year2Subjects {
+    final list = allReports.where((element) => element.isYear2);
+    return subjectNames(list.toList());
   }
 
   Future<void> onRefresh() async {
