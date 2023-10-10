@@ -159,4 +159,30 @@ class ReportModel {
     map['entry_date'] = entryDate;
     return map;
   }
+
+  final _year1Ids = [1, 3, 5, 19];
+  final _year2Ids = [9, 11, 13, 15];
+  final _term1Ids = [1, 3, 9, 11];
+  final _term2Ids = [5, 19, 13, 15];
+  final _midTermAssessmentIds = [1, 9];
+  final _mockTermAssessmentIds = [5, 13];
+  final _mockExamIds = [19, 15];
+  final _midYearExam = [3, 11];
+
+  bool get isYear1 => _year1Ids.contains(assessmentId);
+
+  bool get isYear2 => _year2Ids.contains(assessmentId);
+
+  bool get isTerm1 => _term1Ids.contains(assessmentId);
+
+  bool get isTerm2 => _term2Ids.contains(assessmentId);
+
+  bool get isMidTermAssessment => _midTermAssessmentIds.contains(assessmentId);
+
+  bool get isMockTermAssessment =>
+      _mockTermAssessmentIds.contains(assessmentId);
+
+  bool get isMockExam => _mockExamIds.contains(assessmentId);
+
+  bool get isMidYearExam => _midYearExam.contains(assessmentId);
 }

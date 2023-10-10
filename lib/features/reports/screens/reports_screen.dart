@@ -119,105 +119,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   ],
                 ),
                 15.verticalSpace,
-                // if (provider.selectedYear < 0)
-                //   Consumer<ReportYearVM>(
-                //     builder: (context, provider, child) {
-                //       return Expanded(
-                //         child: SingleChildScrollView(
-                //           child: Column(
-                //             children: [
-                //               21.verticalSpace,
-                //               ReportLineChart(
-                //                 controller: LineChartVM(
-                //                     lineBarsDataTerm1:
-                //                         provider.lineBarsDataTerm1,
-                //                     lineBarsDataTerm2:
-                //                         provider.lineBarsDataTerm2),
-                //               ),
-                //               33.verticalSpace,
-                //               Row(
-                //                 children: [
-                //                   Padding(
-                //                     padding: EdgeInsets.only(
-                //                       left: 5.w,
-                //                     ),
-                //                     child: Text(
-                //                       "CGPA",
-                //                       style: styles.inter8w400,
-                //                     ),
-                //                   ),
-                //                   Expanded(
-                //                     child: Row(
-                //                       mainAxisAlignment:
-                //                           MainAxisAlignment.spaceAround,
-                //                       children: [
-                //                         YearRowWidget(
-                //                             context: context,
-                //                             color: styles.skyBlue,
-                //                             text: "${provider.examType1}"),
-                //                         YearRowWidget(
-                //                             context: context,
-                //                             color: styles.darkOrange,
-                //                             text: "${provider.examType2}"),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                 ],
-                //               ),
-                //               20.verticalSpace,
-                //               Divider(
-                //                 thickness: 0.5,
-                //                 color: styles.black.withOpacity(0.5),
-                //               ),
-                //               32.verticalSpace,
-                //               ReportBarChart(
-                //                 controller: BarChartVM(
-                //                   assessments1: provider.midTermReports,
-                //                   assessments2: provider.midYearReports,
-                //                   context: context,
-                //                   showTermDetails: true,
-                //                   examType1: "Mid Term Assessment",
-                //                   examType2: "Mid Year Exam",
-                //                 ),
-                //                 term: 1,
-                //               ),
-                //               10.verticalSpace,
-                //               ReportBarChart(
-                //                 controller: BarChartVM(
-                //                   assessments1: provider.mockTermReports,
-                //                   assessments2: provider.mockExamReports,
-                //                   context: context,
-                //                   showTermDetails: true,
-                //                   examType1: "Mock Term Assessment",
-                //                   examType2: "Mock Exam",
-                //                 ),
-                //                 term: 2,
-                //               ),
-                //               10.verticalSpace,
-                //               Align(
-                //                 alignment: Alignment.topRight,
-                //                 child: Wrap(
-                //                   runSpacing: 10,
-                //                   spacing: 10,
-                //                   children: [
-                //                     for (int index = 0;
-                //                         index < provider.subjectNames.length;
-                //                         index++)
-                //                       BarChartLegendWidget(
-                //                           text: provider.subjectNames[index],
-                //                           color: colors[index] ??
-                //                               Colors.blueAccent),
-                //                   ],
-                //                 ),
-                //               ),
-                //               10.verticalSpace,
-                //             ],
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //   )
-                // else
                 Expanded(
                   child: PageView(
                     physics: NeverScrollableScrollPhysics(),
@@ -283,26 +184,22 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   32.verticalSpace,
                                   ReportBarChart(
                                     controller: BarChartVM(
-                                      assessments1: provider.midTermReports,
-                                      assessments2: provider.midYearReports,
+                                      assessments1: provider.allReports
+                                          .where((element) =>
+                                              element.isYear1 &&
+                                              element.isMidTermAssessment)
+                                          .toList(),
+                                      assessments2: provider.allReports
+                                          .where((element) =>
+                                              element.isYear1 &&
+                                              element.isMidYearExam)
+                                          .toList(),
                                       context: context,
                                       showTermDetails: true,
                                       examType1: "Mid Term Assessment",
                                       examType2: "Mid Year Exam",
                                     ),
                                     term: 1,
-                                  ),
-                                  10.verticalSpace,
-                                  ReportBarChart(
-                                    controller: BarChartVM(
-                                      assessments1: provider.mockTermReports,
-                                      assessments2: provider.mockExamReports,
-                                      context: context,
-                                      showTermDetails: true,
-                                      examType1: "Mock Term Assessment",
-                                      examType2: "Mock Exam",
-                                    ),
-                                    term: 2,
                                   ),
                                   10.verticalSpace,
                                   Align(
@@ -341,35 +238,35 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             provider: TermDetailsVM(
                                 selectedTerm: provider.selectedTerm,
                                 assessmentSummary: provider.summaryByTerm,
-                                  selectTerm: provider.setSelectedTerm,
-                                  assessments: provider.termAssessments,
-                                  reportIdModel: provider.reportIdModel,
-                                  onRefresh: provider.onRefresh),
+                                selectTerm: provider.setSelectedTerm,
+                                assessments: provider.termAssessments,
+                                reportIdModel: provider.reportIdModel,
+                                onRefresh: provider.onRefresh),
+                          );
+                        },
+                      ),
+                      Consumer<ReportYear2VM>(
+                        builder: (context, provider, child) {
+                          if (provider.isLoading) {
+                            return Center(
+                              child: CircularProgressIndicator(),
                             );
-                          },
-                        ),
-                        Consumer<ReportYear2VM>(
-                          builder: (context, provider, child) {
-                            if (provider.isLoading) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
+                          }
 
-                            return ReportTermScreen(
-                              provider: TermDetailsVM(
-                                  selectedTerm: provider.selectedTerm,
-                                  assessmentSummary: provider.summaryByTerm,
-                                  selectTerm: provider.setSelectedTerm,
-                                  onRefresh: provider.onRefresh,
-                                  assessments: provider.termAssessments,
-                                  reportIdModel: provider.reportIdModel),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  )
+                          return ReportTermScreen(
+                            provider: TermDetailsVM(
+                                selectedTerm: provider.selectedTerm,
+                                assessmentSummary: provider.summaryByTerm,
+                                selectTerm: provider.setSelectedTerm,
+                                onRefresh: provider.onRefresh,
+                                assessments: provider.termAssessments,
+                                reportIdModel: provider.reportIdModel),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           );
