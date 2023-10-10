@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -39,7 +42,7 @@ class UtilFunctions {
     );
   }
 
-  static Future<List<Media>?> openImageTypeDialog(BuildContext context,
+  static Future<List<File>?> openImageTypeDialog(BuildContext context,
       {int imageCount = 1}) async {
     var selection = await showModalBottomSheet(
       context: context,
@@ -56,33 +59,43 @@ class UtilFunctions {
     return null;
   }
 
-  static Future<List<Media>?> imageFromGallery({
+  static Future<List<File>?> imageFromGallery({
     int imageCount = 1,
   }) async {
-    var file = await ImagesPicker.pick(
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
+    List<File> imageFiles = [];
+    for (var value in result?.files ?? <PlatformFile>[]) {
+      if (value.path != null) {
+        final file = File(value.path!);
+        imageFiles.add(file);
+      }
+    }
+    return imageFiles;
+  }
+
+  static Future<List<File>?> imageFromCamera() async {
+    var mediaFiles = await ImagesPicker.openCamera(
       maxSize: 300,
       quality: 0.6,
       pickType: PickType.image,
-      count: imageCount,
       cropOpt: CropOption(),
     );
-    return file;
+    List<File> imageFiles = [];
+
+    if (mediaFiles != null) {
+      for (int index = 0; index < mediaFiles.length; index++) {
+        final imageMedia = mediaFiles[index];
+        final file = File(imageMedia.path);
+        imageFiles.add(file);
+      }
+    }
+    return imageFiles;
   }
 
-  static Future<List<Media>?> imageFromCamera() async {
-    var file = await ImagesPicker.openCamera(
-      maxSize: 300,
-      quality: 0.6,
-      pickType: PickType.image,
-      cropOpt: CropOption(),
-    );
-    return file;
-  }
-
-  static void showToast(
-      {String? msg,
-      BuildContext? context,
-      List<Widget> actionButtons = const []}) {
+  static void showToast({String? msg,
+    BuildContext? context,
+    List<Widget> actionButtons = const []}) {
     // context = context ?? navigatorKey.currentContext;
 
     if (context == null || !(context.mounted)) {

@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -52,11 +52,15 @@ class AccountSettingVM extends ChangeNotifier {
   }
 
   void setImage(BuildContext context) async {
-    List<Media>? file = await UtilFunctions.openImageTypeDialog(context);
-    if (file != null) {
-      log("file picked");
-      image = File(file.first.path);
-      notifyListeners();
+    try {
+      final file = await UtilFunctions.openImageTypeDialog(context);
+      if (file != null) {
+        image = File(file.first.path);
+        notifyListeners();
+      }
+    } catch (e) {
+      log("message ${e.toString()}");
+      // TODO
     }
   }
 

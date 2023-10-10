@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class DocumentUploadWidget extends StatelessWidget {
-  final Function()? onTap;
+  final void Function([BuildContext? context])? onTap;
   final Function()? onRemove;
   final String? documentName;
   final bool isDownloading;
@@ -86,7 +86,7 @@ class DocumentUploadWidget extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               if (onTap != null) {
-                onTap!();
+                onTap!(context);
               }
             },
             style: ElevatedButton.styleFrom(

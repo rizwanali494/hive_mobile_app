@@ -116,7 +116,7 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
   String? documentName;
   bool hasDocumentChanged = false;
 
-  void pickFile() async {
+  void pickFile([BuildContext? context]) async {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
     if (result != null) {

@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:path/path.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -89,15 +89,17 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   File? documentFile;
   String? documentName;
 
-  void pickFile() async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
+  void pickFile([BuildContext? context]) async {
+    // FilePickerResult? result = await FilePicker.platform
+    //     .pickFiles(allowedExtensions: ["pdf"], type: FileType.image);
+    // FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    final result = await UtilFunctions.openImageTypeDialog(context!);
     if (result != null) {
       hasDocumentChanged = true;
       bool validFile = true;
       if (validFile) {
-        documentName = result.files.single.name;
-        documentFile = File(result.files.single.path!);
+        documentFile = File(result.first.path);
+        documentName = basename(documentFile!.path);
         notifyListeners();
       }
     } else {}
