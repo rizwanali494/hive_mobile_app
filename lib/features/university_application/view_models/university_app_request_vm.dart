@@ -285,7 +285,13 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       for (final doc in docs) {
         final fileName = basename(doc.path);
         DocumentWidgetController controller = DocumentWidgetController(
-            onRemove: onDocumentRemove, file: doc, documentName: fileName);
+            onRemove: (int id) {
+              log("message : ${id}");
+              documents.removeWhere((element) => element.id == id);
+              notifyListeners();
+            },
+            file: doc,
+            documentName: fileName);
         documents.add(controller);
       }
     }
@@ -296,8 +302,4 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     return documents.length > 8;
   }
 
-  void onDocumentRemove(int id) {
-    documents.removeWhere((element) => element.id == id);
-    notifyListeners();
-  }
 }

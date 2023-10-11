@@ -73,41 +73,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   ],
                 ),
                 34.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 4.w),
-                      child: Text(
-                        AppStrings.addDocument,
-                        style: styles.inter14w600
-                            .copyWith(color: styles.darkSlateGrey),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        provider.selectDocuments(context);
-                      },
-                      child: Icon(
-                        Icons.add,
-                        color: styles.skyBlue,
-                      ),
-                    ),
-                  ],
-                ),
-                14.verticalSpace,
-                for (final doc in provider.documents)
-                  DocumentUploadWidget(
-                    controller: doc,
-                  ),
 
-                // 28.verticalSpace,
-                // TitleTextField(
-                //   title: AppStrings.description,
-                //   controller: provider.description,
-                //   hintText: "",
-                // ),
-                // 26.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -139,8 +105,44 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   ],
                 ),
                 29.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 4.w),
+                      child: Text(
+                        AppStrings.addDocument,
+                        style: styles.inter14w600
+                            .copyWith(color: styles.darkSlateGrey),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        provider.selectDocuments(context);
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: styles.skyBlue,
+                      ),
+                    ),
+                  ],
+                ),
+                14.verticalSpace,
+                for (final doc in provider.documents)
+                  DocumentUploadWidget(
+                    controller: doc,
+                  ),
+                29.verticalSpace,
+
+                // 28.verticalSpace,
+                // TitleTextField(
+                //   title: AppStrings.description,
+                //   controller: provider.description,
+                //   hintText: "",
+                // ),
+                // 26.verticalSpace,
                 BlueElevatedButton(
-                  text: AppStrings.add,
+                  text: AppStrings.upload,
                   onTap: () {
                     provider.validate(
                         scholarshipAmount: provider.scholarShipAmount.text,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,14 +51,18 @@ class DocumentUploadWidget extends StatelessWidget {
                     badgeColor: styles.greyWhite,
                   ),
                   position: badges.BadgePosition.topEnd(end: -5),
-                  onTap: controller.onRemove!(controller.id ?? 0),
+                  onTap: () {
+                    controller.onRemove!(controller.id ?? 0);
+                  },
                   badgeContent: Icon(
                     Icons.close,
                     size: 10,
                     color: styles.darkGrey,
                   ),
                   child: GestureDetector(
-                    onTap: controller.onRemove!(controller.id ?? 0),
+                    onTap: () {
+                      controller.onRemove!(controller.id ?? 0);
+                    },
                     child: Container(
                       width: 51.w,
                       height: 51.h,
@@ -67,7 +73,14 @@ class DocumentUploadWidget extends StatelessWidget {
                         color: styles.greyWhite,
                       ),
                       child: controller.file != null
-                          ? Image.file(controller.file!)
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                10.r,
+                              ),
+                              child: Image.file(
+                                controller.file!,
+                                fit: BoxFit.cover,
+                              ))
                           : null,
                     ),
                   ),
