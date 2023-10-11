@@ -305,7 +305,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                       ),
                                       TextButton(
                                           onPressed: () {
-                                            provider.downloadAllDocs();
+                                            provider.retry();
                                           },
                                           child: Text(
                                             AppStrings.retry,

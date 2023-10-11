@@ -277,6 +277,7 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
   bool gettingSubjects = true;
 
   Future<void> getAllSubjects(int id) async {
+    gettingSubjects = true;
     try {
       var list = await externalGradeRepo.getAllSubjects(id: id);
       subjectsVM = List.generate(
@@ -293,6 +294,8 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
         log("message : ${e.response.body}");
       }
     }
+    gettingSubjects = false;
+    notifyListeners();
   }
 
   Future<void> deleteAllSubjects(List<int> ids) async {
@@ -409,5 +412,10 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
 
   bool get isMaxed {
     return documents.length > 8;
+  }
+
+  Future<void> retry() async {
+    downloadAllDocs();
+    getAllSubjects(editModel?.id ?? 0);
   }
 }

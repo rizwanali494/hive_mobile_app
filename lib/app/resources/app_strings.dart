@@ -20,7 +20,7 @@ class AppStrings {
   static String searchMessagesHere = "Search Messages Here";
   static String searchMessages = "Search Messages";
   static String profile = "Profile";
-  static String errorDocDownloading = "Couldn't download documents";
+  static String errorDocDownloading = "Couldn't download Documents";
   static String retry = "Retry";
   static String basicInfo = "Basic Info";
   static String gender = "Gender";
