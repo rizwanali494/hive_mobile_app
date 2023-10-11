@@ -284,12 +284,12 @@ class AddExternalGradeScreen extends StatelessWidget {
                           ),
                         ),
                         14.verticalSpace,
-                        DocumentUploadWidget(
-                          onTap: provider.pickFile,
-                          onRemove: provider.removeFile,
-                          documentName: provider.documentName,
-                          isDownloading: provider.fileDownloading,
-                        ),
+                        // DocumentUploadWidget(
+                        //   onTap: provider.pickFile,
+                        //   onRemove: provider.removeFile,
+                        //   documentName: provider.documentName,
+                        //   isDownloading: provider.fileDownloading,
+                        // ),
                       ],
                     ),
                     24.verticalSpace,

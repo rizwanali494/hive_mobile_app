@@ -1,5 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
-
+import 'package:uuid/uuid.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -62,12 +63,22 @@ class UtilFunctions {
   static Future<List<File>?> imageFromGallery({
     int imageCount = 1,
   }) async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
+    // FilePickerResult? result = await FilePicker.platform
+    //     .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
+    var result = await ImagesPicker.pick(
+      maxSize: 300,
+      count: imageCount,
+      quality: 0.6,
+      pickType: PickType.image,
+      cropOpt: CropOption(),
+    );
     List<File> imageFiles = [];
-    for (var value in result?.files ?? <PlatformFile>[]) {
-      if (value.path != null) {
-        final file = File(value.path!);
+    if (result != null) {
+      for (int index = 0; index < result.length; index++) {
+        final imageMedia = result[index];
+        final now = DateTime.now();
+        final file = await changeFileNameOnly(
+            File(imageMedia.path), now.millisecond.toString());
         imageFiles.add(file);
       }
     }
@@ -82,20 +93,32 @@ class UtilFunctions {
       cropOpt: CropOption(),
     );
     List<File> imageFiles = [];
-
     if (mediaFiles != null) {
       for (int index = 0; index < mediaFiles.length; index++) {
         final imageMedia = mediaFiles[index];
-        final file = File(imageMedia.path);
+        final now = DateTime.now();
+        final file = await changeFileNameOnly(
+            File(imageMedia.path), now.millisecond.toString());
         imageFiles.add(file);
       }
     }
     return imageFiles;
   }
 
-  static void showToast({String? msg,
-    BuildContext? context,
-    List<Widget> actionButtons = const []}) {
+  static Future<File> changeFileNameOnly(File file, String newFileName) {
+    final uuid = Uuid();
+    final id = uuid.v1();
+    var path = file.path;
+    var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
+    var newPath = path.substring(0, lastSeparator + 1) + "Image_${id}.jpg";
+    log("old: ${path} new file name: $newPath");
+    return file.rename(newPath);
+  }
+
+  static void showToast(
+      {String? msg,
+      BuildContext? context,
+      List<Widget> actionButtons = const []}) {
     // context = context ?? navigatorKey.currentContext;
 
     if (context == null || !(context.mounted)) {

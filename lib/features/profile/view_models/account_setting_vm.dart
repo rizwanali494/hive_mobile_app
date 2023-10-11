@@ -11,6 +11,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
 import 'package:images_picker/images_picker.dart';
+import 'package:path/path.dart';
 
 class AccountSettingVM extends ChangeNotifier {
   final userModel = GetIt.instance.get<UserModel>();
@@ -56,6 +57,8 @@ class AccountSettingVM extends ChangeNotifier {
       final file = await UtilFunctions.openImageTypeDialog(context);
       if (file != null) {
         image = File(file.first.path);
+        String nane = basename(file.first.path);
+        log(nane);
         notifyListeners();
       }
     } catch (e) {

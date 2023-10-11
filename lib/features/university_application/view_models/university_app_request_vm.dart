@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:path/path.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -272,6 +273,31 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       print('pdf downloading error = $error');
     }
     fileDownloading = false;
+    notifyListeners();
+  }
+
+  List<DocumentWidgetController> documents = [];
+
+  Future<void> selectDocuments(BuildContext context) async {
+    final docs =
+        await UtilFunctions.openImageTypeDialog(context, imageCount: 8);
+    if (docs != null) {
+      for (final doc in docs) {
+        final fileName = basename(doc.path);
+        DocumentWidgetController controller = DocumentWidgetController(
+            onRemove: onDocumentRemove, file: doc, documentName: fileName);
+        documents.add(controller);
+      }
+    }
+    notifyListeners();
+  }
+
+  bool get isMaxed {
+    return documents.length > 8;
+  }
+
+  void onDocumentRemove(int id) {
+    documents.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 }

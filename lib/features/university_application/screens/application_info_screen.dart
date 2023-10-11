@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_request_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
@@ -72,22 +73,35 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   ],
                 ),
                 34.verticalSpace,
-                Padding(
-                  padding: EdgeInsets.only(left: 4.w),
-                  child: Text(
-                    AppStrings.addDocument,
-                    style: styles.inter14w600
-                        .copyWith(color: styles.darkSlateGrey),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 4.w),
+                      child: Text(
+                        AppStrings.addDocument,
+                        style: styles.inter14w600
+                            .copyWith(color: styles.darkSlateGrey),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        provider.selectDocuments(context);
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: styles.skyBlue,
+                      ),
+                    ),
+                  ],
                 ),
                 14.verticalSpace,
-                DocumentUploadWidget(
-                  onTap: provider.pickFile,
-                  onRemove: provider.removeFile,
-                  documentName: provider.documentName,
-                  isDownloading: provider.fileDownloading,
-                ),
-                28.verticalSpace,
+                for (final doc in provider.documents)
+                  DocumentUploadWidget(
+                    controller: doc,
+                  ),
+
+                // 28.verticalSpace,
                 // TitleTextField(
                 //   title: AppStrings.description,
                 //   controller: provider.description,
@@ -129,9 +143,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   text: AppStrings.add,
                   onTap: () {
                     provider.validate(
-                      scholarshipAmount: provider.scholarShipAmount.text,
-                      scholarshipPercent: provider.scholarShipPercent.text,
-                      context: context);
+                        scholarshipAmount: provider.scholarShipAmount.text,
+                        scholarshipPercent: provider.scholarShipPercent.text,
+                        context: context);
                     // context.popUntil(
                     //   HomeScreen.route,
                     // );
