@@ -34,9 +34,12 @@ class ExternalGradeModel {
     institutionName = json['institution_name'];
     degree = json['degree'];
     state = json['state'];
-    resultFile = json['result_file'] != null
-        ? Attachments.fromJson(json['result_file'])
-        : null;
+    if (json['result_files'] != null) {
+      resultFile = [];
+      json['attachments'].forEach((v) {
+        resultFile?.add(Attachments.fromJson(v));
+      });
+    }
   }
 
   ExternalGradeModel.createJson(dynamic json) {
@@ -59,7 +62,7 @@ class ExternalGradeModel {
   String? institutionName;
   String? degree;
   String? state;
-  Attachments? resultFile;
+  List<Attachments>? resultFile;
 
   ExternalGradeModel copyWith({
     int? id,
@@ -71,7 +74,7 @@ class ExternalGradeModel {
     String? institutionName,
     String? degree,
     String? state,
-    Attachments? resultFile,
+    List<Attachments>? resultFile,
   }) =>
       ExternalGradeModel(
         id: id ?? this.id,
@@ -99,7 +102,7 @@ class ExternalGradeModel {
     map['degree'] = degree;
     map['state'] = state;
     if (resultFile != null) {
-      map['result_file'] = resultFile?.toJson();
+      map['result_files'] = resultFile?.map((e) => e.toJson()).toList();
     }
     return map;
   }

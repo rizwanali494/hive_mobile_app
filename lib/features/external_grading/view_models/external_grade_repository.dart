@@ -19,7 +19,7 @@ abstract class ExternalGradesRepo {
 
   Future<List<ExternalGradeModel>> getNextGradesList({int? offSet, int? limit});
 
-  Future<Attachments> uploadResultFile({required File file});
+  Future<List<Attachments>?> uploadResultFile({required List<File> files});
 
   Future<ExternalGradeModel> uploadExternalGrade({required Map map});
 
@@ -66,13 +66,22 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
   }
 
   @override
-  Future<Attachments> uploadResultFile({required File file}) async {
-    var response = await apiService.uploadSingleFile(
-      file: file,
-      purpose: FileUploadPurpose.EXTERNAL_GRADE_RESULT_FILE,
-    );
-    var body = jsonDecode(response.body);
-    return Attachments.fromJson(body);
+  Future<List<Attachments>?> uploadResultFile(
+      {required List<File> files}) async {
+    var response = await Future.wait([
+      for (final file in files)
+        apiService.uploadSingleFile(
+          file: file,
+          purpose: FileUploadPurpose.EXTERNAL_GRADE_RESULT_FILE,
+        )
+    ]);
+    List<Attachments> docFiles = [];
+    for (var value in response) {
+      final response = jsonDecode(value.body);
+      final model = Attachments.fromJson(response);
+      docFiles.add(model);
+    }
+    return docFiles;
   }
 
   @override

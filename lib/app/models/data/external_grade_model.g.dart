@@ -56,7 +56,7 @@ const ExternalGradeModelSchema = CollectionSchema(
     r'resultFile': PropertySchema(
       id: 7,
       name: r'resultFile',
-      type: IsarType.object,
+      type: IsarType.objectList,
       target: r'Attachments',
     ),
     r'state': PropertySchema(
@@ -119,11 +119,17 @@ int _externalGradeModelEstimateSize(
     }
   }
   {
-    final value = object.resultFile;
-    if (value != null) {
-      bytesCount += 3 +
-          AttachmentsSchema.estimateSize(
-              value, allOffsets[Attachments]!, allOffsets);
+    final list = object.resultFile;
+    if (list != null) {
+      bytesCount += 3 + list.length * 3;
+      {
+        final offsets = allOffsets[Attachments]!;
+        for (var i = 0; i < list.length; i++) {
+          final value = list[i];
+          bytesCount +=
+              AttachmentsSchema.estimateSize(value, offsets, allOffsets);
+        }
+      }
     }
   }
   {
@@ -162,7 +168,7 @@ void _externalGradeModelSerialize(
   writer.writeLong(offsets[4], object.hashCode);
   writer.writeLong(offsets[5], object.id);
   writer.writeString(offsets[6], object.institutionName);
-  writer.writeObject<Attachments>(
+  writer.writeObjectList<Attachments>(
     offsets[7],
     allOffsets,
     AttachmentsSchema.serialize,
@@ -191,10 +197,11 @@ ExternalGradeModel _externalGradeModelDeserialize(
     id: reader.readLongOrNull(offsets[5]),
     institutionName: reader.readStringOrNull(offsets[6]),
     localId: id,
-    resultFile: reader.readObjectOrNull<Attachments>(
+    resultFile: reader.readObjectList<Attachments>(
       offsets[7],
       AttachmentsSchema.deserialize,
       allOffsets,
+      Attachments(),
     ),
     state: reader.readStringOrNull(offsets[8]),
     subjects: reader.readObjectList<SubjectModel>(
@@ -229,10 +236,11 @@ P _externalGradeModelDeserializeProp<P>(
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readObjectOrNull<Attachments>(
+      return (reader.readObjectList<Attachments>(
         offset,
         AttachmentsSchema.deserialize,
         allOffsets,
+        Attachments(),
       )) as P;
     case 8:
       return (reader.readStringOrNull(offset)) as P;
@@ -1240,6 +1248,95 @@ extension ExternalGradeModelQueryFilter
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      resultFileLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'resultFile',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      resultFileIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'resultFile',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      resultFileIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'resultFile',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      resultFileLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'resultFile',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      resultFileLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'resultFile',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      resultFileLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'resultFile',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
       stateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1504,7 +1601,7 @@ extension ExternalGradeModelQueryFilter
 extension ExternalGradeModelQueryObject
     on QueryBuilder<ExternalGradeModel, ExternalGradeModel, QFilterCondition> {
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      resultFile(FilterQuery<Attachments> q) {
+      resultFileElement(FilterQuery<Attachments> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'resultFile');
     });
@@ -1879,7 +1976,7 @@ extension ExternalGradeModelQueryProperty
     });
   }
 
-  QueryBuilder<ExternalGradeModel, Attachments?, QQueryOperations>
+  QueryBuilder<ExternalGradeModel, List<Attachments>?, QQueryOperations>
       resultFileProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'resultFile');

@@ -90,9 +90,6 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                       child: TitleTextField(
                         title: AppStrings.scholarship,
                         keyboardType: TextInputType.number,
-                        onChanged: (p0) {
-                          provider.notify();
-                        },
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp(r'^[0-9]+.?[0-9]*')),

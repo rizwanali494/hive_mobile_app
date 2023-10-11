@@ -25,7 +25,7 @@ class GradeDetailVM extends ChangeNotifier {
 
   String get grade => model.subjects?.first.grade ?? "";
 
-  String get documentName => model.resultFile?.label ?? "";
+  String get documentName => "";
 
   final apiService = GetIt.instance.get<ApiService>();
   List<SubjectVM> subjectsVM = [];

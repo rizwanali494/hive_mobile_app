@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:path/path.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -13,11 +13,12 @@ import 'package:hive_mobile/app/models/data/subject_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
+import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
 
-class GradeAddingVM extends ChangeNotifier with UtilFunctions {
+class GradeAddingVM with UtilFunctions, ChangeNotifier {
   final grades = [
     "A",
     "B+",
@@ -112,54 +113,13 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     }
   }
 
-  File? documentFile;
-  String? documentName;
-  bool hasDocumentChanged = false;
 
-  void pickFile([BuildContext? context]) async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
-    if (result != null) {
-      hasDocumentChanged = true;
-      bool validFile = true;
-      if (validFile) {
-        documentName = result.files.single.name;
-        documentFile = File(result.files.single.path!);
-        notifyListeners();
-      }
-    } else {}
-  }
 
-  void removeFile() async {
-    documentFile = null;
-    documentName = null;
-    notifyListeners();
-  }
 
   bool fileDownloading = false;
 
-  Future<void> _downloadFile(String url, String filename) async {
-    fileDownloading = true;
-    notifyListeners();
-    var httpClient = new HttpClient();
-    try {
-      var request = await httpClient.getUrl(Uri.parse(url));
-      var response = await request.close();
-      var bytes = await consolidateHttpClientResponseBytes(response);
-      final dir = await getTemporaryDirectory();
-      File file = File('${dir.path}/$filename');
-      await file.writeAsBytes(bytes);
-      this.documentFile = file;
-      documentName = filename;
-    } catch (error) {
-      print('pdf downloading error = $error');
-    }
-    fileDownloading = false;
-    notifyListeners();
-  }
-
   bool validateData() {
-    bool isDocumentEmpty = documentFile == null;
+    bool isDocumentEmpty = documents.isEmpty;
     bool isSubjectsEmpty = subjectsVM.isEmpty;
     bool isInstituteEmpty = institute.text.trim().isEmpty;
     bool validate = isDocumentEmpty || isSubjectsEmpty || isInstituteEmpty;
@@ -187,13 +147,12 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
 
     try {
       var resultFile = await uploadDocuments();
-      log("message : ${resultFile?.id}");
       var institutionName = institute.text.trim();
       var degree = selectedDegree ?? "";
       var body = {
         "institution_name": institutionName,
         "degree": degree,
-        "result_file": resultFile?.id,
+        "result_files": resultFile?.map((e) => e.id).toList(),
       };
       var model = await externalGradeRepo.uploadExternalGrade(map: body);
       log("popped 1");
@@ -245,17 +204,17 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     log("updating external grade");
     showLoaderDialog(context);
     try {
-      var file = editModel!.resultFile;
-      if (hasDocumentChanged) {
-        file = await uploadDocuments();
-      }
+      var file = await getUpdatedDocuments();
+      // if (hasDocumentChanged) {
+      //   file = await uploadDocuments();
+      // }
       await updateSubjects();
       var institutionName = institute.text.trim();
       var degree = selectedDegree ?? "";
       var body = {
         "institution_name": institutionName,
         "degree": degree,
-        "result_file": file?.id,
+        "result_files": file?.map((e) => e.id).toList(),
       };
       log(body.toString());
       var model = await externalGradeRepo.updateExternalGrade(
@@ -301,11 +260,6 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
     );
   }
 
-  Future<Attachments?> uploadDocuments() async {
-    var fileModel =
-        await externalGradeRepo.uploadResultFile(file: documentFile!);
-    return fileModel;
-  }
 
   ExternalGradeModel? editModel;
 
@@ -315,8 +269,7 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       selectedDegree = degree.first;
     }
     institute.text = model.institutionName ?? "";
-    log("${model.resultFile?.file}");
-    _downloadFile(model.resultFile?.file ?? "", model.resultFile?.label ?? "");
+    downloadAllDocs();
     getAllSubjects(model.id ?? 0);
     editModel = model;
   }
@@ -347,5 +300,114 @@ class GradeAddingVM extends ChangeNotifier with UtilFunctions {
       for (var element in ids) externalGradeRepo.deleteSubject(id: element)
     ]);
     return;
+  }
+
+  /// todo batch file
+  List<DocumentWidgetController> documents = [];
+
+  Future<void> selectDocuments(BuildContext context) async {
+    final docs =
+        await UtilFunctions.openImageTypeDialog(context, imageCount: 8);
+    if (docs != null) {
+      for (final doc in docs) {
+        final fileName = basename(doc.path);
+        DocumentWidgetController controller = DocumentWidgetController(
+            onRemove: (String? id) {
+              log("message : ${id}");
+              documents.removeWhere((element) => element.id == id);
+              notifyListeners();
+            },
+            file: doc,
+            documentName: fileName);
+        documents.add(controller);
+      }
+    }
+    notifyListeners();
+  }
+
+  bool errorDownloading = false;
+
+  Future<void> downloadAllDocs() async {
+    fileDownloading = true;
+    errorDownloading = false;
+    notifyListeners();
+    try {
+      final files = await Future.wait([
+        for (final element in this.editModel?.resultFile ?? <Attachments>[])
+          downloadDoc(
+              fileName: element.label ?? "",
+              url: element.file ?? "",
+              fileId: element.id),
+      ]);
+      for (var value in files) {
+        if (value != null) {
+          documents.add(value);
+        }
+      }
+    } catch (e) {
+      errorDownloading = true;
+      log("error ${e.toString()}");
+      notifyListeners();
+    }
+    fileDownloading = false;
+    notifyListeners();
+  }
+
+  Future<DocumentWidgetController?> downloadDoc(
+      {required String fileName,
+      required String url,
+      required String? fileId}) async {
+    final file = await _downloadFile(url, fileName);
+    if (file == null) {
+      return null;
+    }
+    final controller = DocumentWidgetController(
+        documentName: fileName,
+        fileId: fileId,
+        file: file,
+        downloaded: true,
+        onRemove: (id) {
+          documents.removeWhere((element) => element.id == id);
+          notifyListeners();
+        });
+    return controller;
+  }
+
+  Future<File?> _downloadFile(String url, String filename) async {
+    log("downloading: $filename");
+    var httpClient = new HttpClient();
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    var bytes = await consolidateHttpClientResponseBytes(response);
+    final dir = await getTemporaryDirectory();
+    File file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes);
+    return file;
+  }
+
+  Future<List<Attachments>?> getUpdatedDocuments() async {
+    List<Attachments> list = [];
+    final downloadedIds = documents.map((e) => e.fileId).toList();
+    list.addAll(editModel?.resultFile
+            ?.where((element) => downloadedIds.contains(element.id))
+            .toList() ??
+        []);
+    final toDownload =
+        documents.where((element) => !element.downloaded).toList();
+    log("toUpload : ${toDownload.length}");
+    var files = await externalGradeRepo.uploadResultFile(
+        files: toDownload.map((e) => e.file).toList());
+    list.addAll([...?files]);
+    return list;
+  }
+
+  Future<List<Attachments>?> uploadDocuments() async {
+    var fileModel = await externalGradeRepo.uploadResultFile(
+        files: documents.map((e) => e.file).toList());
+    return fileModel;
+  }
+
+  bool get isMaxed {
+    return documents.length > 8;
   }
 }
