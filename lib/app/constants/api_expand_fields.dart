@@ -8,6 +8,6 @@ class ApiExpandField {
   static String university = "university";
   static String documents = "documents";
   static String subjects = "subjects";
-  static String result_file = "result_file";
+  static String result_file = "result_files";
   static String assessment_id_in = "assessment_id__in";
 }

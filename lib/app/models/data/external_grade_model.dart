@@ -36,7 +36,7 @@ class ExternalGradeModel {
     state = json['state'];
     if (json['result_files'] != null) {
       resultFile = [];
-      json['attachments'].forEach((v) {
+      json['result_files'].forEach((v) {
         resultFile?.add(Attachments.fromJson(v));
       });
     }
