@@ -23,7 +23,8 @@ abstract class UniversityApplicationRepository {
 
   Future<List<UniversityModel>> getAllUniversities();
 
-  Future<Attachments> uploadUniversityDocumentFile({required File file});
+  Future<List<Attachments>> uploadUniversityDocumentFile(
+      {required List<File> files});
 
   Future<UniversityApplicationModel> uploadUniversityDocument(
       {required Map body});
@@ -78,13 +79,22 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   }
 
   @override
-  Future<Attachments> uploadUniversityDocumentFile({required File file}) async {
-    var response = await apiService.uploadSingleFile(
-      file: file,
-      purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
-    );
-    var body = jsonDecode(response.body);
-    return Attachments.fromJson(body);
+  Future<List<Attachments>> uploadUniversityDocumentFile(
+      {required List<File> files}) async {
+    var response = await Future.wait([
+      for (final file in files)
+        apiService.uploadSingleFile(
+          file: file,
+          purpose: FileUploadPurpose.UNIVERSITY_APPLICATION_DOCUMENT,
+        )
+    ]);
+    List<Attachments> docFiles = [];
+    for (var value in response) {
+      final response = jsonDecode(value.body);
+      final model = Attachments.fromJson(response);
+      docFiles.add(model);
+    }
+    return docFiles;
   }
 
   Future<UniversityApplicationModel> uploadUniversityDocument(

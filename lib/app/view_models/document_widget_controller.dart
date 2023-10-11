@@ -1,20 +1,26 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:uuid/v1.dart';
 
 class DocumentWidgetController {
-  final Function(int id)? onRemove;
+  final Function(String? id)? onRemove;
   final String? documentName;
-  final File? file;
-  int? id;
+  final File file;
+  String? fileId;
+  String? id;
+  bool downloaded;
 
   DocumentWidgetController({
     this.documentName,
     this.onRemove,
-    this.file,
+    required this.file,
     this.id,
+    this.fileId,
+    this.downloaded = false,
   }) {
-    id ??= DateTime.now().millisecondsSinceEpoch;
+    final uuid = UuidV1();
+    id ??= uuid.generate();
   }
 
   @override

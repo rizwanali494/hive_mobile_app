@@ -110,7 +110,7 @@ class UtilFunctions {
     final id = uuid.v1();
     var path = file.path;
     var lastSeparator = path.lastIndexOf(Platform.pathSeparator);
-    var newPath = path.substring(0, lastSeparator + 1) + "Image_${id}.jpg";
+    var newPath = path.substring(0, lastSeparator + 1) + "Doc_${id}.jpg";
     log("old: ${path} new file name: $newPath");
     return file.rename(newPath);
   }

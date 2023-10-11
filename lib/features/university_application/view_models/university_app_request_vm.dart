@@ -87,51 +87,33 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     return value == _selectedStatus;
   }
 
-  File? documentFile;
-  String? documentName;
+  // void removeFile() async {
+  //   documentName = null;
+  //   notifyListeners();
+  // }
 
-  void pickFile([BuildContext? context]) async {
-    // FilePickerResult? result = await FilePicker.platform
-    //     .pickFiles(allowedExtensions: ["pdf"], type: FileType.image);
-    // FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
-    final result = await UtilFunctions.openImageTypeDialog(context!);
-    if (result != null) {
-      hasDocumentChanged = true;
-      bool validFile = true;
-      if (validFile) {
-        documentFile = File(result.first.path);
-        documentName = basename(documentFile!.path);
-        notifyListeners();
-      }
-    } else {}
-  }
-
-  void removeFile() async {
-    documentFile = null;
-    documentName = null;
-    notifyListeners();
-  }
-
-  void validate(
-      {required String scholarshipAmount,
-      required String scholarshipPercent,
-      required BuildContext context}) {
+  bool validate() {
+    final scholarshipAmount = scholarShipAmount.text.trim();
+    final scholarshipPercent = scholarShipPercent.text.trim();
     if (scholarshipAmount.trim().isEmpty ||
-        documentFile == null ||
+        documents.isEmpty ||
         scholarshipPercent.trim().isEmpty) {
       log("empty");
-      return;
+      return false;
     }
-    uploadFile(
-        scholarshipAmount: scholarshipAmount,
-        scholarshipPercent: scholarshipPercent,
-        context: context);
+    return true;
+    // uploadFile(
+    //     scholarshipAmount: scholarshipAmount,
+    //     scholarshipPercent: scholarshipPercent,
+    //     context: context);
   }
 
-  void uploadFile(
-      {required String scholarshipAmount,
-      required String scholarshipPercent,
-      required BuildContext context}) async {
+  void uploadFile({required BuildContext context}) async {
+    final scholarshipAmount = scholarShipAmount.text.trim();
+    final scholarshipPercent = scholarShipPercent.text.trim();
+    if (!validate()) {
+      return;
+    }
     showLoaderDialog(context);
     try {
       var documents = await uploadDocuments();
@@ -139,7 +121,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
       var body = {
         "university": selectedUniversity?.id,
-        "documents": ["e29e1a999d1693206609", "e29e1a999d1693206609"],
+        "documents": documents?.map((e) => e.id).toList(),
         "description": "Lorem Porum",
         "scholarship_amount": scholarshipAmountDigit,
         "scholarship_percent": scholarshipPercentDigit,
@@ -149,7 +131,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       if (model == null) {
         log(body.toString());
         var createdModel =
-            await repository.uploadUniversityDocument(body: body);
+        await repository.uploadUniversityDocument(body: body);
         updatedModel = createdModel.copyWith(
           documents: documents,
           university: selectedUniversity,
@@ -164,6 +146,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       context.pop();
       context.pop(updatedModel);
     } catch (e) {
+      context.pop();
       if (e is HTTPStatusCodeException) {
         log(e.response.statusCode.toString());
         log(e.response.body.toString());
@@ -198,21 +181,24 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
 
   Future<List<Attachments>?> getUpdatedDocuments() async {
     List<Attachments> list = [];
-    if (hasDocumentChanged) {
-      var fileModel =
-          await repository.uploadUniversityDocumentFile(file: documentFile!);
-      return [fileModel];
-    }
-    if (model?.documents != null || (model?.documents?.isNotEmpty ?? false)) {
-      list.add(model!.documents!.first);
-    }
+    final downloadedIds = documents.map((e) => e.fileId).toList();
+    list.addAll(model?.documents
+            ?.where((element) => downloadedIds.contains(element.id))
+            .toList() ??
+        []);
+    final toDownload =
+        documents.where((element) => !element.downloaded).toList();
+    log("toUpload : ${toDownload.length}");
+    var files = await repository.uploadUniversityDocumentFile(
+        files: toDownload.map((e) => e.file).toList());
+    list.addAll(files);
     return list;
   }
 
   Future<List<Attachments>?> uploadDocuments() async {
-    var fileModel =
-        await repository.uploadUniversityDocumentFile(file: documentFile!);
-    return [fileModel];
+    var fileModel = await repository.uploadUniversityDocumentFile(
+        files: documents.map((e) => e.file).toList());
+    return fileModel;
   }
 
   void setModelValues() {
@@ -226,8 +212,9 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     // description.text = model?.description ?? "";
     isGettingUniversities = false;
     if (model?.documents?.isNotEmpty ?? false) {
-      _downloadFile(model?.documents?.first.file ?? "",
-          model?.documents?.first.label ?? "document");
+      downloadAllDocs();
+      // _downloadFile(model?.documents?.first.file ?? "",
+      //     model?.documents?.first.label ?? "document");
     } else {
       log("file empty");
       fileDownloading = false;
@@ -256,24 +243,16 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
 
   bool fileDownloading = false;
 
-  Future<void> _downloadFile(String url, String filename) async {
-    fileDownloading = true;
-    notifyListeners();
+  Future<File?> _downloadFile(String url, String filename) async {
+    log("downloading: $filename");
     var httpClient = new HttpClient();
-    try {
-      var request = await httpClient.getUrl(Uri.parse(url));
-      var response = await request.close();
-      var bytes = await consolidateHttpClientResponseBytes(response);
-      final dir = await getTemporaryDirectory();
-      File file = File('${dir.path}/$filename');
-      await file.writeAsBytes(bytes);
-      this.documentFile = file;
-      documentName = filename;
-    } catch (error) {
-      print('pdf downloading error = $error');
-    }
-    fileDownloading = false;
-    notifyListeners();
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    var bytes = await consolidateHttpClientResponseBytes(response);
+    final dir = await getTemporaryDirectory();
+    File file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes);
+    return file;
   }
 
   List<DocumentWidgetController> documents = [];
@@ -285,7 +264,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       for (final doc in docs) {
         final fileName = basename(doc.path);
         DocumentWidgetController controller = DocumentWidgetController(
-            onRemove: (int id) {
+            onRemove: (String? id) {
               log("message : ${id}");
               documents.removeWhere((element) => element.id == id);
               notifyListeners();
@@ -294,12 +273,64 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
             documentName: fileName);
         documents.add(controller);
       }
+      hasDocumentChanged = true;
     }
     notifyListeners();
+  }
+
+  bool errorDownloading = false;
+
+  Future<void> downloadAllDocs() async {
+    fileDownloading = true;
+    errorDownloading = false;
+    notifyListeners();
+    try {
+      final files = await Future.wait([
+        for (final element in this.model?.documents ?? <Attachments>[])
+          downloadDoc(
+              fileName: element.label ?? "",
+              url: element.file ?? "",
+              fileId: element.id),
+      ]);
+      for (var value in files) {
+        if (value != null) {
+          documents.add(value);
+        }
+      }
+    } catch (e) {
+      errorDownloading = true;
+      log("error ${e.toString()}");
+      notifyListeners();
+    }
+    fileDownloading = false;
+    notifyListeners();
+  }
+
+  Future<DocumentWidgetController?> downloadDoc(
+      {required String fileName,
+      required String url,
+      required String? fileId}) async {
+    final file = await _downloadFile(url, fileName);
+    if (file == null) {
+      return null;
+    }
+    final controller = DocumentWidgetController(
+        documentName: fileName,
+        fileId: fileId,
+        file: file,
+        downloaded: true,
+        onRemove: (id) {
+          documents.removeWhere((element) => element.id == id);
+          notifyListeners();
+        });
+    return controller;
   }
 
   bool get isMaxed {
     return documents.length > 8;
   }
 
+  void notify() {
+    notifyListeners();
+  }
 }

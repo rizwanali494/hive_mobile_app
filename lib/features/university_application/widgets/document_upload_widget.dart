@@ -52,7 +52,7 @@ class DocumentUploadWidget extends StatelessWidget {
                   ),
                   position: badges.BadgePosition.topEnd(end: -5),
                   onTap: () {
-                    controller.onRemove!(controller.id ?? 0);
+                    controller.onRemove!(controller.id);
                   },
                   badgeContent: Icon(
                     Icons.close,
@@ -61,7 +61,7 @@ class DocumentUploadWidget extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      controller.onRemove!(controller.id ?? 0);
+                      controller.onRemove!(controller.id);
                     },
                     child: Container(
                       width: 51.w,
@@ -72,16 +72,14 @@ class DocumentUploadWidget extends StatelessWidget {
                         ),
                         color: styles.greyWhite,
                       ),
-                      child: controller.file != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                10.r,
-                              ),
-                              child: Image.file(
-                                controller.file!,
-                                fit: BoxFit.cover,
-                              ))
-                          : null,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            10.r,
+                          ),
+                          child: Image.file(
+                            controller.file,
+                            fit: BoxFit.cover,
+                          )),
                     ),
                   ),
                 ),

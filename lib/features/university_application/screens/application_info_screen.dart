@@ -65,15 +65,11 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                       title: AppStrings.rejected,
                       iconPath: SvgIcons.undecided,
                       spaceBetween: 7,
-                      onTap: () {
-                        provider.selectStatus(AppStrings.rejected);
-                      },
                       isSelected: provider.iSelected(AppStrings.rejected),
                     ),
                   ],
                 ),
                 34.verticalSpace,
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -94,6 +90,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                       child: TitleTextField(
                         title: AppStrings.scholarship,
                         keyboardType: TextInputType.number,
+                        onChanged: (p0) {
+                          provider.notify();
+                        },
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp(r'^[0-9]+.?[0-9]*')),
@@ -105,53 +104,67 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   ],
                 ),
                 29.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 4.w),
-                      child: Text(
-                        AppStrings.addDocument,
-                        style: styles.inter14w600
-                            .copyWith(color: styles.darkSlateGrey),
-                      ),
+                if (provider.fileDownloading)
+                  Center(
+                    child: CircularProgressIndicator(),
+                  )
+                else if (provider.errorDownloading)
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          AppStrings.errorDocDownloading,
+                          style: styles.inter12w500,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              provider.downloadAllDocs();
+                            },
+                            child: Text(
+                              AppStrings.retry,
+                              style: styles.inter12w400Italic,
+                            )),
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        provider.selectDocuments(context);
-                      },
-                      child: Icon(
-                        Icons.add,
-                        color: styles.skyBlue,
+                  )
+                else ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 4.w),
+                        child: Text(
+                          AppStrings.addDocument,
+                          style: styles.inter14w600
+                              .copyWith(color: styles.darkSlateGrey),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                14.verticalSpace,
-                for (final doc in provider.documents)
-                  DocumentUploadWidget(
-                    controller: doc,
+                      GestureDetector(
+                        onTap: () {
+                          provider.selectDocuments(context);
+                        },
+                        child: Icon(
+                          Icons.add,
+                          color: styles.skyBlue,
+                        ),
+                      ),
+                    ],
                   ),
+                  14.verticalSpace,
+                  for (final doc in provider.documents)
+                    DocumentUploadWidget(
+                      controller: doc,
+                    ),
+                ],
                 29.verticalSpace,
-
-                // 28.verticalSpace,
-                // TitleTextField(
-                //   title: AppStrings.description,
-                //   controller: provider.description,
-                //   hintText: "",
-                // ),
-                // 26.verticalSpace,
                 BlueElevatedButton(
                   text: AppStrings.upload,
-                  onTap: () {
-                    provider.validate(
-                        scholarshipAmount: provider.scholarShipAmount.text,
-                        scholarshipPercent: provider.scholarShipPercent.text,
-                        context: context);
-                    // context.popUntil(
-                    //   HomeScreen.route,
-                    // );
-                  },
+                  onTap: !provider.validate()
+                      ? null
+                      : () {
+                          provider.uploadFile(context: context);
+                        },
                 )
               ],
             ),
