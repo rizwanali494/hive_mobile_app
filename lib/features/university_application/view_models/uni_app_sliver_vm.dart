@@ -2,6 +2,7 @@ import 'package:hive_mobile/app/models/data/university_application/university_ap
 
 class UniAppSliverVM {
   String title;
+  final void Function(UniversityApplicationModel model) onUpdate;
 
   final bool isLoading;
   final bool hasAll;
@@ -16,5 +17,6 @@ class UniAppSliverVM {
     required this.hasAll,
     required this.onTap,
     required this.isGettingMore,
+    required this.onUpdate,
   });
 }

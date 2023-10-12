@@ -31,12 +31,22 @@ class UniversityAppSliver extends StatelessWidget {
           SliverToBoxAdapter(
             child: UniversityAppShimmer(),
           )
+        else if (controller.applications.isEmpty)
+          SliverToBoxAdapter(
+            child: Center(
+              child: Text(
+                "No Application Found",
+                style: styles.inter12w400Italic,
+              ),
+            ),
+          )
         else
           SliverList(
             delegate: SliverChildBuilderDelegate(
                 (context, index) => UniversityApplicationWidget(
                       controller: UniversityAppWidgetVM(
                         model: controller.applications[index],
+                        onUpdate: controller.onUpdate,
                       ),
                     ),
                 childCount: controller.applications.length),

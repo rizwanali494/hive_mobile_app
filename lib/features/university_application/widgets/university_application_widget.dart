@@ -44,6 +44,9 @@ class UniversityApplicationWidget extends StatelessWidget {
                         .push(UniversitySelectionScreen.route, extra: {
                       "model": controller.model,
                     });
+                    if (model is UniversityApplicationModel) {
+                      controller.onUpdate(model);
+                    }
                     // UniversityApplicationModel? updatedModel =
                     //     model as UniversityApplicationModel?;
                     // provider.updateUniversityModel(model,

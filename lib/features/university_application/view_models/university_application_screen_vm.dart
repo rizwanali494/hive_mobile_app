@@ -123,7 +123,9 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
 
   Future<void> setLocalApplications() async {
     try {
-      isarService.saveAll(applications);
+      isarService
+          .clearCollection()
+          .then((value) => isarService.saveAll(applications));
     } catch (e) {
       // TODO
     }
@@ -134,10 +136,13 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   void updateUniversityModel(model) {
+    log("updated model : ${model}");
     int index = applications.indexOf(model);
     if (index > -1) {
       applications[index] = model;
     }
+    notifyListeners();
+    updateLocalInstance(model);
   }
 
   Future<void> updateLocalInstance(UniversityApplicationModel model) async {
@@ -156,6 +161,9 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
       hasAll: _hasAll,
       isGettingMore: isGettingMoreAccepted,
       title: applicationType(),
+      onUpdate: (UniversityApplicationModel model) {
+        updateUniversityModel(model);
+      },
     );
   }
 

@@ -66,6 +66,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                       iconPath: SvgIcons.undecided,
                       spaceBetween: 7,
                       isSelected: provider.iSelected(AppStrings.rejected),
+                      onTap: () {
+                        provider.selectStatus(AppStrings.rejected);
+                      },
                     ),
                   ],
                 ),
