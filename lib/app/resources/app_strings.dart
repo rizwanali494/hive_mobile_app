@@ -118,7 +118,7 @@ class AppStrings {
   static String subjectChange = "Subject/Teacher Change Request";
   static String sendRequest = "Send Request";
   static String uploadResult = "Upload Result";
-  static String editBios = "Edit Bios";
+  static String editStatus = "Edit Status";
   static String edit = "Edit";
   static String documentName = "Document Name";
   static String typeMessagesHere = "Type message here...";

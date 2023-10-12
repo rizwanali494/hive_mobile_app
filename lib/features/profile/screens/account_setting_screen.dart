@@ -78,7 +78,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                     ),
                     30.verticalSpace,
                     TitleTextField(
-                      hintText: AppStrings.editBios,
+                      hintText: AppStrings.editStatus,
                       controller: provider.biosCtrl,
                       keyboardType: TextInputType.multiline,
                       maxLength: 150,
