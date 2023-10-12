@@ -2,6 +2,8 @@ class AppStrings {
   static String appName = "Hive";
   static String welcome = "Welcome";
   static String signInWithGoogle = "Sign in with Google.";
+  static String signInWithBeaconiteId =
+      "Please sign in with your Beaconite Email ID.";
   static String continueWithGoogle = "Continue with Google";
   static String enterBackupEmail = "Enter Backup Email";
   static String email = "Email";
@@ -63,7 +65,7 @@ class AppStrings {
   static String characterCertificate = "Character Certificate";
   static String applied = "Applied";
   static String viewDetails = "View Details";
-  static String degree = "Degree";
+  static String certificate = "Certificate";
   static String institute = "Institute";
   static String grade = "Grade";
   static String document = "Document";
@@ -111,6 +113,8 @@ class AppStrings {
   static String approved = "Approved";
   static String myRequest = "My Requests";
   static String requestName = "Request Name";
+  static String closedRequest = "Closed Requests";
+  static String openRequest = "Open Requests";
   static String subjectChange = "Subject/Teacher Change Request";
   static String sendRequest = "Send Request";
   static String uploadResult = "Upload Result";

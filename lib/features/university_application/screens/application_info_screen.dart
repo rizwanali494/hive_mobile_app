@@ -91,7 +91,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                     18.horizontalSpace,
                     Expanded(
                       child: TitleTextField(
-                        title: AppStrings.scholarship,
+                        title: "${AppStrings.scholarship} %",
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(

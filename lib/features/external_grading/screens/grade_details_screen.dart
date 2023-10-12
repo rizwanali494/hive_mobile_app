@@ -76,7 +76,7 @@ class GradeDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GradeDetailWidget(
-                            title: AppStrings.degree,
+                            title: AppStrings.certificate,
                           ),
                           GradeDetailWidget(
                             title: AppStrings.institute,

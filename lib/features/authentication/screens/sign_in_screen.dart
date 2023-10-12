@@ -80,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 17.h,
                           ),
                           Text(
-                            AppStrings.signInWithGoogle,
+                            AppStrings.signInWithBeaconiteId,
                             style: styles.inter12w400
                                 .copyWith(color: styles.white),
                           ),

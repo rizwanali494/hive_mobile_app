@@ -60,15 +60,19 @@ class _UniversityApplicationScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BlueActionButton(
-                      title: AppStrings.addApplication,
-                      onTap: () async {
-                        var model =
-                            await context.push(UniversitySelectionScreen.route);
-                        log(model.runtimeType.toString());
-                        // provider.addUniversityApp(model);
-                      },
-                    ),
+                    Builder(builder: (context) {
+                      return BlueActionButton(
+                        title: AppStrings.addApplication,
+                        onTap: () async {
+                          var model = await context
+                              .push(UniversitySelectionScreen.route);
+                          log(model.runtimeType.toString());
+                          context
+                              .read<PreviousApplicationVM>()
+                              .addUniversityApp(model);
+                        },
+                      );
+                    }),
                     3.verticalSpace,
                     Expanded(
                       child: Padding(

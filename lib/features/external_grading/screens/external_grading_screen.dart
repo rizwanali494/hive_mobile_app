@@ -70,7 +70,7 @@ class ExternalGradingScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: GradingTitleWidget(
-                              title: AppStrings.degree,
+                              title: AppStrings.certificate,
                             ),
                           ),
                         ],

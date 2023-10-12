@@ -70,7 +70,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppStrings.degree,
+                            AppStrings.certificate,
                             style: styles.inter14w600.copyWith(
                               color: styles.darkSlateGrey,
                             ),

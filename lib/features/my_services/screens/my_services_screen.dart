@@ -52,7 +52,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                       bool val =
                           await context.push(NewRequestScreen.route) ?? false;
                       if (val) {
-                        provider.refresh();
+                        provider.refreshList();
                       }
                     },
                     title: AppStrings.initiateRequest,
@@ -62,21 +62,22 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                     children: [
                       ServiceCountWidget(
                         color: styles.yellowGreen,
-                        count: provider.totalApproved.toString(),
-                        type: AppStrings.approved,
+                        count: provider.totalPending.toString(),
+                        type: AppStrings.openRequest,
                       ),
                       13.horizontalSpace,
                       ServiceCountWidget(
                         color: styles.darkOrange,
-                        count: provider.totalPending.toString(),
-                        type: AppStrings.pending,
+                        count: (provider.totalApproved + provider.totalRejected)
+                            .toString(),
+                        type: AppStrings.closedRequest,
                       ),
-                      13.horizontalSpace,
-                      ServiceCountWidget(
-                        color: styles.red,
-                        count: provider.totalRejected.toString(),
-                        type: AppStrings.rejected,
-                      ),
+                      // 13.horizontalSpace,
+                      // ServiceCountWidget(
+                      //   color: styles.red,
+                      //   count: provider.totalRejected.toString(),
+                      //   type: AppStrings.rejected,
+                      // ),
                     ],
                   ),
                   34.verticalSpace,
@@ -115,21 +116,23 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                         },
                       ),
                     )
-                  else if (provider.hasError)
+                  else
+                    if (provider.hasError)
                     Expanded(
                       child: ErrorTextWidget(
-                        onRefresh: provider.refreshServicesList,
+                        onRefresh: provider.refreshList,
                       ),
                     )
-                  else if (provider.servicesList.isNotEmpty)
+                  else if (provider.items.isNotEmpty)
                     Expanded(
                       child: RefreshIndicator(
-                        onRefresh: provider.refreshServicesList,
+                        onRefresh: provider.refreshList,
                         backgroundColor: styles.white,
                         child: ListView.separated(
                           controller: provider.scrollController,
+                          physics: AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            if (index == provider.servicesList.length) {
+                            if (index == provider.items.length) {
                               if (provider.isGettingMore) {
                                 return Center(
                                     child: CircularProgressIndicator());
@@ -141,13 +144,13 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                               onTap: () {
                                 context.push(DescriptionScreen.route, extra: {
                                   "description":
-                                      provider.servicesList[index].description,
+                                      provider.items[index].description,
                                   "title": "Comment"
                                 });
                               },
                               child: MyServiceWidget(
                                 controller: ServiceWidgetVM(
-                                  model: provider.servicesList[index],
+                                  model: provider.items[index],
                                 ),
                               ),
                             );
