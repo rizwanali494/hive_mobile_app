@@ -1,4 +1,5 @@
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_application_screen_vm.dart';
 import 'package:isar/isar.dart';
 
@@ -24,5 +25,10 @@ class AcceptedApplicationVM extends BaseUniversityApplicationScreenVM {
     final list = await universityApplicationRepository.getAcceptedApplications(
         limit: limit, offSet: offset);
     return list;
+  }
+
+  @override
+  String applicationType() {
+    return AppStrings.acceptedApplication;
   }
 }

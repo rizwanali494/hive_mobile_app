@@ -101,6 +101,7 @@ class AppStrings {
   static String peopleGoing = "are going";
   static String addApplication = "Add Application";
   static String acceptedApplication = "Accepted Applications";
+  static String previousApplication = "Previous Applications";
   static String universityName = "University Name";
   static String upload = "Upload";
   static String subjectTitle = "Subject Title";

@@ -38,17 +38,17 @@ class UniversityApplicationWidget extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                   onTap: () async {
-                    final provider =
-                        context.read<UniversityApplicationScreenVM>();
+                    // final provider =
+                    //     context.read<UniversityApplicationScreenVM>();
                     var model = await context
                         .push(UniversitySelectionScreen.route, extra: {
                       "model": controller.model,
                     });
-                    UniversityApplicationModel? updatedModel =
-                        model as UniversityApplicationModel?;
-                    provider.updateUniversityModel(model,
-                        isPrevious: updatedModel?.getStatus ==
-                            ApplicationStatus.unapproved);
+                    // UniversityApplicationModel? updatedModel =
+                    //     model as UniversityApplicationModel?;
+                    // provider.updateUniversityModel(model,
+                    //     isPrevious: updatedModel?.getStatus ==
+                    //         ApplicationStatus.unapproved);
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

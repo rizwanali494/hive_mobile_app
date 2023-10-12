@@ -195,10 +195,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           heading: AppStrings.subjects,
                         ),
                         17.verticalSpace,
-                        ChangeNotifierProvider<AcceptedApplicationVM>(
+                        ChangeNotifierProvider<UserAcceptedApplicationVM>(
                           create: (BuildContext context) =>
-                              AcceptedApplicationVM(),
-                          child: Consumer<AcceptedApplicationVM>(
+                              UserAcceptedApplicationVM(),
+                          child: Consumer<UserAcceptedApplicationVM>(
                             builder: (context, provider, child) {
                               return ProfileSectionWidget(
                                 wrapChildren: provider.items,
