@@ -52,13 +52,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ReportYear1VM(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => ReportYear2VM(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ReportsScreenVM(),
         ),
         // ChangeNotifierProvider(
         //   create: (context) => ReportYearVM(),

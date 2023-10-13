@@ -30,210 +30,206 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => ProfileScreenVM(),
-      child: Consumer<ProfileScreenVM>(
-        builder: (context, controller, child) {
-          return Column(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      styles.linearBlueGradientTopLeft,
-                      styles.linearBlueGradientBottomRight,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  ),
+    return Consumer<ProfileScreenVM>(
+      builder: (context, controller, child) {
+        return Column(
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    styles.linearBlueGradientTopLeft,
+                    styles.linearBlueGradientBottomRight,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppBarWidget(
-                      color: styles.white,
-                      horizontalPadding: 19,
-                      title: AppStrings.profile,
-                      actions: [
-                        GestureDetector(
-                          onTap: () {
-                            context.push(AccountSettingScreen.route);
-                          },
-                          child: SvgPicture.asset(SvgIcons.edit),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppBarWidget(
+                    color: styles.white,
+                    horizontalPadding: 19,
+                    title: AppStrings.profile,
+                    actions: [
+                      GestureDetector(
+                        onTap: () {
+                          context.push(AccountSettingScreen.route);
+                        },
+                        child: SvgPicture.asset(SvgIcons.edit),
+                      ),
+                    ],
+                  ),
+                  27.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 27.w),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: controller.userImage,
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 90.h,
+                            height: 90.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) => UserPlaceHolderWidget(
+                            width: 90.w,
+                            height: 90.h,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              UserPlaceHolderWidget(
+                            width: 90.w,
+                            height: 90.h,
+                          ),
+                        ),
+                        // CircleAvatar(
+                        //   backgroundImage: NetworkImage(
+                        //     _user.imageUrl,
+                        //   ),
+                        //   radius: 50,
+                        // ),
+                        21.horizontalSpace,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                controller.userName,
+                                style: styles.inter20w600
+                                    .copyWith(color: styles.white),
+                              ),
+                              8.verticalSpace,
+                              if (controller.userBio.isNotEmpty)
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: styles.white.withOpacity(0.5),
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      15.r,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 9.w, vertical: 10.h),
+                                  child: Text(
+                                    controller.userBio,
+                                    style: styles.inter12w400
+                                        .copyWith(color: styles.white),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    27.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.only(left: 20.w, right: 27.w),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  35.verticalSpace,
+                ],
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      18.verticalSpace,
+                      Text(
+                        AppStrings.basicInfo,
+                        style: styles.inter16w600,
+                      ),
+                      13.verticalSpace,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          CachedNetworkImage(
-                            imageUrl: controller.userImage,
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: 90.h,
-                              height: 90.w,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            placeholder: (context, url) =>
-                                UserPlaceHolderWidget(
-                              width: 90.w,
-                              height: 90.h,
-                            ),
-                            errorWidget: (context, url, error) =>
-                                UserPlaceHolderWidget(
-                              width: 90.w,
-                              height: 90.h,
-                            ),
+                          BasicInfoWidget(
+                            title: AppStrings.gender,
+                            iconPath: SvgIcons.profile,
+                            info: controller.gender,
                           ),
-                          // CircleAvatar(
-                          //   backgroundImage: NetworkImage(
-                          //     _user.imageUrl,
-                          //   ),
-                          //   radius: 50,
-                          // ),
-                          21.horizontalSpace,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  controller.userName,
-                                  style: styles.inter20w600
-                                      .copyWith(color: styles.white),
-                                ),
-                                8.verticalSpace,
-                                if (controller.userBio.isNotEmpty)
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: styles.white.withOpacity(0.5),
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        15.r,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 9.w, vertical: 10.h),
-                                    child: Text(
-                                      controller.userBio,
-                                      style: styles.inter12w400
-                                          .copyWith(color: styles.white),
-                                    ),
-                                  ),
-                              ],
-                            ),
+                          30.horizontalSpace,
+                          BasicInfoWidget(
+                            title: AppStrings.birthDate,
+                            iconPath: SvgIcons.cake,
+                            info: controller.dateOfBirth,
                           ),
                         ],
                       ),
-                    ),
-                    35.verticalSpace,
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        18.verticalSpace,
-                        Text(
-                          AppStrings.basicInfo,
-                          style: styles.inter16w600,
+                      15.verticalSpace,
+                      BasicInfoWidget(
+                        title: AppStrings.campus,
+                        iconPath: SvgIcons.building,
+                        info: controller.branchName,
+                      ),
+                      10.verticalSpace,
+                      Divider(
+                        color: styles.black.withOpacity(0.2),
+                      ),
+                      15.verticalSpace,
+                      ProfileSectionWidget(
+                        wrapChildren: _user.hobbies,
+                        uiState: UiState.hasAll(),
+                        heading: AppStrings.hobbies,
+                      ),
+                      17.verticalSpace,
+                      ProfileSectionWidget(
+                        wrapChildren: _user.subjects,
+                        uiState: UiState.hasAll(),
+                        heading: AppStrings.subjects,
+                      ),
+                      17.verticalSpace,
+                      ChangeNotifierProvider<UserAcceptedApplicationVM>(
+                        create: (BuildContext context) =>
+                            UserAcceptedApplicationVM(),
+                        child: Consumer<UserAcceptedApplicationVM>(
+                          builder: (context, provider, child) {
+                            return ProfileSectionWidget(
+                              wrapChildren: provider.items,
+                              // onTap: provider.fetchNextItems,
+                              heading: AppStrings.acceptedUniversities,
+                              uiState: provider.uiState,
+                            );
+                          },
                         ),
-                        13.verticalSpace,
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            BasicInfoWidget(
-                              title: AppStrings.gender,
-                              iconPath: SvgIcons.profile,
-                              info: controller.gender,
-                            ),
-                            30.horizontalSpace,
-                            BasicInfoWidget(
-                              title: AppStrings.birthDate,
-                              iconPath: SvgIcons.cake,
-                              info: controller.dateOfBirth,
-                            ),
-                          ],
+                      ),
+                      17.verticalSpace,
+                      ChangeNotifierProvider<UserAwardsVM>(
+                        create: (BuildContext context) => UserAwardsVM(),
+                        child: Consumer<UserAwardsVM>(
+                          builder: (context, provider, child) {
+                            return ProfileSectionWidget(
+                              // wrapChildren: _user.achievementsAwards,
+                              wrapChildren: provider.items,
+                              icon: SvgPicture.asset(SvgIcons.star),
+                              heading: AppStrings.achievementsAwards,
+                              onTap: provider.fetchNextItems,
+                              uiState: provider.uiState,
+                            );
+                          },
                         ),
-                        15.verticalSpace,
-                        BasicInfoWidget(
-                          title: AppStrings.campus,
-                          iconPath: SvgIcons.building,
-                          info: controller.branchName,
-                        ),
-                        10.verticalSpace,
-                        Divider(
-                          color: styles.black.withOpacity(0.2),
-                        ),
-                        15.verticalSpace,
-                        ProfileSectionWidget(
-                          wrapChildren: _user.hobbies,
-                          uiState: UiState.hasAll(),
-                          heading: AppStrings.hobbies,
-                        ),
-                        17.verticalSpace,
-                        ProfileSectionWidget(
-                          wrapChildren: _user.subjects,
-                          uiState: UiState.hasAll(),
-                          heading: AppStrings.subjects,
-                        ),
-                        17.verticalSpace,
-                        ChangeNotifierProvider<UserAcceptedApplicationVM>(
-                          create: (BuildContext context) =>
-                              UserAcceptedApplicationVM(),
-                          child: Consumer<UserAcceptedApplicationVM>(
-                            builder: (context, provider, child) {
-                              return ProfileSectionWidget(
-                                wrapChildren: provider.items,
-                                // onTap: provider.fetchNextItems,
-                                heading: AppStrings.acceptedUniversities,
-                                uiState: provider.uiState,
-                              );
-                            },
-                          ),
-                        ),
-                        17.verticalSpace,
-                        ChangeNotifierProvider<UserAwardsVM>(
-                          create: (BuildContext context) => UserAwardsVM(),
-                          child: Consumer<UserAwardsVM>(
-                            builder: (context, provider, child) {
-                              return ProfileSectionWidget(
-                                // wrapChildren: _user.achievementsAwards,
-                                wrapChildren: provider.items,
-                                icon: SvgPicture.asset(SvgIcons.star),
-                                heading: AppStrings.achievementsAwards,
-                                onTap: provider.fetchNextItems,
-                                uiState: provider.uiState,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

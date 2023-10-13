@@ -25,86 +25,82 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     return Scaffold(
-      body: ChangeNotifierProvider(
-        create: (BuildContext context) => NotificationScreenVM(),
-        child: Consumer<NotificationScreenVM>(
-          builder: (context, provider, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppBarWidget(
-                  color: styles.black,
-                  title: AppStrings.notifications,
-                  horizontalPadding: 14,
-                ),
-                if (provider.isLoading)
-                  Expanded(
-                    child: Padding(
+      body: Consumer<NotificationScreenVM>(
+        builder: (context, provider, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppBarWidget(
+                color: styles.black,
+                title: AppStrings.notifications,
+                horizontalPadding: 14,
+              ),
+              if (provider.isLoading)
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 19.w,
+                    ),
+                    child: ListView.separated(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 19.w,
+                        vertical: 27.h,
                       ),
+                      separatorBuilder: (context, index) {
+                        return 20.verticalSpace;
+                      },
+                      itemBuilder: (context, index) {
+                        return NotificationShimmerWidget();
+                      },
+                      itemCount: 12,
+                    ),
+                  ),
+                )
+              else if (provider.hasError)
+                Expanded(
+                  child: ErrorTextWidget(
+                    onRefresh: provider.refreshList,
+                  ),
+                )
+              else if (provider.items.isNotEmpty)
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 19.w,
+                    ),
+                    child: RefreshIndicator(
+                      onRefresh: provider.refreshList,
+                      backgroundColor: styles.white,
                       child: ListView.separated(
+                        controller: provider.scrollController,
                         padding: EdgeInsets.symmetric(
                           vertical: 27.h,
                         ),
                         separatorBuilder: (context, index) {
-                          return 20.verticalSpace;
+                          return buildDivider();
                         },
                         itemBuilder: (context, index) {
-                          return NotificationShimmerWidget();
-                        },
-                        itemCount: 12,
-                      ),
-                    ),
-                  )
-                else if (provider.hasError)
-                  Expanded(
-                    child: ErrorTextWidget(
-                      onRefresh: provider.refreshList,
-                    ),
-                  )
-                else if (provider.items.isNotEmpty)
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 19.w,
-                      ),
-                      child: RefreshIndicator(
-                        onRefresh: provider.refreshList,
-                        backgroundColor: styles.white,
-                        child: ListView.separated(
-                          controller: provider.scrollController,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 27.h,
-                          ),
-                          separatorBuilder: (context, index) {
-                            return buildDivider();
-                          },
-                          itemBuilder: (context, index) {
-                            if (index == provider.items.length) {
-                              if (provider.isGettingMore) {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              return SizedBox.shrink();
+                          if (index == provider.items.length) {
+                            if (provider.isGettingMore) {
+                              return Center(child: CircularProgressIndicator());
                             }
-                            return NotificationTile(
-                              onTap: () {},
-                              svgIconPath: svgIcons[index % svgIcons.length],
-                              controller: NotificationTileVM(
-                                model: provider.items[index],
-                              ),
-                            );
-                          },
-                          itemCount: provider.listCount,
-                        ),
+                            return SizedBox.shrink();
+                          }
+                          return NotificationTile(
+                            onTap: () {},
+                            svgIconPath: svgIcons[index % svgIcons.length],
+                            controller: NotificationTileVM(
+                              model: provider.items[index],
+                            ),
+                          );
+                        },
+                        itemCount: provider.listCount,
                       ),
                     ),
                   ),
-              ],
-            );
-          },
-        ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
