@@ -4,18 +4,24 @@ import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/features/my_services/view_models/base_service_request_vm.dart';
 import 'package:isar/isar.dart';
 
-class OpenServiceRequestVM extends ServiceScreenVM {
+class OpenServiceRequestVM extends BaseServiceWidgetVM {
   OpenServiceRequestVM()
-      :super(apiUrl: ApiEndpoints.serviceRequest.withPendingState);
+      : super(apiUrl: ApiEndpoints.serviceRequest.withPendingState);
 
   @override
   Future<List<MyServicesModel>> fetchLocalList() async {
-    final list = await localService.query().filter()
-        .stateEqualTo("PENDING")
-        .findAll();
+    final list =
+        await localService.query().filter().stateEqualTo("PENDING").findAll();
     return list;
   }
 
   @override
-
+  Future<void> saveToLocal(List<MyServicesModel> items) async {
+    await localService
+        .query()
+        .filter()
+        .stateEqualTo("PENDING")
+        .deleteAll()
+        .then((value) => localService.saveAll(items));
+  }
 }

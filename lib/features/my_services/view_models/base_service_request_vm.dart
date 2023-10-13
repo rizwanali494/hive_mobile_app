@@ -5,12 +5,12 @@ import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_request_widget_vm.dart';
 
-abstract class ServiceScreenVM extends BaseApiVM<MyServicesModel> {
+abstract class BaseServiceWidgetVM extends BaseApiVM<MyServicesModel> {
   final String apiUrl;
   final apiService = GetIt.instance.get<ApiService>();
   late MyServicesRepository myServicesRepository;
 
-  ServiceScreenVM({required this.apiUrl});
+  BaseServiceWidgetVM({required this.apiUrl});
 
   @override
   Future<List<MyServicesModel>> fetchInitialItems() async {

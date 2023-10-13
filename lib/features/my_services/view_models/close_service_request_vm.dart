@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/features/my_services/view_models/base_service_request_vm.dart';
 import 'package:isar/isar.dart';
 
-class CloseServiceRequestVM extends ServiceScreenVM {
+class CloseServiceRequestVM extends BaseServiceWidgetVM {
   CloseServiceRequestVM()
       : super(apiUrl: ApiEndpoints.serviceRequest.withNotPendingState);
 
@@ -18,5 +18,16 @@ class CloseServiceRequestVM extends ServiceScreenVM {
         .stateEqualTo("PENDING")
         .findAll();
     return list;
+  }
+
+  @override
+  Future<void> saveToLocal(List<MyServicesModel> items) async {
+    await localService
+        .query()
+        .filter()
+        .not()
+        .stateEqualTo("PENDING")
+        .deleteAll()
+        .then((value) => localService.saveAll(items));
   }
 }

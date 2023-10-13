@@ -72,9 +72,9 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                             await context.push(NewRequestScreen.route) ?? false;
                         if (val) {
                           Future.wait([
+                            context.read<AllServiceRequestVM>().refreshList(),
                             context.read<OpenServiceRequestVM>().refreshList(),
-                            context.read<OpenServiceRequestVM>().refreshList(),
-                            context.read<OpenServiceRequestVM>().refreshList(),
+                            context.read<CloseServiceRequestVM>().refreshList(),
                           ]);
                         }
                       },
@@ -111,70 +111,77 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                         AppStrings.myRequest,
                         style: styles.inter20w700,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            25,
-                          ),
-                          border: Border.all(
-                            color: styles.black.withOpacity(
-                              0.2,
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                25,
+                              ),
+                              border: Border.all(
+                                color: styles.black.withOpacity(
+                                  1,
+                                ),
+                              ),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15.w,
+                              vertical: 5.h,
+                            ),
+                            child: DropdownButton<String>(
+                              isDense: true,
+                              value: provider.selectedFilter,
+                              // isExpanded: true,
+                              icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                              dropdownColor: styles.white,
+                              underline: const SizedBox(),
+                              items: provider.filters
+                                  .map(
+                                    (value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: styles.inter12w400,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                provider.setFilter(value);
+                              },
                             ),
                           ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 19.w,
-                          vertical: 10.h,
-                        ),
-                        child: DropdownButton<String>(
-                          isDense: true,
-                          value: provider.selectedFilter,
-                          isExpanded: true,
-                          icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                          dropdownColor: styles.white,
-                          underline: const SizedBox(),
-                          items: provider.filters
-                              .map(
-                                (value) => DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: styles.inter12w400,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (value) {
-                            provider.setFilter(value);
-                          },
                         ),
                       ),
                     ],
                   ),
                   5.verticalSpace,
-                  PageView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: provider.pageController,
-                    children: [
-                      Consumer<AllServiceRequestVM>(
-                        builder: (context, provider, child) =>
-                            ServiceRequestWidget(
-                          provider: provider.widgetVM,
+                  Expanded(
+                    child: PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: provider.pageController,
+                      children: [
+                        Consumer<AllServiceRequestVM>(
+                          builder: (context, provider, child) =>
+                              ServiceRequestWidget(
+                            provider: provider.widgetVM,
+                          ),
                         ),
-                      ),
-                      Consumer<OpenServiceRequestVM>(
-                        builder: (context, provider, child) =>
-                            ServiceRequestWidget(
-                          provider: provider.widgetVM,
+                        Consumer<OpenServiceRequestVM>(
+                          builder: (context, provider, child) =>
+                              ServiceRequestWidget(
+                            provider: provider.widgetVM,
+                          ),
                         ),
-                      ),
-                      Consumer<CloseServiceRequestVM>(
-                        builder: (context, provider, child) =>
-                            ServiceRequestWidget(
-                          provider: provider.widgetVM,
+                        Consumer<CloseServiceRequestVM>(
+                          builder: (context, provider, child) =>
+                              ServiceRequestWidget(
+                            provider: provider.widgetVM,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

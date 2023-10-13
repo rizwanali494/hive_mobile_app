@@ -85,6 +85,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
   }
 
   Future<void> getNextItems() async {
+    uiState = UiState.fetchingMore();
     paginationController.state = PaginationState.GettingMore();
     paginationController.toggleIsGettingMore(true);
     notifyListeners();
@@ -103,6 +104,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
       return;
     };
     await performRequest(request: request);
+    uiState = UiState.loaded();
     notifyListeners();
   }
 

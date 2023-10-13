@@ -18,6 +18,10 @@ class ServiceScreenVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  ServiceScreenVM() {
+    getServicesStatus();
+  }
+
   int totalApproved = 0;
   int totalPending = 0;
   int totalRejected = 0;
@@ -78,5 +82,9 @@ class ServiceScreenVM extends ChangeNotifier {
     final page = pages[selectedFilter] ?? 0;
     pageController.jumpToPage(page);
     notifyListeners();
+  }
+
+  Future<void> refreshList() async {
+    await getServicesStatus();
   }
 }
