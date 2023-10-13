@@ -71,7 +71,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
       }
       items.addAll(list);
       await localService.clearCollection();
-      await localService.saveAll(list);
+      await saveToLocal(list);
       paginationController.addListener();
       return;
     };
@@ -121,7 +121,7 @@ abstract class BaseApiVM<T> with ChangeNotifier {
             .setOffset((paginationController.offset) + list.length);
       }
       items = list;
-      localService.saveAll(list);
+      saveToLocal(list);
       addScrollListeners();
     };
     await performRequest(request: request);
@@ -133,6 +133,10 @@ abstract class BaseApiVM<T> with ChangeNotifier {
 
   Future<List<T>> fetchLocalList() async {
     return await localService.findAll();
+  }
+
+  Future<void> saveToLocal(List<T> items) async {
+    await localService.saveAll(items);
   }
 
   void addScrollListeners() {

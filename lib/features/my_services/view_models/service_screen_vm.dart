@@ -13,44 +13,14 @@ import 'package:hive_mobile/features/my_services/repositories/my_services_reposi
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ServiceScreenVM extends BaseApiVM<MyServicesModel> {
+class ServiceScreenVM extends ChangeNotifier {
   void notifyListener() {
-    notifyListeners();
-  }
-
-  void setServiceStatusLocally() {
-    totalApproved = items
-        .where(
-          (element) =>
-              element.state?.toLowerCase() == AppStrings.approved.toLowerCase(),
-        )
-        .length;
-    totalPending = items
-        .where(
-          (element) =>
-              element.state?.toLowerCase() == AppStrings.pending.toLowerCase(),
-        )
-        .length;
-    totalRejected = items
-        .where(
-          (element) =>
-              element.state?.toLowerCase() == AppStrings.rejected.toLowerCase(),
-        )
-        .length;
     notifyListeners();
   }
 
   int totalApproved = 0;
   int totalPending = 0;
   int totalRejected = 0;
-
-  @override
-  Future<void> refreshList() async {
-    await Future.wait([
-      getServicesStatus(),
-      super.refreshList(),
-    ]);
-  }
 
   Future<void> getServicesStatus() async {
     try {
@@ -65,27 +35,48 @@ class ServiceScreenVM extends BaseApiVM<MyServicesModel> {
     }
   }
 
-  @override
-  Future<List<MyServicesModel>> fetchInitialItems() async {
-    final list =
-        await myServicesRepository.getInitialServicesList(limit: limit);
-    return list;
+  void setServiceStatusLocally() {
+    // totalApproved = items
+    //     .where(
+    //       (element) =>
+    //   element.state?.toLowerCase() == AppStrings.approved.toLowerCase(),
+    // )
+    //     .length;
+    // totalPending = items
+    //     .where(
+    //       (element) =>
+    //   element.state?.toLowerCase() == AppStrings.pending.toLowerCase(),
+    // )
+    //     .length;
+    // totalRejected = items
+    //     .where(
+    //       (element) =>
+    //   element.state?.toLowerCase() == AppStrings.rejected.toLowerCase(),
+    // )
+    //     .length;
+    notifyListeners();
   }
-
-  @override
-  Future<List<MyServicesModel>> fetchNextItems() async {
-    final list = await myServicesRepository.getNextServicesList(
-        limit: limit, offSet: offSet);
-    return list;
-  }
-
-  late MyServicesRepository myServicesRepository;
 
   final apiService = GetIt.instance.get<ApiService>();
 
-  @override
-  void setRepoInstance() {
-    myServicesRepository = MyServicesRepositoryImpl(apiService: apiService);
-    getServicesStatus();
+  late MyServicesRepository myServicesRepository =
+      MyServicesRepositoryImpl(apiService: apiService);
+
+  final pageController = PageController();
+
+  final pages = {
+    "All": 0,
+    "Open": 1,
+    "Closed": 2,
+  };
+
+  String? selectedFilter = "All";
+  final filters = ["All", "Closed", "Open"];
+
+  void setFilter(String? value) {
+    selectedFilter = value;
+    final page = pages[selectedFilter] ?? 0;
+    pageController.jumpToPage(page);
+    notifyListeners();
   }
 }

@@ -12,9 +12,8 @@ abstract class MyServicesRepository {
 
   MyServicesRepository({required this.apiService});
 
-  Future<List<MyServicesModel>> getInitialServicesList({int? limit});
-
-  Future<List<MyServicesModel>> getNextServicesList({int? offSet, int? limit});
+  Future<List<MyServicesModel>> getInitialServicesList(
+      {int? offSet, int? limit, String? apiUrl});
 
   Future<Map<String, int>> getServicesStatus();
 }
@@ -23,28 +22,21 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
   MyServicesRepositoryImpl({required super.apiService});
 
   @override
-  Future<List<MyServicesModel>> getInitialServicesList({int? limit}) async {
+  Future<List<MyServicesModel>> getInitialServicesList(
+      {int? offSet, int? limit, String? apiUrl}) async {
+    var url = apiUrl?.withMostRecentOrder.withOffSet(offSet).withLimit(limit) ??
+        endPoint(limit, offSet);
+
     var response = await apiService.get(
-      url: endPoint(limit),
+      url: url,
     );
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
     return items.map((item) => MyServicesModel.fromJson(item)).toList();
   }
 
-  String endPoint(int? limit) {
-    return apiEndPoint.withLimit(limit).withMostRecentOrder;
-  }
-
-  @override
-  Future<List<MyServicesModel>> getNextServicesList(
-      {int? offSet, int? limit}) async {
-    var response = await apiService.get(
-      url: endPoint(limit).withOffSet(offSet),
-    );
-    var result = jsonDecode(response.body);
-    List items = result["results"] ?? [];
-    return items.map((item) => MyServicesModel.fromJson(item)).toList();
+  String endPoint(int? limit, int? offSet) {
+    return apiEndPoint.withLimit(limit).withOffSet(offSet).withMostRecentOrder;
   }
 
   String get apiEndPoint => ApiEndpoints.serviceRequest;
