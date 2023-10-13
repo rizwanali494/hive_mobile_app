@@ -52,21 +52,17 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          key: Key("1"),
           create: (context) => ReportYear1VM(),
         ),
         ChangeNotifierProvider(
-          key: Key("2"),
           create: (context) => ReportYear2VM(),
         ),
         ChangeNotifierProvider(
-          key: Key("2"),
           create: (context) => ReportsScreenVM(),
         ),
-        ChangeNotifierProvider(
-          key: Key("2"),
-          create: (context) => ReportYearVM(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => ReportYearVM(),
+        // ),
       ],
       child: Consumer<ReportsScreenVM>(
         builder: (context, provider, child) {
@@ -92,13 +88,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          provider.selectYear(1);
+                          provider.selectYear(0);
                         },
                         child: YearToggleWidget(
                           borderRadius: BorderRadius.horizontal(
                             left: Radius.circular(50.r),
                           ),
-                          isSelected: provider.selectedYear == 1,
+                          isSelected: provider.selectedYear == 0,
                           text: 'Year 1',
                         ),
                       ),
@@ -106,13 +102,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          provider.selectYear(2);
+                          provider.selectYear(1);
                         },
                         child: YearToggleWidget(
                           borderRadius: BorderRadius.horizontal(
                             right: Radius.circular(50.r),
                           ),
-                          isSelected: provider.selectedYear == 2,
+                          isSelected: provider.selectedYear == 1,
                           text: 'Year 2',
                         ),
                       ),
@@ -125,138 +121,138 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     controller: provider.pageController,
                     children: [
-                      Consumer<ReportYearVM>(
-                        builder: (context, provider, child) {
-                          if (provider.isLoading) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return RefreshIndicator(
-                            onRefresh: provider.onRefresh,
-                            backgroundColor: styles.white,
-                            child: SingleChildScrollView(
-                              physics: AlwaysScrollableScrollPhysics(),
-                              child: Column(
-                                children: [
-                                  21.verticalSpace,
-                                  ReportLineChart(
-                                    controller: LineChartVM(
-                                        lineBarsDataTerm1:
-                                            provider.lineBarsDataTerm1,
-                                        lineBarsDataTerm2:
-                                            provider.lineBarsDataTerm2),
-                                  ),
-                                  33.verticalSpace,
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 5.w,
-                                        ),
-                                        child: Text(
-                                          "CGPA",
-                                          style: styles.inter8w400,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            YearRowWidget(
-                                                context: context,
-                                                color: styles.skyBlue,
-                                                text: "${provider.examType1}"),
-                                            YearRowWidget(
-                                                context: context,
-                                                color: styles.darkOrange,
-                                                text: "${provider.examType2}"),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  20.verticalSpace,
-                                  Divider(
-                                    thickness: 0.5,
-                                    color: styles.black.withOpacity(0.5),
-                                  ),
-                                  32.verticalSpace,
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Year 1",
-                                      style: styles.inter10w600,
-                                    ),
-                                  ),
-                                  24.verticalSpace,
-                                  ReportYear(
-                                    yearReports: provider.allReports
-                                        .where((element) => element.isYear1)
-                                        .toList(),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Wrap(
-                                      runSpacing: 10,
-                                      spacing: 10,
-                                      children: [
-                                        for (int index = 0;
-                                            index <
-                                                provider.year1Subjects.length;
-                                            index++)
-                                          BarChartLegendWidget(
-                                              text:
-                                                  provider.year1Subjects[index],
-                                              color: colors[index] ??
-                                                  Colors.blueAccent),
-                                      ],
-                                    ),
-                                  ),
-                                  20.verticalSpace,
-                                  Divider(
-                                    thickness: 0.5,
-                                    color: styles.black.withOpacity(0.5),
-                                  ),
-                                  20.verticalSpace,
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Year 2",
-                                      style: styles.inter10w600,
-                                    ),
-                                  ),
-                                  24.verticalSpace,
-                                  ReportYear(
-                                    yearReports: provider.allReports
-                                        .where((element) => element.isYear2)
-                                        .toList(),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Wrap(
-                                      runSpacing: 10,
-                                      spacing: 10,
-                                      children: [
-                                        for (int index = 0;
-                                            index <
-                                                provider.year2Subjects.length;
-                                            index++)
-                                          BarChartLegendWidget(
-                                              text:
-                                                  provider.year2Subjects[index],
-                                              color: colors[index] ??
-                                                  Colors.blueAccent),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      // Consumer<ReportYearVM>(
+                      //   builder: (context, provider, child) {
+                      //     if (provider.isLoading) {
+                      //       return Center(
+                      //         child: CircularProgressIndicator(),
+                      //       );
+                      //     }
+                      //     return RefreshIndicator(
+                      //       onRefresh: provider.onRefresh,
+                      //       backgroundColor: styles.white,
+                      //       child: SingleChildScrollView(
+                      //         physics: AlwaysScrollableScrollPhysics(),
+                      //         child: Column(
+                      //           children: [
+                      //             21.verticalSpace,
+                      //             ReportLineChart(
+                      //               controller: LineChartVM(
+                      //                   lineBarsDataTerm1:
+                      //                       provider.lineBarsDataTerm1,
+                      //                   lineBarsDataTerm2:
+                      //                       provider.lineBarsDataTerm2),
+                      //             ),
+                      //             33.verticalSpace,
+                      //             Row(
+                      //               children: [
+                      //                 Padding(
+                      //                   padding: EdgeInsets.only(
+                      //                     left: 5.w,
+                      //                   ),
+                      //                   child: Text(
+                      //                     "CGPA",
+                      //                     style: styles.inter8w400,
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                   child: Row(
+                      //                     mainAxisAlignment:
+                      //                         MainAxisAlignment.spaceAround,
+                      //                     children: [
+                      //                       YearRowWidget(
+                      //                           context: context,
+                      //                           color: styles.skyBlue,
+                      //                           text: "${provider.examType1}"),
+                      //                       YearRowWidget(
+                      //                           context: context,
+                      //                           color: styles.darkOrange,
+                      //                           text: "${provider.examType2}"),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             20.verticalSpace,
+                      //             Divider(
+                      //               thickness: 0.5,
+                      //               color: styles.black.withOpacity(0.5),
+                      //             ),
+                      //             32.verticalSpace,
+                      //             Align(
+                      //               alignment: Alignment.centerLeft,
+                      //               child: Text(
+                      //                 "Year 1",
+                      //                 style: styles.inter10w600,
+                      //               ),
+                      //             ),
+                      //             24.verticalSpace,
+                      //             ReportYear(
+                      //               yearReports: provider.allReports
+                      //                   .where((element) => element.isYear1)
+                      //                   .toList(),
+                      //             ),
+                      //             Align(
+                      //               alignment: Alignment.topRight,
+                      //               child: Wrap(
+                      //                 runSpacing: 10,
+                      //                 spacing: 10,
+                      //                 children: [
+                      //                   for (int index = 0;
+                      //                       index <
+                      //                           provider.year1Subjects.length;
+                      //                       index++)
+                      //                     BarChartLegendWidget(
+                      //                         text:
+                      //                             provider.year1Subjects[index],
+                      //                         color: colors[index] ??
+                      //                             Colors.blueAccent),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             20.verticalSpace,
+                      //             Divider(
+                      //               thickness: 0.5,
+                      //               color: styles.black.withOpacity(0.5),
+                      //             ),
+                      //             20.verticalSpace,
+                      //             Align(
+                      //               alignment: Alignment.centerLeft,
+                      //               child: Text(
+                      //                 "Year 2",
+                      //                 style: styles.inter10w600,
+                      //               ),
+                      //             ),
+                      //             24.verticalSpace,
+                      //             ReportYear(
+                      //               yearReports: provider.allReports
+                      //                   .where((element) => element.isYear2)
+                      //                   .toList(),
+                      //             ),
+                      //             Align(
+                      //               alignment: Alignment.topRight,
+                      //               child: Wrap(
+                      //                 runSpacing: 10,
+                      //                 spacing: 10,
+                      //                 children: [
+                      //                   for (int index = 0;
+                      //                       index <
+                      //                           provider.year2Subjects.length;
+                      //                       index++)
+                      //                     BarChartLegendWidget(
+                      //                         text:
+                      //                             provider.year2Subjects[index],
+                      //                         color: colors[index] ??
+                      //                             Colors.blueAccent),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
                       Consumer<ReportYear1VM>(
                         builder: (context, provider, child) {
                           if (provider.isLoading) {

@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
+import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
@@ -116,5 +123,31 @@ class HomeScreenVm extends ChangeNotifier {
 
   UserModel getUserModel() {
     return GetIt.instance.get<UserModel>();
+  }
+
+  final apiService = GetIt.instance.get<ApiService>();
+  late final UserRepository userRepository =
+      UserRepository(apiService: apiService);
+
+  Future<void> updateBackupEmail(
+      {required String email, required BuildContext context}) async {
+    log("here");
+    final map = {"backup_email": email};
+    UtilFunctions().showLoaderDialog(context);
+    try {
+      final response = await userRepository.updateBackupEmail(
+          body: map, id: getUserModel().id ?? 0);
+      context.pop();
+      showDialog(
+        context: context,
+        builder: (context) => const BackUpEmailDialog(),
+      );
+      return;
+    } catch (e) {
+      log("Backup email : ${e.toString()}");
+    }
+    context.pop();
+    UtilFunctions.showToast(
+        msg: "Something went wrong. Couldn't verify backup email");
   }
 }

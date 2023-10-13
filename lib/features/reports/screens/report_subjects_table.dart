@@ -62,14 +62,14 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
                     // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
                   ),
-                  Center(
-                    child: Text(
-                      "CGPA",
-                      style: styles.inter7w600.copyWith(
-                        color: styles.white,
-                      ),
-                    ),
-                  ),
+                  // Center(
+                  //   child: Text(
+                  //     "CGPA",
+                  //     style: styles.inter7w600.copyWith(
+                  //       color: styles.white,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             );
@@ -114,15 +114,15 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                       ],
                     ),
                   ),
-                  Container(
-                    width: con.maxWidth * 0.09,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 25.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: styles.alabaster,
-                    ),
-                  ),
+                  // Container(
+                  //   width: con.maxWidth * 0.09,
+                  //   padding: EdgeInsets.symmetric(
+                  //     vertical: 25.h,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     color: styles.alabaster,
+                  //   ),
+                  // ),
                 ],
               ),
             );
@@ -209,22 +209,22 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                           ],
                         ),
                       ),
-                      Container(
-                        width: con.maxWidth * 0.09,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: styles.alabaster,
-                        ),
-                        child: Center(
-                          child: Text(
-                            controller.termDetails[index].cgpa
-                                .toStringAsPrecision(3),
-                            style: styles.inter12w400,
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   width: con.maxWidth * 0.09,
+                      //   padding: EdgeInsets.symmetric(
+                      //     vertical: 5.h,
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     color: styles.alabaster,
+                      //   ),
+                      //   child: Center(
+                      //     child: Text(
+                      //       controller.termDetails[index].cgpa
+                      //           .toStringAsPrecision(3),
+                      //       style: styles.inter12w400,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -232,92 +232,92 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
             },
           ),
         2.verticalSpace,
-        LayoutBuilder(
-          builder: (context, size) {
-            return IntrinsicHeight(
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: size.maxWidth * 0.085,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    decoration: BoxDecoration(color: styles.alabaster),
-                    child: Center(
-                      child: Text(
-                        controller.assessment1AvgGPA,
-                        style: styles.inter12w600,
-                      ),
-                    ),
-                  ),
-                  1.horizontalSpace,
-                  Container(
-                    width: size.maxWidth * 0.075,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    decoration: BoxDecoration(color: styles.alabaster),
-                  ),
-                  1.horizontalSpace,
-                  Container(
-                    width: size.maxWidth * 0.075,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    decoration: BoxDecoration(color: styles.alabaster),
-                  ),
-                  1.horizontalSpace,
-                  Container(
-                    width: size.maxWidth * 0.085,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    decoration: BoxDecoration(color: styles.alabaster),
-                    child: Center(
-                      child: Text(
-                        controller.assessment2AvgGPA,
-                        style: styles.inter12w600,
-                      ),
-                    ),
-                  ),
-                  1.horizontalSpace,
-                  Container(
-                    width: size.maxWidth * 0.085,
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    decoration: BoxDecoration(color: styles.alabaster),
-                    child: Center(
-                      child: Text(
-                        controller.assessmentsAvgCGPA,
-                        style: styles.inter12w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        14.verticalSpace,
-        Row(
-          children: [
-            summaryWidget(
-              "Summary",
-              color: styles.alabaster,
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(59.r),
-              ),
-            ),
-            1.horizontalSpace,
-            summaryWidget("Mean GPA :${controller.meanGPA}",
-                color: styles.paleSkyBlue, flex: 2),
-            1.horizontalSpace,
-            summaryWidget("Top GPA :${controller.topGPA}",
-                color: styles.paleWhite),
-            1.horizontalSpace,
-            summaryWidget(
-              "Bottom GPA :${controller.bottomGPA}",
-              color: styles.peachYellow,
-              flex: 2,
-              borderRadius: BorderRadius.horizontal(
-                right: Radius.circular(59.r),
-              ),
-            ),
-          ],
-        )
+        // LayoutBuilder(
+        //   builder: (context, size) {
+        //     return IntrinsicHeight(
+        //       child: Row(
+        //         mainAxisSize: MainAxisSize.max,
+        //         mainAxisAlignment: MainAxisAlignment.end,
+        //         children: [
+        //           Container(
+        //             width: size.maxWidth * 0.085,
+        //             padding: EdgeInsets.symmetric(vertical: 10.h),
+        //             decoration: BoxDecoration(color: styles.alabaster),
+        //             child: Center(
+        //               child: Text(
+        //                 controller.assessment1AvgGPA,
+        //                 style: styles.inter12w600,
+        //               ),
+        //             ),
+        //           ),
+        //           1.horizontalSpace,
+        //           Container(
+        //             width: size.maxWidth * 0.075,
+        //             padding: EdgeInsets.symmetric(vertical: 10.h),
+        //             decoration: BoxDecoration(color: styles.alabaster),
+        //           ),
+        //           1.horizontalSpace,
+        //           Container(
+        //             width: size.maxWidth * 0.075,
+        //             padding: EdgeInsets.symmetric(vertical: 10.h),
+        //             decoration: BoxDecoration(color: styles.alabaster),
+        //           ),
+        //           1.horizontalSpace,
+        //           Container(
+        //             width: size.maxWidth * 0.085,
+        //             padding: EdgeInsets.symmetric(vertical: 10.h),
+        //             decoration: BoxDecoration(color: styles.alabaster),
+        //             child: Center(
+        //               child: Text(
+        //                 controller.assessment2AvgGPA,
+        //                 style: styles.inter12w600,
+        //               ),
+        //             ),
+        //           ),
+        //           1.horizontalSpace,
+        //           Container(
+        //             width: size.maxWidth * 0.085,
+        //             padding: EdgeInsets.symmetric(vertical: 10.h),
+        //             decoration: BoxDecoration(color: styles.alabaster),
+        //             child: Center(
+        //               child: Text(
+        //                 controller.assessmentsAvgCGPA,
+        //                 style: styles.inter12w600,
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     );
+        //   },
+        // ),
+        // 14.verticalSpace,
+        // Row(
+        //   children: [
+        //     summaryWidget(
+        //       "Summary",
+        //       color: styles.alabaster,
+        //       borderRadius: BorderRadius.horizontal(
+        //         left: Radius.circular(59.r),
+        //       ),
+        //     ),
+        //     1.horizontalSpace,
+        //     summaryWidget("Mean GPA :${controller.meanGPA}",
+        //         color: styles.paleSkyBlue, flex: 2),
+        //     1.horizontalSpace,
+        //     summaryWidget("Top GPA :${controller.topGPA}",
+        //         color: styles.paleWhite),
+        //     1.horizontalSpace,
+        //     summaryWidget(
+        //       "Bottom GPA :${controller.bottomGPA}",
+        //       color: styles.peachYellow,
+        //       flex: 2,
+        //       borderRadius: BorderRadius.horizontal(
+        //         right: Radius.circular(59.r),
+        //       ),
+        //     ),
+        //   ],
+        // )
       ],
     );
   }

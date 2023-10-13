@@ -84,77 +84,77 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                       ),
                     ),
                     32.verticalSpace,
-                    ReportLineChart(
-                      controller: LineChartVM(
-                          lineBarsDataTerm1: controller.lineBarsDataTerm1,
-                          lineBarsDataTerm2: controller.lineBarsDataTerm2),
-                    ),
-                    30.verticalSpace,
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 5.w,
-                          ),
-                          child: Text(
-                            "CGPA",
-                            style: styles.inter8w400,
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              YearRowWidget(
-                                  context: context,
-                                  color: styles.skyBlue,
-                                  text: "${controller.examType1}"),
-                              YearRowWidget(
-                                  context: context,
-                                  color: styles.darkOrange,
-                                  text: "${controller.examType2}"),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    30.verticalSpace,
-                    Divider(
-                      thickness: 0.5,
-                      color: styles.black.withOpacity(0.5),
-                    ),
-                    33.verticalSpace,
-                    ReportBarChart(
-                      controller: BarChartVM(
-                        assessments1: controller.assessments
-                            .map((e) => e.assessment1)
-                            .toList(),
-                        assessments2: controller.assessments
-                            .map((e) => e.assessment2)
-                            .toList(),
-                        context: context,
-                        examType1: controller.examType1,
-                        examType2: controller.examType2,
-                      ),
-                      term: 2,
-                    ),
-                    10.verticalSpace,
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Wrap(
-                        runSpacing: 10,
-                        spacing: 10,
-                        children: [
-                          for (int index = 0;
-                              index < controller.subjectNames.length;
-                              index++)
-                            BarChartLegendWidget(
-                                text: controller.subjectNames[index],
-                                color: colors[index] ?? Colors.blueAccent),
-                        ],
-                      ),
-                    ),
-                    10.verticalSpace,
+                    // ReportLineChart(
+                    //   controller: LineChartVM(
+                    //       lineBarsDataTerm1: controller.lineBarsDataTerm1,
+                    //       lineBarsDataTerm2: controller.lineBarsDataTerm2),
+                    // ),
+                    // 30.verticalSpace,
+                    // Row(
+                    //   children: [
+                    //     Padding(
+                    //       padding: EdgeInsets.only(
+                    //         left: 5.w,
+                    //       ),
+                    //       child: Text(
+                    //         "CGPA",
+                    //         style: styles.inter8w400,
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //         children: [
+                    //           YearRowWidget(
+                    //               context: context,
+                    //               color: styles.skyBlue,
+                    //               text: "${controller.examType1}"),
+                    //           YearRowWidget(
+                    //               context: context,
+                    //               color: styles.darkOrange,
+                    //               text: "${controller.examType2}"),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // 30.verticalSpace,
+                    // Divider(
+                    //   thickness: 0.5,
+                    //   color: styles.black.withOpacity(0.5),
+                    // ),
+                    // 33.verticalSpace,
+                    // ReportBarChart(
+                    //   controller: BarChartVM(
+                    //     assessments1: controller.assessments
+                    //         .map((e) => e.assessment1)
+                    //         .toList(),
+                    //     assessments2: controller.assessments
+                    //         .map((e) => e.assessment2)
+                    //         .toList(),
+                    //     context: context,
+                    //     examType1: controller.examType1,
+                    //     examType2: controller.examType2,
+                    //   ),
+                    //   term: 2,
+                    // ),
+                    // 10.verticalSpace,
+                    // Align(
+                    //   alignment: Alignment.topRight,
+                    //   child: Wrap(
+                    //     runSpacing: 10,
+                    //     spacing: 10,
+                    //     children: [
+                    //       for (int index = 0;
+                    //           index < controller.subjectNames.length;
+                    //           index++)
+                    //         BarChartLegendWidget(
+                    //             text: controller.subjectNames[index],
+                    //             color: colors[index] ?? Colors.blueAccent),
+                    //     ],
+                    //   ),
+                    // ),
+                    // 10.verticalSpace,
                   ],
                 ),
               ),

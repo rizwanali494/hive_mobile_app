@@ -39,6 +39,7 @@ dependencies:
   shared_preferences: ^2.2.1
   uuid: ^4.1.0
   sliver_tools: ^0.2.12
+  email_validator: ^2.1.17
 
 
 dev_dependencies:
