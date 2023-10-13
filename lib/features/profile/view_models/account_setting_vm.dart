@@ -92,6 +92,7 @@ class AccountSettingVM extends ChangeNotifier {
         log("error : ${e.response.statusCode}");
         log("error : ${e.response.body}");
       }
+      UtilFunctions.showToast();
       log("${e.toString()}");
     }
     context.pop();

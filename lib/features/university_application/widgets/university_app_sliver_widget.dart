@@ -50,7 +50,7 @@ class UniversityAppSliver extends StatelessWidget {
                     ),
                 childCount: controller.applications.length),
           ),
-        if (!controller.isLoading)
+        if (!controller.isLoading && controller.applications.isNotEmpty)
           ShowMoreButton(
             styles: styles,
             hasAll: controller.hasAll,

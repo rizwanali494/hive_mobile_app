@@ -64,9 +64,7 @@ class _UniversityApplicationScreenState
                   3.verticalSpace,
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 26.h,
-                      ),
+                      padding: EdgeInsets.only(top: 12.h),
                       child: Builder(builder: (context) {
                         return RefreshIndicator(
                           onRefresh: () async {

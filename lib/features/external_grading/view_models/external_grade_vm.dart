@@ -74,6 +74,6 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
 
   @override
   void displayError() {
-    UtilFunctions.showToast(context: context);
+    UtilFunctions.showToast();
   }
 }

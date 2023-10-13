@@ -135,7 +135,6 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel>
     try {
       await newsFeedRepo.disLikePost(model.id ?? 0);
     } catch (e) {
-      UtilFunctions.showToast();
       if (e is HTTPStatusCodeException) {
         log("${e.response.statusCode}");
       }

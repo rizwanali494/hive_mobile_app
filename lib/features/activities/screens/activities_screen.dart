@@ -62,19 +62,18 @@ class ActivitiesScreen extends StatelessWidget {
                   child: ErrorTextWidget(
                     onRefresh: provider.refreshList,
                   ),
-                )
-              else if (provider.items.isNotEmpty)
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: provider.refreshList,
-                    backgroundColor: styles.white,
-                    child: ListView.separated(
-                      controller: provider.scrollController,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(vertical: 12.h),
-                      separatorBuilder: (context, index) {
-                        // if (index == provider.listCount) {
-                        //   return const SizedBox.shrink();
+                ),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: provider.refreshList,
+                  backgroundColor: styles.white,
+                  child: ListView.separated(
+                    controller: provider.scrollController,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    separatorBuilder: (context, index) {
+                      // if (index == provider.listCount) {
+                      //   return const SizedBox.shrink();
                         // }
 
                         return 20.verticalSpace;
