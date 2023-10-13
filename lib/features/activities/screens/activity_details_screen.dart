@@ -181,7 +181,7 @@ class ActivityDetailScreen extends StatelessWidget {
                           ),
                           12.verticalSpace,
                           Text(
-                            data(),
+                           controller.description,
                             style: styles.inter12w400,
                           ),
                         ],
