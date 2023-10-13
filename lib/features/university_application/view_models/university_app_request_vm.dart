@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:path/path.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';

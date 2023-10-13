@@ -2,16 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
-import 'package:hive_mobile/app/extensions/list_extension.dart';
-import 'package:hive_mobile/app/models/data/my_services_model.dart';
-import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
-import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ServiceScreenVM extends ChangeNotifier {
   void notifyListener() {

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/models/data/report_model.dart';
 import 'package:hive_mobile/features/reports/screens/report_bar_chart.dart';
 import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';

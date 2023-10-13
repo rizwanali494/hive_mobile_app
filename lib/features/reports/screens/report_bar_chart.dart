@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
 import 'package:hive_mobile/features/reports/view_models/bar_chat_vm.dart';
 import 'package:hive_mobile/features/reports/widgets/bar_chat_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/term_divider_widget.dart';

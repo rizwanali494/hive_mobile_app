@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';

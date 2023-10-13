@@ -1,17 +1,13 @@
 import 'dart:developer';
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:hive_mobile/features/university_application/view_models/uni_app_sliver_vm.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   bool _isAcceptedLoading = true;

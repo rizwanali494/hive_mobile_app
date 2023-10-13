@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +9,6 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
-import 'package:images_picker/images_picker.dart';
 import 'package:path/path.dart';
 
 class AccountSettingVM extends ChangeNotifier {

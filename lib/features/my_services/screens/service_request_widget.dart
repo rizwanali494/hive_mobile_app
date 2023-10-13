@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
-import 'package:hive_mobile/features/my_services/view_models/base_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_request_widget_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_widget_vm.dart';

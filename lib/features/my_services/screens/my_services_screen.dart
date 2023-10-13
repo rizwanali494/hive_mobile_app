@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
-import 'package:hive_mobile/app/view/widgets/description_screen.dart';
-import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/service_request_widget.dart';
 import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/close_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/open_service_request_vm.dart';
-import 'package:hive_mobile/features/my_services/view_models/service_request_vm.dart';
-import 'package:hive_mobile/features/my_services/view_models/service_widget_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
-import 'package:hive_mobile/features/my_services/widget/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/my_services/widget/service_count_widget.dart';
-import 'package:hive_mobile/features/my_services/widget/services_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:provider/provider.dart';
 

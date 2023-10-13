@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/university_application/view_models/uni_app_sliver_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_widget_vm.dart';

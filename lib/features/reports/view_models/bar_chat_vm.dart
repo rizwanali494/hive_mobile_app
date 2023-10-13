@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/models/data/report_model.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
-import 'package:collection/collection.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class BarChartVM {
