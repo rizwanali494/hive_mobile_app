@@ -47,7 +47,10 @@ class AuthVM extends ChangeNotifier
       // "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
 
       var body = {
-        "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
+        "payload": {
+          "email": "zunair.8831@beaconite.edu.pk",
+          "email_verified": true
+        }
       };
       // var body = {
       //   "payload": {"email": "${user.email}", "email_verified": true}

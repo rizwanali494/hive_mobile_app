@@ -74,6 +74,10 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("date_added__lte=$date");
   }
 
+  String get withContentNull {
+    return _appendQueryParameter("content__isnull=True");
+  }
+
   String dateLessThan(String date) {
     return _appendQueryParameter("date__lt=$date");
   }

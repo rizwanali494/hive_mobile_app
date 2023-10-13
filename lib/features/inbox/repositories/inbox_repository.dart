@@ -13,6 +13,8 @@ abstract class InboxRepository {
 
   Future<List<InboxModel>> getItems({int? limit, int? offset});
 
+  Future<List<InboxModel>> getNewConversation({int? limit, int? offset});
+
   Future<List<InboxModel>> getSearchItems(String text,
       {int? limit, int? offset});
 }
@@ -41,6 +43,21 @@ class InboxRepositoryImpl extends InboxRepository {
     var response = await apiService.get(
       url: url,
     );
+    var result = jsonDecode(response.body);
+    List items = result["results"] ?? [];
+    log("messeage count : ${items.length}");
+    return items.map((e) => InboxModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<List<InboxModel>> getNewConversation({int? limit, int? offset}) async {
+    var response = await apiService.get(
+      url: ApiEndpoints.inbox
+          .withLimit(limit)
+          .withOffSet(offset)
+          .withContentNull,
+    );
+    log(ApiEndpoints.inbox.withLimit(limit).withOffSet(offset).withContentNull);
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
     log("messeage count : ${items.length}");
