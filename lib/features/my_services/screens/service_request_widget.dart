@@ -68,7 +68,13 @@ class ServiceRequestWidget extends StatelessWidget {
         else if (provider.items.isNotEmpty)
           Expanded(
             child: RefreshIndicator(
-              onRefresh: provider.refreshList,
+              onRefresh: () async {
+                await Future.wait([
+                  provider.refreshList(),
+                  context.read<ServiceScreenVM>().refreshList(),
+                ]);
+                return;
+              },
               backgroundColor: styles.white,
               child: ListView.separated(
                 controller: provider.scrollController,

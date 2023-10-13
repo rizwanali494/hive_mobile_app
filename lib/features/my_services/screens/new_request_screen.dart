@@ -47,38 +47,43 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                     hintText: AppStrings.characterCertificate,
                   ),
                   15.verticalSpace,
-                  Row(
-                    children: [
-                      10.horizontalSpace,
-                      SizedBox(
-                        width: 16.w,
-                        height: 16.h,
-                        child: Checkbox(
-                          value: provider.isChangeRequest,
-                          activeColor: styles.skyBlue,
-                          fillColor: MaterialStateProperty.resolveWith(
-                            (Set states) {
-                              if (states.contains(MaterialState.disabled)) {
+                  GestureDetector(
+                    onTap: () {
+                      provider.toggleChangeRequest();
+                    },
+                    child: Row(
+                      children: [
+                        10.horizontalSpace,
+                        SizedBox(
+                          width: 16.w,
+                          height: 16.h,
+                          child: Checkbox(
+                            value: provider.isChangeRequest,
+                            activeColor: styles.skyBlue,
+                            fillColor: MaterialStateProperty.resolveWith(
+                              (Set states) {
+                                if (states.contains(MaterialState.disabled)) {
+                                  return styles.skyBlue;
+                                }
                                 return styles.skyBlue;
-                              }
-                              return styles.skyBlue;
+                              },
+                            ),
+                            // checkColor: styles.skyBlue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.r),
+                            ),
+                            onChanged: (value) {
+                              provider.toggleChangeRequest();
                             },
                           ),
-                          // checkColor: styles.skyBlue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.r),
-                          ),
-                          onChanged: (value) {
-                            provider.toggleChangeRequest();
-                          },
                         ),
-                      ),
-                      12.horizontalSpace,
-                      Text(
-                        AppStrings.subjectChange,
-                        style: styles.inter12w400,
-                      ),
-                    ],
+                        12.horizontalSpace,
+                        Text(
+                          AppStrings.subjectChange,
+                          style: styles.inter12w400,
+                        ),
+                      ],
+                    ),
                   ),
                   29.verticalSpace,
                   TitleTextField(

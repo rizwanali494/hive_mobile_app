@@ -30,134 +30,131 @@ class ExternalGradingScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 19.w,
         ),
-        child: ChangeNotifierProvider(
-          create: (BuildContext context) => ExternalGradeVM(),
-          child: Consumer<ExternalGradeVM>(
-            builder: (context, provider, child) {
-              provider.context ??= context;
-              return Column(
-                children: [
-                  AppBarWidget(
-                      color: styles.black,
-                      horizontalPadding: 0,
-                      title: AppStrings.externalGrading,
-                      titleStyle: styles.inter28w700),
-                  27.verticalSpace,
-                  BlueActionButton(
-                    title: AppStrings.addExternalGrade,
-                    onTap: () async {
-                      var model = await context.push<ExternalGradeModel>(
-                          AddExternalGradeScreen.route,
-                          extra: {"addedGrades": provider.addedGrades});
-                      provider.addExternalGrade(model);
-                    },
+        child: Consumer<ExternalGradeVM>(
+          builder: (context, provider, child) {
+            provider.context ??= context;
+            return Column(
+              children: [
+                AppBarWidget(
+                    color: styles.black,
+                    horizontalPadding: 0,
+                    title: AppStrings.externalGrading,
+                    titleStyle: styles.inter28w700),
+                27.verticalSpace,
+                BlueActionButton(
+                  title: AppStrings.addExternalGrade,
+                  onTap: () async {
+                    var model = await context.push<ExternalGradeModel>(
+                        AddExternalGradeScreen.route,
+                        extra: {"addedGrades": provider.addedGrades});
+                    provider.addExternalGrade(model);
+                  },
+                ),
+                20.verticalSpace,
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 9.h,
                   ),
-                  20.verticalSpace,
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 9.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: styles.lightCyan,
-                      borderRadius: BorderRadius.circular(25.r),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 21.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: GradingTitleWidget(
-                              title: AppStrings.certificate,
-                            ),
+                  decoration: BoxDecoration(
+                    color: styles.lightCyan,
+                    borderRadius: BorderRadius.circular(25.r),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 21.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: GradingTitleWidget(
+                            title: AppStrings.certificate,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  5.verticalSpace,
-                  if (provider.isLoading)
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 19.w,
-                        ),
-                        child: ListView.separated(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 27.h,
-                          ),
-                          separatorBuilder: (context, index) {
-                            return 20.verticalSpace;
-                          },
-                          itemBuilder: (context, index) {
-                            return ExternalGradeShimmerWidget();
-                          },
-                          itemCount: 5,
-                        ),
-                      ),
-                    )
-                  else if (provider.hasError)
-                    Expanded(
-                      child: ErrorTextWidget(
-                        onRefresh: provider.refreshList,
-                      ),
-                    ),
+                ),
+                5.verticalSpace,
+                if (provider.isLoading)
                   Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: provider.refreshList,
-                      backgroundColor: styles.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 19.w,
+                      ),
                       child: ListView.separated(
-                        controller: provider.scrollController,
-                        physics: AlwaysScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(vertical: 8.h),
-                        // padding: EdgeInsets.symmetric(
-                        //   vertical: 27.h,
-                        // ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 27.h,
+                        ),
                         separatorBuilder: (context, index) {
-                          if (index == provider.listCount) {
-                            return const SizedBox.shrink();
-                          }
-                          return 10.verticalSpace;
+                          return 20.verticalSpace;
                         },
                         itemBuilder: (context, index) {
-                          if (index == provider.items.length) {
-                            if (provider.isGettingMore) {
-                              return Center(child: CircularProgressIndicator());
-                            }
-                            return SizedBox.shrink();
-                          }
-                          return GradeInfoWidget(
-                            controller: GradeDetailVM(
-                              model: provider.items[index],
-                            ),
-                            onChange: (ExternalGradeModel? model) {
-                              provider.updateItem(model);
-                            },
-                          );
+                          return ExternalGradeShimmerWidget();
                         },
-                        itemCount: provider.listCount,
+                        itemCount: 5,
                       ),
                     ),
+                  )
+                else if (provider.hasError)
+                  Expanded(
+                    child: ErrorTextWidget(
+                      onRefresh: provider.refreshList,
+                    ),
                   ),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: provider.refreshList,
+                    backgroundColor: styles.white,
+                    child: ListView.separated(
+                      controller: provider.scrollController,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      // padding: EdgeInsets.symmetric(
+                      //   vertical: 27.h,
+                      // ),
+                      separatorBuilder: (context, index) {
+                        if (index == provider.listCount) {
+                          return const SizedBox.shrink();
+                        }
+                        return 10.verticalSpace;
+                      },
+                      itemBuilder: (context, index) {
+                        if (index == provider.items.length) {
+                          if (provider.isGettingMore) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          return SizedBox.shrink();
+                        }
+                        return GradeInfoWidget(
+                          controller: GradeDetailVM(
+                            model: provider.items[index],
+                          ),
+                          onChange: (ExternalGradeModel? model) {
+                            provider.updateItem(model);
+                          },
+                        );
+                      },
+                      itemCount: provider.listCount,
+                    ),
+                  ),
+                ),
 
-                  // Expanded(
-                  //   child: ListView.separated(
-                  //     padding: EdgeInsets.symmetric(vertical: 8.h),
-                  //     itemBuilder: (context, index) {
-                  //       return GradeInfoWidget();
-                  //     },
-                  //     separatorBuilder: (context, index) {
-                  //       return 10.verticalSpace;
-                  //     },
-                  //     itemCount: 20,
-                  //   ),
-                  // ),
-                ],
-              );
-            },
-          ),
+                // Expanded(
+                //   child: ListView.separated(
+                //     padding: EdgeInsets.symmetric(vertical: 8.h),
+                //     itemBuilder: (context, index) {
+                //       return GradeInfoWidget();
+                //     },
+                //     separatorBuilder: (context, index) {
+                //       return 10.verticalSpace;
+                //     },
+                //     itemCount: 20,
+                //   ),
+                // ),
+              ],
+            );
+          },
         ),
       ),
     );

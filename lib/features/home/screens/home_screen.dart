@@ -10,16 +10,23 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_emal_successful.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
+import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/external_grade_vm.dart';
 import 'package:hive_mobile/features/home/view_models/drawer_widget_vm.dart';
 import 'package:hive_mobile/features/home/widgets/drawer_widget.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
+import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
+import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/notification/view_models/notification_screen_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
+import 'package:hive_mobile/features/university_application/view_models/accepted_application_vm.dart';
+import 'package:hive_mobile/features/university_application/view_models/previous_application_vm.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,6 +92,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ChangeNotifierProvider(
                   create: (context) => ProfileScreenVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => ActivityScreenVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => CalendarVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => ServiceScreenVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => AllServiceRequestVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => ExternalGradeVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => AcceptedApplicationVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => PreviousApplicationVM(),
                 ),
               ],
               child: provider.currentPage,

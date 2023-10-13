@@ -37,12 +37,6 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => ServiceScreenVM(),
-        ),
-        ChangeNotifierProvider(
-          create: (BuildContext context) => AllServiceRequestVM(),
-        ),
-        ChangeNotifierProvider(
           create: (BuildContext context) => OpenServiceRequestVM(),
         ),
         ChangeNotifierProvider(
@@ -75,6 +69,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                             context.read<AllServiceRequestVM>().refreshList(),
                             context.read<OpenServiceRequestVM>().refreshList(),
                             context.read<CloseServiceRequestVM>().refreshList(),
+                            context.read<ServiceScreenVM>().refreshList(),
                           ]);
                         }
                       },

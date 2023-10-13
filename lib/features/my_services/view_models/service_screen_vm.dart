@@ -85,6 +85,7 @@ class ServiceScreenVM extends ChangeNotifier {
   }
 
   Future<void> refreshList() async {
+    log("refreshing");
     await getServicesStatus();
   }
 }

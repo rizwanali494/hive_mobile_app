@@ -206,6 +206,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 ],
               ),
             ),
+          9.verticalSpace,
           Row(
             children: [
               BlueBorderContainer(
