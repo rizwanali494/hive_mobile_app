@@ -8,6 +8,7 @@ class AppStrings {
   static String enterBackupEmail = "Enter Backup Email";
   static String email = "Email";
   static String enter = "enter";
+  static String verify = "verify";
   static String newsFeed = "News Feed";
   static String activities = "Activities";
   static String calendar = "Calendar";

@@ -75,7 +75,7 @@ class _BackUpEmailDialogState extends State<BackUpEmailDialog> {
         SizedBox(
           width: double.infinity,
           child: BlueElevatedButton(
-            text: AppStrings.enter.toUpperCase(),
+            text: AppStrings.verify.toUpperCase(),
             onTap: () {
               if (EmailValidator.validate(emailCtrl.text)) {
                 context.pop(emailCtrl.text);

@@ -5,7 +5,7 @@ class DrawerWidgetVM {
 
   DrawerWidgetVM({required this.userModel});
 
-  String get userImage => userModel.picture?.file ?? "";
+  String? get userImage => userModel.picture?.file;
 
   String get userName => userModel.accountData?.extra?.studentName ?? "";
 }
