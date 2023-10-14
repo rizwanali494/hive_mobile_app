@@ -180,9 +180,12 @@ class ActivityDetailScreen extends StatelessWidget {
                             iconPath: SvgIcons.archiveTick,
                           ),
                           12.verticalSpace,
-                          Text(
-                           controller.description,
-                            style: styles.inter12w400,
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                             controller.description,
+                              style: styles.inter12w400,
+                            ),
                           ),
                         ],
                       ),
