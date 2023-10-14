@@ -62,7 +62,8 @@ class ActivitiesScreen extends StatelessWidget {
                   child: ErrorTextWidget(
                     onRefresh: provider.refreshList,
                   ),
-                ),
+                )
+              else
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: provider.refreshList,
