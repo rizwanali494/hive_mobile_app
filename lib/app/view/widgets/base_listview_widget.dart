@@ -5,9 +5,9 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 
 class BaseListViewWidget<T> extends StatelessWidget {
-  final Widget listViewChild;
-  final Widget shimmerChild;
-  final BaseListViewVM provider;
+  final Widget Function(T item) listViewChild;
+  final Widget Function(T item) shimmerChild;
+  final BaseListViewVM controller;
   final EdgeInsets? shimmerListPadding;
   final EdgeInsets? listViewPadding;
   final double? listSeparatorValue;
@@ -15,7 +15,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
 
   const BaseListViewWidget({
     super.key,
-    required this.provider,
+    required this.controller,
     required this.listViewChild,
     required this.shimmerChild,
     this.shimmerListPadding,
@@ -28,11 +28,11 @@ class BaseListViewWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    if (provider.hasError) {
+    if (controller.hasError) {
       return Expanded(
         child: LayoutBuilder(
           builder: (context, constraints) => RefreshIndicator(
-            onRefresh: provider.refreshList,
+            onRefresh: controller.refreshList,
             backgroundColor: styles.white,
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
@@ -53,7 +53,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
         ),
       );
     }
-    if (provider.isLoading) {
+    if (controller.isLoading) {
       return Expanded(
         child: ListView.separated(
           padding: EdgeInsets.symmetric(
@@ -63,7 +63,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
             // return PostShimmerWidget(
             //   type: PostType.image,
             // );
-            return shimmerChild;
+            return shimmerChild(controller.items[index]);
           },
           separatorBuilder: (context, index) {
             return (shimmerSeparatorValue ?? 20).verticalSpace;
@@ -75,7 +75,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
     return Expanded(
       child: RefreshIndicator(
         // onRefresh: provider.refreshNewsFeed,
-        onRefresh: provider.refreshList,
+        onRefresh: controller.refreshList,
         backgroundColor: styles.white,
         child: ListView.separated(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -83,10 +83,10 @@ class BaseListViewWidget<T> extends StatelessWidget {
               EdgeInsets.symmetric(
                 vertical: (12).h,
               ),
-          controller: provider.scrollController,
+          controller: controller.scrollController,
           itemBuilder: (context, index) {
-            if (index == provider.items.length) {
-              if (provider.isGettingMore) {
+            if (index == controller.items.length) {
+              if (controller.isGettingMore) {
                 return Center(child: CircularProgressIndicator());
               }
               return SizedBox.shrink();
@@ -124,15 +124,15 @@ class BaseListViewWidget<T> extends StatelessWidget {
             //     ),
             //   ),
             // );
-            return listViewChild;
+            return listViewChild(controller.items[index]);
           },
           separatorBuilder: (context, index) {
-            if (index == provider.items.length) {
+            if (index == controller.items.length) {
               return SizedBox.shrink();
             }
             return (listSeparatorValue ?? 20).verticalSpace;
           },
-          itemCount: provider.itemCount,
+          itemCount: controller.itemCount,
         ),
       ),
     );
