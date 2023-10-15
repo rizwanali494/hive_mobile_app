@@ -20,6 +20,19 @@ class BaseListViewVM<T>{
   bool get isLoading => uiState.isLoading;
   bool get isGettingMore => uiState.isFetchingMore;
 
-
-
+  BaseListViewVM copyWith({
+    List<T>? items,
+    UiState? uiState,
+    Future<void> Function()? refreshList,
+    ScrollController? scrollController,
+    int? itemCount,
+  }) {
+    return BaseListViewVM(
+      items: items ?? this.items,
+      uiState: uiState ?? this.uiState,
+      refreshList: refreshList ?? this.refreshList,
+      scrollController: scrollController ?? this.scrollController,
+      itemCount: itemCount ?? this.itemCount,
+    );
+  }
 }

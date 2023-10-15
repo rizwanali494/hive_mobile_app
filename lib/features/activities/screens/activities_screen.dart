@@ -62,85 +62,9 @@ class ActivitiesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                shimmerChild: (item) => PostShimmerWidget(type: PostType.image),
+                shimmerChild: PostShimmerWidget(type: PostType.image),
               ),
 
-              // if (provider.isLoading)
-              //   Expanded(
-              //     child: Padding(
-              //       padding: EdgeInsets.symmetric(
-              //         horizontal: 1.w,
-              //       ),
-              //       child: ListView.separated(
-              //         padding: EdgeInsets.symmetric(
-              //           vertical: 27.h,
-              //         ),
-              //         separatorBuilder: (context, index) {
-              //           return 20.verticalSpace;
-              //         },
-              //         itemBuilder: (context, index) {
-              //           return PostShimmerWidget(type: PostType.image);
-              //         },
-              //         itemCount: 12,
-              //       ),
-              //     ),
-              //   )
-              // else if (provider.hasError)
-              //   Expanded(
-              //     child: ErrorTextWidget(
-              //       onRefresh: provider.refreshList,
-              //     ),
-              //   )
-              // else
-              // Expanded(
-              //   child: RefreshIndicator(
-              //     onRefresh: provider.refreshList,
-              //     backgroundColor: styles.white,
-              //     child: ListView.separated(
-              //       controller: provider.scrollController,
-              //       physics: AlwaysScrollableScrollPhysics(),
-              //       padding: EdgeInsets.symmetric(vertical: 12.h),
-              //       separatorBuilder: (context, index) {
-              //         // if (index == provider.listCount) {
-              //         //   return const SizedBox.shrink();
-              //           // }
-              //
-              //           return 20.verticalSpace;
-              //         },
-              //         itemBuilder: (context, index) {
-              //           if (index == provider.items.length) {
-              //             if (provider.isGettingMore) {
-              //               return Center(
-              //                 child: CircularProgressIndicator(),
-              //               );
-              //             }
-              //             return SizedBox.shrink();
-              //           }
-              //           return GestureDetector(
-              //             onTap: () {
-              //               context.push(
-              //                 ActivityDetailScreen.route,
-              //                 extra: {
-              //                   "controller": ActivityWidgetVM(
-              //                     model: provider.items[index],
-              //                   ),
-              //                   "activityController": provider,
-              //                 },
-              //               );
-              //             },
-              //             child: ActivityWidget(
-              //               type: index.isEven ? PostType.image : PostType.poll,
-              //               selected: selected,
-              //               controller: ActivityWidgetVM(
-              //                 model: provider.items[index],
-              //               ),
-              //             ),
-              //           );
-              //         },
-              //         itemCount: provider.listCount,
-              //       ),
-              //     ),
-              //   ),
             ],
           );
         },
