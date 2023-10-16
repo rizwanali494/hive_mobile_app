@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -151,24 +151,60 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
     required Future<void> Function() onRefresh,
   }) {
     final styles = Theme.of(context).extension<AppTheme>()!;
+    final color = styles.greayShade300;
+
 
     if (isLoading) {
-      return Padding(
+      return ListView.separated(
         padding: EdgeInsets.symmetric(
-          horizontal: 19.w,
+          vertical: 10.h,
         ),
-        child: ListView.separated(
-          padding: EdgeInsets.symmetric(
-            vertical: 27.h,
-          ),
-          separatorBuilder: (context, index) {
-            return 20.verticalSpace;
-          },
-          itemBuilder: (context, index) {
-            return NotificationShimmerWidget();
-          },
-          itemCount: 12,
-        ),
+        separatorBuilder: (context, index) {
+          return 20.verticalSpace;
+        },
+        itemBuilder: (context, index) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    width: 50.w,
+                    height: 15.h,
+                    decoration: BoxDecoration(
+                      color: color,
+                    ),
+                  ),
+                  5.verticalSpace,
+                  Container(
+                    width: 50.w,
+                    height: 15.h,
+                    decoration: BoxDecoration(
+                      color: color,
+                    ),
+                  ),
+                ],
+              ),
+              55.horizontalSpace,
+              Container(
+                width: 150.w,
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color: color,
+                ),
+              ),
+
+            ],
+          ).animate(
+            onComplete: (controller) => controller.repeat(),
+          )
+              .shimmer(
+            color: styles.greyShade200,
+            duration: const Duration(seconds: 2),
+          );
+          // return NotificationShimmerWidget();
+        },
+        itemCount: 12,
       );
     } else {
       if (hasError) {

@@ -76,69 +76,89 @@ class ExternalGradingScreen extends StatelessWidget {
                   ),
                 ),
                 5.verticalSpace,
-                if (provider.isLoading)
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 19.w,
-                      ),
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 27.h,
-                        ),
-                        separatorBuilder: (context, index) {
-                          return 20.verticalSpace;
-                        },
-                        itemBuilder: (context, index) {
-                          return ExternalGradeShimmerWidget();
-                        },
-                        itemCount: 5,
-                      ),
-                    ),
-                  )
-                else if (provider.hasError)
-                  Expanded(
-                    child: ErrorTextWidget(
-                      onRefresh: provider.refreshList,
-                    ),
-                  ),
                 Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: provider.refreshList,
-                    backgroundColor: styles.white,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 19.w,
+                    ),
                     child: ListView.separated(
-                      controller: provider.scrollController,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(vertical: 8.h),
-                      // padding: EdgeInsets.symmetric(
-                      //   vertical: 27.h,
-                      // ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 12.h,
+                      ),
                       separatorBuilder: (context, index) {
-                        if (index == provider.listCount) {
-                          return const SizedBox.shrink();
-                        }
-                        return 10.verticalSpace;
+                        return 20.verticalSpace;
                       },
                       itemBuilder: (context, index) {
-                        if (index == provider.items.length) {
-                          if (provider.isGettingMore) {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                          return SizedBox.shrink();
-                        }
-                        return GradeInfoWidget(
-                          controller: GradeDetailVM(
-                            model: provider.items[index],
-                          ),
-                          onChange: (ExternalGradeModel? model) {
-                            provider.updateItem(model);
-                          },
-                        );
+                        return ExternalGradeShimmerWidget();
                       },
-                      itemCount: provider.listCount,
+                      itemCount: 5,
                     ),
                   ),
-                ),
+                )
+
+                // if (provider.isLoading)
+                //   Expanded(
+                //     child: Padding(
+                //       padding: EdgeInsets.symmetric(
+                //         horizontal: 19.w,
+                //       ),
+                //       child: ListView.separated(
+                //         padding: EdgeInsets.symmetric(
+                //           vertical: 27.h,
+                //         ),
+                //         separatorBuilder: (context, index) {
+                //           return 20.verticalSpace;
+                //         },
+                //         itemBuilder: (context, index) {
+                //           return ExternalGradeShimmerWidget();
+                //         },
+                //         itemCount: 5,
+                //       ),
+                //     ),
+                //   )
+                // else if (provider.hasError)
+                //   Expanded(
+                //     child: ErrorTextWidget(
+                //       onRefresh: provider.refreshList,
+                //     ),
+                //   ),
+                // Expanded(
+                //   child: RefreshIndicator(
+                //     onRefresh: provider.refreshList,
+                //     backgroundColor: styles.white,
+                //     child: ListView.separated(
+                //       controller: provider.scrollController,
+                //       physics: AlwaysScrollableScrollPhysics(),
+                //       padding: EdgeInsets.symmetric(vertical: 8.h),
+                //       // padding: EdgeInsets.symmetric(
+                //       //   vertical: 27.h,
+                //       // ),
+                //       separatorBuilder: (context, index) {
+                //         if (index == provider.listCount) {
+                //           return const SizedBox.shrink();
+                //         }
+                //         return 10.verticalSpace;
+                //       },
+                //       itemBuilder: (context, index) {
+                //         if (index == provider.items.length) {
+                //           if (provider.isGettingMore) {
+                //             return Center(child: CircularProgressIndicator());
+                //           }
+                //           return SizedBox.shrink();
+                //         }
+                //         return GradeInfoWidget(
+                //           controller: GradeDetailVM(
+                //             model: provider.items[index],
+                //           ),
+                //           onChange: (ExternalGradeModel? model) {
+                //             provider.updateItem(model);
+                //           },
+                //         );
+                //       },
+                //       itemCount: provider.listCount,
+                //     ),
+                //   ),
+                // ),
 
                 // Expanded(
                 //   child: ListView.separated(

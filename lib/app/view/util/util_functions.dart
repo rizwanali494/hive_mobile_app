@@ -119,8 +119,6 @@ class UtilFunctions {
       BuildContext? context,
       List<Widget> actionButtons = const []}) {
     // context = context ?? navigatorKey.currentContext;
-
-    if (context == null || !(context.mounted)) {
       Fluttertoast.showToast(
         msg: msg ?? AppStrings.somethingWentWrong,
         toastLength: Toast.LENGTH_LONG,
@@ -130,57 +128,67 @@ class UtilFunctions {
         textColor: Colors.white,
         fontSize: 12.0,
       );
-      return;
-    }
-    FToast fToast = FToast();
-
-    fToast.init(context);
-    Widget toast = Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-      decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(25.0),
-        color: Colors.black,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                msg ?? AppStrings.somethingWentWrong,
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 12.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  fToast.removeCustomToast();
-                },
-                child: Text(
-                  AppStrings.dismiss,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              ...actionButtons
-            ],
-          ),
-        ],
-      ),
-    );
-    fToast.showToast(
-      child: toast,
-      gravity: ToastGravity.BOTTOM,
-      fadeDuration: Duration(milliseconds: 400),
-      toastDuration: Duration(seconds: 3),
-    );
+    // if (context == null || !(context.mounted)) {
+    //   Fluttertoast.showToast(
+    //     msg: msg ?? AppStrings.somethingWentWrong,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.black,
+    //     textColor: Colors.white,
+    //     fontSize: 12.0,
+    //   );
+    //   return;
+    // }
+    // FToast fToast = FToast();
+    //
+    // fToast.init(context);
+    // Widget toast = Container(
+    //   width: double.infinity,
+    //   padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+    //   decoration: BoxDecoration(
+    //     // borderRadius: BorderRadius.circular(25.0),
+    //     color: Colors.black,
+    //   ),
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Align(
+    //         alignment: Alignment.topLeft,
+    //         child: Padding(
+    //           padding: const EdgeInsets.all(8.0),
+    //           child: Text(
+    //             msg ?? AppStrings.somethingWentWrong,
+    //             style: TextStyle(color: Colors.white),
+    //           ),
+    //         ),
+    //       ),
+    //       SizedBox(
+    //         width: 12.0,
+    //       ),
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.end,
+    //         children: [
+    //           TextButton(
+    //             onPressed: () {
+    //               fToast.removeCustomToast();
+    //             },
+    //             child: Text(
+    //               AppStrings.dismiss,
+    //               style: TextStyle(color: Colors.white),
+    //             ),
+    //           ),
+    //           ...actionButtons
+    //         ],
+    //       ),
+    //     ],
+    //   ),
+    // );
+    // fToast.showToast(
+    //   child: toast,
+    //   gravity: ToastGravity.BOTTOM,
+    //   fadeDuration: Duration(milliseconds: 400),
+    //   toastDuration: Duration(seconds: 3),
+    // );
   }
 }
