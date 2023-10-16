@@ -39,7 +39,6 @@ class ActivitiesScreen extends StatelessWidget {
                 horizontalPadding: 12,
                 title: AppStrings.activities,
               ),
-
               BaseListViewWidget<ActivityModel>(
                 controller: provider.listViewVM,
                 listViewChild: (item) => GestureDetector(
@@ -64,7 +63,6 @@ class ActivitiesScreen extends StatelessWidget {
                 ),
                 shimmerChild: PostShimmerWidget(type: PostType.image),
               ),
-
             ],
           );
         },

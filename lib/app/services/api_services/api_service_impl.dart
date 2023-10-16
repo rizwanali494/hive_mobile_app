@@ -28,8 +28,13 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-      response =
-          await http.get(url.parsedUri, headers: headers ?? this._headers);
+      // response =
+      //     await http.get(url.parsedUri, headers: headers ?? this._headers);
+
+      final response = await performHttpRequest(() async {
+        return await http.get(url.parsedUri, headers: headers ?? this._headers);
+      });
+
       return getResponse(response: response);
     } catch (e) {
       throw e;
@@ -45,10 +50,11 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     debugPrint(url.parsedUri.toString());
     url = "$url${queryParameters ?? ""}";
-
     try {
-      response = await http.post(url.parsedUri,
-          body: jsonEncode(body), headers: headers ?? this._headers);
+      final response = await performHttpRequest(() async {
+        return await http.post(url.parsedUri,
+            body: jsonEncode(body), headers: headers ?? this._headers);
+      });
       return getResponse(response: response);
     } catch (e) {
       throw e;
@@ -64,8 +70,14 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-      response = await http.patch(url.parsedUri,
-          body: jsonEncode(body), headers: headers ?? this._headers);
+      // response = await http.patch(url.parsedUri,
+      //     body: jsonEncode(body), headers: headers ?? this._headers);
+
+      final response = await performHttpRequest(() async {
+        return await http.patch(url.parsedUri,
+            body: jsonEncode(body), headers: headers ?? this._headers);
+      });
+
       return getResponse(response: response);
     } catch (e) {
       throw e;
@@ -98,7 +110,13 @@ class ApiServiceImpl extends ApiService {
       multipartFile,
     );
     var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
+
+    // var response = await http.Response.fromStream(streamedResponse);
+
+    final response = await performHttpRequest(() async {
+      return await http.Response.fromStream(streamedResponse);
+    });
+
     return getResponse(response: response);
   }
 
@@ -110,11 +128,23 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-      response =
-          await http.delete(url.parsedUri, headers: headers ?? this._headers);
+      // response =
+      //     await http.delete(url.parsedUri, headers: headers ?? this._headers);
+
+      final response = await performHttpRequest(() async {
+        return await http.delete(url.parsedUri,
+            headers: headers ?? this._headers);
+      });
+
       return getResponse(response: response);
     } catch (e) {
       throw e;
     }
   }
+
+  Future<http.Response> performHttpRequest(httpRequest request) async {
+    return await request.call().timeout(Duration(seconds: 30));
+  }
 }
+
+typedef httpRequest = Future<http.Response> Function();

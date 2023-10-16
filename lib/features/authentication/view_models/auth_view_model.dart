@@ -40,49 +40,56 @@ class AuthVM extends ChangeNotifier
     AuthService authService = GoogleAuthService();
     await authService.logOut();
     showLoaderDialog(context);
-    var user = await authService.logIn();
-    if (user is GoogleSignInAccount) {
-      //test email
-      var body = {
-        "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
-      };
-      // var body = {
-      //   "payload": {
-      //     "email": "zunair.8831@beaconite.edu.pk",
-      //     "email_verified": true
-      //   }
-      // };
-      // var body = {
-      //   "payload": {"email": "${user.email}", "email_verified": true}
-      // };
+    try {
+      var user = await authService.logIn();
+      log("run type : ${user.runtimeType}");
+      if (user is GoogleSignInAccount) {
+        //test email
+        var body = {
+          "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
+        };
+        // var body = {
+        //   "payload": {
+        //     "email": "zunair.8831@beaconite.edu.pk",
+        //     "email_verified": true
+        //   }
+        // };
+        // var body = {
+        //   "payload": {"email": "${user.email}", "email_verified": true}
+        // };
 
-      try {
-        final response = await userRepository.login(body);
+        try {
+          final response = await userRepository.login(body);
 
-        var responseBody = jsonDecode(response.body);
-        var model = UserModel.fromJson(responseBody);
-        log('got it');
-        var token = responseBody["token"]["access"];
-        log(token.toString());
-        registerApiServiceInstance(token: token);
-        registerUserModel(model);
-        context.pushReplacement(HomeScreen.route);
-        await sharedPref.setString("token", token);
-        isarService.clearCollection().then((value) {
-          isarService.put(model);
+          var responseBody = jsonDecode(response.body);
+          var model = UserModel.fromJson(responseBody);
+          log('got it');
+          var token = responseBody["token"]["access"];
+          log(token.toString());
+          registerApiServiceInstance(token: token);
+          registerUserModel(model);
+          context.pushReplacement(HomeScreen.route);
+          await sharedPref.setString("token", token);
+          isarService.clearCollection().then((value) {
+            isarService.put(model);
+            return;
+          });
           return;
-        });
-        return;
-      } catch (e) {
-        log(e.toString());
-        handleException(e, context: context);
-      }
-      if (context.mounted) {
+        } catch (e) {
+          log(e.toString());
+          handleException(e, context: context);
+        }
+        if (context.mounted) {
+          context.pop();
+        }
+      } else {
         context.pop();
       }
-    } else {
+    }  catch (e) {
       context.pop();
+      log("message : ${e.toString()} ");
     }
+
     loggingIn = false;
   }
 }
