@@ -56,7 +56,7 @@ class AuthVM extends ChangeNotifier
       // // };
      if( kDebugMode ){
         body = {
-           "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
+           "payload": {"email": "zunair.8831@beaconite.edu.pk", "email_verified": true}
          };
      }
      else{
