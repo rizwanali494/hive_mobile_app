@@ -74,7 +74,7 @@ class InboxScreen extends StatelessWidget {
                 ),
               ),
             ),
-
+            5.verticalSpace,
             BaseListViewWidget<InboxModel>(
               controller: provider.listViewVM,
               listViewChild: (item) =>
@@ -94,6 +94,14 @@ class InboxScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+              listSeparatorChild: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                child: Divider(
+                  color: styles.black.withOpacity(0.3),
+                  height: 1,
+                  thickness: 0.5,
+                ),
+              ),
               shimmerChild: Padding(
                 padding:EdgeInsets.symmetric(
                   horizontal: 19.w
