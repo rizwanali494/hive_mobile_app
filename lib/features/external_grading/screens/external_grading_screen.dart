@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_vm.dart';
@@ -76,25 +77,48 @@ class ExternalGradingScreen extends StatelessWidget {
                   ),
                 ),
                 5.verticalSpace,
-                Expanded(
-                  child: Padding(
+                BaseListViewWidget<ExternalGradeModel>(
+                  controller: provider.listViewVM,
+                  listViewChild: (item) =>
+                      GradeInfoWidget(
+                        controller: GradeDetailVM(
+                          model: item,
+                        ),
+                        onChange: (ExternalGradeModel? model) {
+                          provider.updateItem(model);
+                        },
+                      ),
+                  shimmerSeparatorValue: 20,
+                  listSeparatorValue: 10,
+                  shimmerChild: Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 19.w,
                     ),
-                    child: ListView.separated(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 12.h,
-                      ),
-                      separatorBuilder: (context, index) {
-                        return 20.verticalSpace;
-                      },
-                      itemBuilder: (context, index) {
-                        return ExternalGradeShimmerWidget();
-                      },
-                      itemCount: 5,
-                    ),
+                    child: ExternalGradeShimmerWidget(),
                   ),
-                )
+                ),
+
+
+                // Expanded(
+                //   child: Padding(
+                //     padding: EdgeInsets.symmetric(
+                //       horizontal: 19.w,
+                //     ),
+                //     child: ListView.separated(
+                //       padding: EdgeInsets.symmetric(
+                //         vertical: 12.h,
+                //       ),
+                //       separatorBuilder: (context, index) {
+                //         return 20.verticalSpace;
+                //       },
+                //       itemBuilder: (context, index) {
+                //         return ExternalGradeShimmerWidget();
+                //       },
+                //       itemCount: 5,
+                //     ),
+                //   ),
+                // )
+
 
                 // if (provider.isLoading)
                 //   Expanded(
@@ -172,7 +196,8 @@ class ExternalGradingScreen extends StatelessWidget {
                 //     itemCount: 20,
                 //   ),
                 // ),
-              ],
+              ]
+              ,
             );
           },
         ),
