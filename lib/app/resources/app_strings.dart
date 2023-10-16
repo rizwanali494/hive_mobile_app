@@ -1,11 +1,12 @@
 class AppStrings {
-  static String appName = "Hive";
+  static String appName = "Hive by BCP";
   static String welcome = "Welcome";
   static String signInWithGoogle = "Sign in with Google.";
   static String signInWithBeaconiteId =
       "Please sign in with your Beaconite Email ID.";
   static String continueWithGoogle = "Continue with Google";
   static String enterBackupEmail = "Enter Backup Email";
+  static String verifyBackupEmail = "Kindly verify back up email address";
   static String email = "Email";
   static String enter = "enter";
   static String verify = "verify";

@@ -26,8 +26,8 @@ class _BackUpEmailDialogState extends State<BackUpEmailDialog> {
         child: Column(
           children: [
             Text(
-              "${AppStrings.enterBackupEmail}",
-              style: styles.inter16w600,
+              "${AppStrings.verifyBackupEmail}",
+              style: styles.inter14w600,
               textAlign: TextAlign.center,
             ),
             Text(

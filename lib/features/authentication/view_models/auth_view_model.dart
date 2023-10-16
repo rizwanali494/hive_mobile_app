@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -40,56 +41,57 @@ class AuthVM extends ChangeNotifier
     AuthService authService = GoogleAuthService();
     await authService.logOut();
     showLoaderDialog(context);
-    try {
-      var user = await authService.logIn();
-      log("run type : ${user.runtimeType}");
-      if (user is GoogleSignInAccount) {
-        //test email
-        var body = {
-          "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
-        };
-        // var body = {
-        //   "payload": {
-        //     "email": "zunair.8831@beaconite.edu.pk",
-        //     "email_verified": true
-        //   }
-        // };
-        // var body = {
-        //   "payload": {"email": "${user.email}", "email_verified": true}
-        // };
+    var user = await authService.logIn();
+    if (user is GoogleSignInAccount) {
+      Map body = {};
+      //test email
+      // var body = {
+      //   "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
+      // };
+      // // var body = {
+      // //   "payload": {
+      // //     "email": "zunair.8831@beaconite.edu.pk",
+      // //     "email_verified": true
+      // //   }
+      // // };
+     if( kDebugMode ){
+        body = {
+           "payload": {"email": "zunair.8831@beaconite.edu.pk", "email_verified": true}
+         };
+     }
+     else{
+        body = {
+         "payload": {"email": "${user.email}", "email_verified": true}
+       };
+     }
 
-        try {
-          final response = await userRepository.login(body);
+      try {
+        final response = await userRepository.login(body);
 
-          var responseBody = jsonDecode(response.body);
-          var model = UserModel.fromJson(responseBody);
-          log('got it');
-          var token = responseBody["token"]["access"];
-          log(token.toString());
-          registerApiServiceInstance(token: token);
-          registerUserModel(model);
-          context.pushReplacement(HomeScreen.route);
-          await sharedPref.setString("token", token);
-          isarService.clearCollection().then((value) {
-            isarService.put(model);
-            return;
-          });
+        var responseBody = jsonDecode(response.body);
+        var model = UserModel.fromJson(responseBody);
+        log('got it');
+        var token = responseBody["token"]["access"];
+        log(token.toString());
+        registerApiServiceInstance(token: token);
+        registerUserModel(model);
+        context.pushReplacement(HomeScreen.route);
+        await sharedPref.setString("token", token);
+        isarService.clearCollection().then((value) {
+          isarService.put(model);
           return;
-        } catch (e) {
-          log(e.toString());
-          handleException(e, context: context);
-        }
-        if (context.mounted) {
-          context.pop();
-        }
-      } else {
+        });
+        return;
+      } catch (e) {
+        log(e.toString());
+        handleException(e);
+      }
+      if (context.mounted) {
         context.pop();
       }
-    }  catch (e) {
+    } else {
       context.pop();
-      log("message : ${e.toString()} ");
     }
-
     loggingIn = false;
   }
 }

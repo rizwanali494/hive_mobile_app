@@ -113,6 +113,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     if (!validate()) {
       return;
     }
+    FocusManager.instance.primaryFocus?.unfocus();
     showLoaderDialog(context);
     try {
       var documents = await uploadDocuments();
@@ -150,6 +151,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
         log(e.response.statusCode.toString());
         log(e.response.body.toString());
       }
+      UtilFunctions.showToast();
       log(e.toString());
     }
   }
