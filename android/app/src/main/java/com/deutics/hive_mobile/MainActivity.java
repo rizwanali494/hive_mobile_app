@@ -1,4 +1,4 @@
-package com.deutics.hive_mobile;
+package com.bcp.hive;
 
 import io.flutter.embedding.android.FlutterActivity;
 
