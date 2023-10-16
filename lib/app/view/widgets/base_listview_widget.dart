@@ -58,8 +58,8 @@ class BaseListViewWidget<T> extends StatelessWidget {
     if (controller.isLoading) {
       return Expanded(
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(
-            vertical: (shimmerSeparatorValue ?? 12).h,
+          padding: shimmerListPadding??EdgeInsets.symmetric(
+            vertical:  12.h,
           ),
           itemBuilder: (context, index) {
             return shimmerChild;
@@ -80,7 +80,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           padding: listViewPadding ??
               EdgeInsets.symmetric(
-                vertical: (12).h,
+                vertical: 12.h,
               ),
           controller: controller.scrollController,
           itemBuilder: (context, index) {
