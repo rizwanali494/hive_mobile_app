@@ -3,17 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
+import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/inbox_list_widget.dart';
 import 'package:hive_mobile/features/inbox/screens/inbox_search_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/new_conversations/new_conversation.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_list_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
+import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
+import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
+import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
-
 
 
 class InboxScreen extends StatelessWidget {
@@ -69,104 +74,41 @@ class InboxScreen extends StatelessWidget {
                 ),
               ),
             ),
-            InboxListWidget(
-              provider: InboxListVM(
-                  hasError: provider.hasError,
-                  isLoading: provider.isLoading,
-                  items: provider.items,
-                  listCount: provider.listCount,
-                  refreshList: provider.refreshList),
-            ),
-            // if (provider.isLoading)
-            //   Expanded(
-            //     child: ListView.separated(
-            //       itemCount: 12,
-            //       padding: EdgeInsets.symmetric(
-            //         vertical: 19.h,
-            //       ),
-            //       itemBuilder: (context, index) {
-            //         return Padding(
-            //           padding: EdgeInsets.symmetric(horizontal: 20.w),
-            //           child: InboxShimmerWidget(),
-            //         );
-            //       },
-            //       separatorBuilder: (BuildContext context, int index) {
-            //         return Padding(
-            //           padding: EdgeInsets.symmetric(
-            //               horizontal: 20.w, vertical: 15.h),
-            //           child: Divider(
-            //             color: styles.black.withOpacity(0.3),
-            //             height: 1,
-            //           ),
-            //         )..animate(
-            //             onComplete: (controller) => controller.repeat(),
-            //           ).shimmer(
-            //             color: styles.greyShade200,
-            //             duration: const Duration(seconds: 2),
-            //           );
-            //       },
-            //     ),
-            //   )
-            // else if (provider.hasError)
-            //   ErrorTextWidget(
-            //     onRefresh: () async {
-            //       return;
-            //     },
-            //   )
-            // else if (true)
-            //   Expanded(
-            //     child: RefreshIndicator(
-            //       backgroundColor: styles.white,
-            //       onRefresh: provider.refreshList,
-            //       child: ListView.separated(
-            //         itemCount: provider.listCount,
-            //         physics: AlwaysScrollableScrollPhysics(),
-            //         padding: EdgeInsets.symmetric(
-            //           vertical: 19.h,
-            //         ),
-            //         itemBuilder: (context, index) {
-            //           if (provider.isLoading) {
-            //             return Center(
-            //               child: CircularProgressIndicator(),
-            //             );
-            //           }
-            //           return Padding(
-            //             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            //             child: Column(
-            //               children: [
-            //                 InboxListTile(
-            //                   onTap: () {
-            //                     context.push(
-            //                       ChatScreen.route,
-            //                       extra: {
-            //                         "receiverId": provider.items[index]
-            //                       },
-            //                     );
-            //                   },
-            //                   controller: InboxTileWidgetVM(
-            //                     model: provider.items[index],
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           );
-            //         },
-            //         separatorBuilder: (BuildContext context, int index) {
-            //           if (provider.isLoading) {
-            //             return const SizedBox.shrink();
-            //           }
-            //           return Padding(
-            //             padding: EdgeInsets.symmetric(
-            //                 horizontal: 20.w, vertical: 17.h),
-            //             child: Divider(
-            //               color: styles.black.withOpacity(0.3),
-            //               height: 1,
-            //             ),
-            //           );
-            //         },
-            //       ),
-            //     ),
-            //   ),
+
+            BaseListViewWidget<InboxModel>(
+              controller: provider.listViewVM,
+              listViewChild: (item) =>
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 19.w
+                    ),
+                    child: InboxListTile(
+                      onTap: () {
+                        context.push(
+                          ChatScreen.route,
+                          extra: {"receiverId": item},
+                        );
+                      },
+                      controller: InboxTileWidgetVM(
+                        model: item,
+                      ),
+                    ),
+                  ),
+              shimmerChild: Padding(
+                padding:EdgeInsets.symmetric(
+                  horizontal: 19.w
+                ),
+                child: InboxShimmerWidget(),
+              ),
+            )
+            // InboxListWidget(
+            //   provider: InboxListVM(
+            //       hasError: provider.hasError,
+            //       isLoading: provider.isLoading,
+            //       items: provider.items,
+            //       listCount: provider.listCount,
+            //       refreshList: provider.refreshList),
+            // ),
           ],
         );
       },

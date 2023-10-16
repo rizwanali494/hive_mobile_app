@@ -6,6 +6,10 @@ import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
+import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
+
+import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 
 abstract class BaseApiVM<T> with ChangeNotifier {
   UiState uiState = UiState.loading();
@@ -177,5 +181,14 @@ abstract class BaseApiVM<T> with ChangeNotifier {
       log("Error occurred : ${e.runtimeType}");
       displayError();
     }
+  }
+
+  BaseListViewVM<T> get listViewVM {
+    return BaseListViewVM<T>(
+        items: items,
+        uiState: uiState,
+        refreshList: refreshList,
+        scrollController: scrollController,
+        itemCount: listCount);
   }
 }
