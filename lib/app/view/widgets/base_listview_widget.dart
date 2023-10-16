@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 
 class BaseListViewWidget<T> extends StatelessWidget {
   final Widget Function(T item) listViewChild;
+  final Widget? listSeparatorChild;
   final Widget shimmerChild;
   final BaseListViewVM controller;
   final EdgeInsets? shimmerListPadding;
@@ -22,6 +23,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
     this.listViewPadding,
     this.shimmerSeparatorValue,
     this.listSeparatorValue,
+    this.listSeparatorChild,
   });
 
   @override
@@ -60,9 +62,6 @@ class BaseListViewWidget<T> extends StatelessWidget {
             vertical: (shimmerSeparatorValue ?? 12).h,
           ),
           itemBuilder: (context, index) {
-            // return PostShimmerWidget(
-            //   type: PostType.image,
-            // );
             return shimmerChild;
           },
           separatorBuilder: (context, index) {
@@ -130,7 +129,8 @@ class BaseListViewWidget<T> extends StatelessWidget {
             if (index == controller.items.length) {
               return SizedBox.shrink();
             }
-            return (listSeparatorValue ?? 20).verticalSpace;
+            return listSeparatorChild ??
+                (listSeparatorValue ?? 20).verticalSpace;
           },
           itemCount: controller.itemCount,
         ),

@@ -28,8 +28,6 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-      // response =
-      //     await http.get(url.parsedUri, headers: headers ?? this._headers);
 
       final response = await performHttpRequest(() async {
         return await http.get(url.parsedUri, headers: headers ?? this._headers);
@@ -70,8 +68,6 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-      // response = await http.patch(url.parsedUri,
-      //     body: jsonEncode(body), headers: headers ?? this._headers);
 
       final response = await performHttpRequest(() async {
         return await http.patch(url.parsedUri,
@@ -110,9 +106,6 @@ class ApiServiceImpl extends ApiService {
       multipartFile,
     );
     var streamedResponse = await request.send();
-
-    // var response = await http.Response.fromStream(streamedResponse);
-
     final response = await performHttpRequest(() async {
       return await http.Response.fromStream(streamedResponse);
     });
@@ -128,8 +121,6 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-      // response =
-      //     await http.delete(url.parsedUri, headers: headers ?? this._headers);
 
       final response = await performHttpRequest(() async {
         return await http.delete(url.parsedUri,
