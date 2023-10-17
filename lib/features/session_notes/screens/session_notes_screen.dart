@@ -29,115 +29,100 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => SessionNoteVM(),
-      child: Consumer<SessionNoteVM>(
-        builder: (context, provider, child) {
-          return Scaffold(
-            body: DefaultTabController(
-              length: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 19.w),
-                child: Column(
-                  children: [
-                    AppBarWidget(
-                      color: styles.black,
-                      title: AppStrings.sessionNote,
-                      horizontalPadding: 0,
+    return Consumer<SessionNoteVM>(
+      builder: (context, provider, child) {
+        return Scaffold(
+          body: DefaultTabController(
+            length: 2,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 19.w),
+              child: Column(
+                children: [
+                  AppBarWidget(
+                    color: styles.black,
+                    title: AppStrings.sessionNote,
+                    horizontalPadding: 0,
+                  ),
+                  21.verticalSpace,
+                  TabBarWidget(
+                    onTap: (index) {
+                      provider.setIndex(index);
+                    },
+                    selectedIndex: provider.selectedIndex,
+                    tab1Title: AppStrings.acknowledged,
+                    tab2Title: AppStrings.pending,
+                  ),
+                  25.verticalSpace,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 6.h,
+                      horizontal: 19.w,
                     ),
-                    21.verticalSpace,
-                    TabBarWidget(
-                      onTap: (index) {
-                        provider.setIndex(index);
-                      },
-                      selectedIndex: provider.selectedIndex,
-                      tab1Title: AppStrings.acknowledged,
-                      tab2Title: AppStrings.pending,
+                    decoration: BoxDecoration(
+                      color: styles.lightCyan,
+                      borderRadius: BorderRadius.circular(25.r),
                     ),
-                    25.verticalSpace,
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 6.h,
-                        horizontal: 19.w,
-                      ),
-                      decoration: BoxDecoration(
-                        color: styles.lightCyan,
-                        borderRadius: BorderRadius.circular(25.r),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              AppStrings.subjectTitle,
-                              style: styles.inter12w400,
-                            ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            AppStrings.subjectTitle,
+                            style: styles.inter12w400,
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              AppStrings.description,
-                              style: styles.inter12w400,
-                            ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            AppStrings.description,
+                            style: styles.inter12w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  10.verticalSpace,
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 21.w),
+                      child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          Consumer<ACKSessionNoteVM>(
+                            key: Key("ack"),
+                            builder: (context, provider, child) {
+                              return buildListView(
+                                  isLoading: provider.uiState.isLoading,
+                                  hasError: provider.uiState.hasError,
+                                  list: provider.items,
+                                  listCount: provider.listCount,
+                                  controller: provider.scrollController,
+                                  onRefresh: provider.refreshList,
+                                  isGettingMore: provider.isGettingMore);
+                            },
+                          ),
+                          Consumer<PendingSessionNoteVM>(
+                            key: Key("pending"),
+                            builder: (context, provider, child) {
+                              return buildListView(
+                                  isLoading: provider.uiState.isLoading,
+                                  hasError: provider.uiState.hasError,
+                                  list: provider.items,
+                                  listCount: provider.listCount,
+                                  controller: provider.scrollController,
+                                  onRefresh: provider.refreshList,
+                                  isGettingMore: provider.isGettingMore);
+                            },
                           ),
                         ],
                       ),
                     ),
-                    10.verticalSpace,
-                    Flexible(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 21.w),
-                        child: MultiProvider(
-                          providers: [
-                            ChangeNotifierProvider<ACKSessionNoteVM>(
-                              create: (context) => ACKSessionNoteVM(),
-                              key: Key("ack"),
-                            ),
-                            ChangeNotifierProvider<PendingSessionNoteVM>(
-                              create: (context) => PendingSessionNoteVM(),
-                              key: Key("pending"),
-                            ),
-                          ],
-                          child: TabBarView(
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [
-                              Consumer<ACKSessionNoteVM>(
-                                key: Key("ack"),
-                                builder: (context, provider, child) {
-                                  return buildListView(
-                                      isLoading: provider.uiState.isLoading,
-                                      hasError: provider.uiState.hasError,
-                                      list: provider.items,
-                                      listCount: provider.listCount,
-                                      controller: provider.scrollController,
-                                      onRefresh: provider.refreshList,
-                                      isGettingMore: provider.isGettingMore);
-                                },
-                              ),
-                              Consumer<PendingSessionNoteVM>(
-                                key: Key("pending"),
-                                builder: (context, provider, child) {
-                                  return buildListView(
-                                      isLoading: provider.uiState.isLoading,
-                                      hasError: provider.uiState.hasError,
-                                      list: provider.items,
-                                      listCount: provider.listCount,
-                                      controller: provider.scrollController,
-                                      onRefresh: provider.refreshList,
-                                      isGettingMore: provider.isGettingMore);
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -167,31 +152,45 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 50.w,
-                    height: 15.h,
+                    width: 65.w,
+                    height: 10.h,
                     decoration: BoxDecoration(
                       color: color,
                     ),
                   ),
-                  5.verticalSpace,
+                  3.verticalSpace,
                   Container(
-                    width: 50.w,
-                    height: 15.h,
+                    width: 35.w,
+                    height: 10.h,
                     decoration: BoxDecoration(
                       color: color,
                     ),
                   ),
                 ],
               ),
-              55.horizontalSpace,
-              Container(
-                width: 150.w,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: color,
-                ),
+              40.horizontalSpace,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 150.w,
+                    height: 10.h,
+                    decoration: BoxDecoration(
+                      color: color,
+                    ),
+                  ),
+                  3.verticalSpace,
+                  Container(
+                    width: 70.w,
+                    height: 10.h,
+                    decoration: BoxDecoration(
+                      color: color,
+                    ),
+                  ),
+                ],
               ),
 
             ],
@@ -206,6 +205,7 @@ class _SessionNotesScreenState extends State<SessionNotesScreen> {
         },
         itemCount: 12,
       );
+
     } else {
       if (hasError) {
         return ErrorTextWidget(

@@ -25,6 +25,9 @@ import 'package:hive_mobile/features/notification/view_models/notification_scree
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
+import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
+import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
+import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/previous_application_vm.dart';
 import 'package:provider/provider.dart';
@@ -113,6 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ChangeNotifierProvider(
                   create: (BuildContext context) => PreviousApplicationVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (BuildContext context) => SessionNoteVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => ACKSessionNoteVM(),
+                ),
+                ChangeNotifierProvider(
+                  create: (context) => PendingSessionNoteVM(),
                 ),
               ],
               child: provider.currentPage,
