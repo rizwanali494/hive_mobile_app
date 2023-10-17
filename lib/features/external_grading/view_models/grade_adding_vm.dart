@@ -18,14 +18,9 @@ import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GradeAddingVM with UtilFunctions, ChangeNotifier {
-  final grades = [
-    "A",
-    "B+",
-    "B",
-    "C+",
-    "C",
-  ];
-  String? selectedGrade = "A";
+  final grades = ["A*", "A", "B", "C", "D", "E"];
+
+  String? selectedGrade = "A*";
 
   GradeAddingVM({List<String> certificates = const [], this.editModel}) {
     setCertificate(certificates);
@@ -58,8 +53,9 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     for (var value in deg) {
       certificates.remove(value.toUpperCase());
     }
-    selectedCertificate =
-        this.certificates.asMap().containsKey(0) ? this.certificates.first : null;
+    selectedCertificate = this.certificates.asMap().containsKey(0)
+        ? this.certificates.first
+        : null;
   }
 
   void selectCertificate(String? value) {
@@ -111,9 +107,6 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
       notifyListeners();
     }
   }
-
-
-
 
   bool fileDownloading = false;
 
@@ -219,7 +212,9 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
       var model = await externalGradeRepo.updateExternalGrade(
           map: body, id: editModel?.id ?? 0);
       model = model.copyWith(
-          resultFile: file, certificate: certificate, institutionName: institutionName);
+          resultFile: file,
+          certificate: certificate,
+          institutionName: institutionName);
       log("file model : ${model}");
       log("file : ${model.resultFile.toString()}");
       context.pop();
@@ -259,11 +254,11 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     );
   }
 
-
   ExternalGradeModel? editModel;
 
   void setValues(ExternalGradeModel model) {
-    var certificate = certificates.where((element) => element == model.certificate).toList();
+    var certificate =
+        certificates.where((element) => element == model.certificate).toList();
     if (certificate.isNotEmpty) {
       selectedCertificate = certificate.first;
     }

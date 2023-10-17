@@ -39,7 +39,7 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   @override
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet}) async {
-    var url = apiEndpoint(offSet, limit).withApprovedStatus;
+    var url = apiEndpoint(offSet, limit).withApprovedState;
     log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
@@ -52,7 +52,7 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   @override
   Future<List<UniversityApplicationModel>> getPreviousApplications(
       {int? limit, int? offSet}) async {
-    var url = apiEndpoint(offSet, limit).withNotApprovedApplications;
+    var url = apiEndpoint(offSet, limit).withNotApprovedState;
     log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
