@@ -18,62 +18,62 @@ const StudentAccountDataSchema = Schema(
       name: r'backupEmail',
       type: IsarType.string,
     ),
-    r'bio': PropertySchema(
-      id: 1,
-      name: r'bio',
-      type: IsarType.string,
-    ),
     r'branchId': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'branchId',
       type: IsarType.long,
     ),
     r'cityId': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'cityId',
       type: IsarType.long,
     ),
     r'classId': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'classId',
       type: IsarType.long,
     ),
     r'dateAdded': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'dateAdded',
       type: IsarType.string,
     ),
     r'dateLastModified': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'dateLastModified',
       type: IsarType.string,
     ),
     r'extra': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'extra',
       type: IsarType.object,
       target: r'StudentExtra',
     ),
     r'hobbies': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'hobbies',
       type: IsarType.objectList,
       target: r'HobbiesModel',
     ),
     r'id': PropertySchema(
-      id: 9,
+      id: 8,
       name: r'id',
       type: IsarType.long,
     ),
     r'owner': PropertySchema(
-      id: 10,
+      id: 9,
       name: r'owner',
       type: IsarType.long,
     ),
     r'regionId': PropertySchema(
-      id: 11,
+      id: 10,
       name: r'regionId',
       type: IsarType.long,
+    ),
+    r'status': PropertySchema(
+      id: 11,
+      name: r'status',
+      type: IsarType.string,
     )
   },
   estimateSize: _studentAccountDataEstimateSize,
@@ -90,12 +90,6 @@ int _studentAccountDataEstimateSize(
   var bytesCount = offsets.last;
   {
     final value = object.backupEmail;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.bio;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -134,6 +128,12 @@ int _studentAccountDataEstimateSize(
       }
     }
   }
+  {
+    final value = object.status;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -144,27 +144,27 @@ void _studentAccountDataSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.backupEmail);
-  writer.writeString(offsets[1], object.bio);
-  writer.writeLong(offsets[2], object.branchId);
-  writer.writeLong(offsets[3], object.cityId);
-  writer.writeLong(offsets[4], object.classId);
-  writer.writeString(offsets[5], object.dateAdded);
-  writer.writeString(offsets[6], object.dateLastModified);
+  writer.writeLong(offsets[1], object.branchId);
+  writer.writeLong(offsets[2], object.cityId);
+  writer.writeLong(offsets[3], object.classId);
+  writer.writeString(offsets[4], object.dateAdded);
+  writer.writeString(offsets[5], object.dateLastModified);
   writer.writeObject<StudentExtra>(
-    offsets[7],
+    offsets[6],
     allOffsets,
     StudentExtraSchema.serialize,
     object.extra,
   );
   writer.writeObjectList<HobbiesModel>(
-    offsets[8],
+    offsets[7],
     allOffsets,
     HobbiesModelSchema.serialize,
     object.hobbies,
   );
-  writer.writeLong(offsets[9], object.id);
-  writer.writeLong(offsets[10], object.owner);
-  writer.writeLong(offsets[11], object.regionId);
+  writer.writeLong(offsets[8], object.id);
+  writer.writeLong(offsets[9], object.owner);
+  writer.writeLong(offsets[10], object.regionId);
+  writer.writeString(offsets[11], object.status);
 }
 
 StudentAccountData _studentAccountDataDeserialize(
@@ -175,26 +175,26 @@ StudentAccountData _studentAccountDataDeserialize(
 ) {
   final object = StudentAccountData(
     backupEmail: reader.readStringOrNull(offsets[0]),
-    bio: reader.readStringOrNull(offsets[1]),
-    branchId: reader.readLongOrNull(offsets[2]),
-    cityId: reader.readLongOrNull(offsets[3]),
-    classId: reader.readLongOrNull(offsets[4]),
-    dateAdded: reader.readStringOrNull(offsets[5]),
-    dateLastModified: reader.readStringOrNull(offsets[6]),
+    branchId: reader.readLongOrNull(offsets[1]),
+    cityId: reader.readLongOrNull(offsets[2]),
+    classId: reader.readLongOrNull(offsets[3]),
+    dateAdded: reader.readStringOrNull(offsets[4]),
+    dateLastModified: reader.readStringOrNull(offsets[5]),
     extra: reader.readObjectOrNull<StudentExtra>(
-      offsets[7],
+      offsets[6],
       StudentExtraSchema.deserialize,
       allOffsets,
     ),
     hobbies: reader.readObjectList<HobbiesModel>(
-      offsets[8],
+      offsets[7],
       HobbiesModelSchema.deserialize,
       allOffsets,
       HobbiesModel(),
     ),
-    id: reader.readLongOrNull(offsets[9]),
-    owner: reader.readLongOrNull(offsets[10]),
-    regionId: reader.readLongOrNull(offsets[11]),
+    id: reader.readLongOrNull(offsets[8]),
+    owner: reader.readLongOrNull(offsets[9]),
+    regionId: reader.readLongOrNull(offsets[10]),
+    status: reader.readStringOrNull(offsets[11]),
   );
   return object;
 }
@@ -209,36 +209,36 @@ P _studentAccountDataDeserializeProp<P>(
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readLongOrNull(offset)) as P;
     case 3:
       return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readStringOrNull(offset)) as P;
-    case 7:
       return (reader.readObjectOrNull<StudentExtra>(
         offset,
         StudentExtraSchema.deserialize,
         allOffsets,
       )) as P;
-    case 8:
+    case 7:
       return (reader.readObjectList<HobbiesModel>(
         offset,
         HobbiesModelSchema.deserialize,
         allOffsets,
         HobbiesModel(),
       )) as P;
+    case 8:
+      return (reader.readLongOrNull(offset)) as P;
     case 9:
       return (reader.readLongOrNull(offset)) as P;
     case 10:
       return (reader.readLongOrNull(offset)) as P;
     case 11:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -395,160 +395,6 @@ extension StudentAccountDataQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'backupEmail',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'bio',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'bio',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'bio',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'bio',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'bio',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'bio',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'bio',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'bio',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'bio',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'bio',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'bio',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
-      bioIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'bio',
         value: '',
       ));
     });
@@ -1427,6 +1273,160 @@ extension StudentAccountDataQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'status',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'status',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'status',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'status',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      statusIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'status',
+        value: '',
       ));
     });
   }

@@ -17,7 +17,7 @@ class StudentAccountData {
     this.regionId,
     this.cityId,
     this.branchId,
-    this.bio,
+    this.status,
     this.backupEmail,
     this.owner,
     this.hobbies,
@@ -33,7 +33,7 @@ class StudentAccountData {
     regionId = json['region_id'];
     cityId = json['city_id'];
     branchId = json['branch_id'];
-    bio = json['bio'];
+    status = json['status'];
     backupEmail = json['backup_email'];
     owner = json['owner'];
     if (json['hobbies'] != null) {
@@ -49,7 +49,7 @@ class StudentAccountData {
   int? regionId;
   int? cityId;
   int? branchId;
-  String? bio;
+  String? status;
   String? backupEmail;
   int? owner;
   List<HobbiesModel>? hobbies;
@@ -77,7 +77,7 @@ class StudentAccountData {
         regionId: regionId ?? this.regionId,
         cityId: cityId ?? this.cityId,
         branchId: branchId ?? this.branchId,
-        bio: bio ?? this.bio,
+        status: bio ?? this.status,
         backupEmail: backupEmail ?? this.backupEmail,
         owner: owner ?? this.owner,
         hobbies: hobbies?.map((e) => e.copyWith()).toList() ??
@@ -96,7 +96,7 @@ class StudentAccountData {
     map['region_id'] = regionId;
     map['city_id'] = cityId;
     map['branch_id'] = branchId;
-    map['bio'] = bio;
+    map['status'] = status;
     map['backup_email'] = backupEmail;
     map['owner'] = owner;
     if (hobbies != null) {

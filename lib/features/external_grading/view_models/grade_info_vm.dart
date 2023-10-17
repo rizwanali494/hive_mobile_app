@@ -17,7 +17,7 @@ class GradeDetailVM extends ChangeNotifier {
     getAllSubjects(model.id ?? 0);
   }
 
-  String get degree => model.degree ?? "";
+  String get degree => model.certificate ?? "";
 
   String get subject => model.subjects?.first.name ?? "";
 

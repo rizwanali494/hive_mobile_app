@@ -13,7 +13,7 @@ class ProfileScreenVM extends ChangeNotifier {
   }
 
   String get userBio {
-    return userModel.accountData?.bio ?? "";
+    return userModel.accountData?.status ?? "";
   }
 
   String get userImage {
