@@ -18,6 +18,7 @@ class SvgIcons {
   static const String eye = "${_iconsPath}eye.svg";
   static const String game = "${_iconsPath}game.svg";
   static const String googleIcon = "${_iconsPath}google_icon.svg";
+  static const String appleIcon = "${_iconsPath}apple_logo.svg";
   static const String homeNav = "${_iconsPath}home_nav.svg";
   static const String logout = "${_iconsPath}logout.svg";
   static const String maybe = "${_iconsPath}maybe.svg";

@@ -33,17 +33,22 @@ class AuthVM extends ChangeNotifier
   final sharedPref = GetIt.instance.get<SharedPreferences>();
   late final userRepository = UserRepository(apiService: apiService);
 
-  Future googleSignIn(BuildContext context) async {
+  AuthService? authService;
+
+  Future signIN(AuthService service,BuildContext context) async {
     if (loggingIn) {
       return;
     }
     loggingIn = true;
-    AuthService authService = GoogleAuthService();
-    await authService.logOut();
+    authService = service;
+    await authService?.logOut();
     showLoaderDialog(context);
-    var user = await authService.logIn();
-    if (user is GoogleSignInAccount) {
-      Map body = {};
+    var user = await authService?.logIn();
+    if (user != null) {
+      if (user.email == null) {
+        UtilFunctions.showToast(msg: "Email not provided");
+        return;
+      }
       //test email
       // var body = {
       //   "payload": {"email": "saqib.manzoor@bh.edu.pk", "email_verified": true}
@@ -54,16 +59,19 @@ class AuthVM extends ChangeNotifier
       // //     "email_verified": true
       // //   }
       // // };
-     if( kDebugMode ){
+      Map body = {};
+      if (kDebugMode) {
         body = {
-           "payload": {"email": "zunair.8831@beaconite.edu.pk", "email_verified": true}
-         };
-     }
-     else{
+          "payload": {
+            "email": "zunair.8831@beaconite.edu.pk",
+            "email_verified": true
+          }
+        };
+      } else {
         body = {
-         "payload": {"email": "${user.email}", "email_verified": true}
-       };
-     }
+          "payload": {"email": "${user.email}", "email_verified": true}
+        };
+      }
 
       try {
         final response = await userRepository.login(body);
@@ -95,4 +103,3 @@ class AuthVM extends ChangeNotifier
     loggingIn = false;
   }
 }
-

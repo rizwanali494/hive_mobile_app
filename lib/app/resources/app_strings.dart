@@ -5,6 +5,7 @@ class AppStrings {
   static String signInWithBeaconiteId =
       "Please sign in with your Beaconite Email ID.";
   static String continueWithGoogle = "Continue with Google";
+  static String continueWithApple = "Continue with Apple";
   static String enterBackupEmail = "Enter Backup Email";
   static String verifyBackupEmail = "Kindly verify back up email address";
   static String email = "Email";
