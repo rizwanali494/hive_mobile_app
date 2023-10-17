@@ -39,7 +39,7 @@ dependencies:
   uuid: ^4.1.0
   sliver_tools: ^0.2.12
   email_validator: ^2.1.17
-  sign_in_with_apple: ^5.0.0
+#  sign_in_with_apple: ^5.0.0
 
 
 dev_dependencies:
