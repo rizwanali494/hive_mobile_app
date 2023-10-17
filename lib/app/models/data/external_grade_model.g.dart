@@ -23,19 +23,19 @@ const ExternalGradeModelSchema = CollectionSchema(
       name: r'branchId',
       type: IsarType.long,
     ),
-    r'dateAdded': PropertySchema(
+    r'certificate': PropertySchema(
       id: 1,
+      name: r'certificate',
+      type: IsarType.string,
+    ),
+    r'dateAdded': PropertySchema(
+      id: 2,
       name: r'dateAdded',
       type: IsarType.string,
     ),
     r'dateLastModified': PropertySchema(
-      id: 2,
-      name: r'dateLastModified',
-      type: IsarType.string,
-    ),
-    r'degree': PropertySchema(
       id: 3,
-      name: r'degree',
+      name: r'dateLastModified',
       type: IsarType.string,
     ),
     r'hashCode': PropertySchema(
@@ -95,6 +95,12 @@ int _externalGradeModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
+    final value = object.certificate;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.dateAdded;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -102,12 +108,6 @@ int _externalGradeModelEstimateSize(
   }
   {
     final value = object.dateLastModified;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.degree;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -162,9 +162,9 @@ void _externalGradeModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.branchId);
-  writer.writeString(offsets[1], object.dateAdded);
-  writer.writeString(offsets[2], object.dateLastModified);
-  writer.writeString(offsets[3], object.degree);
+  writer.writeString(offsets[1], object.certificate);
+  writer.writeString(offsets[2], object.dateAdded);
+  writer.writeString(offsets[3], object.dateLastModified);
   writer.writeLong(offsets[4], object.hashCode);
   writer.writeLong(offsets[5], object.id);
   writer.writeString(offsets[6], object.institutionName);
@@ -191,9 +191,9 @@ ExternalGradeModel _externalGradeModelDeserialize(
 ) {
   final object = ExternalGradeModel(
     branchId: reader.readLongOrNull(offsets[0]),
-    dateAdded: reader.readStringOrNull(offsets[1]),
-    dateLastModified: reader.readStringOrNull(offsets[2]),
-    degree: reader.readStringOrNull(offsets[3]),
+    certificate: reader.readStringOrNull(offsets[1]),
+    dateAdded: reader.readStringOrNull(offsets[2]),
+    dateLastModified: reader.readStringOrNull(offsets[3]),
     id: reader.readLongOrNull(offsets[5]),
     institutionName: reader.readStringOrNull(offsets[6]),
     localId: id,
@@ -423,6 +423,160 @@ extension ExternalGradeModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'certificate',
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'certificate',
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'certificate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'certificate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'certificate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'certificate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'certificate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'certificate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'certificate',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'certificate',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'certificate',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
+      certificateIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'certificate',
+        value: '',
       ));
     });
   }
@@ -730,160 +884,6 @@ extension ExternalGradeModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'dateLastModified',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'degree',
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'degree',
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'degree',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'degree',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'degree',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'degree',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'degree',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'degree',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'degree',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'degree',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'degree',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterFilterCondition>
-      degreeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'degree',
         value: '',
       ));
     });
@@ -1635,6 +1635,20 @@ extension ExternalGradeModelQuerySortBy
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      sortByCertificate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'certificate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      sortByCertificateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'certificate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
       sortByDateAdded() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateAdded', Sort.asc);
@@ -1659,20 +1673,6 @@ extension ExternalGradeModelQuerySortBy
       sortByDateLastModifiedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateLastModified', Sort.desc);
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
-      sortByDegree() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'degree', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
-      sortByDegreeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'degree', Sort.desc);
     });
   }
 
@@ -1750,6 +1750,20 @@ extension ExternalGradeModelQuerySortThenBy
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      thenByCertificate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'certificate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
+      thenByCertificateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'certificate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
       thenByDateAdded() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateAdded', Sort.asc);
@@ -1774,20 +1788,6 @@ extension ExternalGradeModelQuerySortThenBy
       thenByDateLastModifiedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateLastModified', Sort.desc);
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
-      thenByDegree() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'degree', Sort.asc);
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QAfterSortBy>
-      thenByDegreeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'degree', Sort.desc);
     });
   }
 
@@ -1872,6 +1872,13 @@ extension ExternalGradeModelQueryWhereDistinct
   }
 
   QueryBuilder<ExternalGradeModel, ExternalGradeModel, QDistinct>
+      distinctByCertificate({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'certificate', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QDistinct>
       distinctByDateAdded({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dateAdded', caseSensitive: caseSensitive);
@@ -1883,13 +1890,6 @@ extension ExternalGradeModelQueryWhereDistinct
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dateLastModified',
           caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, ExternalGradeModel, QDistinct>
-      distinctByDegree({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'degree', caseSensitive: caseSensitive);
     });
   }
 
@@ -1938,6 +1938,13 @@ extension ExternalGradeModelQueryProperty
   }
 
   QueryBuilder<ExternalGradeModel, String?, QQueryOperations>
+      certificateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'certificate');
+    });
+  }
+
+  QueryBuilder<ExternalGradeModel, String?, QQueryOperations>
       dateAddedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateAdded');
@@ -1948,12 +1955,6 @@ extension ExternalGradeModelQueryProperty
       dateLastModifiedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateLastModified');
-    });
-  }
-
-  QueryBuilder<ExternalGradeModel, String?, QQueryOperations> degreeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'degree');
     });
   }
 

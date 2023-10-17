@@ -26,7 +26,7 @@ class AccountSettingVM extends ChangeNotifier {
     var list =
         userModel.accountData?.hobbies?.map((e) => e.name ?? "").toList() ?? [];
     hobbies = list;
-    biosCtrl.text = userModel.accountData?.bio ?? "";
+    biosCtrl.text = userModel.accountData?.status ?? "";
     userProfileRepo = UserProfileRepoImpl(apiService: apiService);
   }
 
@@ -74,7 +74,7 @@ class AccountSettingVM extends ChangeNotifier {
             await userProfileRepo.uploadProfilePicture(file: image!);
         imageId = fileModel.id;
       }
-      var bioBody = {"bio": biosCtrl.text};
+      var bioBody = {"status": biosCtrl.text};
       await userProfileRepo.updateBio(
           map: bioBody, id: userModel.accountData?.id ?? 0);
       var updateHobbies =

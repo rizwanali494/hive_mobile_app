@@ -125,7 +125,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
         "description": "Lorem Porum",
         "scholarship_amount": scholarshipAmountDigit,
         "scholarship_percent": scholarshipPercentDigit,
-        "state": "APPLIED",
+        "status": _selectedStatus.toUpperCase(),
       };
       UniversityApplicationModel? updatedModel;
       if (model == null) {
@@ -167,7 +167,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       "documents": documents?.map((e) => e.id).toList(),
       "scholarship_amount": scholarshipAmountDigit,
       "scholarship_percent": scholarshipPercentDigit,
-      "state": _selectedStatus.toUpperCase(),
+      "status": _selectedStatus.toUpperCase(),
     };
     await repository.updateUniversityDocument(body: body, id: model?.id ?? 0);
     var updatedModel = model?.copyWith(
@@ -175,7 +175,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       documents: documents,
       scholarshipAmount: scholarshipAmountDigit.toString(),
       scholarshipPercent: scholarshipPercentDigit.toString(),
-      state: _selectedStatus.toUpperCase(),
+      status: _selectedStatus.toUpperCase(),
     );
     return updatedModel;
   }
@@ -224,13 +224,13 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   }
 
   void setStatus() {
-    if (model?.state?.toUpperCase() == AppStrings.accepted.toUpperCase()) {
+    if (model?.status?.toUpperCase() == AppStrings.accepted.toUpperCase()) {
       _selectedStatus = AppStrings.accepted;
     }
-    if (model?.state?.toUpperCase() == AppStrings.applied.toUpperCase()) {
+    if (model?.status?.toUpperCase() == AppStrings.applied.toUpperCase()) {
       _selectedStatus = AppStrings.applied;
     }
-    if (model?.state?.toUpperCase() == AppStrings.rejected.toUpperCase()) {
+    if (model?.status?.toUpperCase() == AppStrings.rejected.toUpperCase()) {
       _selectedStatus = AppStrings.rejected;
     }
   }

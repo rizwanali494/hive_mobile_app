@@ -27,7 +27,7 @@ class AddExternalGradeScreen extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (BuildContext context) =>
-          GradeAddingVM(degrees: addedGrades, editModel: editModel),
+          GradeAddingVM(certificates: addedGrades, editModel: editModel),
       child: Consumer<GradeAddingVM>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -96,12 +96,12 @@ class AddExternalGradeScreen extends StatelessWidget {
                             ),
                             child: DropdownButton<String>(
                               isExpanded: true,
-                              value: provider.selectedDegree,
+                              value: provider.selectedCertificate,
                               isDense: true,
                               icon: const Icon(Icons.keyboard_arrow_down_sharp),
                               dropdownColor: styles.white,
                               underline: const SizedBox(),
-                              items: provider.degrees
+                              items: provider.certificates
                                   .map(
                                     (item) => DropdownMenuItem<String>(
                                       value: item,
@@ -114,7 +114,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                   .toList(),
                               onChanged: provider.editModel == null
                                   ? (value) {
-                                      provider.selectDegree(value);
+                                      provider.selectCertificate(value);
                                     }
                                   : null,
                             ),

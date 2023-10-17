@@ -44,7 +44,7 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
   bool get hasError => uiState.hasError;
 
   List<String> get addedGrades {
-    return items.map((e) => e.degree ?? "").toList();
+    return items.map((e) => e.certificate ?? "").toList();
   }
 
   void addExternalGrade(ExternalGradeModel? model) {

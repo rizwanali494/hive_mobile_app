@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/services/auth_services/apple_auth_service.dart';
+import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart';
 import 'package:hive_mobile/app/view/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/features/authentication/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
@@ -89,9 +93,23 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           AuthButtonWidget(
                             onTap: () async {
-                              await provider.googleSignIn(context);
+                              await provider.signIN(
+                                  GoogleAuthService(), context);
                             },
+                            svgIcon: SvgIcons.googleIcon,
+                            text: AppStrings.continueWithGoogle,
                           ),
+                          if (Platform.isIOS) ...[
+                            20.verticalSpace,
+                            AuthButtonWidget(
+                              onTap: () async {
+                                await provider.signIN(
+                                    AppleAuthService(), context);
+                              },
+                              svgIcon: SvgIcons.appleIcon,
+                              text:AppStrings.continueWithApple,
+                            ),
+                          ],
                           10.verticalSpace,
                         ],
                       ),

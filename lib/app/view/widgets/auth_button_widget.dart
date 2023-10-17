@@ -7,10 +7,14 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class AuthButtonWidget extends StatelessWidget {
   final Function()? onTap;
+  final String svgIcon;
+  final String text;
 
   const AuthButtonWidget({
     super.key,
     this.onTap,
+    required this.svgIcon,
+    required this.text,
   });
 
   @override
@@ -22,17 +26,21 @@ class AuthButtonWidget extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 9.h),
         margin: EdgeInsets.symmetric(horizontal: 42.w),
-        decoration:
-            BoxDecoration(color: styles.white, borderRadius: BorderRadius.circular(30)),
+        decoration: BoxDecoration(
+            color: styles.white, borderRadius: BorderRadius.circular(30)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(SvgIcons.googleIcon),
+            SvgPicture.asset(
+              svgIcon,
+              width: 19.w,
+              height: 19.h,
+            ),
             SizedBox(
               width: 13.w,
             ),
             Text(
-              AppStrings.continueWithGoogle,
+              text,
               style: styles.inter15w400.copyWith(color: Colors.black),
             ),
           ],

@@ -14,7 +14,7 @@ class ExternalGradeModel {
     this.dateLastModified,
     this.branchId,
     this.institutionName,
-    this.degree,
+    this.certificate,
     this.state,
     this.resultFile,
   });
@@ -32,7 +32,7 @@ class ExternalGradeModel {
     dateLastModified = json['date_last_modified'];
     branchId = json['branch_id'];
     institutionName = json['institution_name'];
-    degree = json['degree'];
+    certificate = json['certificate'];
     state = json['state'];
     if (json['result_files'] != null) {
       resultFile = [];
@@ -49,7 +49,7 @@ class ExternalGradeModel {
     dateLastModified = json['date_last_modified'];
     branchId = json['branch_id'];
     institutionName = json['institution_name'];
-    degree = json['degree'];
+    certificate = json['certificate'];
     state = json['state'];
   }
 
@@ -60,7 +60,7 @@ class ExternalGradeModel {
   String? dateLastModified;
   int? branchId;
   String? institutionName;
-  String? degree;
+  String? certificate;
   String? state;
   List<Attachments>? resultFile;
 
@@ -72,7 +72,7 @@ class ExternalGradeModel {
     String? dateLastModified,
     int? branchId,
     String? institutionName,
-    String? degree,
+    String? certificate,
     String? state,
     List<Attachments>? resultFile,
   }) =>
@@ -84,7 +84,7 @@ class ExternalGradeModel {
         dateLastModified: dateLastModified ?? this.dateLastModified,
         branchId: branchId ?? this.branchId,
         institutionName: institutionName ?? this.institutionName,
-        degree: degree ?? this.degree,
+        certificate: certificate ?? this.certificate,
         state: state ?? this.state,
         resultFile: resultFile ?? this.resultFile,
       );
@@ -99,7 +99,7 @@ class ExternalGradeModel {
     map['date_last_modified'] = dateLastModified;
     map['branch_id'] = branchId;
     map['institution_name'] = institutionName;
-    map['degree'] = degree;
+    map['certificate'] = certificate;
     map['state'] = state;
     if (resultFile != null) {
       map['result_files'] = resultFile?.map((e) => e.toJson()).toList();

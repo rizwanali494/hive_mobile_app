@@ -22,8 +22,8 @@ class UniversityApplicationModel {
     this.description,
     this.scholarshipAmount,
     this.comments,
-    this.state,
     this.status,
+    this.state,
     this.owner,
     this.documents,
   });
@@ -44,8 +44,8 @@ class UniversityApplicationModel {
     description = json['description'];
     scholarshipAmount = json['scholarship_amount'];
     comments = json['comments'];
-    state = json['state'];
     status = json['status'];
+    state = json['state'];
     owner = json['owner'];
     if (json['documents'] != null) {
       documents = [];
@@ -67,8 +67,8 @@ class UniversityApplicationModel {
     description = json['description'];
     scholarshipAmount = json['scholarship_amount'];
     comments = json['comments'];
-    state = json['state'];
     status = json['status'];
+    state = json['state'];
     owner = json['owner'];
   }
 
@@ -109,8 +109,8 @@ class UniversityApplicationModel {
   String? description;
   String? scholarshipAmount;
   String? comments;
-  String? state;
   String? status;
+  String? state;
   int? owner;
   List<Attachments>? documents;
 
@@ -127,8 +127,8 @@ class UniversityApplicationModel {
     String? description,
     String? scholarshipAmount,
     String? comments,
-    String? state,
     String? status,
+    String? state,
     int? owner,
     List<Attachments>? documents,
   }) =>
@@ -145,8 +145,8 @@ class UniversityApplicationModel {
         description: description ?? this.description,
         scholarshipAmount: scholarshipAmount ?? this.scholarshipAmount,
         comments: comments ?? this.comments,
-        state: state ?? this.state,
         status: status ?? this.status,
+        state: state ?? this.state,
         owner: owner ?? this.owner,
         documents: documents?.map((e) => e.copyWith()).toList() ??
             this.documents?.map((e) => e.copyWith()).toList(),
@@ -188,7 +188,7 @@ class UniversityApplicationModel {
 
   @ignore
   ApplicationState get getState {
-    switch (state?.toUpperCase()) {
+    switch (status?.toUpperCase()) {
       case 'APPLIED':
         return ApplicationState.applied;
       case 'ACCEPTED':
@@ -202,7 +202,7 @@ class UniversityApplicationModel {
 
   @ignore
   ApplicationStatus get getStatus {
-    switch (status?.toUpperCase()) {
+    switch (state?.toUpperCase()) {
       case 'APPROVED':
         return ApplicationStatus.approved;
       case 'UNAPPROVED':

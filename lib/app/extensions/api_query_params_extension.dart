@@ -180,8 +180,11 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("state=REJECTED");
   }
 
-  String get withNotApprovedApplications {
+  String get withNotApprovedStatus {
     return _appendQueryParameter("status__ne=${("APPROVED").toUpperCase()}");
+  }
+  String get withNotApprovedState {
+    return _appendQueryParameter("state__ne=${("APPROVED").toUpperCase()}");
   }
 
   String _appendQueryParameter(String parameter) {

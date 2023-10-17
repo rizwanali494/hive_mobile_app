@@ -18,52 +18,48 @@ import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GradeAddingVM with UtilFunctions, ChangeNotifier {
-  final grades = [
-    "A",
-    "B+",
-    "B",
-    "C+",
-    "C",
-  ];
-  String? selectedGrade = "A";
+  final grades = ["A*", "A", "B", "C", "D", "E"];
 
-  GradeAddingVM({List<String> degrees = const [], this.editModel}) {
-    setDegrees(degrees);
+  String? selectedGrade = "A*";
+
+  GradeAddingVM({List<String> certificates = const [], this.editModel}) {
+    setCertificate(certificates);
     externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
     if (editModel != null) {
       setValues(editModel!);
     }
   }
 
-  void setAvailableDegrees(List<String> list) {
+  void setAvailableCertificates(List<String> list) {
     for (var element in list) {
-      degrees.remove(element);
+      certificates.remove(element);
     }
   }
 
-  String? selectedDegree;
+  String? selectedCertificate;
   final subjectCtrl = TextEditingController();
   final institute = TextEditingController();
   late ExternalGradesRepo externalGradeRepo;
   final apiService = GetIt.instance.get<ApiService>();
 
-  List<String> degrees = [
+  List<String> certificates = [
     "O2",
     "O3",
     "AS1",
-    "AS2",
+    "A2",
   ];
 
-  void setDegrees(List<String> deg) {
+  void setCertificate(List<String> deg) {
     for (var value in deg) {
-      degrees.remove(value.toUpperCase());
+      certificates.remove(value.toUpperCase());
     }
-    selectedDegree =
-        this.degrees.asMap().containsKey(0) ? this.degrees.first : null;
+    selectedCertificate = this.certificates.asMap().containsKey(0)
+        ? this.certificates.first
+        : null;
   }
 
-  void selectDegree(String? value) {
-    this.selectedDegree = value;
+  void selectCertificate(String? value) {
+    this.selectedCertificate = value;
     notifyListeners();
   }
 
@@ -112,9 +108,6 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     }
   }
 
-
-
-
   bool fileDownloading = false;
 
   bool validateData() {
@@ -147,10 +140,10 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     try {
       var resultFile = await uploadDocuments();
       var institutionName = institute.text.trim();
-      var degree = selectedDegree ?? "";
+      var certificate = selectedCertificate ?? "";
       var body = {
         "institution_name": institutionName,
-        "degree": degree,
+        "certificate": certificate,
         "result_files": resultFile?.map((e) => e.id).toList(),
       };
       var model = await externalGradeRepo.uploadExternalGrade(map: body);
@@ -209,17 +202,19 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
       // }
       await updateSubjects();
       var institutionName = institute.text.trim();
-      var degree = selectedDegree ?? "";
+      var certificate = selectedCertificate ?? "";
       var body = {
         "institution_name": institutionName,
-        "degree": degree,
+        "certificate": certificate,
         "result_files": file?.map((e) => e.id).toList(),
       };
       log(body.toString());
       var model = await externalGradeRepo.updateExternalGrade(
           map: body, id: editModel?.id ?? 0);
       model = model.copyWith(
-          resultFile: file, degree: degree, institutionName: institutionName);
+          resultFile: file,
+          certificate: certificate,
+          institutionName: institutionName);
       log("file model : ${model}");
       log("file : ${model.resultFile.toString()}");
       context.pop();
@@ -259,13 +254,13 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     );
   }
 
-
   ExternalGradeModel? editModel;
 
   void setValues(ExternalGradeModel model) {
-    var degree = degrees.where((element) => element == model.degree).toList();
-    if (degree.isNotEmpty) {
-      selectedDegree = degree.first;
+    var certificate =
+        certificates.where((element) => element == model.certificate).toList();
+    if (certificate.isNotEmpty) {
+      selectedCertificate = certificate.first;
     }
     institute.text = model.institutionName ?? "";
     downloadAllDocs();
