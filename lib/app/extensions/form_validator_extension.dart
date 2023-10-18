@@ -1,9 +1,9 @@
 import 'package:form_validator/form_validator.dart';
 
 extension CustomValidationBuilder on ValidationBuilder {
-  requiredFiled() => add((value) {
+  requiredField() => add((value) {
         if (value?.trim().isEmpty ?? false) {
-          return 'Field is required';
+          return 'The field is required';
         }
         return null;
       });

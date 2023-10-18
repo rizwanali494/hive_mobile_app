@@ -63,7 +63,7 @@ class AuthVM extends ChangeNotifier
       if (kDebugMode) {
         body = {
           "payload": {
-            "email": "zunair.8831@beaconite.edu.pk",
+            "email": "saqib.manzoor@bh.edu.pk",
             "email_verified": true
           }
         };

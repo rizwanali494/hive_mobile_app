@@ -26,8 +26,8 @@ class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
     notifyListeners();
   }
 
-  final requestName = ValidationBuilder().build();
-  final requestDescription = ValidationBuilder().build();
+  final requestName = ValidationBuilder().requiredField().build();
+  final requestDescription = ValidationBuilder().requiredField().build();
 
   void validate(String title, String description, BuildContext context) {
     if (!(form.currentState?.validate() ?? false)) {

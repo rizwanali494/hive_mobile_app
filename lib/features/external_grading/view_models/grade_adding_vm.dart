@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:form_validator/form_validator.dart';
+import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -114,8 +116,9 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     bool isDocumentEmpty = documents.isEmpty;
     bool isSubjectsEmpty = subjectsVM.isEmpty;
     bool isInstituteEmpty = institute.text.trim().isEmpty;
+    bool formValidate = (form.currentState?.validate() ?? false);
     bool validate = isDocumentEmpty || isSubjectsEmpty || isInstituteEmpty;
-    if (validate) {
+    if (validate || !formValidate) {
       return false;
     }
     return true;
@@ -412,4 +415,7 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
     downloadAllDocs();
     getAllSubjects(editModel?.id ?? 0);
   }
+
+  GlobalKey<FormState> form = GlobalKey<FormState>();
+  final instituteValidator = ValidationBuilder().requiredField().build();
 }
