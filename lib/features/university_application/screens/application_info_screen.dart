@@ -175,7 +175,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 ],
                 29.verticalSpace,
                 BlueElevatedButton(
-                  text: AppStrings.upload,
+                  text: provider.model == null
+                      ? AppStrings.upload
+                      : AppStrings.update,
                   onTap: provider.documents.isEmpty
                       ? null
                       : () {
