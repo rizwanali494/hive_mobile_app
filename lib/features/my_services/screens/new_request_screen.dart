@@ -34,76 +34,87 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
           ),
           child: Consumer<ServiceRequestVM>(
             builder: (context, provider, child) {
-              return Column(
-                children: [
-                  DividerAppBar(
-                    title: AppStrings.newRequest,
-                    titleStyle: styles.inter20w700,
-                  ),
-                  16.verticalSpace,
-                  TitleTextField(
-                    title: AppStrings.myRequest,
-                    controller: titleCtrl,
-                    hintText: AppStrings.characterCertificate,
-                  ),
-                  15.verticalSpace,
-                  GestureDetector(
-                    onTap: () {
-                      provider.toggleChangeRequest();
-                    },
-                    child: Row(
-                      children: [
-                        10.horizontalSpace,
-                        SizedBox(
-                          width: 16.w,
-                          height: 16.h,
-                          child: Checkbox(
-                            value: provider.isChangeRequest,
-                            activeColor: styles.skyBlue,
-                            fillColor: MaterialStateProperty.resolveWith(
-                              (Set states) {
-                                if (states.contains(MaterialState.disabled)) {
+              return Form(
+                key: provider.form,
+                child: Column(
+                  children: [
+                    DividerAppBar(
+                      title: AppStrings.requestName,
+                      titleStyle: styles.inter20w700,
+                    ),
+                    16.verticalSpace,
+                    TitleTextField(
+                      title: AppStrings.myRequest,
+                      validator: provider.requestName,
+                      controller: titleCtrl,
+                      hintText: AppStrings.characterCertificate,
+                    ),
+                    15.verticalSpace,
+                    GestureDetector(
+                      onTap: () {
+                        provider.toggleChangeRequest();
+                      },
+                      child: Row(
+                        children: [
+                          10.horizontalSpace,
+                          SizedBox(
+                            width: 16.w,
+                            height: 16.h,
+                            child: Checkbox(
+                              value: provider.isChangeRequest,
+                              activeColor: styles.skyBlue,
+                              fillColor: MaterialStateProperty.resolveWith(
+                                (Set states) {
+                                  if (states.contains(MaterialState.disabled)) {
+                                    return styles.skyBlue;
+                                  }
                                   return styles.skyBlue;
-                                }
-                                return styles.skyBlue;
+                                },
+                              ),
+                              // checkColor: styles.skyBlue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              onChanged: (value) {
+                                provider.toggleChangeRequest();
                               },
                             ),
-                            // checkColor: styles.skyBlue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            onChanged: (value) {
-                              provider.toggleChangeRequest();
-                            },
                           ),
-                        ),
-                        12.horizontalSpace,
-                        Text(
-                          AppStrings.subjectChange,
-                          style: styles.inter12w400,
-                        ),
-                      ],
+                          12.horizontalSpace,
+                          Text(
+                            AppStrings.subjectChange,
+                            style: styles.inter12w400,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  29.verticalSpace,
-                  TitleTextField(
-                    title: AppStrings.description,
-                    controller: descriptionCtrl,
-                    hintText: AppStrings.loremPorum * 2,
-                    maxLines: 5,
-                  ),
-                  23.verticalSpace,
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: BlueElevatedButton(
-                      text: AppStrings.sendRequest,
-                      onTap: () {
-                        provider.validate(
-                            titleCtrl.text, descriptionCtrl.text, context);
-                      },
+                    29.verticalSpace,
+                    TitleTextField(
+                      title: AppStrings.description,
+                      controller: descriptionCtrl,
+                      validator: provider.requestDescription,
+                      hintText: AppStrings.loremPorum * 2,
+                      maxLength: 300,
+                      buildCounter: (p0,
+                              {required currentLength,
+                              required isFocused,
+                              maxLength}) =>
+                          null,
+                      maxLines: 5,
                     ),
-                  )
-                ],
+                    23.verticalSpace,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: BlueElevatedButton(
+                        text: AppStrings.sendRequest,
+                        onTap: () {
+                          provider.validate(
+                              titleCtrl.text, descriptionCtrl.text, context);
+                        },
+                      ),
+                    )
+                  ],
+                ),
               );
             },
           ),

@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
@@ -24,8 +26,11 @@ class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
     notifyListeners();
   }
 
+  final requestName = ValidationBuilder().build();
+  final requestDescription = ValidationBuilder().build();
+
   void validate(String title, String description, BuildContext context) {
-    if (title.trim().isEmpty || description.trim().isEmpty) {
+    if (!(form.currentState?.validate() ?? false)) {
       return;
     }
     sendNewRequest(title, description, context);
@@ -57,4 +62,6 @@ class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
     }
     context.pop();
   }
+
+  GlobalKey<FormState> form = GlobalKey<FormState>();
 }

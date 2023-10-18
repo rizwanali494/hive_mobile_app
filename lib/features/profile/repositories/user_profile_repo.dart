@@ -43,7 +43,7 @@ class UserProfileRepoImpl extends UserProfileRepo {
   @override
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet}) async {
-    var url = apiEndpoint(offSet, limit).withApprovedStatus;
+    var url = apiEndpoint(offSet, limit).withApprovedState;
     log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);

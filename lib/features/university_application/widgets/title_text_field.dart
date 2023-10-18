@@ -18,6 +18,7 @@ class TitleTextField extends StatelessWidget {
   final void Function()? onTap;
   final Function(String)? onChanged;
   final TextFormField? textFormField;
+  final String? Function(String?)? validator;
   final Widget? Function(BuildContext,
       {required int currentLength,
       required bool isFocused,
@@ -40,6 +41,7 @@ class TitleTextField extends StatelessWidget {
     this.onChanged,
     this.textFormField,
     this.buildCounter,
+    this.validator,
   });
 
   @override
@@ -83,6 +85,7 @@ class TitleTextField extends StatelessWidget {
     return textFormField ??
         TextFormField(
           onChanged: onChanged,
+          validator: validator,
           style: styles.inter12w400,
           inputFormatters: inputFormatters,
           keyboardType: keyboardType,
