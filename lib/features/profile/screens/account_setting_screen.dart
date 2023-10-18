@@ -85,7 +85,7 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                     ),
                     14.verticalSpace,
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      padding: EdgeInsets.only(right: 10.w),
                       // margin: EdgeInsets.symmetric(horizontal: 19.w),
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -102,7 +102,13 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                                 child: TitleTextField(
                                   hintText: AppStrings.editHobbies,
                                   controller: provider.hobbiesCtrl,
+                                  showBorder: false,
                                   textFieldOnly: true,
+                                  buildCounter: (p0,
+                                          {required currentLength,
+                                          required isFocused,
+                                          maxLength}) =>
+                                      null,
                                   maxLength: 50,
                                   enabled: !provider.hobbiesMaxed,
                                 ),
@@ -121,20 +127,23 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                           35.verticalSpace,
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Wrap(
-                              runSpacing: 12.w,
-                              spacing: 8,
-                              children: [
-                                ...List.generate(
-                                  provider.hobbies.length,
-                                  (index) => HobbyChipWidget(
-                                    text: provider.hobbies[index],
-                                    onRemove: (String value) {
-                                      provider.removeHobby(value);
-                                    },
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 15.w),
+                              child: Wrap(
+                                runSpacing: 12.w,
+                                spacing: 8,
+                                children: [
+                                  ...List.generate(
+                                    provider.hobbies.length,
+                                    (index) => HobbyChipWidget(
+                                      text: provider.hobbies[index],
+                                      onRemove: (String value) {
+                                        provider.removeHobby(value);
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           20.verticalSpace,

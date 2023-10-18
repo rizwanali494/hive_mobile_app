@@ -128,6 +128,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                           23.verticalSpace,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: TitleTextField(

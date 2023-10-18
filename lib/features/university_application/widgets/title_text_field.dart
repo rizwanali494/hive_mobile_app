@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class TitleTextField extends StatelessWidget {
   final String? title;
+  final bool showBorder;
   final int? maxLength;
   final bool enabled;
   final String? hintText;
@@ -17,6 +18,10 @@ class TitleTextField extends StatelessWidget {
   final void Function()? onTap;
   final Function(String)? onChanged;
   final TextFormField? textFormField;
+  final Widget? Function(BuildContext,
+      {required int currentLength,
+      required bool isFocused,
+      required int? maxLength})? buildCounter;
 
   const TitleTextField({
     super.key,
@@ -30,9 +35,11 @@ class TitleTextField extends StatelessWidget {
     this.keyboardType,
     this.maxLength,
     this.enabled = true,
+    this.showBorder = true,
     this.onTap,
     this.onChanged,
     this.textFormField,
+    this.buildCounter,
   });
 
   @override
@@ -59,13 +66,13 @@ class TitleTextField extends StatelessWidget {
           11.verticalSpace,
         ],
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 5.h),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: styles.black.withOpacity(.3),
-            ),
-            borderRadius: BorderRadius.circular(25),
-          ),
+          // padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 5.h),
+          // decoration: BoxDecoration(
+          //   border: Border.all(
+          //     color: styles.black.withOpacity(.3),
+          //   ),
+          //   borderRadius: BorderRadius.circular(25),
+          // ),
           child: buildTextFormField(styles),
         ),
       ],
@@ -83,11 +90,43 @@ class TitleTextField extends StatelessWidget {
           controller: controller,
           maxLines: maxLines ?? 1,
           decoration: InputDecoration(
-              border: InputBorder.none,
               isDense: true,
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.fromLTRB(22.w, 15, 12, 12),
+              enabledBorder: showBorder ? enabledBorder(styles) : null,
+              focusedBorder: showBorder ? focusedBorder() : null,
               enabled: enabled,
+              // errorText: "as",
+              errorBorder: showBorder ? errorBorder(styles) : null,
+              focusedErrorBorder: showBorder ? focusedError(styles) : null,
               hintStyle: hintStyle,
               hintText: hintText),
+          buildCounter: buildCounter,
         );
+  }
+
+  OutlineInputBorder focusedError(AppTheme styles) {
+    return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: BorderSide(width: 1, color: styles.red));
+  }
+
+  OutlineInputBorder errorBorder(AppTheme styles) {
+    return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: BorderSide(width: 0.7, color: styles.red));
+  }
+
+  OutlineInputBorder focusedBorder() {
+    return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: BorderSide(width: 0.5));
+  }
+
+  OutlineInputBorder enabledBorder(AppTheme styles) {
+    return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide:
+            BorderSide(color: styles.black.withOpacity(0.5), width: 0.5));
   }
 }
