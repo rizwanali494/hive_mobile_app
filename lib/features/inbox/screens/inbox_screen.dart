@@ -58,9 +58,9 @@ class InboxScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(
                   horizontal: 20.w,
                 ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 26.w,
-                ),
+                // padding: EdgeInsets.symmetric(
+                //   horizontal: 26.w,
+                // ),
                 decoration: BoxDecoration(
                   color: styles.greyWhite,
                   borderRadius: BorderRadius.circular(

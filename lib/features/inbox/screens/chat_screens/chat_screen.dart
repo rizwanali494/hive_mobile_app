@@ -109,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 26.w,
+                              horizontal: 0.w,
                             ),
                             child: TitleTextField(
                               hintText: AppStrings.typeMessagesHere,
