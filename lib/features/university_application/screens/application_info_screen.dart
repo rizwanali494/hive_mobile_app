@@ -74,14 +74,20 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 34.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: TitleTextField(
                         title: AppStrings.scholarshipAmount,
+                        validator: provider.scholarShipAmountValidator,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                              RegExp(r'^[0-9]+.?[0-9]*')),
+                            RegExp(r'^[0-9]+.?[0-9]*'),
+                          ),
+                          FilteringTextInputFormatter.deny(
+                            RegExp(r'\s'),
+                          )
                         ],
                         controller: provider.scholarShipAmount,
                         hintText: "",
@@ -92,9 +98,20 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                       child: TitleTextField(
                         title: "${AppStrings.scholarship} %",
                         keyboardType: TextInputType.number,
+                        maxLength: 6,
+                        buildCounter: (p0,
+                                {required currentLength,
+                                required isFocused,
+                                maxLength}) =>
+                            null,
+                        validator: provider.scholarShipPercentValidator,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
-                              RegExp(r'^[0-9]+.?[0-9]*')),
+                            RegExp(r'^[0-9]+.?[0-9]*'),
+                          ),
+                          FilteringTextInputFormatter.deny(
+                            RegExp(r'\s'),
+                          )
                         ],
                         controller: provider.scholarShipPercent,
                         hintText: "",
@@ -159,7 +176,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                 29.verticalSpace,
                 BlueElevatedButton(
                   text: AppStrings.upload,
-                  onTap: !provider.validate()
+                  onTap: provider.documents.isEmpty
                       ? null
                       : () {
                           provider.uploadFile(context: context);

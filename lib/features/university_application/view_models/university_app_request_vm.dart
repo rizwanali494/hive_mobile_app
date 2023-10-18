@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:form_validator/form_validator.dart';
+import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
@@ -94,9 +96,11 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   bool validate() {
     final scholarshipAmount = scholarShipAmount.text.trim();
     final scholarshipPercent = scholarShipPercent.text.trim();
+    final bool validate = form.currentState?.validate() ?? false;
     if (scholarshipAmount.trim().isEmpty ||
         documents.isEmpty ||
-        scholarshipPercent.trim().isEmpty) {
+        scholarshipPercent.trim().isEmpty ||
+        !validate) {
       log("empty");
       return false;
     }
@@ -329,4 +333,10 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   bool get isMaxed {
     return documents.length > 8;
   }
+
+  GlobalKey<FormState> form = GlobalKey<FormState>();
+  final scholarShipAmountValidator =
+      ValidationBuilder().requiredField().build();
+  final scholarShipPercentValidator =
+      ValidationBuilder().requiredField().build();
 }

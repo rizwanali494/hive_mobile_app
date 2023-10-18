@@ -35,115 +35,122 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
           padding: EdgeInsets.symmetric(horizontal: 18.w),
           child: Consumer<UniversityAppRequestVM>(
             builder: (context, provider, child) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DividerAppBar(
-                    title: AppStrings.applicationInformation,
-                  ),
-                  if (provider.hasError)
-                    Expanded(
-                      child: ErrorTextWidget(
-                        onRefresh: provider.refresh,
-                      ),
-                    )
-                  else
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            26.verticalSpace,
-                            Text(
-                              provider.title,
-                              style: styles.inter14w600.copyWith(
-                                color: styles.darkSlateGrey,
+              return Form(
+                key: provider.form,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DividerAppBar(
+                      title: AppStrings.applicationInformation,
+                    ),
+                    if (provider.hasError)
+                      Expanded(
+                        child: ErrorTextWidget(
+                          onRefresh: provider.refresh,
+                        ),
+                      )
+                    else
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              26.verticalSpace,
+                              Text(
+                                provider.title,
+                                style: styles.inter14w600.copyWith(
+                                  color: styles.darkSlateGrey,
+                                ),
                               ),
-                            ),
-                            14.verticalSpace,
-                            if (provider.isGettingUniversities)
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 20.h,
-                                  ),
-                                  child: CircularProgressIndicator(),
-                                ),
-                              )
-                            else if (provider.universities.isEmpty &&
-                                provider.model == null)
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                                  child: Text(
-                                    AppStrings.noUniFound,
-                                    style: styles.inter12w400Italic,
-                                  ),
-                                ),
-                              )
-                            else ...[
-                              if (provider.model == null) ...[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      25,
+                              14.verticalSpace,
+                              if (provider.isGettingUniversities)
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 20.h,
                                     ),
-                                    border: Border.all(
-                                      color: styles.black.withOpacity(
-                                        0.2,
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                )
+                              else if (provider.universities.isEmpty &&
+                                  provider.model == null)
+                                Center(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 20.h),
+                                    child: Text(
+                                      AppStrings.noUniFound,
+                                      style: styles.inter12w400Italic,
+                                    ),
+                                  ),
+                                )
+                              else ...[
+                                if (provider.model == null) ...[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        25,
+                                      ),
+                                      border: Border.all(
+                                        color: styles.black.withOpacity(
+                                          0.2,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 19.w,
-                                  ),
-                                  child: DropdownButton<UniversityModel>(
-                                    value: provider.selectedUniversity,
-                                    hint: Text("Select University",style: styles.inter12w400,),
-                                    isExpanded: true,
-                                    icon: const Icon(
-                                        Icons.keyboard_arrow_down_sharp),
-                                    dropdownColor: styles.white,
-                                    underline: const SizedBox(),
-                                    items: provider.universities
-                                        .map(
-                                          (value) =>
-                                              DropdownMenuItem<UniversityModel>(
-                                            value: value,
-                                            child: Text(
-                                              value.name ?? "",
-                                              style: styles.inter12w400,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 19.w,
+                                    ),
+                                    child: DropdownButton<UniversityModel>(
+                                      value: provider.selectedUniversity,
+                                      hint: Text(
+                                        "Select University",
+                                        style: styles.inter12w400,
+                                      ),
+                                      isExpanded: true,
+                                      icon: const Icon(
+                                          Icons.keyboard_arrow_down_sharp),
+                                      dropdownColor: styles.white,
+                                      underline: const SizedBox(),
+                                      items: provider.universities
+                                          .map(
+                                            (value) => DropdownMenuItem<
+                                                UniversityModel>(
+                                              value: value,
+                                              child: Text(
+                                                value.name ?? "",
+                                                style: styles.inter12w400,
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                        .toList(),
-                                    onChanged: (value) {
-                                      provider.selectUniversity(value);
-                                    },
+                                          )
+                                          .toList(),
+                                      onChanged: (value) {
+                                        provider.selectUniversity(value);
+                                      },
+                                    ),
                                   ),
-                                ),
-                                35.verticalSpace,
-                              ] else ...[
-                                Text(
-                                  provider.model?.university?.name ?? "",
-                                  style: styles.inter12w400,
-                                ),
-                                10.verticalSpace,
-                                Divider(
-                                  thickness: 0.2,
-                                ),
-                                35.verticalSpace,
-                              ],
-                              if (provider.selectedUniversity != null ||
-                                  provider.model != null) ...[
-                                ApplicationInfoScreen()
+                                  35.verticalSpace,
+                                ] else ...[
+                                  Text(
+                                    provider.model?.university?.name ?? "",
+                                    style: styles.inter12w400,
+                                  ),
+                                  10.verticalSpace,
+                                  Divider(
+                                    thickness: 0.2,
+                                  ),
+                                  35.verticalSpace,
+                                ],
+                                if (provider.selectedUniversity != null ||
+                                    provider.model != null) ...[
+                                  ApplicationInfoScreen()
+                                ],
                               ],
                             ],
-                          ],
+                          ),
                         ),
-                      ),
-                    )
-                ],
+                      )
+                  ],
+                ),
               );
             },
           ),
