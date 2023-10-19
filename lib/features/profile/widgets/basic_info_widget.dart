@@ -25,7 +25,10 @@ class BasicInfoWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SvgPicture.asset(iconPath),
+        SvgPicture.asset(
+          iconPath,
+          width: 18,
+        ),
         13.horizontalSpace,
         Flexible(
           child: Column(

@@ -44,7 +44,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                     ),
                     16.verticalSpace,
                     TitleTextField(
-                      title: AppStrings.myRequest,
+                      title: AppStrings.requestName,
                       validator: provider.requestName,
                       controller: titleCtrl,
                       hintText: AppStrings.characterCertificate,

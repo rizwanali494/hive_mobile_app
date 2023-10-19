@@ -155,6 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       13.verticalSpace,
                       Row(
                         mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BasicInfoWidget(
                             title: AppStrings.gender,
@@ -170,10 +171,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                       15.verticalSpace,
-                      BasicInfoWidget(
-                        title: AppStrings.campus,
-                        iconPath: SvgIcons.building,
-                        info: controller.branchName,
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 0.w,
+                        ),
+                        child: BasicInfoWidget(
+                          title: AppStrings.campus,
+                          iconPath: SvgIcons.building,
+                          info: controller.branchName,
+                        ),
                       ),
                       10.verticalSpace,
                       Divider(
