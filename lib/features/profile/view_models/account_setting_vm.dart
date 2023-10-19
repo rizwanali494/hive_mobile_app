@@ -5,8 +5,11 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
 import 'package:path/path.dart';
@@ -68,25 +71,30 @@ class AccountSettingVM extends ChangeNotifier {
   Future<void> saveChanges(BuildContext context) async {
     UtilFunctions().showLoaderDialog(context);
     try {
-      String? imageId = userModel.picture?.id;
+      Attachments fileModel = Attachments.fromJson(userModel.picture?.toJson());
       if (image != null) {
-        var fileModel =
-            await userProfileRepo.uploadProfilePicture(file: image!);
-        imageId = fileModel.id;
+        fileModel = await userProfileRepo.uploadProfilePicture(file: image!);
       }
-      var bioBody = {"status": biosCtrl.text};
+      var bioText = biosCtrl.text;
+      var bioBody = {"status": bioText};
       await userProfileRepo.updateBio(
           map: bioBody, id: userModel.accountData?.id ?? 0);
       var updateHobbies =
           await userProfileRepo.updateHobbies(map: {"hobbies": hobbies});
       log("message : ${updateHobbies.length}");
-      var imageBody = {"picture": imageId};
+      var imageBody = {"picture": fileModel.id};
       var model = await userProfileRepo.updateUserProfile(map: imageBody);
       log("profile updated ${model.picture?.id} Hobbies : ${model.accountData?.hobbies?.length}");
-      registerUserModel(model.copyWith(
-          accountData: model.accountData?.copyWith(
-        hobbies: updateHobbies,
-      )));
+      final hobby = [...updateHobbies, ...?userModel.accountData?.hobbies];
+      final updatedUserModel = userModel.copyWith(
+        picture: AccountPicture.fromJson(fileModel.toJson()),
+        accountData: model.accountData?.copyWith(
+          hobbies: hobby,
+          bio: bioText,
+        ),
+      );
+      registerUserModel(updatedUserModel);
+      localService.deleteAndPut(updatedUserModel, updatedUserModel.id ?? 0);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("error : ${e.response.statusCode}");
@@ -98,4 +106,6 @@ class AccountSettingVM extends ChangeNotifier {
     context.pop();
     context.pop();
   }
+
+  final localService = IsarService<UserModel>();
 }

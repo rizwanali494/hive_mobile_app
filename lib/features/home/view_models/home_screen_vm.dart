@@ -30,6 +30,15 @@ class HomeScreenVm extends ChangeNotifier {
     ReportsScreen(),
     ProfileScreen(),
   ];
+  List<Widget> drawerWidgets = const [
+    ActivitiesScreen(),
+    CalendarScreen(),
+    ReportsScreen(),
+    MyServicesScreen(),
+    SessionNotesScreen(),
+    ExternalGradingScreen(),
+    UniversityApplicationScreen(),
+  ];
 
   bool isSelected(String icon) {
     if (_currentIndex < 0) {
@@ -79,6 +88,7 @@ class HomeScreenVm extends ChangeNotifier {
   final drawerIcons = [
     SvgIcons.activities,
     SvgIcons.calender,
+    SvgIcons.reportDrawer,
     SvgIcons.myServices,
     SvgIcons.clock,
     SvgIcons.externalGrading,
@@ -88,21 +98,13 @@ class HomeScreenVm extends ChangeNotifier {
   final drawerActionNames = [
     AppStrings.activities,
     AppStrings.calendar,
+    AppStrings.reports,
     AppStrings.myServices,
     AppStrings.sessionNote,
     AppStrings.externalGrading,
     AppStrings.universityApplication,
   ];
   Widget? currentDrawerWidget;
-
-  List<Widget> drawerWidgets = [
-    ActivitiesScreen(),
-    CalendarScreen(),
-    MyServicesScreen(),
-    SessionNotesScreen(),
-    ExternalGradingScreen(),
-    UniversityApplicationScreen(),
-  ];
 
   void setDrawerWidget(int index) {
     closeDrawer();

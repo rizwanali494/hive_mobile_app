@@ -22,6 +22,10 @@ class DrawerActionWidget extends StatelessWidget {
         children: [
           SvgPicture.asset(
             icon,
+            colorFilter: ColorFilter.mode(
+              styles.deepSkyBlue,
+              BlendMode.srcIn,
+            ),
           ),
           19.horizontalSpace,
           Expanded(

@@ -181,13 +181,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       15.verticalSpace,
                       ProfileSectionWidget(
-                        wrapChildren: _user.hobbies,
+                        wrapChildren: controller.userModel.accountData?.hobbies
+                                ?.map((e) => e.name ?? "")
+                                .toList() ??
+                            [],
                         uiState: UiState.hasAll(),
                         heading: AppStrings.hobbies,
                       ),
                       17.verticalSpace,
                       ProfileSectionWidget(
-                        wrapChildren: _user.subjects,
+                        wrapChildren: controller.userModel.accountData?.hobbies
+                                ?.map((e) => e.name ?? "")
+                                .toList() ??
+                            [],
                         uiState: UiState.hasAll(),
                         heading: AppStrings.subjects,
                       ),
@@ -234,4 +240,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-const _user = UserProfileModel.user;
+// const _user = UserProfileModel.user;
