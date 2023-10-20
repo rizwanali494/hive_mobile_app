@@ -196,10 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       17.verticalSpace,
                       ProfileSectionWidget(
-                        wrapChildren: controller.userModel.accountData?.hobbies
-                                ?.map((e) => e.name ?? "")
-                                .toList() ??
-                            [],
+                        wrapChildren: [],
                         uiState: UiState.hasAll(),
                         heading: AppStrings.subjects,
                       ),
