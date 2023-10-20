@@ -130,7 +130,7 @@ final goRouter = GoRouter(
           applicationStatus: status,
           description: description,
           title: title,
-          statusController: statusController ?? DefaultStatusController(),
+          statusController: statusController,
         );
       },
     ),

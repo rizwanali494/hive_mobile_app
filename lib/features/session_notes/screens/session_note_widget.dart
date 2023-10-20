@@ -30,7 +30,10 @@ class SessionNoteWidget extends StatelessWidget {
         GestureDetector(
           onTap: () {
             if (!isPending) {
-              context.push(DescriptionScreen.route);
+              context.push(DescriptionScreen.route, extra: {
+                "title": controller.title,
+                "description": controller.content,
+              });
             }
           },
           child: Row(
@@ -39,9 +42,14 @@ class SessionNoteWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: Text(
-                  controller.title,
-                  style: styles.inter12w400,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: 5.w,
+                  ),
+                  child: Text(
+                    controller.title,
+                    style: styles.inter12w400,
+                  ),
                 ),
               ),
               if (isPending) 10.horizontalSpace,

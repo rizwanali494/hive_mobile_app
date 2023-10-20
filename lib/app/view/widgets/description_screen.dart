@@ -9,7 +9,7 @@ import 'package:hive_mobile/features/university_application/widgets/application_
 
 class DescriptionScreen extends StatelessWidget {
   final String description;
-  final BaseStatusController statusController;
+  final BaseStatusController? statusController;
 
   final ApplicationState? applicationStatus;
   static const route = "/DescriptionScreen";
@@ -46,6 +46,7 @@ class DescriptionScreen extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         AppStrings.description,
@@ -53,13 +54,14 @@ class DescriptionScreen extends StatelessWidget {
                           color: styles.darkSlateGrey,
                         ),
                       ),
-                      ApplicationStatusWidget(
-                        applicationStatus: applicationStatus,
-                        controller: statusController,
-                      )
+                      if (statusController != null)
+                        ApplicationStatusWidget(
+                          applicationStatus: applicationStatus,
+                          controller: statusController!,
+                        )
                     ],
                   ),
-                  22.verticalSpace,
+                  15.verticalSpace,
                   Text(
                     description,
                     style: styles.inter12w400,

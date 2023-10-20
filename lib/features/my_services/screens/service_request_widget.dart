@@ -92,7 +92,7 @@ class ServiceRequestWidget extends StatelessWidget {
                     onTap: () {
                       context.push(DescriptionScreen.route, extra: {
                         "description": provider.items[index].description,
-                        "title": "Comment",
+                        "title": provider.items[index].name,
                         "status_controller": ServiceStatusController(
                             model: provider.items[index], styles: styles)
                       });

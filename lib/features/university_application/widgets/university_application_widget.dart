@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view_models/default_status_controller.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
+import 'package:hive_mobile/features/university_application/view_models/uni_app_status_controller.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_widget_vm.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
@@ -78,7 +79,7 @@ class UniversityApplicationWidget extends StatelessWidget {
                   onTap: () {
                     context.push(DescriptionScreen.route, extra: {
                       "title": AppStrings.comment,
-                      "description": controller.description
+                      "description": controller.model.comments
                     });
                   },
                   child: Column(
@@ -98,7 +99,10 @@ class UniversityApplicationWidget extends StatelessWidget {
             ),
             ApplicationStatusWidget(
               applicationStatus: controller.applicationState,
-              controller: DefaultStatusController(),
+              controller: UApplicationStatusController(
+                styles: styles,
+                application: controller.model,
+              ),
             ),
           ],
         ),

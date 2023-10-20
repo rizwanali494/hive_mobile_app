@@ -77,5 +77,5 @@ class MyServiceWidget extends StatelessWidget {
   }
 
   Color color(AppTheme styles) =>
-      controller.isOpen ? styles.green : styles.darkOrange;
+      controller.isOpen ? styles.green : styles.lightOrange;
 }

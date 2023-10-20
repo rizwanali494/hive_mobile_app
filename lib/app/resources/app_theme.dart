@@ -72,6 +72,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Color denimBlue;
   final Color gravel;
   final Color paleOrange;
+  final Color lightOrange;
   final Color green;
 
   const AppTheme({
@@ -135,6 +136,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     required this.gravel,
     required this.paleOrange,
     required this.green,
+    required this.lightOrange,
   });
 
   @override
@@ -208,6 +210,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       gravel: Color.lerp(gravel, other.gravel, t)!,
       paleOrange: Color.lerp(paleOrange, other.paleOrange, t)!,
       green: Color.lerp(green, other.green, t)!,
+      lightOrange: Color.lerp(lightOrange, other.lightOrange, t)!,
     );
   }
 
@@ -411,7 +414,8 @@ class AppTheme extends ThemeExtension<AppTheme> {
     denimBlue: const Color(0xff7CB5EC),
     gravel: const Color(0xff444349),
     paleOrange: const Color(0xffF7A35B),
-    green: const Color(0xff008000),
+    green: const Color(0xffA2C73B),
+    lightOrange: const Color(0xffFFDCA8),
   );
 
   AppTheme copyWith({
@@ -475,6 +479,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Color? gravel,
     Color? paleOrange,
     Color? green,
+    Color? lightOrange,
   }) {
     return AppTheme(
       inter8w400: inter8w400 ?? this.inter8w400,
@@ -539,6 +544,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       gravel: gravel ?? this.gravel,
       paleOrange: paleOrange ?? this.paleOrange,
       green: green ?? this.green,
+      lightOrange: lightOrange ?? this.lightOrange,
     );
   }
 }
