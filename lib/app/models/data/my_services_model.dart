@@ -125,4 +125,10 @@ class MyServicesModel {
     map['state'] = state;
     return map;
   }
+
+  @ignore
+  bool get isOpen => state == "PENDING";
+
+  @ignore
+  bool get isClosed => state != "PENDING";
 }

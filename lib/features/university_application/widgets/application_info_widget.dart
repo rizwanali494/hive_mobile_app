@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/app/view_models/default_status_controller.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 class ApplicationInfoWidget extends StatelessWidget {
@@ -74,6 +75,7 @@ class ApplicationInfoWidget extends StatelessWidget {
             ),
             ApplicationStatusWidget(
               applicationStatus: applicationStatus,
+              controller: DefaultStatusController(),
             )
           ],
         ),

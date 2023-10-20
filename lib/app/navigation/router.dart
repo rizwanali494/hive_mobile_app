@@ -8,6 +8,8 @@ import 'package:hive_mobile/app/models/data/university_application/university_ap
 import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
+import 'package:hive_mobile/app/view_models/base_status_controller.dart';
+import 'package:hive_mobile/app/view_models/default_status_controller.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
@@ -118,7 +120,9 @@ final goRouter = GoRouter(
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>?;
         ApplicationState? status;
+        BaseStatusController? statusController;
         status = extra?["status"];
+        statusController = extra?["status_controller"];
         var description = extra?["description"] ?? "";
         log(description.toString());
         String? title = extra?["title"];
@@ -126,6 +130,7 @@ final goRouter = GoRouter(
           applicationStatus: status,
           description: description,
           title: title,
+          statusController: statusController ?? DefaultStatusController(),
         );
       },
     ),

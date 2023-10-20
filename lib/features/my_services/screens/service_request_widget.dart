@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_request_widget_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
+import 'package:hive_mobile/features/my_services/view_models/service_status_controller.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_widget_vm.dart';
 import 'package:hive_mobile/features/my_services/widget/my_service_widget.dart';
 import 'package:hive_mobile/features/my_services/widget/services_shimmer_widget.dart';
@@ -91,7 +92,9 @@ class ServiceRequestWidget extends StatelessWidget {
                     onTap: () {
                       context.push(DescriptionScreen.route, extra: {
                         "description": provider.items[index].description,
-                        "title": "Comment"
+                        "title": "Comment",
+                        "status_controller": ServiceStatusController(
+                            model: provider.items[index], styles: styles)
                       });
                     },
                     child: MyServiceWidget(

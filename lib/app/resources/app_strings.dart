@@ -139,4 +139,6 @@ class AppStrings {
   static String externalGradeUpdated = "External Grade Updated";
   static String dismiss = "Dismiss";
   static String Class = "Class";
+  static String closed = "Closed";
+  static String open = "Open";
 }

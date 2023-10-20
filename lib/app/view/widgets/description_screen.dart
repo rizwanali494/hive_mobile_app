@@ -3,18 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view_models/base_status_controller.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 class DescriptionScreen extends StatelessWidget {
   final String description;
+  final BaseStatusController statusController;
 
   final ApplicationState? applicationStatus;
   static const route = "/DescriptionScreen";
   final String? title;
 
   const DescriptionScreen(
-      {Key? key, this.title, this.applicationStatus, required this.description})
+      {Key? key,
+      this.title,
+      this.applicationStatus,
+      required this.description,
+      required this.statusController})
       : super(key: key);
 
   @override
@@ -49,6 +55,7 @@ class DescriptionScreen extends StatelessWidget {
                       ),
                       ApplicationStatusWidget(
                         applicationStatus: applicationStatus,
+                        controller: statusController,
                       )
                     ],
                   ),

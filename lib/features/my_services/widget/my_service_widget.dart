@@ -24,21 +24,46 @@ class MyServiceWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 controller.title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
                 style: styles.inter14w600.copyWith(
                   color: styles.darkSlateGrey,
                 ),
               ),
             ),
-            Text(
-              controller.time,
-              style: styles.inter10w400.copyWith(
-                color: styles.darkGrey,
-              ),
+            10.horizontalSpace,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 5.h,
+                  ),
+                  child: Text(
+                    controller.time,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: styles.inter10w400.copyWith(
+                      color: styles.darkGrey,
+                    ),
+                  ),
+                ),
+                22.horizontalSpace,
+                ColoredBox(
+                  color: color(styles),
+                  child: SizedBox(
+                    width: 7.w,
+                    height: 31.h,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
         Text(
           controller.description,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
           style: styles.inter10w400.copyWith(
             color: styles.darkGrey,
           ),
@@ -50,4 +75,7 @@ class MyServiceWidget extends StatelessWidget {
       ],
     );
   }
+
+  Color color(AppTheme styles) =>
+      controller.isOpen ? styles.green : styles.darkOrange;
 }

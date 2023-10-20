@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
 
@@ -15,5 +17,7 @@ class ServiceWidgetVM {
     return time.formattedTime;
   }
 
+  bool get isOpen => model.isOpen;
 
+  bool get isClosed => model.isClosed;
 }
