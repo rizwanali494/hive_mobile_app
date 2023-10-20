@@ -47,7 +47,7 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
   List<String> certificates = [
     "O2",
     "O3",
-    "AS1",
+    "AS",
     "A2",
   ];
 
