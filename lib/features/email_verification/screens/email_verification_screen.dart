@@ -64,6 +64,7 @@ class EmailVerificationScreen extends StatelessWidget {
                           child: TextFormField(
                             style: styles.inter14w400,
                             validator: provider.emailValidator,
+                            controller: provider.emailCtrl,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: AppStrings.email,

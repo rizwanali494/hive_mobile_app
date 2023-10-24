@@ -29,6 +29,7 @@ class MailSentController extends ChangeNotifier {
       userIsarService.put(userModel);
       if (userModel.isEmailVerified ?? false) {
         context.pushReplacement(HomeScreen.route);
+        return;
       }
     } catch (e) {
       UtilFunctions.showToast();
