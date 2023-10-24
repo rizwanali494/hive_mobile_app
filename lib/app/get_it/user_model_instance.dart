@@ -3,6 +3,6 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 
 final getIt = GetIt.instance;
 
-void registerUserModel(UserModel model) {
-  getIt.registerSingleton<UserModel>(model);
+Future<void> registerUserModel(UserModel model) async {
+ await getIt.registerSingleton<UserModel>(model);
 }

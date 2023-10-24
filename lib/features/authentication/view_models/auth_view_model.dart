@@ -12,12 +12,13 @@ import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/user_verrification_service/user_verfication_handler.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthVM extends ChangeNotifier
-    with BaseExceptionController, UtilFunctions {
+    with BaseExceptionController, UtilFunctions, UserVerificationHandler {
   GetIt getIt = GetIt.instance;
   late ApiService apiService;
 
@@ -80,8 +81,9 @@ class AuthVM extends ChangeNotifier
         var token = responseBody["token"]["access"];
         log(token.toString());
         registerApiServiceInstance(token: token);
-        registerUserModel(model);
-        context.pushReplacement(HomeScreen.route);
+        await registerUserModel(model);
+        // context.pushReplacement(HomeScreen.route);
+        checkEmailVerification(context);
         await sharedPref.setString("token", token);
         isarService.clearCollection().then((value) {
           isarService.put(model);
