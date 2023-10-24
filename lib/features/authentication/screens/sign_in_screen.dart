@@ -10,6 +10,7 @@ import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart'
 import 'package:hive_mobile/app/view/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/features/authentication/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -77,24 +78,21 @@ class _SignInScreenState extends State<SignInScreen> {
                         children: [
                           Text(
                             AppStrings.welcome,
-                            style: styles.inter50w700
-                                .copyWith(color: styles.white),
+                            style: styles.inter50w700.copyWith(color: styles.white),
                           ),
                           SizedBox(
                             height: 17.h,
                           ),
                           Text(
                             AppStrings.signInWithBeaconiteId,
-                            style: styles.inter12w400
-                                .copyWith(color: styles.white),
+                            style: styles.inter12w400.copyWith(color: styles.white),
                           ),
                           SizedBox(
                             height: 60.h,
                           ),
                           AuthButtonWidget(
                             onTap: () async {
-                              await provider.signIN(
-                                  GoogleAuthService(), context);
+                              await provider.signIN(GoogleAuthService(), context);
                             },
                             svgIcon: SvgIcons.googleIcon,
                             text: AppStrings.continueWithGoogle,
@@ -105,9 +103,10 @@ class _SignInScreenState extends State<SignInScreen> {
                               onTap: () async {
                                 await provider.signIN(
                                     AppleAuthService(), context);
+
                               },
                               svgIcon: SvgIcons.appleIcon,
-                              text:AppStrings.continueWithApple,
+                              text: AppStrings.continueWithApple,
                             ),
                           ],
                           10.verticalSpace,

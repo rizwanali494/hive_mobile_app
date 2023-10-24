@@ -41,7 +41,7 @@ class AuthVM extends ChangeNotifier
     }
     loggingIn = true;
     authService = service;
-    await authService?.logOut();
+    // await authService?.logOut();
     showLoaderDialog(context);
     var user = await authService?.logIn();
     if (user != null) {
