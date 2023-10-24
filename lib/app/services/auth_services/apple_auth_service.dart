@@ -25,9 +25,8 @@ class AppleAuthService implements AuthService {
   }
 
   @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<void> logOut() async {
+    return;
   }
 
   String getNonce({int length = 32}) {

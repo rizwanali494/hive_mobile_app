@@ -17,6 +17,7 @@ class ApiEndpoints {
   static String user = "${apiUrl}user/";
   static String studentUser = "${user}student/";
   static String inbox = "${user}inbox";
+  static String verifyEmail = "${user}initiate_verify_backup_email/";
   static String message = "${communication}message/";
   static String hobby = "${studentUser}hobby/bulk_create/";
   static String event = "${apiUrl}event/";

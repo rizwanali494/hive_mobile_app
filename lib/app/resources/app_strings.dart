@@ -7,6 +7,7 @@ class AppStrings {
   static String continueWithGoogle = "Continue with Google";
   static String continueWithApple = "Continue with Apple";
   static String enterBackupEmail = "Enter Backup Email";
+  static String emailVerification = "Email Verfication";
   static String verifyBackupEmail = "Kindly verify back up email address";
   static String email = "Email";
   static String enter = "enter";

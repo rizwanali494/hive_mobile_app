@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/get_it/api_service_instance.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
@@ -12,7 +11,6 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
-import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
@@ -35,13 +33,13 @@ class AuthVM extends ChangeNotifier
 
   AuthService? authService;
 
-  Future signIN(AuthService service,BuildContext context) async {
+  Future signIN(AuthService service, BuildContext context) async {
     if (loggingIn) {
       return;
     }
     loggingIn = true;
     authService = service;
-    // await authService?.logOut();
+    await authService?.logOut();
     showLoaderDialog(context);
     var user = await authService?.logIn();
     if (user != null) {
