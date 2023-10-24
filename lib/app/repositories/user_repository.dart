@@ -22,7 +22,8 @@ class UserRepository {
       {required Map body, required int id}) async {
     // final url = ApiEndpoints.studentUser.withId(id);
     final url = ApiEndpoints.verifyEmail;
-    final response = await apiService.patch(url: url, body: body);
+    log("message : ${url}");
+    final response = await apiService.post(url: url, body: body);
     return response;
   }
 

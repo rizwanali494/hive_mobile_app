@@ -8,11 +8,12 @@ extension CustomValidationBuilder on ValidationBuilder {
         }
         return null;
       });
+
   emailField() => add((value) {
         if (value?.trim().isEmpty ?? false) {
           return 'The field is required';
         }
-        if( EmailValidator.validate(value??"") ){
+        if (!EmailValidator.validate(value ?? "")) {
           return "Invalid Email";
         }
         return null;

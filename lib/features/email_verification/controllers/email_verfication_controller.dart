@@ -15,7 +15,6 @@ class EmailVerifyController extends ChangeNotifier with UtilFunctions {
   final emailCtrl = TextEditingController();
 
   void validate(BuildContext context) {
-    final text = emailCtrl.text;
     final validate = form.currentState?.validate() ?? false;
     if (!validate) {
       return;

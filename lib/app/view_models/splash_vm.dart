@@ -23,6 +23,7 @@ class SplashVM extends ChangeNotifier with UserVerificationHandler {
   }
 
   void check(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 1500));
     String? token = await sharedPref.getString("token");
     if (token != null && token.trim().isNotEmpty) {
       registerApiServiceInstance(token: token);

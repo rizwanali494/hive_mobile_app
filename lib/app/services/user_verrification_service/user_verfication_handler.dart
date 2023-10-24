@@ -11,7 +11,7 @@ class UserVerificationHandler {
 
   void checkEmailVerification(BuildContext context,UserModel model) {
     log("message ::: ${model.isEmailVerified}");
-    if (!(model.isEmailVerified ?? false)) {
+    if ((model.isEmailVerified ?? false)) {
       context.pushReplacement(HomeScreen.route);
       return;
     }

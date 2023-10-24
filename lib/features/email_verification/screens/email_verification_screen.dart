@@ -26,104 +26,72 @@ class EmailVerificationScreen extends StatelessWidget {
         child: Consumer<EmailVerifyController>(
           builder: (context, provider, child) {
             return SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 64.w
-                ),
-                child: Column(
-                  children: [
-                    50.verticalSpace,
-                    Image(
-                      image: AssetImage(
-                        SvgIcons.hiveLogo,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 64.w
+                  ),
+                  child: Column(
+                    children: [
+                      50.verticalSpace,
+                      Image(
+                        image: AssetImage(
+                          SvgIcons.hiveLogo,
+                        ),
+                        width: 109.w,
+                        height: 55.h,
                       ),
-                      width: 109.w,
-                      height: 55.h,
-                    ),
-                    65.verticalSpace,
-                    Text(
-                      AppStrings.emailVerification,
-                      textAlign: TextAlign.center,
-                      style: styles.inter40w700,
-                    ),
-                    40.verticalSpace,
-                    Text(
-                      "${AppStrings.verifyBackupEmail}",
-                      style: styles.inter14w600,
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "(also it should not be bh.edu.pk)",
-                      style: styles.inter14w400,
-                      textAlign: TextAlign.center,
-                    ),
-                    20.verticalSpace,
-                    Form(
-                      key: provider.form,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Padding(
-                          //   padding: EdgeInsets.only(
-                          //     top: 10.h
-                          //   ),
-                          //   child: SvgPicture.asset(
-                          //     SvgIcons.emailLogo,
-                          //     width: 14.w,
-                          //     height: 20.h,
-                          //   ),
-                          // ),
-                          Expanded(
-                            child: TitleTextField(
-                              controller: provider.emailCtrl,
-                              // showBorder: false,
-                              prefixIcon: SvgPicture.asset(
-                                SvgIcons.emailLogo,
-                                width: 14.w,
-                                height: 20.h,
-                              ),
-                              prefixIconConstraints: BoxConstraints(
-                                minWidth: 50,
-                                maxWidth: 60.w,
-                                minHeight: 0,
-                                maxHeight: 20.h,
-                              ),
-                              validator: provider.emailValidator,
-                              hintText: AppStrings.email,
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            // child: TextFormField(
-                            //   style: styles.inter14w400,
-                            //   validator: provider.emailValidator,
-                            //   controller: provider.emailCtrl,
-                            //   decoration: InputDecoration(
-                            //     border: InputBorder.none,
-                            //     hintText: AppStrings.email,
-                            //     hintStyle: styles.inter12w400.copyWith(
-                            //       color: styles.black.withOpacity(0.5),
-                            //     ),
-                            //     isDense: true,
-                            //   ),
-                            // ),
+                      65.verticalSpace,
+                      Text(
+                        AppStrings.emailVerification,
+                        textAlign: TextAlign.center,
+                        style: styles.inter40w700,
+                      ),
+                      40.verticalSpace,
+                      Text(
+                        "${AppStrings.verifyBackupEmail}",
+                        style: styles.inter14w600,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "(also it should not be bh.edu.pk)",
+                        style: styles.inter14w400,
+                        textAlign: TextAlign.center,
+                      ),
+                      20.verticalSpace,
+                      Form(
+                        key: provider.form,
+                        child: TitleTextField(
+                          controller: provider.emailCtrl,
+                          // showBorder: false,
+                          prefixIcon: SvgPicture.asset(
+                            SvgIcons.emailLogo,
+                            width: 14.w,
+                            height: 20.h,
                           ),
-                          30.verticalSpace,
-                        ],
+                          prefixIconConstraints: BoxConstraints(
+                            minWidth: 50,
+                            maxWidth: 60.w,
+                            minHeight: 0,
+                            maxHeight: 20.h,
+                          ),
+                          validator: provider.emailValidator,
+                          hintText: AppStrings.email,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
                       ),
-                    ),
-                    28.verticalSpace,
-                    SizedBox(
-                      // width: double.infinity,
-                      child: BlueElevatedButton(
-                        text: AppStrings.verify.toUpperCase(),
-                        onTap: () {
-                          provider.validate(context);
-                          // if (EmailValidator.validate(emailCtrl.text)) {
-                          // context.pop(emailCtrl.text);
-                          // }
-                        },
+                      28.verticalSpace,
+                      SizedBox(
+                        width: double.infinity,
+                        child: BlueElevatedButton(
+                          text: AppStrings.verify.toUpperCase(),
+                          onTap: () {
+                            provider.validate(context);
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );
