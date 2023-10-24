@@ -83,7 +83,7 @@ class AuthVM extends ChangeNotifier
         registerApiServiceInstance(token: token);
         await registerUserModel(model);
         // context.pushReplacement(HomeScreen.route);
-        checkEmailVerification(context);
+        checkEmailVerification(context,model);
         await sharedPref.setString("token", token);
         isarService.clearCollection().then((value) {
           isarService.put(model);

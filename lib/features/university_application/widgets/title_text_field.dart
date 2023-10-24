@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class TitleTextField extends StatelessWidget {
@@ -23,10 +25,14 @@ class TitleTextField extends StatelessWidget {
       {required int currentLength,
       required bool isFocused,
       required int? maxLength})? buildCounter;
+  final Widget? prefixIcon;
+  final BoxConstraints? prefixIconConstraints;
 
   const TitleTextField({
     super.key,
     this.title,
+    this.prefixIcon,
+    this.prefixIconConstraints,
     this.textFieldOnly = false,
     this.hintText,
     this.maxLines,
@@ -95,6 +101,8 @@ class TitleTextField extends StatelessWidget {
           decoration: InputDecoration(
               isDense: true,
               border: InputBorder.none,
+              prefixIcon: prefixIcon,
+              prefixIconConstraints: prefixIconConstraints,
               contentPadding: EdgeInsets.fromLTRB(22.w, 15, 12, 12),
               enabledBorder: showBorder ? enabledBorder(styles) : null,
               focusedBorder: showBorder ? focusedBorder() : null,

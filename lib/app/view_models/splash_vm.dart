@@ -30,7 +30,7 @@ class SplashVM extends ChangeNotifier with UserVerificationHandler {
       if (userModel != null) {
         await registerUserModel(userModel);
         // navigate(context, HomeScreen.route);
-        checkEmailVerification(context);
+        checkEmailVerification(context,userModel);
         return;
       } else {
         navigate(context, SignInScreen.route);

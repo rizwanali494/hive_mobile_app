@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -6,10 +8,10 @@ import 'package:hive_mobile/features/email_verification/screens/email_verificati
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 
 class UserVerificationHandler {
-  final userModel = GetIt.instance.get<UserModel>();
 
-  void checkEmailVerification(BuildContext context) {
-    if (userModel.isEmailVerified ?? false) {
+  void checkEmailVerification(BuildContext context,UserModel model) {
+    log("message ::: ${model.isEmailVerified}");
+    if (!(model.isEmailVerified ?? false)) {
       context.pushReplacement(HomeScreen.route);
       return;
     }

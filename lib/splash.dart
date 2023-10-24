@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) => SplashVM(context: context),
+      lazy: false,
       child: Scaffold(
         body: Center(
           child: InkWell(
