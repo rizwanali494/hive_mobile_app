@@ -17,6 +17,8 @@ import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.d
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/calender/screens/calendar_screen.dart';
 import 'package:hive_mobile/features/calender/screens/days_event_screen.dart';
+import 'package:hive_mobile/features/email_verification/screens/email_verification_screen.dart';
+import 'package:hive_mobile/features/email_verification/screens/mail_sent_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
@@ -219,6 +221,24 @@ final goRouter = GoRouter(
         return ChatScreen(
           inboxModel: model,
         );
+      },
+    ),
+    CustomGoRoute.cupertino(
+      path: MailSentScreen.route,
+      name: MailSentScreen.route,
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        String email = extra?["list"] ?? "";
+        return MailSentScreen(
+          email: email,
+        );
+      },
+    ),
+    CustomGoRoute.cupertino(
+      path: EmailVerificationScreen.route,
+      name: EmailVerificationScreen.route,
+      builder: (_, state) {
+        return EmailVerificationScreen();
       },
     ),
     // CustomGoRoute.cupertino(

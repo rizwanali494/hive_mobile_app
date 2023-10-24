@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/email_verification/screens/email_verification_screen.dart';
+import 'package:hive_mobile/features/home/screens/home_screen.dart';
 
 class MailSentController extends ChangeNotifier {
   bool isLoading = false;
@@ -19,13 +20,16 @@ class MailSentController extends ChangeNotifier {
 
   late final userProfileService = UserRepository(apiService: apiService);
 
-  Future<void> checkStatus() async {
+  Future<void> checkStatus(BuildContext context) async {
     isLoading = true;
     notifyListeners();
     try {
       final userModel = await userProfileService.fetchProfile();
       registerUserModel(userModel);
       userIsarService.put(userModel);
+      if (userModel.isEmailVerified ?? false) {
+        context.pushReplacement(HomeScreen.route);
+      }
     } catch (e) {
       UtilFunctions.showToast();
     }
