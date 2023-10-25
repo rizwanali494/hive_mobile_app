@@ -23,6 +23,7 @@ class ApiEndpoints {
   static String event = "${apiUrl}event/";
   static String activity = "${event}activity/";
   static String report = "${user}reports/";
+  static String reportToken = "${report}token/";
   static String assessments = "${report}assessments/";
   static String summary = "${report}summary/";
   static String universityApplication =

@@ -84,7 +84,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           9.horizontalSpace,
                           GestureDetector(
                               onTap: () {
-                                context.push(ReportWebView.route);
+                                provider.generateReportToken(context);
+                                // context.push(ReportWebView.route);
                                 // launchUrl(
                                 //   Uri.parse(
                                 //           "https://hive.bcp.net.pk/view-reports-pdf")

@@ -31,4 +31,13 @@ class ReportRepository {
     final model = ReportSummaryModel.fromMap(result);
     return model;
   }
+
+  Future<String> generateReportToken() async {
+    var url = ApiEndpoints.reportToken;
+    var response = await apiService.get(url: url);
+    var result = jsonDecode(response.body);
+    log("body : ${result}");
+    String reportToken = result["token"];
+    return reportToken;
+  }
 }
