@@ -29,6 +29,7 @@ import 'package:hive_mobile/features/inbox/screens/new_conversations/new_convers
 import 'package:hive_mobile/features/my_services/screens/my_services_screen.dart';
 import 'package:hive_mobile/features/my_services/screens/new_request_screen.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
+import 'package:hive_mobile/features/reports/screens/report_web_view.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
@@ -239,6 +240,17 @@ final goRouter = GoRouter(
       name: EmailVerificationScreen.route,
       builder: (_, state) {
         return EmailVerificationScreen();
+      },
+    ),
+    CustomGoRoute.cupertino(
+      path: ReportWebView.route,
+      name: ReportWebView.route,
+      builder: (_, state) {
+        var extra = state.extra as Map<String, dynamic>?;
+        String token = extra?["token"] ?? "";
+        return ReportWebView(
+          token: token,
+        );
       },
     ),
     // CustomGoRoute.cupertino(
