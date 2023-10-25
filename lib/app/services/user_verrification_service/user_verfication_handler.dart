@@ -10,8 +10,8 @@ import 'package:hive_mobile/features/home/screens/home_screen.dart';
 class UserVerificationHandler {
 
   void checkEmailVerification(BuildContext context,UserModel model) {
-    log("message ::: ${model.isEmailVerified}");
-    if ((model.isEmailVerified ?? false)) {
+    log("message ::: ${model.accountData?.isBackUpEmailVerified}");
+    if ((model.accountData?.isBackUpEmailVerified ?? false)) {
       context.pushReplacement(HomeScreen.route);
       return;
     }

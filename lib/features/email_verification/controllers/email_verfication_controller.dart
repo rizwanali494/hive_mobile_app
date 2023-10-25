@@ -40,6 +40,7 @@ class EmailVerifyController extends ChangeNotifier with UtilFunctions {
       context.pushReplacement(MailSentScreen.route, extra: {"email": text});
       return;
     } catch (e) {
+      UtilFunctions.showToast();
       log("error verify email : ${e.toString()}");
     }
     context.pop();

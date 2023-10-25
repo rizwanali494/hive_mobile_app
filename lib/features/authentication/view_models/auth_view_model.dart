@@ -63,7 +63,7 @@ class AuthVM extends ChangeNotifier
         body = {
           "payload": {
             "email": "saqib.manzoor@bh.edu.pk",
-            "email_verified": true
+            "email_verified": false
           }
         };
       } else {

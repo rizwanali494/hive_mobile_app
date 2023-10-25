@@ -175,13 +175,13 @@ int _universityApplicationModelEstimateSize(
     }
   }
   {
-    final value = object.status;
+    final value = object.state;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   {
-    final value = object.state;
+    final value = object.status;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -221,8 +221,8 @@ void _universityApplicationModelSerialize(
   writer.writeLong(offsets[10], object.regionId);
   writer.writeString(offsets[11], object.scholarshipAmount);
   writer.writeString(offsets[12], object.scholarshipPercent);
-  writer.writeString(offsets[13], object.status);
-  writer.writeString(offsets[14], object.state);
+  writer.writeString(offsets[13], object.state);
+  writer.writeString(offsets[14], object.status);
   writer.writeObject<UniversityModel>(
     offsets[15],
     allOffsets,
@@ -256,8 +256,8 @@ UniversityApplicationModel _universityApplicationModelDeserialize(
     regionId: reader.readLongOrNull(offsets[10]),
     scholarshipAmount: reader.readStringOrNull(offsets[11]),
     scholarshipPercent: reader.readStringOrNull(offsets[12]),
-    status: reader.readStringOrNull(offsets[13]),
-    state: reader.readStringOrNull(offsets[14]),
+    state: reader.readStringOrNull(offsets[13]),
+    status: reader.readStringOrNull(offsets[14]),
     university: reader.readObjectOrNull<UniversityModel>(
       offsets[15],
       UniversityModelSchema.deserialize,

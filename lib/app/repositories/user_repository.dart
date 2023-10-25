@@ -23,6 +23,7 @@ class UserRepository {
     // final url = ApiEndpoints.studentUser.withId(id);
     final url = ApiEndpoints.verifyEmail;
     log("message : ${url}");
+    log("message : ${body}");
     final response = await apiService.post(url: url, body: body);
     return response;
   }

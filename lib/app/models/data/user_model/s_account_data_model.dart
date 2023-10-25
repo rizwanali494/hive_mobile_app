@@ -21,6 +21,7 @@ class StudentAccountData {
     this.backupEmail,
     this.owner,
     this.hobbies,
+    this.isBackUpEmailVerified,
   });
 
   StudentAccountData.fromJson(dynamic json) {
@@ -29,6 +30,7 @@ class StudentAccountData {
     log("extra");
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
+    isBackUpEmailVerified = json['is_backup_email_verified'];
     classId = json['class_id'];
     regionId = json['region_id'];
     cityId = json['city_id'];
@@ -50,6 +52,7 @@ class StudentAccountData {
   int? cityId;
   int? branchId;
   String? status;
+  bool? isBackUpEmailVerified;
   String? backupEmail;
   int? owner;
   List<HobbiesModel>? hobbies;
@@ -67,6 +70,7 @@ class StudentAccountData {
     String? backupEmail,
     int? owner,
     List<HobbiesModel>? hobbies,
+    bool? isBackUpEmailVerified,
   }) =>
       StudentAccountData(
         id: id ?? this.id,
@@ -79,6 +83,8 @@ class StudentAccountData {
         branchId: branchId ?? this.branchId,
         status: bio ?? this.status,
         backupEmail: backupEmail ?? this.backupEmail,
+        isBackUpEmailVerified:
+            isBackUpEmailVerified ?? this.isBackUpEmailVerified,
         owner: owner ?? this.owner,
         hobbies: hobbies?.map((e) => e.copyWith()).toList() ??
             this.hobbies?.map((e) => e.copyWith()).toList(),
@@ -98,6 +104,7 @@ class StudentAccountData {
     map['branch_id'] = branchId;
     map['status'] = status;
     map['backup_email'] = backupEmail;
+    map['is_backup_email_verified'] = isBackUpEmailVerified;
     map['owner'] = owner;
     if (hobbies != null) {
       map['hobbies'] = hobbies?.map((v) => v.toJson()).toList();

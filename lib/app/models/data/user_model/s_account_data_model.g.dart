@@ -60,18 +60,23 @@ const StudentAccountDataSchema = Schema(
       name: r'id',
       type: IsarType.long,
     ),
-    r'owner': PropertySchema(
+    r'isBackUpEmailVerified': PropertySchema(
       id: 9,
+      name: r'isBackUpEmailVerified',
+      type: IsarType.bool,
+    ),
+    r'owner': PropertySchema(
+      id: 10,
       name: r'owner',
       type: IsarType.long,
     ),
     r'regionId': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'regionId',
       type: IsarType.long,
     ),
     r'status': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'status',
       type: IsarType.string,
     )
@@ -162,9 +167,10 @@ void _studentAccountDataSerialize(
     object.hobbies,
   );
   writer.writeLong(offsets[8], object.id);
-  writer.writeLong(offsets[9], object.owner);
-  writer.writeLong(offsets[10], object.regionId);
-  writer.writeString(offsets[11], object.status);
+  writer.writeBool(offsets[9], object.isBackUpEmailVerified);
+  writer.writeLong(offsets[10], object.owner);
+  writer.writeLong(offsets[11], object.regionId);
+  writer.writeString(offsets[12], object.status);
 }
 
 StudentAccountData _studentAccountDataDeserialize(
@@ -192,9 +198,10 @@ StudentAccountData _studentAccountDataDeserialize(
       HobbiesModel(),
     ),
     id: reader.readLongOrNull(offsets[8]),
-    owner: reader.readLongOrNull(offsets[9]),
-    regionId: reader.readLongOrNull(offsets[10]),
-    status: reader.readStringOrNull(offsets[11]),
+    isBackUpEmailVerified: reader.readBoolOrNull(offsets[9]),
+    owner: reader.readLongOrNull(offsets[10]),
+    regionId: reader.readLongOrNull(offsets[11]),
+    status: reader.readStringOrNull(offsets[12]),
   );
   return object;
 }
@@ -234,10 +241,12 @@ P _studentAccountDataDeserializeProp<P>(
     case 8:
       return (reader.readLongOrNull(offset)) as P;
     case 9:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 10:
       return (reader.readLongOrNull(offset)) as P;
     case 11:
+      return (reader.readLongOrNull(offset)) as P;
+    case 12:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1125,6 +1134,34 @@ extension StudentAccountDataQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      isBackUpEmailVerifiedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isBackUpEmailVerified',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      isBackUpEmailVerifiedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isBackUpEmailVerified',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      isBackUpEmailVerifiedEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isBackUpEmailVerified',
+        value: value,
       ));
     });
   }
