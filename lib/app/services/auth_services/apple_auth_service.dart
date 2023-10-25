@@ -4,7 +4,6 @@ import 'dart:math' hide log;
 import 'package:hive_mobile/app/models/user_auth_model.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleAuthService implements AuthService {
   @override

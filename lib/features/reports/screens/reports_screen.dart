@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
@@ -11,6 +13,7 @@ import 'package:hive_mobile/features/reports/view_models/report_year2_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);
@@ -58,10 +61,45 @@ class _ReportsScreenState extends State<ReportsScreen> {
             child: Column(
               children: [
                 AppBarWidget(
-                    color: styles.black,
-                    horizontalPadding: 0,
-                    title: AppStrings.reports,
-                    titleStyle: styles.inter28w700),
+                  color: styles.black,
+                  horizontalPadding: 0,
+                  title: AppStrings.reports,
+                  titleStyle: styles.inter28w700,
+                  actions: [
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(SvgIcons.verifiedIcon),
+                          7.horizontalSpace,
+                          Text(
+                            "Password\nProtected",
+                            style: styles.inter10w400,
+                          ),
+                          9.horizontalSpace,
+                          VerticalDivider(
+                            thickness: 0.5,
+                          ),
+                          9.horizontalSpace,
+                          GestureDetector(
+                              onTap: () {
+                                launchUrl(
+                                  Uri.parse(
+                                          "https://hive.bcp.net.pk/view-reports-pdf")
+                                      .replace(
+                                    queryParameters: {
+                                      "token":
+                                          "gAAAAABlOLgTYVoODpWzuIPaqitum77Z450jHK1JwzZy9ODMFXsmXdOPZ_PWIX6U4TzgZEku_JD70YScY6FyzU3C3Nyd2oSIdQ=="
+                                    },
+                                  ),
+                                  mode: LaunchMode.inAppWebView,
+                                );
+                              },
+                              child: SvgPicture.asset(SvgIcons.downloadIcon)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 15.verticalSpace,
                 ReportHeaderWidget(styles: styles),
                 Divider(

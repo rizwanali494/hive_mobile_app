@@ -50,4 +50,6 @@ class SvgIcons {
   static const String send = "${_iconsPath}send.svg";
   static const String userPlaceholder = "${_iconsPath}user_placeholder.svg";
   static const String bcpCollegeIcon = "${_iconsPath}bcp_college_logo.png";
+  static const String downloadIcon = "${_iconsPath}download_icon.svg";
+  static const String verifiedIcon = "${_iconsPath}verified_icon.svg";
 }
