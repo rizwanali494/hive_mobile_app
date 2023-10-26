@@ -45,16 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final email = await showDialog(
-        context: context,
-        builder: (context) => const BackUpEmailDialog(),
-      );
-      log("message : ${email}");
-      if (email != null) {
-        updateBackupEmail(email: email);
-      }
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    //   final email = await showDialog(
+    //     context: context,
+    //     builder: (context) => const BackUpEmailDialog(),
+    //   );
+    //   log("message : ${email}");
+    //   if (email != null) {
+    //     updateBackupEmail(email: email);
+    //   }
+    // });
   }
 
   @override

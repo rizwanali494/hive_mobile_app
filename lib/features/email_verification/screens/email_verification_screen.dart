@@ -22,15 +22,14 @@ class EmailVerificationScreen extends StatelessWidget {
 
     return Scaffold(
       body: ChangeNotifierProvider(
-        create: (BuildContext context) => EmailVerifyController(),
+        create: (BuildContext context) =>
+            EmailVerifyController(context: context),
         child: Consumer<EmailVerifyController>(
           builder: (context, provider, child) {
             return SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 64.w
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 64.w),
                   child: Column(
                     children: [
                       50.verticalSpace,
@@ -81,15 +80,18 @@ class EmailVerificationScreen extends StatelessWidget {
                         ),
                       ),
                       28.verticalSpace,
-                      SizedBox(
-                        width: double.infinity,
-                        child: BlueElevatedButton(
-                          text: AppStrings.verify.toUpperCase(),
-                          onTap: () {
-                            provider.validate(context);
-                          },
+                      if (provider.isLoading)
+                        CircularProgressIndicator()
+                      else
+                        SizedBox(
+                          width: double.infinity,
+                          child: BlueElevatedButton(
+                            text: AppStrings.verify.toUpperCase(),
+                            onTap: () {
+                              provider.validate(context);
+                            },
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),

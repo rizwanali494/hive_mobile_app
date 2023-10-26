@@ -106,14 +106,14 @@ class _ReportWebViewState extends State<ReportWebView> {
                 },
                 onDownloadStartRequest:
                     (controller, downloadStartRequest) async {
-                  final taskId = await FlutterDownloader.enqueue(
-                    url: downloadStartRequest.url.toString(),
-                    savedDir: (await getExternalStorageDirectory())!.path,
-                    showNotification: true,
-                    // show download progress in status bar (for Android)
-                    openFileFromNotification:
-                        true, // click on notification to open downloaded file (for Android)
-                  );
+                  // final taskId = await FlutterDownloader.enqueue(
+                  //   url: downloadStartRequest.url.toString(),
+                  //   savedDir: (await getExternalStorageDirectory())!.path,
+                  //   showNotification: true,
+                  //   // show download progress in status bar (for Android)
+                  //   openFileFromNotification:
+                  //       true, // click on notification to open downloaded file (for Android)
+                  // );
 
                   // launchUrl(
                   //  downloadStartRequest.url,

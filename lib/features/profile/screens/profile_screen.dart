@@ -195,12 +195,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         heading: AppStrings.hobbies,
                       ),
                       17.verticalSpace,
-                      ProfileSectionWidget(
-                        wrapChildren: [],
-                        uiState: UiState.hasAll(),
-                        heading: AppStrings.subjects,
-                      ),
-                      17.verticalSpace,
+                      // ProfileSectionWidget(
+                      //   wrapChildren: [],
+                      //   uiState: UiState.hasAll(),
+                      //   heading: AppStrings.subjects,
+                      // ),
+                      // 17.verticalSpace,
                       ChangeNotifierProvider<UserAcceptedApplicationVM>(
                         create: (BuildContext context) =>
                             UserAcceptedApplicationVM(),
