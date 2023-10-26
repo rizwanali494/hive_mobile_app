@@ -14,7 +14,6 @@ import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/services/user_verrification_service/user_verfication_handler.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
-import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthVM extends ChangeNotifier

@@ -6,7 +6,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
-import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_note_widget.dart';
 import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';

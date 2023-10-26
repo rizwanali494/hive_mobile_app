@@ -6,7 +6,6 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
-import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
 

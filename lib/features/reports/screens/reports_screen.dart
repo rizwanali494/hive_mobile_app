@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
-import 'package:hive_mobile/features/reports/screens/report_web_view.dart';
 import 'package:hive_mobile/features/reports/widgets/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year2_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({Key? key}) : super(key: key);

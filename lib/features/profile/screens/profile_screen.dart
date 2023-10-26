@@ -9,7 +9,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
-import 'package:hive_mobile/features/profile/models/user_profile_model.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';

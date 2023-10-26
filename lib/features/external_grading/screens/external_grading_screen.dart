@@ -5,7 +5,6 @@ import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
-import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';

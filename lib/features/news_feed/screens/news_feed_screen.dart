@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
-import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';

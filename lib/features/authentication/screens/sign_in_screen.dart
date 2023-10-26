@@ -10,7 +10,6 @@ import 'package:hive_mobile/app/services/auth_services/google_auth_service.dart'
 import 'package:hive_mobile/app/view/widgets/auth_button_widget.dart';
 import 'package:hive_mobile/features/authentication/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);

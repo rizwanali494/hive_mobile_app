@@ -7,7 +7,6 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
-import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_emal_successful.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';

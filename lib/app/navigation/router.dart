@@ -9,7 +9,6 @@ import 'package:hive_mobile/app/navigation/custom_go_route.dart';
 import 'package:hive_mobile/app/navigation/go_router_observer.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view_models/base_status_controller.dart';
-import 'package:hive_mobile/app/view_models/default_status_controller.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';

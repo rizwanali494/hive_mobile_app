@@ -6,8 +6,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
-import 'package:hive_mobile/features/inbox/screens/chat_screens/inbox_list_widget.dart';
-import 'package:hive_mobile/features/inbox/view_models/inbox_list_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/new_conversation_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
