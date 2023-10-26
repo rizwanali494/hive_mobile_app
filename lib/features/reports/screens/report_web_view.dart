@@ -89,20 +89,17 @@ class _ReportWebViewState extends State<ReportWebView> {
             Expanded(
               child: InAppWebView(
                 initialUrlRequest: URLRequest(
-                  url: Uri.parse("https://hive.bcp.net.pk/view-reports-pdf")
+                  url: Uri.parse(
+                          "https://hive.bcp.net.pk/view-reports-pdf?token=${widget.token}")
                       .replace(
-                    queryParameters: {
-                      "token":
-                          // "$token"
-                          "gAAAAABlOLgTYVoODpWzuIPaqitum77Z450jHK1JwzZy9ODMFXsmXdOPZ_PWIX6U4TzgZEku_JD70YScY6FyzU3C3Nyd2oSIdQ=="
-                    },
+                    queryParameters: {"token": "${widget.token}"},
                   ),
                 ),
                 initialOptions: InAppWebViewGroupOptions(
                   crossPlatform: InAppWebViewOptions(useOnDownloadStart: true),
                 ),
                 onWebViewCreated: (controller) {
-                  webViewController = controller;
+                  log("token ${widget.token}");
                 },
                 onDownloadStartRequest:
                     (controller, downloadStartRequest) async {
