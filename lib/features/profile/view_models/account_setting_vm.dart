@@ -71,7 +71,8 @@ class AccountSettingVM extends ChangeNotifier {
   Future<void> saveChanges(BuildContext context) async {
     UtilFunctions().showLoaderDialog(context);
     try {
-      Attachments fileModel = Attachments.fromJson(userModel.picture?.toJson());
+      Attachments fileModel =
+          Attachments.fromJson(userModel.picture?.toJson() ?? {});
       if (image != null) {
         fileModel = await userProfileRepo.uploadProfilePicture(file: image!);
       }
