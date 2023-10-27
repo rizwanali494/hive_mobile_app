@@ -1,5 +1,6 @@
 class ApiEndpoints {
   static String baseUrl = "https://hive.bcp.net.pk";
+  static String viewReport = "${baseUrl}/view-reports-pdf";
   static String apiUrl = "${baseUrl}/api/v1/";
   static String authUrl = "${apiUrl}auth/";
   static String me = "${authUrl}me/";

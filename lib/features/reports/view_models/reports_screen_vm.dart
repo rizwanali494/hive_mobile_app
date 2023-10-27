@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
 import 'package:hive_mobile/features/reports/screens/report_web_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreenVM extends ChangeNotifier with UtilFunctions {
   int selectedYear = 0;
@@ -21,7 +22,7 @@ class ReportsScreenVM extends ChangeNotifier with UtilFunctions {
   final apiService = GetIt.instance.get<ApiService>();
 
   late ReportRepository reportRepository =
-  ReportRepository(apiService: apiService);
+      ReportRepository(apiService: apiService);
 
   void inItValues() {}
   final PageController pageController = PageController(initialPage: 0);
@@ -45,12 +46,19 @@ class ReportsScreenVM extends ChangeNotifier with UtilFunctions {
       final token = await reportRepository.generateReportToken();
       log("token : $token");
       context.pop();
-      context.push(
-        ReportWebView.route,
-        extra: {
-          "token": token,
-        },
+      launchUrl(
+        Uri.parse("https://hive.bcp.net.pk/view-reports-pdf").replace(
+          queryParameters: {"token": "$token"},
+        ),
+        mode: LaunchMode.externalApplication,
       );
+
+      // context.push(
+      //   ReportWebView.route,
+      //   extra: {
+      //     "token": token,
+      //   },
+      // );
     } catch (e) {
       context.pop();
     }

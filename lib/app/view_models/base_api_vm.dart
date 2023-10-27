@@ -67,7 +67,6 @@ abstract class BaseApiVM<T> with ChangeNotifier {
     notifyListeners();
     final request = () async {
       var list = await fetchInitialItems();
-      // sortByRecentOrder();
       if (list.length < limit) {
         paginationController.isLastPage = true;
       } else {
@@ -77,14 +76,10 @@ abstract class BaseApiVM<T> with ChangeNotifier {
       await localService.clearCollection();
       await saveToLocal(list);
       paginationController.addListener();
+      uiState = UiState.loaded();
       return;
     };
     await performRequest(request: request);
-    var localList = await fetchLocalList();
-    items.addAll(localList);
-    items = items.toSet().toList();
-    uiState = UiState.loaded();
-    sortByRecentOrder();
     notifyListeners();
   }
 
@@ -155,7 +150,11 @@ abstract class BaseApiVM<T> with ChangeNotifier {
 
   void displayError() {}
 
-  void onError() {
+  Future<void> onError() async {
+    var localList = await fetchLocalList();
+    items.addAll(localList);
+    items = items.toSet().toList();
+    sortByRecentOrder();
     if (items.isEmpty) {
       uiState = UiState.error();
     } else {
