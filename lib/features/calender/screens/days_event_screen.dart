@@ -128,7 +128,7 @@ class _DaysEventScreenState extends State<DaysEventScreen> {
                                 return GestureDetector(
                                   onTap: () {
                                     context.push(
-                                      ActivityDetailScreen.route,
+                                       ActivityDetailScreen.route,
                                       extra: {
                                         "controller": ActivityWidgetVM(
                                           model: provider.items[index],

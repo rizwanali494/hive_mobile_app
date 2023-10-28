@@ -8,7 +8,6 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
-
 class ActivityScreenVM extends BaseApiVM<ActivityModel>
     with BaseExceptionController {
   late ActivityRepo activityRepo;
@@ -66,6 +65,12 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel>
 
   bool get hasError => uiState.hasError;
 
-
-
+  void setModel(ActivityModel model) {
+    int indexOf = items.indexOf(model);
+    if (indexOf > -1) {
+      items[indexOf] = model;
+      notifyListeners();
+      localService.put(model);
+    }
+  }
 }

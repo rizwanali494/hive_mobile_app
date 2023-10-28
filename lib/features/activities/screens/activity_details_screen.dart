@@ -335,9 +335,12 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            widget.activityProvider?.setActivitySelection(
-                                model: widget.controller.model,
-                                state: AppStrings.attending);
+                            widget.controller.setActivitySelection(
+                                state: AppStrings.attending,
+                                activityScreenVM: widget.activityProvider);
+                            // widget.activityProvider?.setActivitySelection(
+                            //     model: widget.controller.model,
+                            //     state: AppStrings.attending);
                           },
                           child: ActivityStatusWidget(
                             iconPath: SvgIcons.tickSquare,
@@ -350,9 +353,13 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                         12.17.horizontalSpace,
                         GestureDetector(
                           onTap: () async {
-                            widget.activityProvider?.setActivitySelection(
-                                model: widget.controller.model,
-                                state: AppStrings.SKEPTICAL);
+                            widget.controller.setActivitySelection(
+                                state: AppStrings.SKEPTICAL,
+                                activityScreenVM: widget.activityProvider);
+                            //
+                            // widget.activityProvider?.setActivitySelection(
+                            //     model: widget.controller.model,
+                            //     state: AppStrings.SKEPTICAL);
                           },
                           child: ActivityStatusWidget(
                             iconPath: SvgIcons.maybe,
@@ -365,9 +372,13 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                         12.17.horizontalSpace,
                         GestureDetector(
                           onTap: () {
-                            widget.activityProvider?.setActivitySelection(
-                                model: widget.controller.model,
-                                state: AppStrings.NON_ATTENDING);
+                            widget.controller.setActivitySelection(
+                                state: AppStrings.NON_ATTENDING,
+                                activityScreenVM: widget.activityProvider);
+
+                            // widget.activityProvider?.setActivitySelection(
+                            //     model: widget.controller.model,
+                            //     state: AppStrings.NON_ATTENDING);
                           },
                           child: ActivityStatusWidget(
                             iconPath: SvgIcons.undecided,

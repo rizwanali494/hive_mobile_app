@@ -58,19 +58,21 @@ class AuthVM extends ChangeNotifier
       // //   }
       // // };
       Map body = {};
-      if (kDebugMode) {
-        body = {
-          "payload": {
-            "email": "saqib.manzoor@bh.edu.pk",
-            "email_verified": false
-          }
-        };
-      } else {
-        body = {
-          "payload": {"email": "${user.email}", "email_verified": true}
-        };
-      }
-
+      // if (kDebugMode) {
+      //   body = {
+      //     "payload": {
+      //       "email": "saqib.manzoor@bh.edu.pk",
+      //       "email_verified": false
+      //     }
+      //   };
+      // } else {
+      //   body = {
+      //     "payload": {"email": "${user.email}", "email_verified": true}
+      //   };
+      // }
+      body = {
+        "payload": {"email": "${user.email}", "email_verified": true}
+      };
       try {
         final response = await userRepository.login(body);
 
