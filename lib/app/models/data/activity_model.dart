@@ -149,18 +149,18 @@ class ActivityModel {
   int get hashCode => id.hashCode;
 
   @ignore
-  ActivityStatus? get getSelection {
+  ActivitySelectionStatus? get getSelection {
     if (selection?.toLowerCase() == AppStrings.attending.toLowerCase()) {
-      return ActivityStatus.Attending;
+      return ActivitySelectionStatus.Attending;
     }
     if (selection?.toLowerCase() == AppStrings.SKEPTICAL.toLowerCase()) {
-      return ActivityStatus.Maybe;
+      return ActivitySelectionStatus.Maybe;
     }
     if (selection?.toLowerCase() == AppStrings.NON_ATTENDING.toLowerCase()) {
-      return ActivityStatus.Undecided;
+      return ActivitySelectionStatus.Undecided;
     }
     return null;
   }
 }
 
-enum ActivityStatus { Attending, Maybe, Undecided }
+enum ActivitySelectionStatus { Attending, Maybe, Undecided }

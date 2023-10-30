@@ -116,7 +116,7 @@ class ActivityWidget extends StatelessWidget {
                   iconPath: SvgIcons.tickSquare,
                   title: AppStrings.attending,
                   isSelected: controller.isSelected(
-                    ActivityStatus.Attending,
+                    ActivitySelectionStatus.Attending,
                   ),
                 ),
               ),
@@ -129,7 +129,8 @@ class ActivityWidget extends StatelessWidget {
                 child: ActivityStatusWidget(
                   iconPath: SvgIcons.maybe,
                   title: AppStrings.maybe,
-                  isSelected: controller.isSelected(ActivityStatus.Maybe),
+                  isSelected:
+                      controller.isSelected(ActivitySelectionStatus.Maybe),
                 ),
               ),
               6.17.horizontalSpace,
@@ -141,7 +142,8 @@ class ActivityWidget extends StatelessWidget {
                 child: ActivityStatusWidget(
                   iconPath: SvgIcons.undecided,
                   title: AppStrings.undecided,
-                  isSelected: controller.isSelected(ActivityStatus.Undecided),
+                  isSelected:
+                      controller.isSelected(ActivitySelectionStatus.Undecided),
                 ),
               ),
             ],

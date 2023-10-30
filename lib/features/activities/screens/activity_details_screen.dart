@@ -329,66 +329,69 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                     ),
                   ),
                   15.verticalSpace,
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 27.h),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            widget.controller.setActivitySelection(
-                                state: AppStrings.attending,
-                                activityScreenVM: widget.activityProvider);
-                            // widget.activityProvider?.setActivitySelection(
-                            //     model: widget.controller.model,
-                            //     state: AppStrings.attending);
-                          },
-                          child: ActivityStatusWidget(
-                            iconPath: SvgIcons.tickSquare,
-                            title: AppStrings.attending,
-                            isSelected: widget.controller.isSelected(
-                              ActivityStatus.Attending,
+                  ValueListenableBuilder(
+                    valueListenable: widget.controller.selectionStatus,
+                    builder: (context, value, child) => Padding(
+                      padding: EdgeInsets.only(bottom: 27.h),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              widget.controller.setActivitySelection(
+                                  state: AppStrings.attending,
+                                  activityScreenVM: widget.activityProvider);
+                              // widget.activityProvider?.setActivitySelection(
+                              //     model: widget.controller.model,
+                              //     state: AppStrings.attending);
+                            },
+                            child: ActivityStatusWidget(
+                              iconPath: SvgIcons.tickSquare,
+                              title: AppStrings.attending,
+                              isSelected: widget.controller.isSelected(
+                                ActivitySelectionStatus.Attending,
+                              ),
                             ),
                           ),
-                        ),
-                        12.17.horizontalSpace,
-                        GestureDetector(
-                          onTap: () async {
-                            widget.controller.setActivitySelection(
-                                state: AppStrings.SKEPTICAL,
-                                activityScreenVM: widget.activityProvider);
-                            //
-                            // widget.activityProvider?.setActivitySelection(
-                            //     model: widget.controller.model,
-                            //     state: AppStrings.SKEPTICAL);
-                          },
-                          child: ActivityStatusWidget(
-                            iconPath: SvgIcons.maybe,
-                            title: AppStrings.maybe,
-                            isSelected: widget.controller.isSelected(
-                              ActivityStatus.Maybe,
+                          12.17.horizontalSpace,
+                          GestureDetector(
+                            onTap: () async {
+                              widget.controller.setActivitySelection(
+                                  state: AppStrings.SKEPTICAL,
+                                  activityScreenVM: widget.activityProvider);
+                              //
+                              // widget.activityProvider?.setActivitySelection(
+                              //     model: widget.controller.model,
+                              //     state: AppStrings.SKEPTICAL);
+                            },
+                            child: ActivityStatusWidget(
+                              iconPath: SvgIcons.maybe,
+                              title: AppStrings.maybe,
+                              isSelected: widget.controller.isSelected(
+                                ActivitySelectionStatus.Maybe,
+                              ),
                             ),
                           ),
-                        ),
-                        12.17.horizontalSpace,
-                        GestureDetector(
-                          onTap: () {
-                            widget.controller.setActivitySelection(
-                                state: AppStrings.NON_ATTENDING,
-                                activityScreenVM: widget.activityProvider);
+                          12.17.horizontalSpace,
+                          GestureDetector(
+                            onTap: () {
+                              widget.controller.setActivitySelection(
+                                  state: AppStrings.NON_ATTENDING,
+                                  activityScreenVM: widget.activityProvider);
 
-                            // widget.activityProvider?.setActivitySelection(
-                            //     model: widget.controller.model,
-                            //     state: AppStrings.NON_ATTENDING);
-                          },
-                          child: ActivityStatusWidget(
-                            iconPath: SvgIcons.undecided,
-                            title: AppStrings.undecided,
-                            isSelected: widget.controller.isSelected(
-                              ActivityStatus.Undecided,
+                              // widget.activityProvider?.setActivitySelection(
+                              //     model: widget.controller.model,
+                              //     state: AppStrings.NON_ATTENDING);
+                            },
+                            child: ActivityStatusWidget(
+                              iconPath: SvgIcons.undecided,
+                              title: AppStrings.undecided,
+                              isSelected: widget.controller.isSelected(
+                                ActivitySelectionStatus.Undecided,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],

@@ -6,19 +6,15 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
+
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
 class ActivityWidgetVM {
-  final ValueNotifier<ActivityModel> valueModel;
+  ActivityModel model;
 
-  ActivityWidgetVM({required ActivityModel model}) : valueModel = ValueNotifier(model);
-
-  ActivityModel get model => valueModel.value;
-
-  set model(ActivityModel model) {
-    valueModel.value = model;
-  }
+  ActivityWidgetVM({required this.model});
 
   String get ownerImageUrl => model.owner?.picture?.file ?? "";
 
@@ -61,26 +57,17 @@ class ActivityWidgetVM {
     return eventDay.monthOnlyShort;
   }
 
-  bool isSelected(ActivityStatus? status) {
-    return status == model.getSelection;
+  bool isSelected(ActivitySelectionStatus? status) {
+    return status == selectionStatus.value;
   }
-
-  late ActivityRepo activityRepo =
-      ActivityRepositoryImpl(apiService: apiService);
-
-  final apiService = GetIt.instance.get<ApiService>();
 
   Future<void> setActivitySelection(
       {required String state,
       required ActivityScreenVM? activityScreenVM}) async {
     var previousModel = model.copyWith();
+    model = model.copyWith(selection: state.toUpperCase());
     model.selection = state.toUpperCase();
-    // var index = items.indexOf(model);
-    // log("current model index : $index");
-    // if (index > -1) {
-    //   items[index] = model;
-    // }
-    // notifyListeners();
+    selectionStatus.value = model.getSelection;
     activityScreenVM?.setModel(model);
     try {
       await activityRepo.submitSelection(
@@ -92,6 +79,7 @@ class ActivityWidgetVM {
         log("message : ${e.response.body.toString()}");
       }
       await Future.delayed(Duration(seconds: 1));
+      UtilFunctions.showToast();
       // var index = items.indexOf(previousModel);
       // if (index > -1) {
       //   items[index] = previousModel;
@@ -100,6 +88,16 @@ class ActivityWidgetVM {
       // }
       model = previousModel;
       activityScreenVM?.setModel(model);
+      model.selection = previousModel.selection?.toUpperCase();
+      selectionStatus.value = model.getSelection;
     }
   }
+
+  final apiService = GetIt.instance.get<ApiService>();
+
+  late final ActivityRepo activityRepo =
+      ActivityRepositoryImpl(apiService: apiService);
+
+  late ValueNotifier<ActivitySelectionStatus?> selectionStatus =
+      ValueNotifier(model.getSelection);
 }
