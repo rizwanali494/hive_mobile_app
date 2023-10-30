@@ -61,18 +61,28 @@ class DrawerWidget extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                    CachedNetworkImage(
-                      imageUrl: controller.userImage ?? "",
-                    imageBuilder: (context, imageProvider) => Container(
+                  if (controller.userImage == null)
+                    Container(
                       width: 45.h,
                       height: 45.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
                       ),
+                      child: UserPlaceHolderWidget(),
+                    )
+                  else
+                    CachedNetworkImage(
+                      imageUrl: controller.userImage ?? "",
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 45.h,
+                        height: 45.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                     ),
                       placeholder: (context, url) =>
                           const UserPlaceHolderWidget(),

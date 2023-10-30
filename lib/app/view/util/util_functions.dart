@@ -62,39 +62,35 @@ class UtilFunctions {
   static Future<List<File>?> imageFromGallery({
     int imageCount = 1,
   }) async {
-    // FilePickerResult? result = await FilePicker.platform
-    //     .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
-    // var result = await ImagePickers.pickerPaths(
-    //   maxSize: 300,
-    //   count: imageCount,
-    //   quality: 0.6,
-    //   pickType: PickType.image,
-    //   cropOpt: CropOption(),
-    // );
-    var result = await ImagePickers.pickerPaths(
-        galleryMode: GalleryMode.image,
-        selectCount: imageCount,
-        showGif: false,
-        showCamera: false,
-        compressSize: 500,
-        cropConfig: CropConfig(
-          enableCrop: true,
-        ));
+    try {
+      var result = await ImagePickers.pickerPaths(
+          galleryMode: GalleryMode.image,
+          selectCount: imageCount,
+          showGif: false,
+          showCamera: false,
+          compressSize: 500,
+          cropConfig: CropConfig(
+            enableCrop: true,
+          ));
 
-    List<File>? imageFiles;
-    if (result.isNotEmpty) {
-      for (int index = 0; index < result.length; index++) {
-        final imageMedia = result[index];
-        if (imageMedia.path != null) {
-          imageFiles = [];
-          final now = DateTime.now();
-          final file = await changeFileNameOnly(
-              File(imageMedia.path!), now.millisecond.toString());
-          imageFiles.add(file);
+      List<File>? imageFiles;
+      if (result.isNotEmpty) {
+        for (int index = 0; index < result.length; index++) {
+          final imageMedia = result[index];
+          if (imageMedia.path != null) {
+            imageFiles = [];
+            final now = DateTime.now();
+            final file = await changeFileNameOnly(
+                File(imageMedia.path!), now.millisecond.toString());
+            imageFiles.add(file);
+          }
         }
       }
+      return imageFiles;
+    } catch (e) {
+      // TODO
     }
-    return imageFiles;
+    return null;
   }
 
   static Future<List<File>?> imageFromCamera() async {

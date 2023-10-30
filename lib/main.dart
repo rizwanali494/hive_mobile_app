@@ -5,11 +5,17 @@ import 'package:hive_mobile/app/get_it/get_it_instances.dart';
 import 'package:hive_mobile/app/navigation/router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await getItSetup();
   runApp(const MyApp());
+  Map<Permission, PermissionStatus> statuses = await [
+    Permission.photos,
+    Permission.camera,
+    Permission.storage,
+  ].request();
 }
 
 class MyApp extends StatelessWidget {
