@@ -13,6 +13,7 @@ import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
 import 'package:path/path.dart';
+import 'package:collection/collection.dart';
 
 class AccountSettingVM extends ChangeNotifier {
   final userModel = GetIt.instance.get<UserModel>();
@@ -55,7 +56,8 @@ class AccountSettingVM extends ChangeNotifier {
 
   void setImage(BuildContext context) async {
     try {
-      final file = await UtilFunctions.openImageTypeDialog(context);
+      final file =
+          await UtilFunctions.openImageTypeDialog(context, imageCount: 1);
       if (file != null) {
         image = File(file.first.path);
         String nane = basename(file.first.path);

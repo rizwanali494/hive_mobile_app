@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:image_pickers/image_pickers.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
-import 'package:images_picker/images_picker.dart';
 
 class UtilFunctions {
   showLoaderDialog(BuildContext context, {String text = 'Loading'}) {
@@ -64,40 +64,50 @@ class UtilFunctions {
   }) async {
     // FilePickerResult? result = await FilePicker.platform
     //     .pickFiles(allowedExtensions: ["pdf"], type: FileType.custom);
-    var result = await ImagesPicker.pick(
-      maxSize: 300,
-      count: imageCount,
-      quality: 0.6,
-      pickType: PickType.image,
-      cropOpt: CropOption(),
-    );
-    List<File> imageFiles = [];
-    if (result != null) {
+    // var result = await ImagePickers.pickerPaths(
+    //   maxSize: 300,
+    //   count: imageCount,
+    //   quality: 0.6,
+    //   pickType: PickType.image,
+    //   cropOpt: CropOption(),
+    // );
+    var result = await ImagePickers.pickerPaths(
+        galleryMode: GalleryMode.image,
+        selectCount: imageCount,
+        showGif: false,
+        showCamera: false,
+        compressSize: 500,
+        cropConfig: CropConfig(
+          enableCrop: true,
+        ));
+
+    List<File>? imageFiles;
+    if (result.isNotEmpty) {
       for (int index = 0; index < result.length; index++) {
         final imageMedia = result[index];
-        final now = DateTime.now();
-        final file = await changeFileNameOnly(
-            File(imageMedia.path), now.millisecond.toString());
-        imageFiles.add(file);
+        if (imageMedia.path != null) {
+          imageFiles = [];
+          final now = DateTime.now();
+          final file = await changeFileNameOnly(
+              File(imageMedia.path!), now.millisecond.toString());
+          imageFiles.add(file);
+        }
       }
     }
     return imageFiles;
   }
 
   static Future<List<File>?> imageFromCamera() async {
-    var mediaFiles = await ImagesPicker.openCamera(
-      maxSize: 300,
-      quality: 0.6,
-      pickType: PickType.image,
-      cropOpt: CropOption(),
-    );
-    List<File> imageFiles = [];
+    var mediaFiles = await ImagePickers.openCamera(
+        compressSize: 500, cropConfig: CropConfig(enableCrop: true));
+    List<File>? imageFiles;
     if (mediaFiles != null) {
-      for (int index = 0; index < mediaFiles.length; index++) {
-        final imageMedia = mediaFiles[index];
+      final imageMedia = mediaFiles;
+      if (imageMedia.path != null) {
+        imageFiles = [];
         final now = DateTime.now();
         final file = await changeFileNameOnly(
-            File(imageMedia.path), now.millisecond.toString());
+            File(imageMedia.path!), now.millisecond.toString());
         imageFiles.add(file);
       }
     }
