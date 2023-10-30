@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/email_verification/controllers/mail_sent_controller.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class MailSentScreen extends StatelessWidget {
                     ),
                     32.verticalSpace,
                     Text(
-                      'Mail has been sent to your given email address',
+                      AppStrings.mailHasBeenSent,
                       style: styles.inter16w400,
                       textAlign: TextAlign.center,
                     ),
@@ -65,22 +66,22 @@ class MailSentScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        actionButton(
-                            onTap: () {
-                              provider.resendEmail(email: email);
-                            },
-                            text: "Resend"),
-                        actionButton(
-                            onTap: () {
-                              provider.changeEmail(context);
-                            },
-                            text: "Change Email"),
-                        actionButton(
-                            onTap: () {
-                              provider.checkStatus(context);
-                            },
-                            text: "Check Status"),
-                      ],
+                          actionButton(
+                              onTap: () {
+                                provider.resendEmail(email: email);
+                              },
+                              text: AppStrings.resend),
+                          actionButton(
+                              onTap: () {
+                                provider.changeEmail(context);
+                              },
+                              text: AppStrings.changeEmail),
+                          actionButton(
+                              onTap: () {
+                                provider.checkStatus(context);
+                              },
+                              text: AppStrings.proceed),
+                        ],
                     ),
                   ],
                 ),
