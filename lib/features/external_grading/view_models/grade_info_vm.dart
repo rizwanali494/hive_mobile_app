@@ -5,11 +5,12 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view_models/base_document_controller.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 
-class GradeDetailVM extends ChangeNotifier {
+class GradeDetailVM extends ChangeNotifier with DocumentController {
   final ExternalGradeModel model;
   late ExternalGradesRepo externalGradeRepo;
 
@@ -34,25 +35,6 @@ class GradeDetailVM extends ChangeNotifier {
   bool gettingSubject = true;
   bool errorDownloading = false;
 
-  Future<void> getAllSubjects(int id) async {
-    try {
-      var list = await externalGradeRepo.getAllSubjects(id: id);
-      subjectsVM = List.generate(
-        list.length,
-        (index) => SubjectVM(
-          name: list[index].name ?? "",
-          grade: list[index].grade ?? '',
-          isLocal: false,
-          id: list[index].id,
-        ),
-      );
-    } catch (e) {
-      // TODO
-    }
-    gettingSubject = false;
-    notifyListeners();
-  }
-
   void updateVM(SubjectVM updateVM) {
     int indexOf = subjectsVM.indexOf(updateVM);
     log("index ofaaa $indexOf ${updateVM.id}");
@@ -74,7 +56,6 @@ class GradeDetailVM extends ChangeNotifier {
   }
 
   void removeSubject(SubjectVM subjectVM) {
-    var previous = subjectVM.copyWith();
     subjectsVM.remove(subjectVM);
     notifyListeners();
     try {
@@ -89,12 +70,49 @@ class GradeDetailVM extends ChangeNotifier {
     }
   }
 
+  Future<void> refresh() async {
+    getAllDocs();
+    getAllSubjects(model.id ?? 0);
+  }
+
   List<DocumentWidgetController> documents = [];
 
-  bool downloadingSubjects = true;
+  bool downloadingDocs = true;
 
-  Future<void> getAllSubjects() async {
+  Future<void> getAllSubjects(int id) async {
+    gettingSubject = true;
     errorDownloading = false;
-    downloadingSubjects = true;
+    notifyListeners();
+    try {
+      var list = await externalGradeRepo.getAllSubjects(id: id);
+      subjectsVM = List.generate(
+        list.length,
+        (index) => SubjectVM(
+          name: list[index].name ?? "",
+          grade: list[index].grade ?? '',
+          isLocal: false,
+          id: list[index].id,
+        ),
+      );
+    } catch (e) {
+      errorDownloading = true;
+    }
+    gettingSubject = false;
+    notifyListeners();
   }
+
+  Future<void> getAllDocs() async {
+    errorDownloading = false;
+    downloadingDocs = true;
+    notifyListeners();
+    try {
+      documents = await downloadAllDocs(docs: model.resultFile);
+    } catch (e) {
+      errorDownloading = true;
+      // TODO
+    }
+    downloadingDocs = false;
+  }
+
+  bool get isDownloading => downloadingDocs || gettingSubject;
 }

@@ -97,26 +97,62 @@ class GradeDetailsScreen extends StatelessWidget {
                               GradeInfoDescription(
                                 description: provider.documentName,
                               ),
-                              12.horizontalSpace,
-                              Container(
-                                padding: EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  color: styles.yellowGreen,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.arrow_downward_sharp,
-                                  size: 20,
-                                  color: styles.white,
-                                ),
-                              ),
+                              // 12.horizontalSpace,
+                              // Container(
+                              //   padding: EdgeInsets.all(2),
+                              //   decoration: BoxDecoration(
+                              //     color: styles.yellowGreen,
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              //   child: Icon(
+                              //     Icons.arrow_downward_sharp,
+                              //     size: 20,
+                              //     color: styles.white,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],
                       ),
                     ],
                   ),
-                  21.verticalSpace,
+                  Divider(
+                    thickness: 0.5,
+                    height: 0.h,
+                  ),
+                  20.verticalSpace,
+                  Row(
+                    children: [
+                      Text(
+                        "${AppStrings.attachment}:",
+                        style: styles.inter14w400,
+                      ),
+                      Expanded(
+                        child: Row(),
+                      ),
+                      Text(
+                        "${AppStrings.downloadAll}",
+                        style: styles.inter14w400,
+                      ),
+                      5.horizontalSpace,
+                      Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: styles.lightBlue,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.arrow_downward_sharp,
+                          size: 20,
+                          color: styles.denimBlue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 0.5,
+                    height: 50.h,
+                  ),
                   if (provider.gettingSubject)
                     Padding(
                       padding: const EdgeInsets.all(8.0),

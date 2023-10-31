@@ -27,6 +27,7 @@ class AppStrings {
   static String searchMessages = "Search Messages";
   static String profile = "Profile";
   static String errorDocDownloading = "Couldn't download Documents";
+  static String downloadAll = "Download all";
   static String retry = "Retry";
   static String basicInfo = "Basic Info";
   static String gender = "Gender";
@@ -38,6 +39,7 @@ class AppStrings {
   static String newConversation = "New Conversation";
   static String accountSettings = "Account Settings";
   static String attending = "Attending";
+  static String attachment = "Attachment";
   static String maybe = "Maybe";
   static String SKEPTICAL = "SKEPTICAL";
   static String undecided = "Undecided";
