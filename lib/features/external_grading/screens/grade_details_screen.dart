@@ -7,8 +7,9 @@ import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
-import 'package:hive_mobile/features/external_grading/screens/grade_info_widget.dart';
+import 'package:hive_mobile/features/external_grading/screens/document_name_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_detail_widget.dart';
+import 'package:hive_mobile/features/external_grading/screens/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
@@ -128,8 +129,16 @@ class GradeDetailsScreen extends StatelessWidget {
                         style: styles.inter14w400,
                       ),
                       Expanded(
-                        child: Row(),
+                        child: Row(
+                          children: [
+                            10.horizontalSpace,
+                            Expanded(child: DocumentNameWidget(name: "1.pdf")),
+                            10.horizontalSpace,
+                            Expanded(child: DocumentNameWidget(name: "2.pdf")),
+                          ],
+                        ),
                       ),
+                      5.horizontalSpace,
                       Text(
                         "${AppStrings.downloadAll}",
                         style: styles.inter14w400,
