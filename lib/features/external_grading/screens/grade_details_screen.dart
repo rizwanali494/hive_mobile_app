@@ -81,9 +81,9 @@ class GradeDetailsScreen extends StatelessWidget {
                           GradeDetailWidget(
                             title: AppStrings.institute,
                           ),
-                          GradeDetailWidget(
-                            title: AppStrings.document,
-                          ),
+                          // GradeDetailWidget(
+                          //   title: AppStrings.document,
+                          // ),
                         ],
                       ),
                       40.horizontalSpace,
@@ -123,45 +123,41 @@ class GradeDetailsScreen extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     )
                   else if (provider.subjectsVM.isNotEmpty) ...[
-                    Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 9.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: styles.azure,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.r),
-                              topRight: Radius.circular(10.r),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 21.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    AppStrings.subjects,
-                                    style: styles.inter10w600
-                                        .copyWith(color: styles.white),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    AppStrings.grade,
-                                    style: styles.inter10w600
-                                        .copyWith(color: styles.white),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 9.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: styles.azure,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          topRight: Radius.circular(10.r),
                         ),
-                      ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 21.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                AppStrings.subjects,
+                                style: styles.inter10w600
+                                    .copyWith(color: styles.white),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                AppStrings.grade,
+                                style: styles.inter10w600
+                                    .copyWith(color: styles.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     for (var subject in provider.subjectsVM)
                       GradeWidget(

@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 
@@ -31,6 +32,7 @@ class GradeDetailVM extends ChangeNotifier {
   List<SubjectVM> subjectsVM = [];
 
   bool gettingSubject = true;
+  bool errorDownloading = false;
 
   Future<void> getAllSubjects(int id) async {
     try {
@@ -85,5 +87,14 @@ class GradeDetailVM extends ChangeNotifier {
       subjectsVM.add(subjectVM);
       notifyListeners();
     }
+  }
+
+  List<DocumentWidgetController> documents = [];
+
+  bool downloadingSubjects = true;
+
+  Future<void> getAllSubjects() async {
+    errorDownloading = false;
+    downloadingSubjects = true;
   }
 }
