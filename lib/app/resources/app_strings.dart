@@ -26,6 +26,11 @@ class AppStrings {
   static String searchMessagesHere = "Search Messages Here";
   static String searchMessages = "Search Messages";
   static String profile = "Profile";
+  static String proceed = "Proceed";
+  static String resend = "Resend";
+  static String mailHasBeenSent =
+      "Mail has been sent to your given email address";
+  static String changeEmail = "Change Email";
   static String errorDocDownloading = "Couldn't download Documents";
   static String downloadAll = "Download all";
   static String retry = "Retry";

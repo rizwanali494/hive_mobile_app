@@ -70,35 +70,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: controller.userImage,
-                          imageBuilder: (context, imageProvider) => Container(
-                            width: 90.h,
-                            height: 90.w,
+                        if (controller.userImage.isEmpty)
+                          Container(
+                            width: 90.w,
+                            height: 90.h,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
                             ),
+                            child: UserPlaceHolderWidget(
+                              width: 90.w,
+                              height: 90.h,
+                            ),
+                          )
+                        else
+                          CachedNetworkImage(
+                            imageUrl: controller.userImage,
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: 90.h,
+                              height: 90.w,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                                  ),
+                                ),
+                            placeholder: (context, url) => UserPlaceHolderWidget(
+                              width: 90.w,
+                              height: 90.h,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                UserPlaceHolderWidget(
+                                  width: 90.w,
+                                  height: 90.h,
+                                ),
                           ),
-                          placeholder: (context, url) => UserPlaceHolderWidget(
-                            width: 90.w,
-                            height: 90.h,
-                          ),
-                          errorWidget: (context, url, error) =>
-                              UserPlaceHolderWidget(
-                            width: 90.w,
-                            height: 90.h,
-                          ),
-                        ),
-                        // CircleAvatar(
-                        //   backgroundImage: NetworkImage(
-                        //     _user.imageUrl,
-                        //   ),
-                        //   radius: 50,
-                        // ),
                         21.horizontalSpace,
                         Expanded(
                           child: Column(
