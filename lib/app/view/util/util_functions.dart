@@ -83,10 +83,10 @@ class UtilFunctions {
 
     List<File>? imageFiles;
     if (result.isNotEmpty) {
+      imageFiles = [];
       for (int index = 0; index < result.length; index++) {
         final imageMedia = result[index];
         if (imageMedia.path != null) {
-          imageFiles = [];
           final now = DateTime.now();
           final file = await changeFileNameOnly(
               File(imageMedia.path!), now.millisecond.toString());

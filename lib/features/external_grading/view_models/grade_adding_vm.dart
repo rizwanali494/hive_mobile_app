@@ -309,6 +309,7 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
   Future<void> selectDocuments(BuildContext context) async {
     final docs =
         await UtilFunctions.openImageTypeDialog(context, imageCount: 8);
+    log("docs : ${docs?.length}");
     if (docs != null) {
       for (final doc in docs) {
         final fileName = basename(doc.path);
