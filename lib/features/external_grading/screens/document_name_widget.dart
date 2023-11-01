@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -24,11 +26,26 @@ class DocumentNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
+    ReceivePort _port = ReceivePort();
+
     return GestureDetector(
       onTap: () async {
         try {
           final downloadService = GetIt.instance.get<DownloadService>();
-          await downloadService.downloadFile(fileUrl: url, name: name);
+          downloadService.downloadFile(fileUrl: url, name: name);
+          IsolateNameServer.registerPortWithName(
+              _port.sendPort, 'downloader_send_port');
+          _port.listen((dynamic data) {
+            String id = data[0];
+            DownloadTaskStatus status = DownloadTaskStatus(data[1]);
+            int progress = data[2];
+            log("message :: $progress");
+            if (status.value == DownloadTaskStatus.complete) {
+              UtilFunctions.showToast(msg: "File Downloaded");
+              log("message :: file download completed");
+              IsolateNameServer.removePortNameMapping('downloader_send_port');
+            }
+          });
         } catch (e) {
           log("message : ${e.toString()}");
         }

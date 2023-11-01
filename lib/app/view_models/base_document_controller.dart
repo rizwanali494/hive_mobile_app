@@ -46,7 +46,6 @@ mixin DocumentController {
   }
 
   Future<File?> _downloadFile(String url, String filename) async {
-    log("downloading: $filename");
     var httpClient = new HttpClient();
     var request = await httpClient.getUrl(Uri.parse(url));
     var response = await request.close();
