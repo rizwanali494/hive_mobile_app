@@ -14,12 +14,15 @@ class DocumentNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return Container(
+    return DecoratedBox(
       // width: 65.w,
       // constraints: BoxConstraints(maxHeight: 24.h),
       decoration: BoxDecoration(
-          color: styles.whiteSmoke, borderRadius: BorderRadius.circular(4.r)),
+        color: styles.whiteSmoke,
+        borderRadius: BorderRadius.circular(4.r),
+      ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: 24.2,
@@ -28,11 +31,12 @@ class DocumentNameWidget extends StatelessWidget {
                 color: styles.lavender,
                 borderRadius: BorderRadius.circular(4.r)),
           ),
-          8.horizontalSpace,
-          Expanded(
+          4.horizontalSpace,
+          Flexible(
             child: Text(
               name,
               style: styles.inter9w400,
+              overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
           ),

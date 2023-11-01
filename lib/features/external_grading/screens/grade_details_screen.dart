@@ -132,13 +132,32 @@ class GradeDetailsScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             10.horizontalSpace,
-                            Expanded(child: DocumentNameWidget(name: "1.pdf")),
-                            10.horizontalSpace,
-                            Expanded(child: DocumentNameWidget(name: "2.pdf")),
+                            if (provider.documents.length < 3) ...[
+                              for (int i = 0;
+                                  i < provider.documents.length;
+                                  i++)
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: (i.isEven ? 10 : 0).w),
+                                    child: DocumentNameWidget(
+                                        name: provider
+                                                .documents[i].documentName ??
+                                            "$i"),
+                                  ),
+                                ),
+                            ],
+                            // Expanded(
+                            //   child: DocumentNameWidget(name: "1.pdf"),
+                            // ),
+                            // 10.horizontalSpace,
+                            // Expanded(
+                            //   child: DocumentNameWidget(name: "2.pdf"),
+                            // ),
                           ],
                         ),
                       ),
-                      5.horizontalSpace,
+                      10.horizontalSpace,
                       Text(
                         "${AppStrings.downloadAll}",
                         style: styles.inter14w400,
@@ -158,11 +177,31 @@ class GradeDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  if (provider.documents.length > 2) ...[
+                    Padding(
+                      padding: EdgeInsets.only(top: 12.h),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Wrap(
+                          runSpacing: 10.h,
+                          spacing: 10.w,
+                          children: [
+                            for (int index = 0;
+                                index < provider.documents.length;
+                                index++)
+                              DocumentNameWidget(
+                                  name:
+                                      "${provider.documents[index].documentName ?? "$index"}"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                   Divider(
                     thickness: 0.5,
                     height: 50.h,
                   ),
-                  if (provider.gettingSubject)
+                  if (provider.isDownloading)
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircularProgressIndicator(),

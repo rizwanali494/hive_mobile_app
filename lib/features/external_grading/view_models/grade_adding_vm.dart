@@ -229,6 +229,7 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
         log("${e.response.statusCode}");
         log("${e.response.body}");
       }
+      log("error in external grade : ${e.toString()}");
       UtilFunctions.showToast(
           msg: AppStrings.somethingWentWrong, context: context);
     }

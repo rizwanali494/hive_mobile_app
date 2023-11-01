@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/view_models/base_document_controller.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
+import 'package:collection/collection.dart';
 
 class GradeDetailVM extends ChangeNotifier with DocumentController {
   final ExternalGradeModel model;
@@ -17,6 +18,7 @@ class GradeDetailVM extends ChangeNotifier with DocumentController {
   GradeDetailVM({required this.model}) {
     externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
     getAllSubjects(model.id ?? 0);
+    getAllDocs();
   }
 
   String get degree => model.certificate ?? "";
@@ -112,6 +114,7 @@ class GradeDetailVM extends ChangeNotifier with DocumentController {
       // TODO
     }
     downloadingDocs = false;
+    notifyListeners();
   }
 
   bool get isDownloading => downloadingDocs || gettingSubject;
