@@ -5,6 +5,7 @@ import 'package:uuid/v1.dart';
 class DocumentWidgetController {
   final Function(String? id)? onRemove;
   final String? documentName;
+  final String? url;
   final File file;
   String? fileId;
   String? id;
@@ -12,6 +13,7 @@ class DocumentWidgetController {
 
   DocumentWidgetController({
     this.documentName,
+    this.url,
     this.onRemove,
     required this.file,
     this.id,

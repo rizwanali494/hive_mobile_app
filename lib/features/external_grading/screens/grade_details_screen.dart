@@ -141,9 +141,11 @@ class GradeDetailsScreen extends StatelessWidget {
                                     padding: EdgeInsets.only(
                                         right: (i.isEven ? 10 : 0).w),
                                     child: DocumentNameWidget(
-                                        name: provider
-                                                .documents[i].documentName ??
-                                            "$i"),
+                                      name:
+                                          provider.documents[i].documentName ??
+                                              "$i",
+                                      url: provider.documents[i].url ?? "",
+                                    ),
                                   ),
                                 ),
                             ],
@@ -190,8 +192,10 @@ class GradeDetailsScreen extends StatelessWidget {
                                 index < provider.documents.length;
                                 index++)
                               DocumentNameWidget(
-                                  name:
-                                      "${provider.documents[index].documentName ?? "$index"}"),
+                                name:
+                                    "${provider.documents[index].documentName ?? "$index"}",
+                                url: provider.documents[index].url ?? "",
+                              ),
                           ],
                         ),
                       ),

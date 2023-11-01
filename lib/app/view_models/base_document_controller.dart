@@ -39,6 +39,7 @@ mixin DocumentController {
         documentName: fileName,
         fileId: fileId,
         file: file,
+        url: url,
         downloaded: true,
         onRemove: (id) {});
     return controller;
