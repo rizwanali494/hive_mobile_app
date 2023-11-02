@@ -160,23 +160,30 @@ class GradeDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       10.horizontalSpace,
-                      Text(
-                        "${AppStrings.downloadAll}",
-                        style: styles.inter14w400,
-                      ),
-                      5.horizontalSpace,
-                      Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: styles.lightBlue,
-                          shape: BoxShape.circle,
+                      if (provider.documents.isNotEmpty) ...[
+                        Text(
+                          "${AppStrings.downloadAll}",
+                          style: styles.inter14w400,
                         ),
-                        child: Icon(
-                          Icons.arrow_downward_sharp,
-                          size: 20,
-                          color: styles.denimBlue,
+                        5.horizontalSpace,
+                        GestureDetector(
+                          onTap: () {
+                            provider.downloadAllDocuments();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: styles.lightBlue,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.arrow_downward_sharp,
+                              size: 20,
+                              color: styles.denimBlue,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                   if (provider.documents.length > 2) ...[

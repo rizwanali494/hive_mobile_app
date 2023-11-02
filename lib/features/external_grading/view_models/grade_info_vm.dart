@@ -5,6 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/download_service/download_service.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view_models/base_document_controller.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/subject_vm.dart';
@@ -118,4 +120,20 @@ class GradeDetailVM extends ChangeNotifier with DocumentController {
   }
 
   bool get isDownloading => downloadingDocs || gettingSubject;
+
+  final downloadService = GetIt.instance.get<DownloadService>();
+
+  Future<void> downloadAllDocuments() async {
+    try {
+      for (var element in documents) {
+        downloadService.downloadFile(
+            fileUrl: element.url ?? "", name: element.documentName);
+      }
+      UtilFunctions.showToast(
+          msg:
+              "Download Started. Please visit Notifications system for status.");
+    } catch (e) {
+      log("Error ${e.toString()}");
+    }
+  }
 }

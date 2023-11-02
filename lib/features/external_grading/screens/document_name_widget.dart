@@ -33,19 +33,9 @@ class DocumentNameWidget extends StatelessWidget {
         try {
           final downloadService = GetIt.instance.get<DownloadService>();
           downloadService.downloadFile(fileUrl: url, name: name);
-          IsolateNameServer.registerPortWithName(
-              _port.sendPort, 'downloader_send_port');
-          _port.listen((dynamic data) {
-            String id = data[0];
-            DownloadTaskStatus status = DownloadTaskStatus(data[1]);
-            int progress = data[2];
-            log("message :: $progress");
-            if (status.value == DownloadTaskStatus.complete) {
-              UtilFunctions.showToast(msg: "File Downloaded");
-              log("message :: file download completed");
-              IsolateNameServer.removePortNameMapping('downloader_send_port');
-            }
-          });
+          UtilFunctions.showToast(
+              msg:
+                  "Download Started. Please visit Notifications system for status.");
         } catch (e) {
           log("message : ${e.toString()}");
         }

@@ -53,7 +53,7 @@ class DownloadService {
           showNotification: true,
           openFileFromNotification: true,
           fileName: name);
-      listenToChanges();
+      // listenToChanges();
     } catch (e) {
       log("message : ${e.toString()}");
       // TODO
