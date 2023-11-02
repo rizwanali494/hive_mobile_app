@@ -5,10 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
+import 'package:hive_mobile/app/navigation/router.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/auth_services/auth_token_handler.dart';
+import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
 
-class ApiServiceImpl extends ApiService {
+class ApiServiceImpl extends ApiService with AuthTokenHandler {
   String? _token;
   late Map<String, String> _headers;
 
@@ -20,6 +24,19 @@ class ApiServiceImpl extends ApiService {
     }
   }
 
+  final client = http.Client();
+
+  late final RetryClient retryClient = RetryClient(
+    client,
+    retries: 1,
+    when: (p0) => true,
+    onRetry: (p0, p1, retryCount) {
+      final router = goRouter;
+      goRouter.push(SignInScreen.route);
+      return;
+    },
+  );
+
   @override
   Future<http.Response> get(
       {required String url,
@@ -28,9 +45,9 @@ class ApiServiceImpl extends ApiService {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-
       final response = await performHttpRequest(() async {
-        return await http.get(url.parsedUri, headers: headers ?? this._headers);
+        return await retryClient.get(url.parsedUri,
+            headers: headers ?? this._headers);
       });
 
       return getResponse(response: response);

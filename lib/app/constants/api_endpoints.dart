@@ -3,6 +3,7 @@ class ApiEndpoints {
   static String viewReport = "${baseUrl}/view-reports-pdf";
   static String apiUrl = "${baseUrl}/api/v1/";
   static String authUrl = "${apiUrl}auth/";
+  static String refreshToken = "${authUrl}token/refresh/";
   static String me = "${authUrl}me/";
   static String googleLogin = "${authUrl}google_login_mobile/";
   static String upload = "${apiUrl}upload/";
