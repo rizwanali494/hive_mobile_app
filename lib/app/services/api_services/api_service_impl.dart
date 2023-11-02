@@ -32,6 +32,7 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     client,
     retries: _retryCount,
     delay: (retryCount) => Duration(milliseconds: 500),
+    // when: (p0) => true,
     when: (p0) => p0.statusCode == 401,
     onRetry: (p0, p1, retryCount) async {
       log("Current Token ${_token}");
@@ -73,7 +74,7 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     url = "$url${queryParameters ?? ""}";
     try {
       final response = await performHttpRequest(() async {
-        return await http.post(url.parsedUri,
+        return await retryClient.post(url.parsedUri,
             body: jsonEncode(body), headers: headers ?? this._headers);
       });
       return getResponse(response: response);
@@ -92,7 +93,7 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     url = "$url${queryParameters ?? ""}";
     try {
       final response = await performHttpRequest(() async {
-        return await http.patch(url.parsedUri,
+        return await retryClient.patch(url.parsedUri,
             body: jsonEncode(body), headers: headers ?? this._headers);
       });
 
@@ -128,6 +129,7 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
       multipartFile,
     );
     var streamedResponse = await request.send();
+    // var streamedResponse = await retryClient.send(request);
     final response = await performHttpRequest(() async {
       return await http.Response.fromStream(streamedResponse);
     });
@@ -144,7 +146,7 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     url = "$url${queryParameters ?? ""}";
     try {
       final response = await performHttpRequest(() async {
-        return await http.delete(url.parsedUri,
+        return await retryClient.delete(url.parsedUri,
             headers: headers ?? this._headers);
       });
 
