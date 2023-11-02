@@ -20,6 +20,7 @@ class AppStrings {
   static String externalGrading = "External Grading";
   static String universityApplication = "University Application";
   static String logout = "Log Out";
+  static String pleaseSignIn = "Please Sign In";
   static String inbox = "Inbox";
   static String notifications = "Notifications";
   static String reports = "Reports";

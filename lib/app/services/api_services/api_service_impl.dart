@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/navigation/router.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_token_handler.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
@@ -25,15 +26,21 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
   }
 
   final client = http.Client();
+  static const _retryCount = 2;
 
   late final RetryClient retryClient = RetryClient(
     client,
-    retries: 1,
-    when: (p0) => true,
-    onRetry: (p0, p1, retryCount) {
-      final router = goRouter;
-      goRouter.push(SignInScreen.route);
-      return;
+    retries: _retryCount,
+    delay: (retryCount) => Duration(milliseconds: 500),
+    when: (p0) => p0.statusCode == 401,
+    onRetry: (p0, p1, retryCount) async {
+      log("Current Token ${_token}");
+      _token = await refreshToken(_token ?? "");
+      log("Got new Token ::::: ${_token}");
+      if (retryCount == _retryCount - 1) {
+        logout();
+        return;
+      }
     },
   );
 
@@ -49,7 +56,6 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
         return await retryClient.get(url.parsedUri,
             headers: headers ?? this._headers);
       });
-
       return getResponse(response: response);
     } catch (e) {
       throw e;
@@ -85,7 +91,6 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-
       final response = await performHttpRequest(() async {
         return await http.patch(url.parsedUri,
             body: jsonEncode(body), headers: headers ?? this._headers);
@@ -138,7 +143,6 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     http.Response response;
     url = "$url${queryParameters ?? ""}";
     try {
-
       final response = await performHttpRequest(() async {
         return await http.delete(url.parsedUri,
             headers: headers ?? this._headers);
