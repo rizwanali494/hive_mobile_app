@@ -7,5 +7,5 @@ class DrawerWidgetVM {
 
   String? get userImage => userModel.picture?.file;
 
-  String get userName => userModel.accountData?.extra?.studentName ?? "";
+  String get userName => userModel.accountData?.studentName ?? "";
 }

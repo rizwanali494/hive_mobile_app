@@ -79,6 +79,11 @@ const StudentAccountDataSchema = Schema(
       id: 12,
       name: r'status',
       type: IsarType.string,
+    ),
+    r'studentName': PropertySchema(
+      id: 13,
+      name: r'studentName',
+      type: IsarType.string,
     )
   },
   estimateSize: _studentAccountDataEstimateSize,
@@ -139,6 +144,12 @@ int _studentAccountDataEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.studentName;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -171,6 +182,7 @@ void _studentAccountDataSerialize(
   writer.writeLong(offsets[10], object.owner);
   writer.writeLong(offsets[11], object.regionId);
   writer.writeString(offsets[12], object.status);
+  writer.writeString(offsets[13], object.studentName);
 }
 
 StudentAccountData _studentAccountDataDeserialize(
@@ -202,6 +214,7 @@ StudentAccountData _studentAccountDataDeserialize(
     owner: reader.readLongOrNull(offsets[10]),
     regionId: reader.readLongOrNull(offsets[11]),
     status: reader.readStringOrNull(offsets[12]),
+    studentName: reader.readStringOrNull(offsets[13]),
   );
   return object;
 }
@@ -247,6 +260,8 @@ P _studentAccountDataDeserializeProp<P>(
     case 11:
       return (reader.readLongOrNull(offset)) as P;
     case 12:
+      return (reader.readStringOrNull(offset)) as P;
+    case 13:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1463,6 +1478,160 @@ extension StudentAccountDataQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'status',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'studentName',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'studentName',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'studentName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'studentName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'studentName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'studentName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'studentName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'studentName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'studentName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'studentName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'studentName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentAccountData, StudentAccountData, QAfterFilterCondition>
+      studentNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'studentName',
         value: '',
       ));
     });

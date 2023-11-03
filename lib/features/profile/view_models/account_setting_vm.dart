@@ -8,12 +8,15 @@ import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
+import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
 import 'package:path/path.dart';
 import 'package:collection/collection.dart';
+import 'package:provider/provider.dart';
 
 class AccountSettingVM extends ChangeNotifier {
   final userModel = GetIt.instance.get<UserModel>();
@@ -98,6 +101,7 @@ class AccountSettingVM extends ChangeNotifier {
       );
       registerUserModel(updatedUserModel);
       localService.deleteAndPut(updatedUserModel, updatedUserModel.id ?? 0);
+      UtilFunctions.showToast(msg: AppStrings.profileUpdated);
     } catch (e) {
       if (e is HTTPStatusCodeException) {
         log("error : ${e.response.statusCode}");
@@ -106,6 +110,7 @@ class AccountSettingVM extends ChangeNotifier {
       UtilFunctions.showToast();
       log("${e.toString()}");
     }
+
     context.pop();
     context.pop();
   }

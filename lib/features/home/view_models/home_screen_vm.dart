@@ -152,4 +152,8 @@ class HomeScreenVm extends ChangeNotifier {
     UtilFunctions.showToast(
         msg: "Something went wrong. Couldn't verify backup email");
   }
+
+  void notify() {
+    notifyListeners();
+  }
 }

@@ -21,6 +21,7 @@ class StudentAccountData {
     this.backupEmail,
     this.owner,
     this.hobbies,
+    this.studentName,
     this.isBackUpEmailVerified,
   });
 
@@ -29,6 +30,7 @@ class StudentAccountData {
     extra = json['extra'] != null ? StudentExtra.fromJson(json['extra']) : null;
     log("extra");
     dateAdded = json['date_added'];
+    studentName = json['student_name'];
     dateLastModified = json['date_last_modified'];
     isBackUpEmailVerified = json['is_backup_email_verified'];
     classId = json['class_id'];
@@ -46,6 +48,7 @@ class StudentAccountData {
   int? id;
   StudentExtra? extra;
   String? dateAdded;
+  String? studentName;
   String? dateLastModified;
   int? classId;
   int? regionId;
@@ -61,6 +64,7 @@ class StudentAccountData {
     int? id,
     StudentExtra? extra,
     String? dateAdded,
+    String? studentName,
     String? dateLastModified,
     int? classId,
     int? regionId,
@@ -81,6 +85,7 @@ class StudentAccountData {
         regionId: regionId ?? this.regionId,
         cityId: cityId ?? this.cityId,
         branchId: branchId ?? this.branchId,
+        studentName: studentName ?? this.studentName,
         status: bio ?? this.status,
         backupEmail: backupEmail ?? this.backupEmail,
         isBackUpEmailVerified:
@@ -97,6 +102,7 @@ class StudentAccountData {
       map['extra'] = extra?.toJson();
     }
     map['date_added'] = dateAdded;
+    map['student_name'] = studentName;
     map['date_last_modified'] = dateLastModified;
     map['class_id'] = classId;
     map['region_id'] = regionId;

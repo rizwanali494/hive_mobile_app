@@ -9,7 +9,7 @@ class ProfileScreenVM extends ChangeNotifier {
   }
 
   String get userName {
-    return userModel.accountData?.extra?.studentName ?? "";
+    return userModel.accountData?.studentName ?? "";
   }
 
   String get userBio {

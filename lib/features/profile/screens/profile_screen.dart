@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
+import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
@@ -58,7 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     actions: [
                       GestureDetector(
                         onTap: () {
-                          context.push(AccountSettingScreen.route);
+                          context
+                              .push(AccountSettingScreen.route)
+                              .then((value) {
+                            final homeScreenProvider =
+                                context.read<HomeScreenVm?>();
+                            homeScreenProvider?.notify();
+                          });
                         },
                         child: SvgPicture.asset(SvgIcons.edit),
                       ),
@@ -94,17 +101,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   image: imageProvider,
                                   fit: BoxFit.cover,
                                 ),
-                                  ),
-                                ),
-                            placeholder: (context, url) => UserPlaceHolderWidget(
+                              ),
+                            ),
+                            placeholder: (context, url) =>
+                                UserPlaceHolderWidget(
                               width: 90.w,
                               height: 90.h,
                             ),
                             errorWidget: (context, url, error) =>
                                 UserPlaceHolderWidget(
-                                  width: 90.w,
-                                  height: 90.h,
-                                ),
+                              width: 90.w,
+                              height: 90.h,
+                            ),
                           ),
                         21.horizontalSpace,
                         Expanded(

@@ -27,6 +27,7 @@ class AppStrings {
   static String searchMessagesHere = "Search Messages Here";
   static String searchMessages = "Search Messages";
   static String profile = "Profile";
+  static String profileUpdated = "Profile Updated";
   static String proceed = "Proceed";
   static String resend = "Resend";
   static String mailHasBeenSent =
