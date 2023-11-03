@@ -2,12 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
 import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/close_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/open_service_request_vm.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
 class ServiceScreenVM extends ChangeNotifier {
@@ -36,25 +39,13 @@ class ServiceScreenVM extends ChangeNotifier {
     }
   }
 
+  final localService = IsarService<MyServicesModel>();
+
   void setServiceStatusLocally() {
-    // totalApproved = items
-    //     .where(
-    //       (element) =>
-    //   element.state?.toLowerCase() == AppStrings.approved.toLowerCase(),
-    // )
-    //     .length;
-    // totalPending = items
-    //     .where(
-    //       (element) =>
-    //   element.state?.toLowerCase() == AppStrings.pending.toLowerCase(),
-    // )
-    //     .length;
-    // totalRejected = items
-    //     .where(
-    //       (element) =>
-    //   element.state?.toLowerCase() == AppStrings.rejected.toLowerCase(),
-    // )
-    //     .length;
+    totalApproved =
+        localService.query().filter().not().stateEqualTo("PENDING").countSync();
+    totalPending =
+        localService.query().filter().stateEqualTo("PENDING").countSync();
     notifyListeners();
   }
 
