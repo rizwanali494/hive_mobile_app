@@ -58,12 +58,7 @@ class _MyServicesScreenState extends State<MyServicesScreen> {
                         bool val =
                             await context.push(NewRequestScreen.route) ?? false;
                         if (val) {
-                          Future.wait([
-                            context.read<AllServiceRequestVM>().refreshList(),
-                            context.read<OpenServiceRequestVM>().refreshList(),
-                            context.read<CloseServiceRequestVM>().refreshList(),
-                            context.read<ServiceScreenVM>().refreshList(),
-                          ]);
+                          provider.refreshAllList(context);
                         }
                       },
                       title: AppStrings.initiateRequest,

@@ -59,7 +59,7 @@ class ServiceRequestWidget extends StatelessWidget {
               onRefresh: () async {
                 await Future.wait([
                   provider.refreshList(),
-                  context.read<ServiceScreenVM>().refreshList(),
+                  context.read<ServiceScreenVM>().refreshStatus(),
                 ]);
                 return;
               },
@@ -71,7 +71,8 @@ class ServiceRequestWidget extends StatelessWidget {
               onRefresh: () async {
                 await Future.wait([
                   provider.refreshList(),
-                  context.read<ServiceScreenVM>().refreshList(),
+                  // context.read<ServiceScreenVM>().refreshStatus(),
+                  context.read<ServiceScreenVM>().refreshAllList(context),
                 ]);
                 return;
               },

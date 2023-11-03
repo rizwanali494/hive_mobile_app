@@ -5,6 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
+import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
+import 'package:hive_mobile/features/my_services/view_models/close_service_request_vm.dart';
+import 'package:hive_mobile/features/my_services/view_models/open_service_request_vm.dart';
+import 'package:provider/provider.dart';
 
 class ServiceScreenVM extends ChangeNotifier {
   void notifyListener() {
@@ -77,8 +81,14 @@ class ServiceScreenVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> refreshList() async {
-    log("refreshing");
+  Future<void> refreshStatus() async {
     await getServicesStatus();
+  }
+
+  Future<void> refreshAllList(BuildContext context) async {
+    context.read<AllServiceRequestVM?>()?.refreshList();
+    context.read<OpenServiceRequestVM?>()?.refreshList();
+    context.read<CloseServiceRequestVM?>()?.refreshList();
+    refreshStatus();
   }
 }
