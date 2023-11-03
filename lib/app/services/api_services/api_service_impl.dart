@@ -149,8 +149,12 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
     }
   }
 
+  static const _timeoutDurationMinutes = 2;
+
   Future<http.Response> performHttpRequest(httpRequest request) async {
-    return await request.call().timeout(Duration(seconds: 30));
+    return await request
+        .call()
+        .timeout(Duration(minutes: _timeoutDurationMinutes));
   }
 }
 

@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             drawer: DrawerWidget(
               bottomRadius: bottomRadius,
               controller: DrawerWidgetVM(
-                userModel: provider.getUserModel(),
+                userModel: provider.getUserModel,
               ),
             ),
             body: MultiProvider(

@@ -123,7 +123,7 @@ class HomeScreenVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  UserModel getUserModel() {
+  UserModel get getUserModel {
     return GetIt.instance.get<UserModel>();
   }
 
@@ -138,7 +138,7 @@ class HomeScreenVm extends ChangeNotifier {
     UtilFunctions().showLoaderDialog(context);
     try {
       final response = await userRepository.updateBackupEmail(
-          body: map, id: getUserModel().id ?? 0);
+          body: map, id: getUserModel.id ?? 0);
       context.pop();
       showDialog(
         context: context,
