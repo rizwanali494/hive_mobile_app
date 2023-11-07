@@ -1,25 +1,14 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:math' hide log;
-import 'dart:typed_data';
-import 'package:encrypt/encrypt.dart' as encryp;
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/app/services/local_services/shared_pref_service.dart';
 import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
-import 'package:pointycastle/api.dart';
-import 'package:pointycastle/block/aes.dart';
-import 'package:pointycastle/block/modes/cbc.dart';
-import 'package:pointycastle/random/fortuna_random.dart';
 import 'package:provider/provider.dart';
 
 class NewsFeedScreen extends StatefulWidget {
@@ -52,37 +41,31 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
           ),
           Consumer<NewsFeedVM>(
             builder: (BuildContext context, provider, Widget? child) {
-              return BaseListViewWidget<AnnouncementPostModel>(
+             return BaseListViewWidget<AnnouncementPostModel>(
                 controller: provider.listViewVM,
                 listViewChild: (item) => GestureDetector(
                   onTap: () {
-                    final key = "C8620628BE2507E2";
-                    final sharedPref = SharedPrefService();
-                    final token =
-                        sharedPref.sharedPref.getString("token") ?? '';
-                    final iv = "1234567890123456";
-                    log("enrcypted ::::: ${encrypt(token, key)}");
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (context) => Dialog(
-                    //     child: ChangeNotifierProvider.value(
-                    //       value: provider,
-                    //       child: Consumer<NewsFeedVM>(
-                    //         builder: (context, value, child) {
-                    //           return NewsFeedWidget(
-                    //             type: item.type == "POST"
-                    //                 ? PostType.image
-                    //                 : PostType.poll,
-                    //             horizontalPadding: 0,
-                    //             controller: NewsFeedWidgetVm(
-                    //               model: item,
-                    //             ),
-                    //           );
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ),
-                    // );
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        child: ChangeNotifierProvider.value(
+                          value: provider,
+                          child: Consumer<NewsFeedVM>(
+                            builder: (context, value, child) {
+                              return NewsFeedWidget(
+                                type: item.type == "POST"
+                                    ? PostType.image
+                                    : PostType.poll,
+                                horizontalPadding: 0,
+                                controller: NewsFeedWidgetVm(
+                                  model: item,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
                   },
                   child: NewsFeedWidget(
                     type: item.isPost ? PostType.image : PostType.poll,
@@ -205,62 +188,5 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
         ],
       ),
     );
-  }
-
-  Map<String, String> encrypt(String plainText, String key, {String? iv}) {
-    Uint8List data = pad(Uint8List.fromList(utf8.encode(plainText)), 16);
-    // final cipher = CBCBlockCipher(AESEngine())
-    //   ..init(
-    //       true,
-    //       ParametersWithIV(
-    //         KeyParameter(
-    //           Uint8List.fromList(
-    //             utf8.encode(key),
-    //           ),
-    //         ),
-    //         getRandomBytes(16),
-    //       ));
-    // Uint8List cipherText = cipher.process(data);
-    // String cipherTextBase64 = base64.encode(cipherText);
-    // String ivBase64 =
-    //     base64.encode(Uint8List.fromList(cipher.process(cipherText)));
-    final eKey = encryp.Key.fromUtf8(key);
-    final ivv = encryp.IV.fromSecureRandom(16);
-    final encrypter =
-        encryp.Encrypter(encryp.AES(eKey, mode: encryp.AESMode.cbc));
-    final cText = encrypter.encrypt(plainText, iv: ivv);
-    // final cText=  encrypter.encryptBytes(data,iv: ivv);
-    return {
-      "cipher_text": cText.base64,
-      "iv": ivv.base64,
-    };
-  }
-
-  Uint8List pad(Uint8List data, int blockSize) {
-    int padLength = blockSize - (data.length % blockSize);
-    Uint8List paddedData = Uint8List(data.length + padLength)..setAll(0, data);
-    for (int i = data.length; i < paddedData.length; i++) {
-      paddedData[i] = padLength;
-    }
-    return paddedData;
-  }
-
-  Uint8List getRandomBytes(int size) {
-    final _sGen = Random.secure();
-    final secureRandom = SecureRandom("AES/CTR/PRNG");
-    final key = Uint8List(size);
-    secureRandom.seed(
-      KeyParameter(
-        Uint8List.fromList(
-          List.generate(
-            16,
-            (_) => _sGen.nextInt(16),
-          ),
-        ),
-      ),
-    );
-
-    secureRandom.nextBytes(key.length);
-    return key;
   }
 }
