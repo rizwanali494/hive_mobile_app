@@ -6,11 +6,11 @@ import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
-import 'package:hive_mobile/app/services/auth_services/auth_token_handler.dart';
+import 'package:hive_mobile/app/services/auth_services/user_session_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 
-class ApiServiceImpl extends ApiService with AuthTokenHandler {
+class ApiServiceImpl extends ApiService with UserSessionHandler {
   String? _token;
   late Map<String, String> _headers;
 
@@ -36,7 +36,7 @@ class ApiServiceImpl extends ApiService with AuthTokenHandler {
       _token = await refreshToken(_token ?? "");
       log("Got new Token ::::: ${_token}");
       if (retryCount == _retryCount - 1) {
-        logout();
+        sessionExpiredLogout();
         return;
       }
     },
