@@ -87,17 +87,6 @@ class AuthVM extends ChangeNotifier
             userModel: model,
             refreshToken: refreshToken,
             context: context);
-        // registerApiServiceInstance(token: token);
-        // await registerUserModel(model);
-        // checkEmailVerification(context, model);
-        // await Future.wait([
-        //   sharedPref.setString("token", token),
-        //   sharedPref.setString("refresh_Token", refreshToken)
-        // ]);
-        // isarService.clearCollection().then((value) {
-        //   isarService.put(model);
-        //   return;
-        // });
         return;
       } catch (e) {
         log(e.toString());

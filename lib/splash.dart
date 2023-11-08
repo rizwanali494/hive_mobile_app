@@ -24,21 +24,10 @@ class _SplashScreenState extends State<SplashScreen> {
       lazy: false,
       child: Scaffold(
         body: Center(
-          child: InkWell(
-            onTap: () {
-              debugPrint("tapped");
-            },
-            // child: SvgPicture.asset(
-            //   SvgIcons.arrowRight,
-            //   semanticsLabel: 'A red up arrow',
-            //   width: 200,
-            //   height: 300,
-            // ),
-            child: Image.asset(
-              SvgIcons.hiveLogo,
-              width: 200,
-              height: 200,
-            ),
+          child: Image.asset(
+            SvgIcons.hiveLogo,
+            width: 200,
+            height: 200,
           ),
         ),
       ),

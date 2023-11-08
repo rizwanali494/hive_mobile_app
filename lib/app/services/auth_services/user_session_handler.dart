@@ -77,11 +77,11 @@ mixin UserSessionHandler {
       required BuildContext context}) async {
     registerApiServiceInstance(token: token);
     await registerUserModel(userModel);
-    checkEmailVerification(context, userModel);
     await Future.wait([
       _sharedPref.setString("token", token),
       _sharedPref.setString("refresh_Token", refreshToken)
     ]);
+    checkEmailVerification(context, userModel);
     _userModelService.clearCollection().then((value) {
       _userModelService.put(userModel).then((value) => connectSockets());
       return;
