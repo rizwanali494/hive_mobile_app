@@ -67,7 +67,6 @@ mixin UserSessionHandler {
       router.pop();
     }
     router.pushReplacement(SignInScreen.route);
-    UtilFunctions.showToast(msg: AppStrings.pleaseSignIn);
     disconnectSocketConnections();
   }
 

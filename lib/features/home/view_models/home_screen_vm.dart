@@ -158,6 +158,10 @@ class HomeScreenVm extends ChangeNotifier with UserSessionHandler {
     notifyListeners();
   }
 
+  void logout() {
+    manualLogout();
+  }
+
   @override
   void dispose() {
     disconnectSocketConnections();

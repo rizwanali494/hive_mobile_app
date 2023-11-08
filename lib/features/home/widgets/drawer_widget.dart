@@ -83,7 +83,7 @@ class DrawerWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                    ),
+                      ),
                       placeholder: (context, url) =>
                           const UserPlaceHolderWidget(),
                       errorWidget: (context, url, error) =>
@@ -168,10 +168,7 @@ class DrawerWidget extends StatelessWidget {
                   10.verticalSpace,
                   GestureDetector(
                     onTap: () {
-                      final sharedPref = SharedPrefService();
-                      sharedPref.sharedPref.remove("token");
-                      context.pushAndRemoveUntil(SignInScreen.route);
-                      registerApiServiceInstance();
+                      homeScreenVM.logout();
                     },
                     child: Row(
                       children: [
