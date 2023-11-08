@@ -20,7 +20,6 @@ class WebSocketService with SocketEncryptionService {
     final data = encryptedAuthData(token, _key);
     socket = WebSocket(_socketUrl.parsedUri);
     await socket?.connection.firstWhere((state) => state is Connected);
-    setMessagesStream();
     _sendAuthData(data);
   }
 
@@ -34,19 +33,10 @@ class WebSocketService with SocketEncryptionService {
     });
   }
 
-  StreamSubscription? socketStream;
-  StreamController dataStream = StreamController.broadcast();
+  Stream? get dataStream => socket?.messages;
 
-  void setMessagesStream() {
-    socketStream = socket?.messages.listen((event) {
-      log("Socket Event Message ::: ${event.toString()}");
-      dataStream.sink.add(event);
-    });
-  }
 
   void disconnectAll() {
-    socketStream?.cancel();
     socket?.close();
-    dataStream.close();
   }
 }

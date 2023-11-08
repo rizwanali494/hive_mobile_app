@@ -49,7 +49,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   final webSocketService = GetIt.instance.get<WebSocketService>();
 
   void setNotificationListener() {
-    notificationListener = webSocketService.dataStream.stream.listen((event) {
+    notificationListener = webSocketService.dataStream?.listen((event) {
       log("Notification Listener ::::: ${event}");
       refreshList();
     });
