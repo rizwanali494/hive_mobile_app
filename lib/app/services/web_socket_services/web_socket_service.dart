@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
@@ -16,20 +17,29 @@ class WebSocketService with SocketEncryptionService {
 
   Future<void> connect() async {
     final token = sharedPref.getString("token") ?? "";
-    final data = jsonEncode(encryptedAuthData(token, _key));
+    final data = encryptedAuthData(token, _key);
     socket = WebSocket(_socketUrl.parsedUri);
     await socket?.connection.firstWhere((state) => state is Connected);
+    setMessagesStream();
     _sendAuthData(data);
   }
 
   void _sendAuthData(data) {
-    socket?.send(data);
+    log("Socket Message ::: ${socket?.connection.state}");
+    log("Socket Message ::: ${data}");
+    log("Socket Message ::: ${jsonEncode(data)}");
+    socket?.send(jsonEncode(data));
+    Future.delayed(Duration(seconds: 3)).then((value) {
+      log("Socket Message ::: ${socket?.connection.state}");
+    });
   }
 
   StreamSubscription? socketStream;
 
   void setMessagesStream() {
-    socketStream = socket?.messages.listen((event) {});
+    socket?.messages.listen((event) {
+      log("Socket Event Message ::: ${event.toString()}");
+    });
   }
 
   void disconnectAll() {

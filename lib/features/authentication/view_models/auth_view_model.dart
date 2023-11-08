@@ -11,13 +11,14 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
+import 'package:hive_mobile/app/services/auth_services/user_session_handler.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/services/user_verrification_service/user_verfication_handler.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthVM extends ChangeNotifier
-    with BaseExceptionController, UtilFunctions, UserVerificationHandler {
+    with BaseExceptionController, UtilFunctions, UserSessionHandler {
   GetIt getIt = GetIt.instance;
   late ApiService apiService;
 
@@ -82,17 +83,22 @@ class AuthVM extends ChangeNotifier
         var token = responseBody["token"]["access"];
         var refreshToken = responseBody["token"]["refresh"];
         log(token.toString());
-        registerApiServiceInstance(token: token);
-        await registerUserModel(model);
-        checkEmailVerification(context, model);
-        await Future.wait([
-          sharedPref.setString("token", token),
-          sharedPref.setString("refresh_Token", refreshToken)
-        ]);
-        isarService.clearCollection().then((value) {
-          isarService.put(model);
-          return;
-        });
+        createUserSession(
+            token: token,
+            userModel: model,
+            refreshToken: refreshToken,
+            context: context);
+        // registerApiServiceInstance(token: token);
+        // await registerUserModel(model);
+        // checkEmailVerification(context, model);
+        // await Future.wait([
+        //   sharedPref.setString("token", token),
+        //   sharedPref.setString("refresh_Token", refreshToken)
+        // ]);
+        // isarService.clearCollection().then((value) {
+        //   isarService.put(model);
+        //   return;
+        // });
         return;
       } catch (e) {
         log(e.toString());

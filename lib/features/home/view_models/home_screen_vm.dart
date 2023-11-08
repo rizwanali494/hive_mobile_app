@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/auth_services/user_session_handler.dart';
 import 'package:hive_mobile/app/view/dialogs/backup_email_dialog.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
@@ -22,7 +23,7 @@ import 'package:hive_mobile/features/reports/screens/reports_screen.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
 
-class HomeScreenVm extends ChangeNotifier {
+class HomeScreenVm extends ChangeNotifier with UserSessionHandler {
   final List<Widget> bottomNavBarWidget = const [
     NewsFeedScreen(),
     InboxScreen(),
@@ -155,5 +156,11 @@ class HomeScreenVm extends ChangeNotifier {
 
   void notify() {
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    disconnectSocketConnections();
+    super.dispose();
   }
 }

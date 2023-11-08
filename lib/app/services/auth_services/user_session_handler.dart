@@ -12,6 +12,7 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/navigation/router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/email_verification/screens/email_verification_screen.dart';
@@ -54,6 +55,20 @@ mixin UserSessionHandler {
     }
     router.pushReplacement(SignInScreen.route);
     UtilFunctions.showToast(msg: AppStrings.pleaseSignIn);
+    disconnectSocketConnections();
+  }
+
+  Future<void> manualLogout() async {
+    _sharedPref.remove("token");
+    IsarService<UserModel>().clearCollection();
+    registerApiServiceInstance();
+    final router = goRouter;
+    while (router.canPop()) {
+      router.pop();
+    }
+    router.pushReplacement(SignInScreen.route);
+    UtilFunctions.showToast(msg: AppStrings.pleaseSignIn);
+    disconnectSocketConnections();
   }
 
   Future<void> createUserSession(
@@ -69,7 +84,7 @@ mixin UserSessionHandler {
       _sharedPref.setString("refresh_Token", refreshToken)
     ]);
     _userModelService.clearCollection().then((value) {
-      _userModelService.put(userModel);
+      _userModelService.put(userModel).then((value) => connectSockets());
       return;
     });
   }
@@ -81,5 +96,21 @@ mixin UserSessionHandler {
       return;
     }
     context.pushReplacement(EmailVerificationScreen.route);
+  }
+
+  Future<void> login(
+      BuildContext context, UserModel model, String token) async {
+    await registerUserModel(model);
+    await registerApiServiceInstance(token: token);
+    connectSockets();
+    checkEmailVerification(context, model);
+  }
+
+  void disconnectSocketConnections() {
+    GetIt.instance.get<WebSocketService>().disconnectAll();
+  }
+
+  void connectSockets() {
+    GetIt.instance.get<WebSocketService>().connect();
   }
 }
