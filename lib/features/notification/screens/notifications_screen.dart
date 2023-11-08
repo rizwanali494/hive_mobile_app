@@ -63,70 +63,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   child: NotificationShimmerWidget(),
                 ),
               )
-
-              // if (provider.isLoading)
-              //   Expanded(
-              //     child: Padding(
-              //       padding: EdgeInsets.symmetric(
-              //         horizontal: 19.w,
-              //       ),
-              //       child: ListView.separated(
-              //         padding: EdgeInsets.symmetric(
-              //           vertical: 27.h,
-              //         ),
-              //         separatorBuilder: (context, index) {
-              //           return 20.verticalSpace;
-              //         },
-              //         itemBuilder: (context, index) {
-              //           return NotificationShimmerWidget();
-              //         },
-              //         itemCount: 12,
-              //       ),
-              //     ),
-              //   )
-              // else if (provider.hasError)
-              //   Expanded(
-              //     child: ErrorTextWidget(
-              //       onRefresh: provider.refreshList,
-              //     ),
-              //   )
-              // else if (provider.items.isNotEmpty)
-              //   Expanded(
-              //     child: Padding(
-              //       padding: EdgeInsets.symmetric(
-              //         horizontal: 19.w,
-              //       ),
-              //       child: RefreshIndicator(
-              //         onRefresh: provider.refreshList,
-              //         backgroundColor: styles.white,
-              //         child: ListView.separated(
-              //           controller: provider.scrollController,
-              //           padding: EdgeInsets.symmetric(
-              //             vertical: 27.h,
-              //           ),
-              //           separatorBuilder: (context, index) {
-              //             return buildDivider();
-              //           },
-              //           itemBuilder: (context, index) {
-              //             if (index == provider.items.length) {
-              //               if (provider.isGettingMore) {
-              //                 return Center(child: CircularProgressIndicator());
-              //               }
-              //               return SizedBox.shrink();
-              //             }
-              //             return NotificationTile(
-              //               onTap: () {},
-              //               svgIconPath: svgIcons[index % svgIcons.length],
-              //               controller: NotificationTileVM(
-              //                 model: provider.items[index],
-              //               ),
-              //             );
-              //           },
-              //           itemCount: provider.listCount,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
             ],
           );
         },
@@ -156,10 +92,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     SvgIcons.newMessage,
   ];
 
-  // final svgIcons = {
-  //   "ANNOUNCEMENT_POST": SvgIcons.announcement,
-  //   "ACTIVITY": SvgIcons.game,
-  // };
 
   Divider buildDivider() => Divider(color: Colors.black.withOpacity(0.2));
 }

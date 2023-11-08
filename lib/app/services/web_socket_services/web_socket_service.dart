@@ -35,15 +35,18 @@ class WebSocketService with SocketEncryptionService {
   }
 
   StreamSubscription? socketStream;
+  StreamController dataStream = StreamController.broadcast();
 
   void setMessagesStream() {
-    socket?.messages.listen((event) {
+    socketStream = socket?.messages.listen((event) {
       log("Socket Event Message ::: ${event.toString()}");
+      dataStream.sink.add(event);
     });
   }
 
   void disconnectAll() {
     socketStream?.cancel();
     socket?.close();
+    dataStream.close();
   }
 }
