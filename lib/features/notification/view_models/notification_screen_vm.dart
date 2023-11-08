@@ -13,7 +13,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   @override
   Future<List<NotificationModel>> fetchInitialItems() async {
     var list =
-    await notificationRepository.getInitialNotificationList(limit: limit);
+        await notificationRepository.getInitialNotificationList(limit: limit);
     return list;
   }
 
@@ -51,6 +51,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   void setNotificationListener() {
     notificationListener = webSocketService.dataStream.stream.listen((event) {
       log("Notification Listener ::::: ${event}");
+      refreshList();
     });
   }
 
