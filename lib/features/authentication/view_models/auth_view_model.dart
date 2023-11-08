@@ -13,7 +13,6 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
 import 'package:hive_mobile/app/services/auth_services/user_session_handler.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
-import 'package:hive_mobile/app/services/user_verrification_service/user_verfication_handler.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
