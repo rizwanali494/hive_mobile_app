@@ -53,7 +53,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   void setNotificationListener() {
     notificationListener = webSocketService.dataStream?.listen((event) {
       log("Notification Listener ::::: ${event}");
-      Future.delayed(Duration(seconds: 1)).then((value) => refreshList());
+      Future.delayed(Duration(seconds: 2)).then((value) => refreshList());
     });
   }
 
