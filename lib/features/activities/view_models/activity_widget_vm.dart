@@ -16,7 +16,7 @@ class ActivityWidgetVM {
 
   ActivityWidgetVM({required this.model});
 
-  String get ownerImageUrl => model.owner?.picture?.file ?? "";
+  String? get ownerImageUrl => model.owner?.picture?.file;
 
   String get ownerName => model.owner?.accountData?.extra?.employeeName ?? "";
 

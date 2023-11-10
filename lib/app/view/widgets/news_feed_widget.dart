@@ -75,6 +75,15 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                   placeholder: (context, url) => const UserPlaceHolderWidget(),
                   errorWidget: (context, url, error) =>
                       const UserPlaceHolderWidget(),
+                )
+              else
+                Container(
+                  width: 45.h,
+                  height: 45.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: UserPlaceHolderWidget(),
                 ),
               12.horizontalSpace,
               Column(

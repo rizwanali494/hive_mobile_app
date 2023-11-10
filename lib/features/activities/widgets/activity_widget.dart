@@ -46,8 +46,9 @@ class ActivityWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
+              if(controller.ownerImageUrl != null)
               CachedNetworkImage(
-                imageUrl: controller.ownerImageUrl,
+                imageUrl: controller.ownerImageUrl!,
                 imageBuilder: (context, imageProvider) => Container(
                   width: 45.h,
                   height: 45.w,
@@ -62,8 +63,16 @@ class ActivityWidget extends StatelessWidget {
                 placeholder: (context, url) => const UserPlaceHolderWidget(),
                 errorWidget: (context, url, error) =>
                     const UserPlaceHolderWidget(),
-              ),
-
+              )
+              else
+                Container(
+                  width: 45.h,
+                  height: 45.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: UserPlaceHolderWidget(),
+                ),
               12.horizontalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
