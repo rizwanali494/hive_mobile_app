@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
@@ -60,5 +62,15 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     // TODO: implement dispose
     notificationListener?.cancel();
     super.dispose();
+  }
+
+  @override
+  Future<void> refreshList() async {
+    await super.refreshList();
+    final topValue = scrollController.position.minScrollExtent;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      scrollController.animateTo(topValue,
+          duration: Duration(milliseconds: 600), curve: Curves.linear);
+    });
   }
 }

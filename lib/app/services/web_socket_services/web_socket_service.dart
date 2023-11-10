@@ -16,11 +16,39 @@ class WebSocketService with SocketEncryptionService {
   late final sharedPref = GetIt.instance.get<SharedPreferences>();
 
   Future<void> connect() async {
-    final token = sharedPref.getString("token") ?? "";
-    final data = encryptedAuthData(token, _key);
-    socket = WebSocket(_socketUrl.parsedUri);
-    await socket?.connection.firstWhere((state) => state is Connected);
-    _sendAuthData(data);
+    socket = WebSocket(
+      _socketUrl.parsedUri,
+      backoff: ConstantBackoff(
+        Duration(seconds: 5),
+      ),
+    );
+    handleAuth();
+    // await socket?.connection.firstWhere((state) => state is Connected);
+  }
+
+  bool _isAuthenticated = false;
+
+  void handleAuth() {
+    socket?.connection.listen((event) {
+      log("socket connection : ${event}");
+      bool reconnected = event is Reconnected;
+      bool connected = event is Connected;
+      bool reAuth = reconnected || connected;
+      log("ReAuth value : ${reAuth} ${reconnected} ${connected}");
+      if (reAuth) {
+        log("ReAuth");
+        if (!_isAuthenticated) {
+          final token = sharedPref.getString("token") ?? "";
+          log("Data Sent");
+          final data = encryptedAuthData(token, _key);
+          _sendAuthData(data);
+          _isAuthenticated = true;
+        }
+      }
+      else {
+        _isAuthenticated = false;
+      }
+    });
   }
 
   void _sendAuthData(data) {
@@ -28,13 +56,9 @@ class WebSocketService with SocketEncryptionService {
     log("Socket Message ::: ${data}");
     log("Socket Message ::: ${jsonEncode(data)}");
     socket?.send(jsonEncode(data));
-    Future.delayed(Duration(seconds: 3)).then((value) {
-      log("Socket Message ::: ${socket?.connection.state}");
-    });
   }
 
   Stream? get dataStream => socket?.messages;
-
 
   void disconnectAll() {
     socket?.close();
