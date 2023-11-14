@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/user_session_handler.dart';
 import 'package:http/http.dart' as http;
@@ -25,22 +26,22 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
   final client = http.Client();
   static const _retryCount = 2;
 
-  late final RetryClient retryClient = RetryClient(
-    client,
-    retries: _retryCount,
-    delay: (retryCount) => Duration(milliseconds: 500),
-    // when: (p0) => true,
-    when: (p0) => p0.statusCode == 401,
-    onRetry: (p0, p1, retryCount) async {
-      log("Current Token ${_token}");
-      _token = await refreshToken(_token ?? "");
-      log("Got new Token ::::: ${_token}");
-      if (retryCount == _retryCount - 1) {
-        sessionExpiredLogout();
-        return;
-      }
-    },
-  );
+  // late final RetryClient retryClient = RetryClient(
+  //   client,
+  //   retries: _retryCount,
+  //   delay: (retryCount) => Duration(milliseconds: 500),
+  //   // when: (p0) => true,
+  //   when: (p0) => p0.statusCode == 401,
+  //   onRetry: (p0, p1, retryCount) async {
+  //     log("Current Token ${_token}");
+  //     _token = await refreshToken();
+  //     log("Got new Token ::::: ${_token}");
+  //     if (retryCount == _retryCount - 1) {
+  //       sessionExpiredLogout();
+  //       return;
+  //     }
+  //   },
+  // );
 
   @override
   Future<http.Response> get(
@@ -49,8 +50,8 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
       String? queryParameters}) async {
     url = "$url${queryParameters ?? ""}";
     try {
-      final response = await performHttpRequest(() async {
-        return await retryClient.get(url.parsedUri,
+      final response = await performRetryRequest(() async {
+        return await client.get(url.parsedUri,
             headers: headers ?? this._headers);
       });
       return getResponse(response: response);
@@ -68,8 +69,8 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
     debugPrint(url.parsedUri.toString());
     url = "$url${queryParameters ?? ""}";
     try {
-      final response = await performHttpRequest(() async {
-        return await retryClient.post(url.parsedUri,
+      final response = await performRetryRequest(() async {
+        return await client.post(url.parsedUri,
             body: jsonEncode(body), headers: headers ?? this._headers);
       });
       return getResponse(response: response);
@@ -86,8 +87,8 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
       String? queryParameters}) async {
     url = "$url${queryParameters ?? ""}";
     try {
-      final response = await performHttpRequest(() async {
-        return await retryClient.patch(url.parsedUri,
+      final response = await performRetryRequest(() async {
+        return await client.patch(url.parsedUri,
             body: jsonEncode(body), headers: headers ?? this._headers);
       });
 
@@ -124,7 +125,7 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
     );
     var streamedResponse = await request.send();
     // var streamedResponse = await retryClient.send(request);
-    final response = await performHttpRequest(() async {
+    final response = await performRetryRequest(() async {
       return await http.Response.fromStream(streamedResponse);
     });
 
@@ -138,8 +139,8 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
       String? queryParameters}) async {
     url = "$url${queryParameters ?? ""}";
     try {
-      final response = await performHttpRequest(() async {
-        return await retryClient.delete(url.parsedUri,
+      final response = await performRetryRequest(() async {
+        return await client.delete(url.parsedUri,
             headers: headers ?? this._headers);
       });
 
@@ -151,10 +152,41 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
 
   static const _timeoutDurationMinutes = 2;
 
-  Future<http.Response> performHttpRequest(httpRequest request) async {
-    return await request
-        .call()
-        .timeout(Duration(minutes: _timeoutDurationMinutes));
+  // Future<http.Response> performHttpRequest(httpRequest request) async {
+  //   return await request
+  //       .call()
+  //       .timeout(Duration(minutes: _timeoutDurationMinutes));
+  // }
+
+  Future<http.Response> performRetryRequest(httpRequest request) async {
+    int retries = 1;
+    for (;;) {
+      log("hitting ${retries}");
+      final req = await request
+          .call()
+          .timeout(Duration(minutes: _timeoutDurationMinutes))
+          .timeout(Duration(minutes: _timeoutDurationMinutes));
+      int statusCode = req.statusCode;
+      if (retries == _retryCount) {
+        return getResponse(response: req);
+      }
+      await refreshUserToken();
+      if (statusCode == 401) {
+        await refreshUserToken();
+      } else {
+        return getResponse(response: req);
+      }
+      retries++;
+    }
+  }
+
+  Future<void> refreshUserToken() async {
+    try {
+      _token = await refreshToken();
+    } catch (e) {
+      sessionExpiredLogout();
+      throw AppStrings.somethingWentWrong;
+    }
   }
 }
 

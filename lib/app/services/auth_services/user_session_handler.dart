@@ -24,7 +24,7 @@ mixin UserSessionHandler {
   final _sharedPref = GetIt.instance.get<SharedPreferences>();
   final _userModelService = IsarService<UserModel>();
 
-  Future<String> refreshToken(String token) async {
+  Future<String> refreshToken() async {
     try {
       String refreshToken = await _sharedPref.getString("refresh_Token") ?? "";
       if (refreshToken.isEmpty) {
@@ -37,11 +37,10 @@ mixin UserSessionHandler {
       String newToken = responseBody["access"];
       await _sharedPref.setString("token", newToken);
       registerApiServiceInstance(token: newToken);
-      log("token Refreshed : ${newToken}");
       return newToken;
     } catch (e) {
       log("error refreshing ${e.toString()}");
-      throw AppStrings.somethingWentWrong;
+      rethrow;
     }
   }
 
