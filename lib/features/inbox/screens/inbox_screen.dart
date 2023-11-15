@@ -83,10 +83,10 @@ class InboxScreen extends StatelessWidget {
                     child: InboxListTile(
                       onTap: () {
                         context.push(
-                          ChatScreen.route,
-                          extra: {"receiverId": item},
-                        );
-                      },
+                      ChatScreen.route,
+                      extra: {"receiverId": item},
+                    ).then((value) => provider.refreshList());
+                  },
                       controller: InboxTileWidgetVM(
                         model: item,
                       ),

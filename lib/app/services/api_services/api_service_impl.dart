@@ -123,8 +123,7 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
     request.files.add(
       multipartFile,
     );
-    var streamedResponse = await request.send();
-    // var streamedResponse = await retryClient.send(request);
+    var streamedResponse = await client.send(request);
     final response = await performRetryRequest(() async {
       return await http.Response.fromStream(streamedResponse);
     });
