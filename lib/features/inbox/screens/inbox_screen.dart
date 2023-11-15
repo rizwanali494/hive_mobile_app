@@ -82,15 +82,15 @@ class InboxScreen extends StatelessWidget {
                     ),
                     child: InboxListTile(
                       onTap: () {
-                        context.push(
+                    context.push(
                       ChatScreen.route,
                       extra: {"receiverId": item},
                     ).then((value) => provider.refreshList());
                   },
-                      controller: InboxTileWidgetVM(
-                        model: item,
-                      ),
-                    ),
+                  controller: InboxTileWidgetVM(
+                    model: item,
+                  ),
+                ),
                   ),
               listSeparatorChild: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
