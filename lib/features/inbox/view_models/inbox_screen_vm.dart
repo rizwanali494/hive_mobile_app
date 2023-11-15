@@ -55,3 +55,4 @@ class InboxScreenVM extends BaseApiVM<InboxModel> {
     );
   }
 }
+
