@@ -144,6 +144,10 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("ordering=-date_added");
   }
 
+  String get withMostRecentOrderDate {
+    return _appendQueryParameter("ordering=-date");
+  }
+
   String get withLeastRecentOrder {
     return _appendQueryParameter("ordering=date_added");
   }

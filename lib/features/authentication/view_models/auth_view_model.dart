@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -88,9 +89,12 @@ class AuthVM extends ChangeNotifier
             refreshToken: refreshToken,
             context: context);
         return;
-      } catch (e) {
-        log(e.toString());
-        handleException(e);
+      } catch (error) {
+        log(error.toString());
+        handleException(error);
+        if (error is SocketException) {
+          UtilFunctions.showToast(msg: "No Internet Connection");
+        }
       }
       if (context.mounted) {
         context.pop();
