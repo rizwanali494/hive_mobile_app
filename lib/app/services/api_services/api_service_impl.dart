@@ -165,7 +165,6 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
       final req = await request
           .call()
           .timeout(Duration(minutes: _timeoutDurationMinutes))
-          .timeout(Duration(minutes: _timeoutDurationMinutes));
       int statusCode = req.statusCode;
       if (retries == _retryCount) {
         return getResponse(response: req);
