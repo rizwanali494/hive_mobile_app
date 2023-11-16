@@ -1,16 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
-import 'package:hive_mobile/app/services/base_request_service/base_request_services.dart'
-    as req;
+import 'package:hive_mobile/app/services/base_request_service/base_request_services.dart';
 
-abstract class BaseApiVM<T> with ChangeNotifier {
+abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseExceptionController {
   UiState uiState = UiState.loading();
 
   bool get hasError => uiState.hasError;
@@ -78,7 +78,13 @@ abstract class BaseApiVM<T> with ChangeNotifier {
       uiState = UiState.loaded();
       return;
     };
-    await performRequest(request: request);
+
+
+    final onError = (  error ){
+      handleException(error);
+    };
+
+    await performRequest(request: request,onErrorOccurred: onError);
     notifyListeners();
   }
 
@@ -166,19 +172,23 @@ abstract class BaseApiVM<T> with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> performRequest({required Function request}) async {
+  Future<void> performRequest(
+      {required Function request, Function( dynamic error )? onErrorOccurred}) async {
     try {
       await request();
     } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        log("Error occurred : ${e.response.body}");
-        log("Error occurred : ${e.response.statusCode}");
-      }
       onError();
-      log("Error occurred : $e");
-      log("Error occurred : ${e.runtimeType}");
-      displayError();
+      onErrorOccurred?.call(e);
     }
+    //   if (e is HTTPStatusCodeException) {
+    //     log("Error occurred : ${e.response.body}");
+    //     log("Error occurred : ${e.response.statusCode}");
+    //   }
+    //   onError();
+    //   log("Error occurred : $e");
+    //   log("Error occurred : ${e.runtimeType}");
+    //   displayError();
+    // }
   }
 
   BaseListViewVM<T> get listViewVM {
