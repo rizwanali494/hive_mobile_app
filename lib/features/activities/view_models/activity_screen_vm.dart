@@ -9,7 +9,7 @@ import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
 class ActivityScreenVM extends BaseApiVM<ActivityModel>
-    with BaseExceptionController {
+     {
   late ActivityRepo activityRepo;
 
   @override

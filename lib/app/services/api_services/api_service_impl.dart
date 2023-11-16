@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/exceptions/refresh_token_exception.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -181,9 +182,12 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
   Future<void> refreshUserToken() async {
     try {
       _token = await refreshToken();
-    } catch (e) {
-      sessionExpiredLogout();
-      throw AppStrings.somethingWentWrong;
+    } catch (error) {
+      if( error is HTTPStatusCodeException ) {
+        sessionExpiredLogout();
+        throw RefreshTokenException();
+      }
+      throw error;
     }
   }
 }
