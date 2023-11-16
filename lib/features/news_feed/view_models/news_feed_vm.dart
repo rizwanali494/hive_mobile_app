@@ -14,8 +14,7 @@ import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
 import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 
-class NewsFeedVM extends BaseApiVM<AnnouncementPostModel>
-    with BaseExceptionController {
+class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
   final apiService = GetIt.instance.get<ApiService>();
 
   late NewsFeedRepository newsFeedRepo;
