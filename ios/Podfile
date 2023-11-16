@@ -52,10 +52,10 @@ post_install do |installer|
             ## dart: PermissionGroup.camera
             'PERMISSION_CAMERA=1',
 
-           ## dart: PermissionGroup.photos
+            ## dart: PermissionGroup.photos
             'PERMISSION_PHOTOS=1',
 
-           ## dart: PermissionGroup.mediaLibrary
+            ## dart: PermissionGroup.mediaLibrary
             'PERMISSION_MEDIA_LIBRARY=1',
 
           ]
