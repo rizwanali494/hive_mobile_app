@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/message_model.dart';
 import 'package:hive_mobile/app/models/rev_pagination_controller.dart';
@@ -16,7 +17,7 @@ import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 
 
-class ChatScreenVM extends ChangeNotifier {
+class ChatScreenVM extends ChangeNotifier with BaseExceptionController {
   int receiverId;
   List<MessageModel> messages = [];
 
@@ -74,10 +75,11 @@ class ChatScreenVM extends ChangeNotifier {
       messages.addAll(latestMessages);
       saveMessagesToLocal();
     };
-    final onError = () async {
+    final onError = (error) async {
       final list = await getLocalMessages();
       messages = list;
       setMessageSData();
+      handleException(error);
     };
     await performRequest(request: request,onError: onError);
     uiState = UiState.loaded();
@@ -93,12 +95,12 @@ class ChatScreenVM extends ChangeNotifier {
   }
 
   Future<void> performRequest(
-      {required Function request, Function? onError}) async {
+      {required Function request, Function(dynamic error)? onError}) async {
     try {
       await request();
     } catch (e) {
       if (onError != null) {
-        onError();
+        onError(e);
       }
       // TODO
     }
@@ -207,6 +209,7 @@ class ChatScreenVM extends ChangeNotifier {
     } catch (e) {
       removeMessage(messageModel);
       addMessage(messageModel.copyWith(messageState: MessageState.hasError()));
+      handleException(e);
     }
     notifyListeners();
   }
@@ -236,6 +239,7 @@ class ChatScreenVM extends ChangeNotifier {
     } catch (e) {
       removeMessage(model);
       addMessage(model.copyWith(messageState: MessageState.hasError()));
+      handleException(e);
     }
     notifyListeners();
   }

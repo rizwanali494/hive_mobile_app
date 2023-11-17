@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -11,7 +12,8 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/my_services/repositories/new_service_request_repo.dart';
 
-class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
+class ServiceRequestVM extends ChangeNotifier
+    with UtilFunctions, BaseExceptionController {
   bool _isChangeRequest = false;
   late NewServiceRequestRepo newServiceRequestRepo;
 
@@ -48,7 +50,6 @@ class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
     showLoaderDialog(context);
     try {
       await newServiceRequestRepo.requestNewService(body: body);
-      // context.popUntil(MyServicesScreen.route);
       context.pop();
       context.pop(true);
       return;
@@ -57,7 +58,8 @@ class ServiceRequestVM extends ChangeNotifier with UtilFunctions {
         log(e.response.body.toString());
         log(e.response.statusCode.toString());
       }
-      UtilFunctions.showToast(msg: AppStrings.somethingWentWrong);
+      // UtilFunctions.showToast(msg: AppStrings.somethingWentWrong);
+      handleException(e);
       log(e.toString());
     }
     context.pop();

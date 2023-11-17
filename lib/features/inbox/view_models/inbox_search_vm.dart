@@ -6,7 +6,7 @@ import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 
 class InboxSearchVM extends InboxScreenVM {
   InboxScreenVM() {
-   uiState = UiState.loaded();
+    uiState = UiState.loaded();
   }
 
   @override
@@ -30,7 +30,12 @@ class InboxSearchVM extends InboxScreenVM {
       items.addAll(list);
       return;
     };
-    await performRequest(request: request);
+    await performRequest(
+      request: request,
+      onErrorOccurred: (error) {
+        handleException(error);
+      },
+    );
     uiState = UiState.loaded();
     notifyListeners();
   }
@@ -57,7 +62,6 @@ class InboxSearchVM extends InboxScreenVM {
         offset: offSet, limit: limit);
     return list;
   }
-
 
   @override
   Future<List<InboxModel>> fetchLocalList() async {
