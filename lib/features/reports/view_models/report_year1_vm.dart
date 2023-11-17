@@ -12,4 +12,9 @@ class ReportYear1VM extends ReportWidgetVM {
                 mockExam: 19));
 
   List<AssessmentInfoVM> term1Assessments = [];
+
+  @override
+  void onError(error) {
+    handleException(error);
+  }
 }
