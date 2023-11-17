@@ -13,7 +13,9 @@ import 'package:hive_mobile/features/my_services/view_models/open_service_reques
 import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 
-class ServiceScreenVM extends ChangeNotifier {
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
+
+class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
   void notifyListener() {
     notifyListeners();
   }
@@ -36,6 +38,7 @@ class ServiceScreenVM extends ChangeNotifier {
     } catch (e) {
       // TODO
       setServiceStatusLocally();
+      handleException(e);
     }
   }
 
