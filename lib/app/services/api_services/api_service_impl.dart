@@ -125,9 +125,14 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
       multipartFile,
     );
     var streamedResponse = await client.send(request);
-    final response = await performRetryRequest(() async {
-      return await http.Response.fromStream(streamedResponse);
-    });
+    final response = await performRetryRequest(
+      () async {
+        return await http.Response.fromStream(streamedResponse);
+      },
+      timeout: Duration(
+        minutes: 1,
+      ),
+    );
 
     return getResponse(response: response);
   }
@@ -150,7 +155,7 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
     }
   }
 
-  static const _timeoutDurationMinutes = 2;
+  static const _timeoutDurationSeconds = 45;
 
   // Future<http.Response> performHttpRequest(httpRequest request) async {
   //   return await request
@@ -158,18 +163,18 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
   //       .timeout(Duration(minutes: _timeoutDurationMinutes));
   // }
 
-  Future<http.Response> performRetryRequest(httpRequest request) async {
+  Future<http.Response> performRetryRequest(httpRequest request,
+      {Duration? timeout}) async {
     int retries = 1;
     for (;;) {
       log("hitting ${retries}");
       final req = await request
           .call()
-          .timeout(Duration(minutes: _timeoutDurationMinutes));
+          .timeout(timeout ?? Duration(seconds: _timeoutDurationSeconds));
       int statusCode = req.statusCode;
       if (retries == _retryCount) {
         return getResponse(response: req);
       }
-      await refreshUserToken();
       if (statusCode == 401) {
         await refreshUserToken();
       } else {
@@ -183,7 +188,7 @@ class ApiServiceImpl extends ApiService with UserSessionHandler {
     try {
       _token = await refreshToken();
     } catch (error) {
-      if( error is HTTPStatusCodeException ) {
+      if (error is HTTPStatusCodeException) {
         sessionExpiredLogout();
         throw RefreshTokenException();
       }

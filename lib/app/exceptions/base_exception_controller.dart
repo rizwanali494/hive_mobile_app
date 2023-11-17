@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ mixin BaseExceptionController {
       {String? msg,
       BuildContext? context,
       List<Widget> actionButtons = const []}) {
+    log("Error run time type : ${error.runtimeType}");
     if (error is TimeoutException) {
       showErrorToast(msg: "Request Timeout");
     }
