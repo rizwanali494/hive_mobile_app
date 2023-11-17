@@ -32,7 +32,6 @@ class ExternalGradingScreen extends StatelessWidget {
         ),
         child: Consumer<ExternalGradeVM>(
           builder: (context, provider, child) {
-            provider.context ??= context;
             return Column(
               children: [
                 AppBarWidget(

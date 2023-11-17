@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
@@ -9,7 +10,7 @@ import 'package:hive_mobile/features/calender/controllers/clean_calendar_control
 import 'package:hive_mobile/features/calender/repositories/calendar_repo.dart';
 import 'package:intl/intl.dart';
 
-class CalendarVM extends ChangeNotifier {
+class CalendarVM extends ChangeNotifier with BaseExceptionController {
   static const _startYear = 2023;
   int selectedValue = _startYear;
   static const _totalYears = 5;
@@ -67,17 +68,24 @@ class CalendarVM extends ChangeNotifier {
       );
       activities.addAll(list);
     };
-    await performRequest(request: request);
+    await performRequest(
+      request: request,
+      onError: (error) {
+        handleException(error);
+      },
+    );
     isLoading = false;
     notifyListeners();
   }
 
-  Future<void> performRequest({required Function request}) async {
+  Future<void> performRequest(
+      {required Function request, Function(dynamic error)? onError}) async {
     try {
       await request();
-    } catch (e) {
+    } catch (error) {
       hasError = true;
-      log("Error occurred : $e");
+      onError?.call(error);
+      log("Error occurred : $error");
     }
     notifyListeners();
   }

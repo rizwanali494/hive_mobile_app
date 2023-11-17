@@ -6,6 +6,7 @@ import 'package:form_validator/form_validator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
@@ -16,7 +17,8 @@ import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/email_verification/screens/mail_sent_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 
-class EmailVerifyController extends ChangeNotifier with UtilFunctions {
+class EmailVerifyController extends ChangeNotifier
+    with UtilFunctions, BaseExceptionController {
   final emailCtrl = TextEditingController();
 
   void validate(BuildContext context) {
@@ -41,12 +43,13 @@ class EmailVerifyController extends ChangeNotifier with UtilFunctions {
     showLoaderDialog(context);
     try {
       final response =
-      await userProfileService.updateBackupEmail(body: body, id: 0);
+          await userProfileService.updateBackupEmail(body: body, id: 0);
       context.pushReplacement(MailSentScreen.route, extra: {"email": text});
       return;
-    } catch (e) {
-      UtilFunctions.showToast();
-      log("error verify email : ${e.toString()}");
+    } catch (error) {
+      handleException(error);
+      // UtilFunctions.showToast();
+      log("error verify email : ${error.toString()}");
     }
     context.pop();
   }
@@ -77,7 +80,9 @@ class EmailVerifyController extends ChangeNotifier with UtilFunctions {
         localService.put(model);
         return;
       }
-    } catch (e) {}
+    } catch (error) {
+      handleException(error);
+    }
     isLoading = false;
     notifyListeners();
   }
