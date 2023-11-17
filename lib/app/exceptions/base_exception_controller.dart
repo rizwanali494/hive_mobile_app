@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
+import 'package:hive_mobile/app/exceptions/refresh_token_exception.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 
@@ -23,6 +24,8 @@ mixin BaseExceptionController {
     if (error is HTTPStatusCodeException) {
       _showApiErrorMessage(error.response.body);
       // showErrorToast(msg: msg, context: context);
+    } else if (!(error is RefreshTokenException)) {
+      showErrorToast();
     }
     // showErrorToast(msg: msg, context: context);
   }
