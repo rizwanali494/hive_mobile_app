@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
@@ -18,7 +19,7 @@ import 'package:path/path.dart';
 import 'package:collection/collection.dart';
 import 'package:provider/provider.dart';
 
-class AccountSettingVM extends ChangeNotifier {
+class AccountSettingVM extends ChangeNotifier with BaseExceptionController {
   final userModel = GetIt.instance.get<UserModel>();
   final apiService = GetIt.instance.get<ApiService>();
 
@@ -107,7 +108,8 @@ class AccountSettingVM extends ChangeNotifier {
         log("error : ${e.response.statusCode}");
         log("error : ${e.response.body}");
       }
-      UtilFunctions.showToast();
+      handleException(e);
+      // UtilFunctions.showToast();
       log("${e.toString()}");
     }
 

@@ -26,4 +26,9 @@ class UserAcceptedApplicationVM extends BaseSliverListVM<String> {
   void setRepoInstance() {
     userProfileRepo = UserProfileRepoImpl(apiService: apiService);
   }
+
+  @override
+  void onInitialListError(error) {
+    handleException(error);
+  }
 }
