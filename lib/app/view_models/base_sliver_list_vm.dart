@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 
-abstract class BaseSliverListVM<T> with ChangeNotifier {
+abstract class BaseSliverListVM<T>
+    with ChangeNotifier, BaseExceptionController {
   final limit = 10;
   int offset = 0;
   UiState uiState = UiState.loading();
@@ -54,16 +56,20 @@ abstract class BaseSliverListVM<T> with ChangeNotifier {
     }
   }
 
-  Future<void> performRequest({required Function request}) async {
+  Future<void> performRequest(
+      {required Function request, Function(dynamic error)? onError}) async {
     try {
       await request();
     } catch (e) {
       uiState = UiState.error();
-      if (e is HTTPStatusCodeException) {
-        log("Error occurred : ${e.response.body}");
-        log("Error occurred : ${e.response.statusCode}");
-      }
+      // if (e is HTTPStatusCodeException) {
+      //   log("Error occurred : ${e.response.body}");
+      //   log("Error occurred : ${e.response.statusCode}");
+      // }
+      onInitialListError.call(e);
       log("Error occurred : $e");
     }
   }
+
+  void onInitialListError(dynamic error);
 }
