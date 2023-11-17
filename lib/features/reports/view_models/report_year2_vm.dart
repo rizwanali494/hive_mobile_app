@@ -10,4 +10,7 @@ class ReportYear2VM extends ReportWidgetVM {
           midYearId: 11,
           mockExam: 15,
         ));
+
+  @override
+  void onError(error) {}
 }

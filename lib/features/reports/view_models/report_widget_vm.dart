@@ -2,6 +2,7 @@ import 'dart:developer';
 import "package:collection/collection.dart";
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/models/data/report_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -10,7 +11,8 @@ import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart
 import 'package:hive_mobile/features/reports/view_models/report_id_model.dart';
 import 'package:hive_mobile/features/reports/view_models/summary_model.dart';
 
-abstract class ReportWidgetVM extends ChangeNotifier {
+abstract class ReportWidgetVM extends ChangeNotifier
+    with BaseExceptionController {
   final ReportIdModel reportIdModel;
 
   final apiService = GetIt.instance.get<ApiService>();
@@ -42,7 +44,7 @@ abstract class ReportWidgetVM extends ChangeNotifier {
       term2Summary = models.elementAtOrNull(1);
       sortItems();
     } catch (e) {
-      log("message ${e.toString()}");
+      onError(e);
       uiState = UiState.error();
     }
     uiState = UiState.loaded();
@@ -150,4 +152,6 @@ abstract class ReportWidgetVM extends ChangeNotifier {
     final model = await reportRepository.getSummary(ids: ids);
     return model;
   }
+
+  void onError(dynamic error);
 }
