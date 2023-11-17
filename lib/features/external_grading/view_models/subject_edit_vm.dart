@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hive_mobile/features/external_grading/subject_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 
 class SubjectEditVM with ChangeNotifier {
   final grades = ["A*", "A", "B", "C", "D", "E"];

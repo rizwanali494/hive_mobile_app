@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:form_validator/form_validator.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,10 +17,11 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
-import 'package:hive_mobile/features/external_grading/subject_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
 
-class GradeAddingVM with UtilFunctions, ChangeNotifier {
+class GradeAddingVM
+    with UtilFunctions, ChangeNotifier, BaseExceptionController {
   final grades = ["A*", "A", "B", "C", "D", "E"];
 
   String? selectedGrade = "A*";
@@ -158,14 +160,15 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
       context.pop(model);
       UtilFunctions.showToast(msg: AppStrings.externalGradeUploaded);
       return;
-    } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        log("${e.response.statusCode}");
-        log("${e.response.body}");
+    } catch (error) {
+      if (error is HTTPStatusCodeException) {
+        log("${error.response.statusCode}");
+        log("${error.response.body}");
       }
-      log(e.toString());
-      UtilFunctions.showToast(
-          msg: AppStrings.somethingWentWrong, context: context);
+      log(error.toString());
+      // UtilFunctions.showToast(
+      //     msg: AppStrings.somethingWentWrong, context: context);
+      handleException(error);
     }
     context.pop();
   }
@@ -229,9 +232,10 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
         log("${e.response.statusCode}");
         log("${e.response.body}");
       }
+      handleException(e);
       log("error in external grade : ${e.toString()}");
-      UtilFunctions.showToast(
-          msg: AppStrings.somethingWentWrong, context: context);
+      // UtilFunctions.showToast(
+      //     msg: AppStrings.somethingWentWrong, context: context);
     }
     context.pop();
   }
@@ -287,10 +291,7 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
             id: list[index].id),
       );
     } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        log("message : ${e.response.statusCode}");
-        log("message : ${e.response.body}");
-      }
+      handleException(e);
     }
     gettingSubjects = false;
     notifyListeners();
@@ -346,9 +347,9 @@ class GradeAddingVM with UtilFunctions, ChangeNotifier {
           documents.add(value);
         }
       }
-    } catch (e) {
+    } catch (error) {
       errorDownloading = true;
-      log("error ${e.toString()}");
+      handleException(error);
       notifyListeners();
     }
     fileDownloading = false;
