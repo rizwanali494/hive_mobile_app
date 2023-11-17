@@ -51,6 +51,7 @@ mixin UserSessionHandler {
 
   Future<void> sessionExpiredLogout() async {
     _sharedPref.remove("token");
+    _sharedPref.remove("refresh_Token");
     IsarService<UserModel>().clearCollection();
     registerApiServiceInstance();
     final router = goRouter;
@@ -64,6 +65,7 @@ mixin UserSessionHandler {
 
   Future<void> manualLogout() async {
     _sharedPref.remove("token");
+    _sharedPref.remove("refresh_Token");
     IsarService<UserModel>().clearCollection();
     registerApiServiceInstance();
     final router = goRouter;

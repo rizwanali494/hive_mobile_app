@@ -171,26 +171,27 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
             ),
             child: Stack(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.controller.bannerImageUrl!,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                    placeholder: (context, url) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                    errorWidget: (context, url, error) => Center(
-                      child: Icon(Icons.error),
+                if (widget.controller.bannerImageUrl != null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.controller.bannerImageUrl!,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      placeholder: (context, url) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                      errorWidget: (context, url, error) => Center(
+                        child: Icon(Icons.error),
+                      ),
                     ),
                   ),
-                ),
                 Container(
                   width: double.infinity,
                   height: double.infinity,
