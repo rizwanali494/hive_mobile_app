@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/features/external_grading/subject_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 
 class GradeWidget extends StatelessWidget {
   final SubjectVM gradeVM;
