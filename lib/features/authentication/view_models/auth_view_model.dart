@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/get_it/api_service_instance.dart';
 import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
+import 'package:hive_mobile/app/models/user_auth_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';
@@ -92,9 +93,6 @@ class AuthVM extends ChangeNotifier
       } catch (error) {
         log(error.toString());
         handleException(error);
-        if (error is SocketException) {
-          UtilFunctions.showToast(msg: "No Internet Connection");
-        }
       }
       if (context.mounted) {
         context.pop();

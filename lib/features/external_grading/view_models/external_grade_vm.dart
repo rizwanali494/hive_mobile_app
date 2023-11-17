@@ -1,6 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
@@ -67,13 +67,10 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
     try {
       await externalGradeRepo.deleteExternalGrade(id: model.id ?? 0);
       localService.put(model);
-    } catch (e) {}
+    } catch (error) {
+      handleException(error);
+    }
   }
 
-  BuildContext? context;
 
-  @override
-  void displayError() {
-    UtilFunctions.showToast();
-  }
 }
