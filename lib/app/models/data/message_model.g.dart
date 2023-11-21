@@ -25,7 +25,7 @@ const MessageModelSchema = CollectionSchema(
     r'cityId': PropertySchema(
       id: 1,
       name: r'cityId',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'content': PropertySchema(
       id: 2,
@@ -70,7 +70,7 @@ const MessageModelSchema = CollectionSchema(
     r'regionId': PropertySchema(
       id: 10,
       name: r'regionId',
-      type: IsarType.string,
+      type: IsarType.long,
     )
   },
   estimateSize: _messageModelEstimateSize,
@@ -94,12 +94,6 @@ int _messageModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.cityId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.content;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -117,12 +111,6 @@ int _messageModelEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  {
-    final value = object.regionId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
   return bytesCount;
 }
 
@@ -133,7 +121,7 @@ void _messageModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.branchId);
-  writer.writeString(offsets[1], object.cityId);
+  writer.writeLong(offsets[1], object.cityId);
   writer.writeString(offsets[2], object.content);
   writer.writeString(offsets[3], object.dateAdded);
   writer.writeString(offsets[4], object.dateLastModified);
@@ -142,7 +130,7 @@ void _messageModelSerialize(
   writer.writeBool(offsets[7], object.isRead);
   writer.writeLong(offsets[8], object.owner);
   writer.writeLong(offsets[9], object.receiver);
-  writer.writeString(offsets[10], object.regionId);
+  writer.writeLong(offsets[10], object.regionId);
 }
 
 MessageModel _messageModelDeserialize(
@@ -153,7 +141,7 @@ MessageModel _messageModelDeserialize(
 ) {
   final object = MessageModel(
     branchId: reader.readLongOrNull(offsets[0]),
-    cityId: reader.readStringOrNull(offsets[1]),
+    cityId: reader.readLongOrNull(offsets[1]),
     content: reader.readStringOrNull(offsets[2]),
     dateAdded: reader.readStringOrNull(offsets[3]),
     dateLastModified: reader.readStringOrNull(offsets[4]),
@@ -162,7 +150,7 @@ MessageModel _messageModelDeserialize(
     localId: id,
     owner: reader.readLongOrNull(offsets[8]),
     receiver: reader.readLongOrNull(offsets[9]),
-    regionId: reader.readStringOrNull(offsets[10]),
+    regionId: reader.readLongOrNull(offsets[10]),
   );
   return object;
 }
@@ -177,7 +165,7 @@ P _messageModelDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
@@ -195,7 +183,7 @@ P _messageModelDeserializeProp<P>(
     case 9:
       return (reader.readLongOrNull(offset)) as P;
     case 10:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -389,56 +377,48 @@ extension MessageModelQueryFilter
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> cityIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       cityIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       cityIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> cityIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -447,78 +427,6 @@ extension MessageModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      cityIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      cityIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      cityIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> cityIdMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'cityId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      cityIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cityId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      cityIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'cityId',
-        value: '',
       ));
     });
   }
@@ -1378,58 +1286,49 @@ extension MessageModelQueryFilter
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      regionIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       regionIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       regionIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       regionIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1438,77 +1337,6 @@ extension MessageModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'regionId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'regionId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      regionIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'regionId',
-        value: '',
       ));
     });
   }
@@ -1814,10 +1642,9 @@ extension MessageModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<MessageModel, MessageModel, QDistinct> distinctByCityId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<MessageModel, MessageModel, QDistinct> distinctByCityId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'cityId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'cityId');
     });
   }
 
@@ -1873,10 +1700,9 @@ extension MessageModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<MessageModel, MessageModel, QDistinct> distinctByRegionId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<MessageModel, MessageModel, QDistinct> distinctByRegionId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'regionId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'regionId');
     });
   }
 }
@@ -1895,7 +1721,7 @@ extension MessageModelQueryProperty
     });
   }
 
-  QueryBuilder<MessageModel, String?, QQueryOperations> cityIdProperty() {
+  QueryBuilder<MessageModel, int?, QQueryOperations> cityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'cityId');
     });
@@ -1950,7 +1776,7 @@ extension MessageModelQueryProperty
     });
   }
 
-  QueryBuilder<MessageModel, String?, QQueryOperations> regionIdProperty() {
+  QueryBuilder<MessageModel, int?, QQueryOperations> regionIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'regionId');
     });

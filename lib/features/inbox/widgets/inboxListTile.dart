@@ -43,22 +43,32 @@ class InboxListTile extends StatelessWidget {
       //   ),
       //   radius: 23,
       // ),
-      leading: CachedNetworkImage(
-        imageUrl: controller.userImage,
-        imageBuilder: (context, imageProvider) => Container(
-          width: 45.h,
-          height: 45.w,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
+      leading: controller.userImage != null
+          ? CachedNetworkImage(
+              imageUrl: controller.userImage!,
+              imageBuilder: (context, imageProvider) => Container(
+                width: 45.h,
+                height: 45.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              placeholder: (context, url) => const UserPlaceHolderWidget(),
+              errorWidget: (context, url, error) =>
+                  const UserPlaceHolderWidget(),
+            )
+          : Container(
+              width: 45.h,
+              height: 45.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: UserPlaceHolderWidget(),
             ),
-          ),
-        ),
-        placeholder: (context, url) => const UserPlaceHolderWidget(),
-        errorWidget: (context, url, error) => const UserPlaceHolderWidget(),
-      ),
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

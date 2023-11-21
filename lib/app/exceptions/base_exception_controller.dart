@@ -14,7 +14,7 @@ mixin BaseExceptionController {
       {String? msg,
       BuildContext? context,
       List<Widget> actionButtons = const []}) {
-    log("Error run time type : ${error.runtimeType}");
+    log("Type of error found : ${error.runtimeType}");
     if (error is TimeoutException) {
       showErrorToast(msg: "Request Timeout");
     }

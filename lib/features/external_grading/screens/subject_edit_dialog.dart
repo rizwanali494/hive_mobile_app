@@ -76,6 +76,7 @@ class SubjectEditDialog extends StatelessWidget {
                   15.verticalSpace,
                   TitleTextField(
                     hintText: "",
+                    title: AppStrings.subject,
                     controller: provider.subjectCtrl,
                   ),
                   16.verticalSpace,
