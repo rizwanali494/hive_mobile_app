@@ -23,6 +23,7 @@ mixin BaseExceptionController {
     }
     if (error is HTTPStatusCodeException) {
       _showResponseMessage(error.response.body);
+      log("Error : ${error.response.body}");
       // showErrorToast(msg: msg, context: context);
     } else if (!(error is RefreshTokenException)) {
       showErrorToast();
