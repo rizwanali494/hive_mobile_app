@@ -95,10 +95,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
       notifyListeners();
       localService.put(previous);
       log("Something went wrong");
-      UtilFunctions.showToast();
-      if (e is HTTPStatusCodeException) {
-        log(e.response.statusCode.toString());
-      }
+      handleException(e);
     }
 
     notifyListeners();

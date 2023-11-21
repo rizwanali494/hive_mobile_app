@@ -22,7 +22,8 @@ mixin BaseExceptionController {
       showErrorToast(msg: "No Internet Connection");
     }
     if (error is HTTPStatusCodeException) {
-      _showApiErrorMessage(error.response.body);
+      _showResponseMessage(error.response.body);
+      log("Error : ${error.response.body}");
       // showErrorToast(msg: msg, context: context);
     } else if (!(error is RefreshTokenException)) {
       showErrorToast();
@@ -37,7 +38,7 @@ mixin BaseExceptionController {
     UtilFunctions.showToast(msg: msg, context: context);
   }
 
-  void _showApiErrorMessage(data) {
+  void _showResponseMessage(data) {
     final messageData = jsonDecode(data);
     String msg = messageData["message"] ?? AppStrings.somethingWentWrong;
     showErrorToast(msg: msg);
