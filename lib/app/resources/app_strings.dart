@@ -41,6 +41,7 @@ class AppStrings {
   static String birthDate = "Birth Date";
   static String campus = "Campus";
   static String subjects = "Subjects";
+  static String subject = "Subject";
   static String acceptedUniversities = "Accepted Universities";
   static String achievementsAndAwards = "Achievements & Awards";
   static String newConversation = "New Conversation";
@@ -126,6 +127,7 @@ class AppStrings {
   static String approved = "Approved";
   static String myRequest = "My Requests";
   static String requestName = "Request Name";
+  static String requestDescription = "Request Description";
   static String closedRequest = "Closed Requests";
   static String openRequest = "Open Requests";
   static String subjectChange = "Subject/Teacher Change Request";

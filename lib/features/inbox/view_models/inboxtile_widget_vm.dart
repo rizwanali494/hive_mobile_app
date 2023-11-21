@@ -6,7 +6,7 @@ class InboxTileWidgetVM {
 
   InboxTileWidgetVM({required this.model}) {}
 
-  String get userImage => model.picture?.file ?? "";
+  String? get userImage => model.picture?.file;
 
   String get time => model.date?.timeAgoAdded ?? "";
 

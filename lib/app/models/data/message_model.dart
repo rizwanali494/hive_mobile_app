@@ -38,8 +38,8 @@ class MessageModel {
   String? dateAdded;
   String? dateLastModified;
   int? branchId;
-  String? regionId;
-  String? cityId;
+  int? regionId;
+  int? cityId;
   String? content;
   bool? isRead;
   int? owner;
@@ -53,8 +53,8 @@ class MessageModel {
     String? dateAdded,
     String? dateLastModified,
     int? branchId,
-    String? regionId,
-    String? cityId,
+    int? regionId,
+    int? cityId,
     String? content,
     bool? isRead,
     int? owner,

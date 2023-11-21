@@ -39,7 +39,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                 child: Column(
                   children: [
                     DividerAppBar(
-                      title: AppStrings.requestName,
+                      title: AppStrings.newRequest,
                       titleStyle: styles.inter20w700,
                     ),
                     16.verticalSpace,
@@ -93,7 +93,7 @@ class _NewRequestScreenState extends State<NewRequestScreen> {
                       title: AppStrings.description,
                       controller: descriptionCtrl,
                       validator: provider.requestDescription,
-                      hintText: AppStrings.loremPorum * 2,
+                      hintText: AppStrings.requestDescription,
                       maxLength: 300,
                       buildCounter: (p0,
                               {required currentLength,
