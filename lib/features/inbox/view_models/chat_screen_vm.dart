@@ -71,9 +71,9 @@ class ChatScreenVM extends ChangeNotifier with BaseExceptionController {
     final request = () async {
       var latestMessages = await messageRepository.getMessages(
           receiverId: receiverId, limit: limit);
-      // offset = latestMessages.length;
+      offset = latestMessages.length;
       messages.addAll(latestMessages);
-      // saveMessagesToLocal();
+      saveMessagesToLocal();
     };
     final onError = (error) async {
       final list = await getLocalMessages();
