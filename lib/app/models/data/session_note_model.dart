@@ -41,7 +41,7 @@ class SessionNoteModel {
   String? dateLastModified;
   int? branchId;
   int? regionId;
-  String? cityId;
+  int? cityId;
   String? subject;
   String? content;
   String? state;
@@ -55,7 +55,7 @@ class SessionNoteModel {
     String? dateLastModified,
     int? branchId,
     int? regionId,
-    String? cityId,
+    int? cityId,
     String? subject,
     String? content,
     String? state,

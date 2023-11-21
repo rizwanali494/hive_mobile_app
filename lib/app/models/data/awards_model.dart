@@ -27,28 +27,28 @@ class AwardsModel {
     student = json['student'];
   }
 
-  num? id;
+  int? id;
   Achievement? achievement;
   String? dateAdded;
   String? dateLastModified;
-  num? branchId;
-  num? regionId;
-  dynamic cityId;
+  int? branchId;
+  int? regionId;
+  int? cityId;
   String? description;
-  num? owner;
-  num? student;
+  int? owner;
+  int? student;
 
   AwardsModel copyWith({
-    num? id,
+    int? id,
     Achievement? achievement,
     String? dateAdded,
     String? dateLastModified,
-    num? branchId,
-    num? regionId,
-    dynamic cityId,
+    int? branchId,
+    int? regionId,
+    int? cityId,
     String? description,
-    num? owner,
-    num? student,
+    int? owner,
+    int? student,
   }) =>
       AwardsModel(
         id: id ?? this.id,

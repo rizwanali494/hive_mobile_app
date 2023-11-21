@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/my_services/repositories/new_service_request_repo.dart';

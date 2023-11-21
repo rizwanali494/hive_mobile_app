@@ -66,7 +66,7 @@ class ActivityModel {
   String? dateLastModified;
   int? branchId;
   int? regionId;
-  String? cityId;
+  int? cityId;
   String? name;
   String? location;
   String? description;
@@ -85,7 +85,7 @@ class ActivityModel {
     String? dateLastModified,
     int? branchId,
     int? regionId,
-    String? cityId,
+    int? cityId,
     String? name,
     String? location,
     String? description,

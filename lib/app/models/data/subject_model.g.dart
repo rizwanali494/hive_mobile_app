@@ -21,7 +21,7 @@ const SubjectModelSchema = Schema(
     r'cityId': PropertySchema(
       id: 1,
       name: r'cityId',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'dateAdded': PropertySchema(
       id: 2,
@@ -61,7 +61,7 @@ const SubjectModelSchema = Schema(
     r'regionId': PropertySchema(
       id: 9,
       name: r'regionId',
-      type: IsarType.string,
+      type: IsarType.long,
     )
   },
   estimateSize: _subjectModelEstimateSize,
@@ -76,12 +76,6 @@ int _subjectModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.cityId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
   {
     final value = object.dateAdded;
     if (value != null) {
@@ -106,12 +100,6 @@ int _subjectModelEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  {
-    final value = object.regionId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
   return bytesCount;
 }
 
@@ -122,7 +110,7 @@ void _subjectModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.branchId);
-  writer.writeString(offsets[1], object.cityId);
+  writer.writeLong(offsets[1], object.cityId);
   writer.writeString(offsets[2], object.dateAdded);
   writer.writeString(offsets[3], object.dateLastModified);
   writer.writeLong(offsets[4], object.externalGrade);
@@ -130,7 +118,7 @@ void _subjectModelSerialize(
   writer.writeLong(offsets[6], object.id);
   writer.writeString(offsets[7], object.name);
   writer.writeLong(offsets[8], object.owner);
-  writer.writeString(offsets[9], object.regionId);
+  writer.writeLong(offsets[9], object.regionId);
 }
 
 SubjectModel _subjectModelDeserialize(
@@ -141,7 +129,7 @@ SubjectModel _subjectModelDeserialize(
 ) {
   final object = SubjectModel(
     branchId: reader.readLongOrNull(offsets[0]),
-    cityId: reader.readStringOrNull(offsets[1]),
+    cityId: reader.readLongOrNull(offsets[1]),
     dateAdded: reader.readStringOrNull(offsets[2]),
     dateLastModified: reader.readStringOrNull(offsets[3]),
     externalGrade: reader.readLongOrNull(offsets[4]),
@@ -149,7 +137,7 @@ SubjectModel _subjectModelDeserialize(
     id: reader.readLongOrNull(offsets[6]),
     name: reader.readStringOrNull(offsets[7]),
     owner: reader.readLongOrNull(offsets[8]),
-    regionId: reader.readStringOrNull(offsets[9]),
+    regionId: reader.readLongOrNull(offsets[9]),
   );
   return object;
 }
@@ -164,7 +152,7 @@ P _subjectModelDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
@@ -180,7 +168,7 @@ P _subjectModelDeserializeProp<P>(
     case 8:
       return (reader.readLongOrNull(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -281,56 +269,48 @@ extension SubjectModelQueryFilter
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> cityIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
       cityIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
       cityIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> cityIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -339,78 +319,6 @@ extension SubjectModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      cityIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      cityIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      cityIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> cityIdMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'cityId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      cityIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cityId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      cityIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'cityId',
-        value: '',
       ));
     });
   }
@@ -1261,58 +1169,49 @@ extension SubjectModelQueryFilter
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      regionIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
       regionIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
       regionIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'regionId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
       regionIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1321,77 +1220,6 @@ extension SubjectModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'regionId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'regionId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'regionId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
-      regionIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'regionId',
-        value: '',
       ));
     });
   }

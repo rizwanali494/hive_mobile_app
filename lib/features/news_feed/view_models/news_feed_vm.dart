@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
-import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';

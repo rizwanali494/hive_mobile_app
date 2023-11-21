@@ -7,7 +7,6 @@ import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
-import 'package:hive_mobile/features/reports/screens/report_web_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreenVM extends ChangeNotifier with UtilFunctions {

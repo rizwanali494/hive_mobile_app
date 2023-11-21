@@ -25,7 +25,7 @@ const SessionNoteModelSchema = CollectionSchema(
     r'cityId': PropertySchema(
       id: 1,
       name: r'cityId',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'content': PropertySchema(
       id: 2,
@@ -99,12 +99,6 @@ int _sessionNoteModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.cityId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.content;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -144,7 +138,7 @@ void _sessionNoteModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.branchId);
-  writer.writeString(offsets[1], object.cityId);
+  writer.writeLong(offsets[1], object.cityId);
   writer.writeString(offsets[2], object.content);
   writer.writeString(offsets[3], object.dateAdded);
   writer.writeString(offsets[4], object.dateLastModified);
@@ -165,7 +159,7 @@ SessionNoteModel _sessionNoteModelDeserialize(
 ) {
   final object = SessionNoteModel(
     branchId: reader.readLongOrNull(offsets[0]),
-    cityId: reader.readStringOrNull(offsets[1]),
+    cityId: reader.readLongOrNull(offsets[1]),
     content: reader.readStringOrNull(offsets[2]),
     dateAdded: reader.readStringOrNull(offsets[3]),
     dateLastModified: reader.readStringOrNull(offsets[4]),
@@ -190,7 +184,7 @@ P _sessionNoteModelDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
@@ -404,58 +398,49 @@ extension SessionNoteModelQueryFilter
   }
 
   QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      cityIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
       cityIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
       cityIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
       cityIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -464,77 +449,6 @@ extension SessionNoteModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'cityId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cityId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QAfterFilterCondition>
-      cityIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'cityId',
-        value: '',
       ));
     });
   }
@@ -2083,10 +1997,10 @@ extension SessionNoteModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<SessionNoteModel, SessionNoteModel, QDistinct> distinctByCityId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<SessionNoteModel, SessionNoteModel, QDistinct>
+      distinctByCityId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'cityId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'cityId');
     });
   }
 
@@ -2175,7 +2089,7 @@ extension SessionNoteModelQueryProperty
     });
   }
 
-  QueryBuilder<SessionNoteModel, String?, QQueryOperations> cityIdProperty() {
+  QueryBuilder<SessionNoteModel, int?, QQueryOperations> cityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'cityId');
     });
