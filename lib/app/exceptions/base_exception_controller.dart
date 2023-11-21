@@ -17,11 +17,9 @@ mixin BaseExceptionController {
     log("Type of error found : ${error.runtimeType}");
     if (error is TimeoutException) {
       showErrorToast(msg: "Request Timeout");
-    }
-    if (error is SocketException) {
+    } else if (error is SocketException) {
       showErrorToast(msg: "No Internet Connection");
-    }
-    if (error is HTTPStatusCodeException) {
+    } else if (error is HTTPStatusCodeException) {
       _showResponseMessage(error.response.body);
       log("Error : ${error.response.body}");
       // showErrorToast(msg: msg, context: context);
