@@ -41,7 +41,7 @@ const ActivityModelSchema = CollectionSchema(
     r'cityId': PropertySchema(
       id: 4,
       name: r'cityId',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'date': PropertySchema(
       id: 5,
@@ -151,12 +151,6 @@ int _activityModelEstimateSize(
     }
   }
   {
-    final value = object.cityId;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.date;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -224,7 +218,7 @@ void _activityModelSerialize(
   );
   writer.writeString(offsets[2], object.bio);
   writer.writeLong(offsets[3], object.branchId);
-  writer.writeString(offsets[4], object.cityId);
+  writer.writeLong(offsets[4], object.cityId);
   writer.writeString(offsets[5], object.date);
   writer.writeString(offsets[6], object.dateAdded);
   writer.writeString(offsets[7], object.dateLastModified);
@@ -260,7 +254,7 @@ ActivityModel _activityModelDeserialize(
     ),
     bio: reader.readStringOrNull(offsets[2]),
     branchId: reader.readLongOrNull(offsets[3]),
-    cityId: reader.readStringOrNull(offsets[4]),
+    cityId: reader.readLongOrNull(offsets[4]),
     date: reader.readStringOrNull(offsets[5]),
     dateAdded: reader.readStringOrNull(offsets[6]),
     dateLastModified: reader.readStringOrNull(offsets[7]),
@@ -302,7 +296,7 @@ P _activityModelDeserializeProp<P>(
     case 3:
       return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
@@ -770,58 +764,49 @@ extension ActivityModelQueryFilter
   }
 
   QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      cityIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
       cityIdGreaterThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
       cityIdLessThan(
-    String? value, {
+    int? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'cityId',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
       cityIdBetween(
-    String? lower,
-    String? upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -830,77 +815,6 @@ extension ActivityModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'cityId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'cityId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cityId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
-      cityIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'cityId',
-        value: '',
       ));
     });
   }
@@ -2879,10 +2793,9 @@ extension ActivityModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ActivityModel, ActivityModel, QDistinct> distinctByCityId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<ActivityModel, ActivityModel, QDistinct> distinctByCityId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'cityId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'cityId');
     });
   }
 
@@ -3002,7 +2915,7 @@ extension ActivityModelQueryProperty
     });
   }
 
-  QueryBuilder<ActivityModel, String?, QQueryOperations> cityIdProperty() {
+  QueryBuilder<ActivityModel, int?, QQueryOperations> cityIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'cityId');
     });

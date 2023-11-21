@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
-import 'package:hive_mobile/app/get_it/api_service_instance.dart';
-import 'package:hive_mobile/app/get_it/user_model_instance.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
-import 'package:hive_mobile/app/models/user_auth_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/auth_services/auth_service.dart';

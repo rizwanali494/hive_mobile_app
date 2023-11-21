@@ -1,4 +1,3 @@
-import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 
 mixin BaseRequestHandler {
   Future<void> performApiRequest(

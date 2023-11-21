@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
-import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 
 abstract class BaseSliverListVM<T>

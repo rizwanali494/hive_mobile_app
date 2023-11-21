@@ -34,8 +34,8 @@ class SubjectModel {
   String? dateAdded;
   String? dateLastModified;
   int? branchId;
-  String? regionId;
-  String? cityId;
+  int? regionId;
+  int? cityId;
   String? name;
   String? grade;
   int? owner;
@@ -46,8 +46,8 @@ class SubjectModel {
     String? dateAdded,
     String? dateLastModified,
     int? branchId,
-    String? regionId,
-    String? cityId,
+    int? regionId,
+    int? cityId,
     String? name,
     String? grade,
     int? owner,

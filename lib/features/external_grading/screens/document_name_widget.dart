@@ -1,16 +1,12 @@
 import 'dart:developer';
 import 'dart:isolate';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/services/download_service/download_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DocumentNameWidget extends StatelessWidget {
   final String name;

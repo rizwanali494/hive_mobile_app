@@ -13,11 +13,8 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
-import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/profile/repositories/user_profile_repo.dart';
 import 'package:path/path.dart';
-import 'package:collection/collection.dart';
-import 'package:provider/provider.dart';
 
 class AccountSettingVM extends ChangeNotifier with BaseExceptionController {
   final userModel = GetIt.instance.get<UserModel>();

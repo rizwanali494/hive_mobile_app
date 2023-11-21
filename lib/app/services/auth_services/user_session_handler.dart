@@ -14,7 +14,6 @@ import 'package:hive_mobile/app/navigation/router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
-import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/email_verification/screens/email_verification_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
