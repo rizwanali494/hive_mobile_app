@@ -299,6 +299,7 @@ class GradeAddingVM
   List<DocumentWidgetController> documents = [];
 
   Future<void> selectDocuments(BuildContext context) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     final docs =
         await UtilFunctions.openImageTypeDialog(context, imageCount: 8);
     log("docs : ${docs?.length}");

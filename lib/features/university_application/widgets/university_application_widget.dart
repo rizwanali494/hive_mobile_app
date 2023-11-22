@@ -61,7 +61,7 @@ class UniversityApplicationWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        controller.description,
+                        controller.comments,
                         style: styles.inter10w400.copyWith(
                           color: styles.darkGrey,
                           overflow: TextOverflow.ellipsis,

@@ -129,6 +129,7 @@ class UtilFunctions {
       BuildContext? context,
       List<Widget> actionButtons = const []}) {
     // context = context ?? navigatorKey.currentContext;
+    Fluttertoast.cancel().then((value) {
       Fluttertoast.showToast(
         msg: msg ?? AppStrings.somethingWentWrong,
         toastLength: Toast.LENGTH_LONG,
@@ -138,6 +139,8 @@ class UtilFunctions {
         textColor: Colors.white,
         fontSize: 12.0,
       );
+    });
+
     // if (context == null || !(context.mounted)) {
     //   Fluttertoast.showToast(
     //     msg: msg ?? AppStrings.somethingWentWrong,
