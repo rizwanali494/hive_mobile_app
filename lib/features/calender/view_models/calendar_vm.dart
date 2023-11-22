@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
@@ -104,5 +103,10 @@ class CalendarVM extends ChangeNotifier with BaseExceptionController {
       return null;
     }
     return list[0];
+  }
+
+  Future<void> refreshCalendar() async {
+    await getAllEvents();
+    return;
   }
 }

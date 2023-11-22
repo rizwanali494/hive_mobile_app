@@ -34,4 +34,14 @@ class DaysEventController extends BaseApiVM<ActivityModel> {
   void setRepoInstance() {
     repo = DaysEventRepo(service: apiService);
   }
+
+  @override
+  Future<List<ActivityModel>> fetchLocalList() async {
+    return const [];
+  }
+
+  @override
+  Future<void> saveToLocal(List<ActivityModel> items) async {
+    return;
+  }
 }

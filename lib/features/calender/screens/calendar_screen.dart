@@ -86,60 +86,75 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
             ),
             10.verticalSpace,
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
+            if (provider.isLoading)
+              Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
-                child: CustomScrollView(
-                  slivers: [
-                    for (int i = 0;
-                        i < provider.calendarController.months.length;
-                        i++) ...[
-                      SliverToBoxAdapter(
-                        child: Text(
-                          DateTime(provider.calendarController.months[i].year,
-                                  provider.calendarController.months[i].month)
-                              .monthOnly,
-                          style: styles.inter20w700,
-                        ),
-                      ),
-                      SliverToBoxAdapter(child: 8.verticalSpace),
-                      SliverToBoxAdapter(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 5.h,
+              )
+            else
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                  ),
+                  child: RefreshIndicator(
+                    onRefresh: provider.refreshCalendar,
+                    backgroundColor: styles.white,
+                    child: CustomScrollView(
+                      slivers: [
+                        for (int i = 0;
+                            i < provider.calendarController.months.length;
+                            i++) ...[
+                          SliverToBoxAdapter(
+                            child: Text(
+                              DateTime(
+                                      provider
+                                          .calendarController.months[i].year,
+                                      provider
+                                          .calendarController.months[i].month)
+                                  .monthOnly,
+                              style: styles.inter20w700,
+                            ),
                           ),
-                          decoration: BoxDecoration(
-                              color: styles.lightCyan,
-                              borderRadius: BorderRadius.circular(25.r)),
-                          child: Row(
-                            children: [
-                              ...List.generate(
-                                provider.shortWeekDays.length,
-                                (index) => Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "${provider.shortWeekDays[index]}",
-                                      style: styles.inter12w400,
+                          SliverToBoxAdapter(child: 8.verticalSpace),
+                          SliverToBoxAdapter(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 5.h,
+                              ),
+                              decoration: BoxDecoration(
+                                  color: styles.lightCyan,
+                                  borderRadius: BorderRadius.circular(25.r)),
+                              child: Row(
+                                children: [
+                                  ...List.generate(
+                                    provider.shortWeekDays.length,
+                                    (index) => Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          "${provider.shortWeekDays[index]}",
+                                          style: styles.inter12w400,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      DayBuilderNew(
-                        month: provider.calendarController.months[i],
-                        cleanCalendarController: provider.calendarController,
-                      ),
-                      SliverToBoxAdapter(child: 40.verticalSpace),
-                    ],
-                  ],
+                          DayBuilderNew(
+                            month: provider.calendarController.months[i],
+                            cleanCalendarController:
+                                provider.calendarController,
+                          ),
+                          SliverToBoxAdapter(child: 40.verticalSpace),
+                        ],
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
           ],
         );
       },

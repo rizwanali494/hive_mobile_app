@@ -67,11 +67,11 @@ extension ApiFieldExpandExtension on String {
   }
 
   String withStartDate(String date) {
-    return _appendQueryParameter("date_added__gte=$date");
+    return _appendQueryParameter("date__gte=$date");
   }
 
   String withEndDate(String date) {
-    return _appendQueryParameter("date_added__lte=$date");
+    return _appendQueryParameter("date__lte=$date");
   }
 
   String get withContentNull {
