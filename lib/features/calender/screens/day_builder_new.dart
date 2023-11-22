@@ -118,12 +118,15 @@ class DayBuilderNew extends StatelessWidget {
                     ),
                   ),
                   if (hasEvent)
-                    Text(
-                      event.name ?? "",
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      style: styles.inter10w400.copyWith(
-                        color: hasEvent ? styles.white : null,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 2),
+                      child: Text(
+                        event.name ?? "",
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: styles.inter10w400.copyWith(
+                          color: hasEvent ? styles.white : null,
+                        ),
                       ),
                     ),
                 ],
