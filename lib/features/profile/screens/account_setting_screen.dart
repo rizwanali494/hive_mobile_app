@@ -44,25 +44,30 @@ class _AccountSettingScreenState extends State<AccountSettingScreen> {
                         radius: 40,
                       )
                     else
-                      CachedNetworkImage(
-                        imageUrl: provider.userImageUrl,
-                        imageBuilder: (context, imageProvider) => Container(
-                          width: 80.h,
-                          height: 80.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
+                      Card(
+                        elevation: 1,
+                        shape: CircleBorder(),
+                        margin: EdgeInsets.zero,
+                        child: CachedNetworkImage(
+                          imageUrl: provider.userImageUrl,
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 80.h,
+                            height: 80.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        placeholder: (context, url) => UserPlaceHolderWidget(
-                          height: 80.h,
-                        ),
-                        errorWidget: (context, url, error) =>
-                            UserPlaceHolderWidget(
-                          height: 80.h,
+                          placeholder: (context, url) => UserPlaceHolderWidget(
+                            height: 80.h,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              UserPlaceHolderWidget(
+                            height: 80.h,
+                          ),
                         ),
                       ),
                     11.verticalSpace,

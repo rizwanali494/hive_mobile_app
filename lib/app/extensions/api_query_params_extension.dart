@@ -1,5 +1,8 @@
+import 'dart:convert';
 
 import 'package:hive_mobile/app/constants/api_expand_fields.dart';
+import 'package:hive_mobile/app/extensions/date_time_extension.dart';
+import 'package:intl/intl.dart';
 
 extension ApiFieldExpandExtension on String {
   String get withOwnerObject {
@@ -148,6 +151,12 @@ extension ApiFieldExpandExtension on String {
     return _appendQueryParameter("ordering=-date");
   }
 
+  String get expiredPollsFilter {
+    final date = DateTime.now();
+    final formatter = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    return _appendQueryParameter("expiry_date=${formatter.format(date)}");
+  }
+
   String get withLeastRecentOrder {
     return _appendQueryParameter("ordering=date_added");
   }
@@ -187,6 +196,7 @@ extension ApiFieldExpandExtension on String {
   String get withNotApprovedStatus {
     return _appendQueryParameter("status__ne=${("APPROVED").toUpperCase()}");
   }
+
   String get withNotApprovedState {
     return _appendQueryParameter("state__ne=${("APPROVED").toUpperCase()}");
   }

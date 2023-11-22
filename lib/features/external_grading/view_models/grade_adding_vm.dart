@@ -369,7 +369,9 @@ class GradeAddingVM
 
   Future<File?> _downloadFile(String url, String filename) async {
     var httpClient = new HttpClient();
-    var request = await httpClient.getUrl(Uri.parse(url));
+    var request = await httpClient.getUrl(Uri.parse(url)).timeout(
+          Duration(minutes: 2),
+        );
     var response = await request.close();
     var bytes = await consolidateHttpClientResponseBytes(response);
     final dir = await getTemporaryDirectory();
