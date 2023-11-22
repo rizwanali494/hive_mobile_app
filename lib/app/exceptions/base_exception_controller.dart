@@ -22,7 +22,6 @@ mixin BaseExceptionController {
     } else if (error is HTTPStatusCodeException) {
       _showResponseMessage(error.response.body);
       log("Error : ${error.response.body}");
-      // showErrorToast(msg: msg, context: context);
     } else if (!(error is RefreshTokenException)) {
       showErrorToast();
     }
@@ -37,7 +36,12 @@ mixin BaseExceptionController {
   }
 
   void _showResponseMessage(data) {
-    final messageData = jsonDecode(data);
+    var messageData;
+    try {
+      messageData = jsonDecode(data);
+    } catch (e) {
+      messageData = {};
+    }
     String msg = messageData["message"] ?? AppStrings.somethingWentWrong;
     showErrorToast(msg: msg);
   }

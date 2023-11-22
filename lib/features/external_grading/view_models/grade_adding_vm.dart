@@ -19,6 +19,7 @@ import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 class GradeAddingVM
     with UtilFunctions, ChangeNotifier, BaseExceptionController {
@@ -140,8 +141,6 @@ class GradeAddingVM
 
   Future<void> uploadExternalGrade(BuildContext context) async {
     showLoaderDialog(context);
-    log("add external grade");
-
     try {
       var resultFile = await uploadDocuments();
       var institutionName = institute.text.trim();
@@ -152,22 +151,14 @@ class GradeAddingVM
         "result_files": resultFile?.map((e) => e.id).toList(),
       };
       var model = await externalGradeRepo.uploadExternalGrade(map: body);
-      log("popped 1");
-      var subjects = await uploadSubjects(model, subjectsVM);
-      log("popped 2");
+      await uploadSubjects(model, subjectsVM);
       model = model.copyWith(resultFile: resultFile);
       context.pop();
       context.pop(model);
       UtilFunctions.showToast(msg: AppStrings.externalGradeUploaded);
       return;
     } catch (error) {
-      if (error is HTTPStatusCodeException) {
-        log("${error.response.statusCode}");
-        log("${error.response.body}");
-      }
       log(error.toString());
-      // UtilFunctions.showToast(
-      //     msg: AppStrings.somethingWentWrong, context: context);
       handleException(error);
     }
     context.pop();
@@ -396,7 +387,6 @@ class GradeAddingVM
         []);
     final toDownload =
         documents.where((element) => !element.downloaded).toList();
-    log("toUpload : ${toDownload.length}");
     var files = await externalGradeRepo.uploadResultFile(
         files: toDownload.map((e) => e.file).toList());
     list.addAll([...?files]);
