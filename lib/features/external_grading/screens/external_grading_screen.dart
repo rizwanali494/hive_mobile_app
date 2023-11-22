@@ -43,6 +43,9 @@ class ExternalGradingScreen extends StatelessWidget {
                 BlueActionButton(
                   title: AppStrings.addExternalGrade,
                   onTap: () async {
+                    if (provider.isLoading) {
+                      return;
+                    }
                     var model = await context.push<ExternalGradeModel>(
                         AddExternalGradeScreen.route,
                         extra: {"addedGrades": provider.addedGrades});
@@ -77,15 +80,14 @@ class ExternalGradingScreen extends StatelessWidget {
                 5.verticalSpace,
                 BaseListViewWidget<ExternalGradeModel>(
                   controller: provider.listViewVM,
-                  listViewChild: (item) =>
-                      GradeInfoWidget(
-                        controller: GradeDetailVM(
-                          model: item,
-                        ),
-                        onChange: (ExternalGradeModel? model) {
-                          provider.updateItem(model);
-                        },
-                      ),
+                  listViewChild: (item) => GradeInfoWidget(
+                    controller: GradeDetailVM(
+                      model: item,
+                    ),
+                    onChange: (ExternalGradeModel? model) {
+                      provider.updateItem(model);
+                    },
+                  ),
                   shimmerSeparatorValue: 20,
                   listSeparatorValue: 10,
                   shimmerChild: Padding(
@@ -95,7 +97,6 @@ class ExternalGradingScreen extends StatelessWidget {
                     child: ExternalGradeShimmerWidget(),
                   ),
                 ),
-
 
                 // Expanded(
                 //   child: Padding(
@@ -116,7 +117,6 @@ class ExternalGradingScreen extends StatelessWidget {
                 //     ),
                 //   ),
                 // )
-
 
                 // if (provider.isLoading)
                 //   Expanded(
@@ -194,8 +194,7 @@ class ExternalGradingScreen extends StatelessWidget {
                 //     itemCount: 20,
                 //   ),
                 // ),
-              ]
-              ,
+              ],
             );
           },
         ),

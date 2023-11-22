@@ -13,7 +13,7 @@ extension StringExtension on String {
   }
   String get timeAgo  {
     var time = DateTime.tryParse(this) ?? DateTime.now();
-    return _timeOnlyFormat.format(time);
+    return _timeOnlyFormat.format(time.toLocal());
   }
 
   DateTime get toDatetime {
