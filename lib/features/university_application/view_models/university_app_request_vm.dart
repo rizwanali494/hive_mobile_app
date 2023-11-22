@@ -135,7 +135,7 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
       if (model == null) {
         log(body.toString());
         var createdModel =
-        await repository.uploadUniversityDocument(body: body);
+            await repository.uploadUniversityDocument(body: body);
         updatedModel = createdModel.copyWith(
           documents: documents,
           university: selectedUniversity,
@@ -337,5 +337,5 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   final scholarShipAmountValidator =
       ValidationBuilder().requiredField().build();
   final scholarShipPercentValidator =
-      ValidationBuilder().requiredField().build();
+      ValidationBuilder().amountField(100).build();
 }
