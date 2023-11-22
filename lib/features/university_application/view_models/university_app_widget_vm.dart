@@ -15,5 +15,7 @@ class UniversityAppWidgetVM {
 
   String get description => model.description ?? "";
 
+  String get comments => model.comments ?? "";
+
   ApplicationState get applicationState => model.getState;
 }
