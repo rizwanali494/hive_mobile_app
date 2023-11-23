@@ -8,8 +8,8 @@ import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
-import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
-import 'package:hive_mobile/features/news_feed/news_feed_repository_impl.dart';
+import 'package:hive_mobile/features/news_feed/repositories/news_feed_repository.dart';
+import 'package:hive_mobile/features/news_feed/repositories/news_feed_repository_impl.dart';
 import 'package:hive_mobile/features/news_feed/repositories/poll_repository.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 

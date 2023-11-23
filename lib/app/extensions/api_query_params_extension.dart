@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:hive_mobile/app/constants/api_expand_fields.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
@@ -75,6 +76,14 @@ extension ApiFieldExpandExtension on String {
 
   String withEndDate(String date) {
     return _appendQueryParameter("date__lte=$date");
+  }
+
+  String get withExpiredAndNUll {
+    final date = DateTime.now();
+    final formatter = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    log("Formatted date is ${formatter.format(date)}");
+    return _appendQueryParameter(
+        "expiry_date__gt__null=${formatter.format(date)}Z");
   }
 
   String get withContentNull {

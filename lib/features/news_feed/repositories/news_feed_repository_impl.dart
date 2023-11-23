@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
-import 'package:hive_mobile/features/news_feed/news_feed_repository.dart';
+import 'package:hive_mobile/features/news_feed/repositories/news_feed_repository.dart';
 
 class NewsFeedRepositoryImpl extends NewsFeedRepository {
   NewsFeedRepositoryImpl({required super.apiService});
@@ -16,6 +16,8 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
     var response = await apiService.get(
       url: withAttachments().withLimit(limit),
     );
+    log(withAttachments().withLimit(limit).withOffSet(offSet));
+
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
     announcements = items
@@ -45,7 +47,7 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
   }
 
   String withAttachments() => ApiEndpoints.announcementPost.withOwnerObject
-      .withPolls.withAttachments.withMostRecentOrder;
+      .withPolls.withAttachments.withMostRecentOrder.withExpiredAndNUll;
 
   @override
   Future<AnnouncementPostModel> fetchNewsFeedModel(int id) async {
