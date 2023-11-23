@@ -75,6 +75,8 @@ class GradeAddingVM
 
   List<SubjectVM> subjectsVM = [];
 
+  final scrollController = ScrollController();
+
   void addSubject() {
     final subjectName = subjectCtrl.text.trim();
     final hasSubject = subjectsVM
@@ -87,9 +89,15 @@ class GradeAddingVM
     if (!hasSubject) {
       final subject = SubjectVM(grade: selectedGrade!, name: subjectName);
       subjectsVM.add(subject);
+      subjectCtrl.clear();
+      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        final maxExtend = scrollController.position.maxScrollExtent;
+        scrollController.jumpTo(maxExtend);
+      });
+    } else {
+      UtilFunctions.showToast(msg: "Subject Already added");
     }
-    subjectCtrl.clear();
-    notifyListeners();
   }
 
   List<int> removedSubjectIds = [];

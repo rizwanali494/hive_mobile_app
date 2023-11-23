@@ -68,6 +68,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                     26.verticalSpace,
                     Expanded(
                       child: SingleChildScrollView(
+                        controller: provider.scrollController,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -101,24 +102,24 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 value: provider.selectedCertificate,
                                 isDense: true,
                                 icon:
-                                    const Icon(Icons.keyboard_arrow_down_sharp),
+                                const Icon(Icons.keyboard_arrow_down_sharp),
                                 dropdownColor: styles.white,
                                 underline: const SizedBox(),
                                 items: provider.certificates
                                     .map(
                                       (item) => DropdownMenuItem<String>(
-                                        value: item,
-                                        child: Text(
-                                          item,
-                                          style: styles.inter12w400,
-                                        ),
-                                      ),
-                                    )
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: styles.inter12w400,
+                                    ),
+                                  ),
+                                )
                                     .toList(),
                                 onChanged: provider.editModel == null
                                     ? (value) {
-                                        provider.selectCertificate(value);
-                                      }
+                                  provider.selectCertificate(value);
+                                }
                                     : null,
                               ),
                             ),
@@ -147,7 +148,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.only(left: 4.w),
@@ -185,14 +186,14 @@ class AddExternalGradeScreen extends StatelessWidget {
                                           items: provider.grades
                                               .map(
                                                 (value) =>
-                                                    DropdownMenuItem<String>(
+                                                DropdownMenuItem<String>(
                                                   value: value,
                                                   child: Text(
                                                     value,
                                                     style: styles.inter12w400,
                                                   ),
                                                 ),
-                                              )
+                                          )
                                               .toList(),
                                           onChanged: (value) {
                                             provider.setGrade(value);
@@ -247,14 +248,14 @@ class AddExternalGradeScreen extends StatelessWidget {
                                       padding: EdgeInsets.only(left: 21.w),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             child: Text(
                                               AppStrings.subjects,
                                               style: styles.inter10w600
                                                   .copyWith(
-                                                      color: styles.white),
+                                                  color: styles.white),
                                             ),
                                           ),
                                           Expanded(
@@ -263,7 +264,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                               AppStrings.grade,
                                               style: styles.inter10w600
                                                   .copyWith(
-                                                      color: styles.white),
+                                                  color: styles.white),
                                             ),
                                           ),
                                         ],
@@ -293,13 +294,6 @@ class AddExternalGradeScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Padding(
-                                //   padding: EdgeInsets.symmetric(horizontal: 4.w),
-                                //   child: Text(
-                                //     AppStrings.uploadResult,
-                                //     style: styles.inter14w600,
-                                //   ),
-                                // ),
                                 14.verticalSpace,
                                 if (provider.fileDownloading)
                                   Center(
@@ -309,7 +303,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                   Center(
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           AppStrings.errorDocDownloading,
@@ -327,35 +321,35 @@ class AddExternalGradeScreen extends StatelessWidget {
                                     ),
                                   )
                                 else ...[
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 4.w),
-                                        child: Text(
-                                          AppStrings.addDocument,
-                                          style: styles.inter14w600.copyWith(
-                                              color: styles.darkSlateGrey),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 4.w),
+                                          child: Text(
+                                            AppStrings.addDocument,
+                                            style: styles.inter14w600.copyWith(
+                                                color: styles.darkSlateGrey),
+                                          ),
                                         ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          provider.selectDocuments(context);
-                                        },
-                                        child: Icon(
-                                          Icons.add,
-                                          color: styles.skyBlue,
+                                        GestureDetector(
+                                          onTap: () {
+                                            provider.selectDocuments(context);
+                                          },
+                                          child: Icon(
+                                            Icons.add,
+                                            color: styles.skyBlue,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  24.verticalSpace,
-                                  for (final doc in provider.documents)
-                                    DocumentUploadWidget(
-                                      controller: doc,
+                                      ],
                                     ),
-                                ],
+                                    24.verticalSpace,
+                                    for (final doc in provider.documents)
+                                      DocumentUploadWidget(
+                                        controller: doc,
+                                      ),
+                                  ],
                               ],
                             ),
                             24.verticalSpace,
@@ -363,12 +357,12 @@ class AddExternalGradeScreen extends StatelessWidget {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: (provider.documents.isEmpty ||
-                                        provider.subjectsVM.isEmpty)
+                                    provider.subjectsVM.isEmpty)
                                     ? null
                                     : () {
-                                        // context.pop();
-                                        provider.addUpdate(context);
-                                      },
+                                  // context.pop();
+                                  provider.addUpdate(context);
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: styles.skyBlue,
                                 ),

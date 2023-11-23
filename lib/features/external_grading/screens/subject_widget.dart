@@ -23,83 +23,88 @@ class GradeWidget extends StatelessWidget {
       padding: EdgeInsets.only(
         bottom: 1.h,
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: styles.alabaster,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 21.w,
-                  bottom: 12.h,
-                  top: 12.h,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Expanded(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: styles.alabaster,
                 ),
-                child: Text(
-                  gradeVM.name,
-                  style: styles.inter12w400,
-                ),
-              ),
-            ),
-          ),
-          1.horizontalSpace,
-          Expanded(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: styles.alabaster,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 14.w,
-                  bottom: 12.h,
-                  top: 12.h,
-                ),
-                child: Text(
-                  gradeVM.grade,
-                  style: styles.inter12w400,
-                ),
-              ),
-            ),
-          ),
-          1.horizontalSpace,
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 11.h,
-              ),
-              decoration: BoxDecoration(color: styles.alabaster),
-              child: Align(
-                alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.only(
-                    right: 20.w,
+                    left: 21.w,
+                    bottom: 12.h,
+                    top: 12.h,
                   ),
-                  child: GestureDetector(
-                    onTap: onEdit,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Edit",
-                          style: styles.inter12w400,
-                        ),
-                        10.horizontalSpace,
-                        SvgPicture.asset(
-                          SvgIcons.edit,
-                          width: 20.w,
-                          height: 20.h,
-                          colorFilter:
-                              ColorFilter.mode(styles.azure, BlendMode.srcIn),
-                        ),
-                      ],
+                  child: Text(
+                    gradeVM.name,
+                    style: styles.inter12w400,
+                  ),
+                ),
+              ),
+            ),
+            1.horizontalSpace,
+            Expanded(
+              child: SizedBox(
+                height: double.infinity,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: styles.alabaster,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 14.w,
+                      bottom: 12.h,
+                      top: 12.h,
+                    ),
+                    child: Text(
+                      gradeVM.grade,
+                      style: styles.inter12w400,
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+            1.horizontalSpace,
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 11.h,
+                ),
+                decoration: BoxDecoration(color: styles.alabaster),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      right: 20.w,
+                    ),
+                    child: GestureDetector(
+                      onTap: onEdit,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Edit",
+                            style: styles.inter12w400,
+                          ),
+                          10.horizontalSpace,
+                          SvgPicture.asset(
+                            SvgIcons.edit,
+                            width: 20.w,
+                            height: 20.h,
+                            colorFilter:
+                                ColorFilter.mode(styles.azure, BlendMode.srcIn),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
