@@ -26,7 +26,6 @@ class DaysEventRepo {
     var response = await service.get(url: url);
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
-    log("linkkkkkk : ${list.length}");
     return list.map((item) => ActivityModel.fromJson(item)).toList();
   }
 }

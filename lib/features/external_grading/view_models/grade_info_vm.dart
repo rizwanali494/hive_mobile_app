@@ -23,7 +23,7 @@ class GradeDetailVM extends ChangeNotifier
     getAllDocs();
   }
 
-  String get degree => model.certificate ?? "";
+  String get certificate => model.certificate ?? "";
 
   String get subject => model.subjects?.first.name ?? "";
 
@@ -112,7 +112,7 @@ class GradeDetailVM extends ChangeNotifier
       documents = await downloadAllDocs(docs: model.resultFile);
     } catch (e) {
       errorDownloading = true;
-      handleException(e);
+      // handleException(e);
     }
     downloadingDocs = false;
     notifyListeners();

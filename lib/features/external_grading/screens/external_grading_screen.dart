@@ -81,9 +81,7 @@ class ExternalGradingScreen extends StatelessWidget {
                 BaseListViewWidget<ExternalGradeModel>(
                   controller: provider.listViewVM,
                   listViewChild: (item) => GradeInfoWidget(
-                    controller: GradeDetailVM(
-                      model: item,
-                    ),
+                    model: item,
                     onChange: (ExternalGradeModel? model) {
                       provider.updateItem(model);
                     },

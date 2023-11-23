@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
@@ -60,6 +61,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
   Future<List<T>> fetchInitialItems();
 
   Future<void> getInitialItems() async {
+    log("Getting initial Items for ${T.runtimeType}");
     uiState = UiState.loading();
     notifyListeners();
     final request = () async {
@@ -87,6 +89,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
   }
 
   Future<void> getNextItems() async {
+    log("Getting next Item for ${T.runtimeType}");
     uiState = UiState.fetchingMore();
     paginationController.state = PaginationState.GettingMore();
     paginationController.toggleIsGettingMore(true);
@@ -170,8 +173,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
     notifyListeners();
   }
 
-  Future<void> performRequest(
-      {required Function request, Function( dynamic error )? onErrorOccurred}) async {
+  Future<void> performRequest({required Function request, Function( dynamic error )? onErrorOccurred}) async {
     try {
       await request();
     } catch (e) {

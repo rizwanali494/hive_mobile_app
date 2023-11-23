@@ -86,6 +86,13 @@ extension ApiFieldExpandExtension on String {
         "expiry_date__gt__null=${formatter.format(date)}Z");
   }
 
+  String get withDateGTE {
+    final date = DateTime.now();
+    final formatter = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    log("Formatted date is ${formatter.format(date)}");
+    return _appendQueryParameter("date__gte=${formatter.format(date)}Z");
+  }
+
   String get withContentNull {
     return _appendQueryParameter("content__isnull=True");
   }

@@ -12,9 +12,12 @@ abstract class ActivityRepo {
 
   ActivityRepo({required this.apiService});
 
-  Future<List<ActivityModel>> getInitialActivities({int? limit});
+  Future<List<ActivityModel>> getInitialActiveActivities({int? limit});
 
-  Future<List<ActivityModel>> getNextActivities({int? offSet, int? limit});
+  Future<List<ActivityModel>> getNextActiveActivities(
+      {int? offSet, int? limit});
+
+  Future<List<ActivityModel>> getAllActivities({int? offSet, int? limit});
 
   Future<void> submitSelection(
       {required int id, required Map body, required String state});
@@ -23,14 +26,17 @@ abstract class ActivityRepo {
 class ActivityRepositoryImpl extends ActivityRepo {
   ActivityRepositoryImpl({required super.apiService});
 
-  String endPoint =
+  String activeEventsEndpoint = ApiEndpoints
+      .activity.withBanner.withOwnerObject.withMostRecentOrder.withDateGTE;
+
+  String allEventsEndpoint =
       ApiEndpoints.activity.withBanner.withOwnerObject.withMostRecentOrder;
 
   @override
-  Future<List<ActivityModel>> getInitialActivities({int? limit}) async {
-    log(endPoint.withLimit(limit));
+  Future<List<ActivityModel>> getInitialActiveActivities({int? limit}) async {
+    log("Activity URL is ${activeEventsEndpoint.withLimit(10)}");
     var response = await apiService.get(
-      url: endPoint.withLimit(limit),
+      url: activeEventsEndpoint.withLimit(limit),
     );
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
@@ -38,10 +44,21 @@ class ActivityRepositoryImpl extends ActivityRepo {
   }
 
   @override
-  Future<List<ActivityModel>> getNextActivities(
+  Future<List<ActivityModel>> getNextActiveActivities(
       {int? offSet, int? limit}) async {
     var response = await apiService.get(
-      url: endPoint.withLimit(limit).withOffSet(offSet),
+      url: activeEventsEndpoint.withLimit(limit).withOffSet(offSet),
+    );
+    var result = jsonDecode(response.body);
+    List list = result["results"] ?? [];
+    return list.map((e) => ActivityModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<List<ActivityModel>> getAllActivities(
+      {int? offSet, int? limit}) async {
+    var response = await apiService.get(
+      url: allEventsEndpoint.withLimit(limit).withOffSet(offSet),
     );
     var result = jsonDecode(response.body);
     List list = result["results"] ?? [];
@@ -52,7 +69,6 @@ class ActivityRepositoryImpl extends ActivityRepo {
   Future<void> submitSelection(
       {required int id, required Map body, required String state}) async {
     var url = getEndpoint(id, state);
-    log(url.toString());
     var response = await apiService.post(url: url, body: {});
     return;
   }

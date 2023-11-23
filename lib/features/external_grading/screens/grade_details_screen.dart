@@ -91,7 +91,8 @@ class GradeDetailsScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          GradeInfoDescription(description: provider.degree),
+                          GradeInfoDescription(
+                              description: provider.certificate),
                           GradeInfoDescription(description: provider.institute),
                           Row(
                             children: [

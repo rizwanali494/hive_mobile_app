@@ -12,14 +12,14 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
 
   @override
   Future<List<ActivityModel>> fetchInitialItems() async {
-    var list = await activityRepo.getInitialActivities(limit: limit);
+    var list = await activityRepo.getInitialActiveActivities(limit: limit);
     return list;
   }
 
   @override
   Future<List<ActivityModel>> fetchNextItems() async {
-    var list =
-        await activityRepo.getNextActivities(limit: limit, offSet: offSet);
+    var list = await activityRepo.getNextActiveActivities(
+        limit: limit, offSet: offSet);
     return list;
   }
 

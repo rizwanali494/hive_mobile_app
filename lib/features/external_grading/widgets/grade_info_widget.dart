@@ -13,13 +13,14 @@ import 'package:hive_mobile/features/external_grading/widgets/grading_title_widg
 import 'package:provider/provider.dart';
 
 class GradeInfoWidget extends StatelessWidget {
-  final GradeDetailVM controller;
+  final ExternalGradeModel model;
+
   final Function(ExternalGradeModel? model) onChange;
 
   const GradeInfoWidget({
     super.key,
-    required this.controller,
     required this.onChange,
+    required this.model,
   });
 
   @override
@@ -35,7 +36,7 @@ class GradeInfoWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GradingTitleWidget(
-                title: controller.degree,
+                title: model.certificate ?? "",
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -47,7 +48,7 @@ class GradeInfoWidget extends StatelessWidget {
                     var model = await context.push<ExternalGradeModel>(
                         GradeDetailsScreen.route,
                         extra: {
-                          "model": controller.model,
+                          "model": this.model,
                           "onChange": provider.updateItem,
                           "onDelete": provider.removeExternalGrade,
                         });
