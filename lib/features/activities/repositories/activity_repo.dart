@@ -46,6 +46,8 @@ class ActivityRepositoryImpl extends ActivityRepo {
   @override
   Future<List<ActivityModel>> getNextActiveActivities(
       {int? offSet, int? limit}) async {
+    log("Activity URL is ${activeEventsEndpoint.withLimit(limit).withOffSet(offSet)}");
+
     var response = await apiService.get(
       url: activeEventsEndpoint.withLimit(limit).withOffSet(offSet),
     );
