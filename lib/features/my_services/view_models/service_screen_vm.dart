@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
@@ -79,6 +78,7 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
   }
 
   Future<void> refreshAllList(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 1500));
     context.read<AllServiceRequestVM?>()?.refreshList();
     context.read<OpenServiceRequestVM?>()?.refreshList();
     context.read<CloseServiceRequestVM?>()?.refreshList();
