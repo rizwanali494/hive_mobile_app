@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -40,7 +42,7 @@ class ActivityModel {
     skepticalStudents = json['skeptical_students'];
     selection = json['selection'];
     banner =
-        json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
+    json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
     owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
@@ -141,9 +143,9 @@ class ActivityModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ActivityModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+          other is ActivityModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
 
   @override
   int get hashCode => id.hashCode;
@@ -160,6 +162,17 @@ class ActivityModel {
       return ActivitySelectionStatus.Undecided;
     }
     return null;
+  }
+
+  void handleAttendingCount() {
+    if (getSelection == ActivitySelectionStatus.Attending) {
+      attendingStudents = (attendingStudents ?? 0) + 1;
+    } else {
+      if ((attendingStudents ?? 0) > 0) {
+        attendingStudents = (attendingStudents ?? -1) - 1;
+      }
+    }
+    log("message 111 ::: ${attendingStudents}");
   }
 }
 

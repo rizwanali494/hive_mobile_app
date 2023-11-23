@@ -7,8 +7,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
-class ActivityScreenVM extends BaseApiVM<ActivityModel>
-     {
+class ActivityScreenVM extends BaseApiVM<ActivityModel> {
   late ActivityRepo activityRepo;
 
   @override
@@ -35,8 +34,9 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel>
       {required ActivityModel model, required String state}) async {
     var previousModel = model.copyWith();
     model.selection = state.toUpperCase();
+    model.handleAttendingCount();
+    log("message ::: ${model.attendingStudents}");
     var index = items.indexOf(model);
-    log("current model index : $index");
     if (index > -1) {
       items[index] = model;
     }
@@ -46,10 +46,6 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel>
           id: model.id ?? 0, body: {}, state: state);
       await localService.put(model);
     } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        log("message : ${e.response.statusCode.toString()}");
-        log("message : ${e.response.body.toString()}");
-      }
       await Future.delayed(Duration(seconds: 1));
       var index = items.indexOf(previousModel);
       if (index > -1) {

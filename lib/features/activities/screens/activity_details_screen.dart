@@ -34,132 +34,6 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
     return Scaffold(
       body: Column(
         children: [
-          // CachedNetworkImage(
-          //   imageUrl: controller.bannerImageUrl!,
-          //   placeholder: (context, url) => Container(
-          //     width: 393.w,
-          //     height: 385.h,
-          //     decoration: BoxDecoration(
-          //       borderRadius: const BorderRadius.only(
-          //         bottomLeft: Radius.circular(30),
-          //         bottomRight: Radius.circular(30),
-          //       ),
-          //     ),
-          //   ),
-          //   imageBuilder: (context, imageProvider) => Container(
-          //     width: 393.w,
-          //     height: 385.h,
-          //     decoration: BoxDecoration(
-          //       image: DecorationImage(
-          //         image: NetworkImage(controller.bannerImageUrl!),
-          //         fit: BoxFit.cover,
-          //       ),
-          //       gradient: LinearGradient(colors: [
-          //         styles.white,
-          //         styles.black,
-          //       ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
-          //       borderRadius: const BorderRadius.only(
-          //         bottomLeft: Radius.circular(30),
-          //         bottomRight: Radius.circular(30),
-          //       ),
-          //     ),
-          //     child: DecoratedBox(
-          //       decoration: BoxDecoration(
-          //           borderRadius: const BorderRadius.only(
-          //             bottomLeft: Radius.circular(30),
-          //             bottomRight: Radius.circular(30),
-          //           ),
-          //           gradient: LinearGradient(
-          //               colors: [
-          //                 styles.black.withOpacity(0),
-          //                 styles.black.withOpacity(0.9),
-          //               ],
-          //               begin: Alignment.topCenter,
-          //               end: Alignment.bottomCenter)),
-          //       child: Padding(
-          //         padding:
-          //             EdgeInsets.only(left: 18.w, right: 25.w, bottom: 31.h),
-          //         child: Align(
-          //           alignment: Alignment.bottomLeft,
-          //           child: Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Expanded(
-          //                 child: Row(
-          //                   children: [
-          //                     GestureDetector(
-          //                       onTap: () {
-          //                         context.pop();
-          //                       },
-          //                       child: Icon(
-          //                         Icons.arrow_back_ios,
-          //                         color: styles.white,
-          //                       ),
-          //                     ),
-          //                     20.horizontalSpace,
-          //                     Expanded(
-          //                       child: Column(
-          //                         crossAxisAlignment: CrossAxisAlignment.start,
-          //                         mainAxisSize: MainAxisSize.min,
-          //                         children: [
-          //                           Text(
-          //                             controller.name,
-          //                             overflow: TextOverflow.ellipsis,
-          //                             style: styles.inter20w700
-          //                                 .copyWith(color: styles.white),
-          //                           ),
-          //                           Text(
-          //                             "${controller.eventDay} ${AppStrings.at} ${controller.eventTime}",
-          //                             maxLines: 1,
-          //                             style: styles.inter16w400
-          //                                 .copyWith(color: styles.white),
-          //                           ),
-          //                         ],
-          //                       ),
-          //                     ),
-          //                   ],
-          //                 ),
-          //               ),
-          //               IntrinsicHeight(
-          //                 child: IntrinsicWidth(
-          //                   child: Stack(
-          //                     children: [
-          //                       SvgPicture.asset(
-          //                         SvgIcons.calenderBorder,
-          //                       ),
-          //                       Center(
-          //                         child: Column(
-          //                           mainAxisSize: MainAxisSize.min,
-          //                           crossAxisAlignment:
-          //                               CrossAxisAlignment.center,
-          //                           children: [
-          //                             10.horizontalSpace,
-          //                             Text(
-          //                               controller.dateOnly,
-          //                               style: styles.inter12w400
-          //                                   .copyWith(color: styles.white),
-          //                             ),
-          //                             Text(
-          //                               controller.monthOnly,
-          //                               style: styles.inter8w400
-          //                                   .copyWith(color: styles.white),
-          //                             ),
-          //                             5.horizontalSpace,
-          //                           ],
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          //   errorWidget: (context, url, error) => Icon(Icons.error),
-          // ),
           Container(
             width: 393.w,
             height: 385.h,
@@ -297,105 +171,107 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ActivityDetailWidget(
-                            title: widget.controller.campusName,
-                            iconPath: SvgIcons.campusLocation,
+              child: ValueListenableBuilder(
+                valueListenable: widget.controller.selectionStatus,
+                builder: (context, value, child) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ActivityDetailWidget(
+                                title: widget.controller.campusName,
+                                iconPath: SvgIcons.campusLocation,
+                              ),
+                              ActivityDetailWidget(
+                                title:
+                                    "${AppStrings.eventBy}: ${widget.controller.eventBy}",
+                                iconPath: SvgIcons.userBlue,
+                              ),
+                              ActivityDetailWidget(
+                                title:
+                                    "${widget.controller.peopleGoing} ${AppStrings.peopleGoing}",
+                                iconPath: SvgIcons.archiveTick,
+                              ),
+                              12.verticalSpace,
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  widget.controller.description,
+                                  style: styles.inter12w400,
+                                ),
+                              ),
+                            ],
                           ),
-                          ActivityDetailWidget(
-                            title:
-                                "${AppStrings.eventBy}: ${widget.controller.eventBy}",
-                            iconPath: SvgIcons.userBlue,
-                          ),
-                          ActivityDetailWidget(
-                            title:
-                                "${widget.controller.peopleGoing} ${AppStrings.peopleGoing}",
-                            iconPath: SvgIcons.archiveTick,
-                          ),
-                          12.verticalSpace,
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              widget.controller.description,
-                              style: styles.inter12w400,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  15.verticalSpace,
-                  ValueListenableBuilder(
-                    valueListenable: widget.controller.selectionStatus,
-                    builder: (context, value, child) => Padding(
-                      padding: EdgeInsets.only(bottom: 27.h),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              widget.controller.setActivitySelection(
-                                  state: AppStrings.attending,
-                                  activityScreenVM: widget.activityProvider);
-                              // widget.activityProvider?.setActivitySelection(
-                              //     model: widget.controller.model,
-                              //     state: AppStrings.attending);
-                            },
-                            child: ActivityStatusWidget(
-                              iconPath: SvgIcons.tickSquare,
-                              title: AppStrings.attending,
-                              isSelected: widget.controller.isSelected(
-                                ActivitySelectionStatus.Attending,
+                      15.verticalSpace,
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 27.h),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                widget.controller.setActivitySelection(
+                                    state: AppStrings.attending,
+                                    activityScreenVM: widget.activityProvider);
+                                // widget.activityProvider?.setActivitySelection(
+                                //     model: widget.controller.model,
+                                //     state: AppStrings.attending);
+                              },
+                              child: ActivityStatusWidget(
+                                iconPath: SvgIcons.tickSquare,
+                                title: AppStrings.attending,
+                                isSelected: widget.controller.isSelected(
+                                  ActivitySelectionStatus.Attending,
+                                ),
                               ),
                             ),
-                          ),
-                          12.17.horizontalSpace,
-                          GestureDetector(
-                            onTap: () async {
-                              widget.controller.setActivitySelection(
-                                  state: AppStrings.SKEPTICAL,
-                                  activityScreenVM: widget.activityProvider);
-                              //
-                              // widget.activityProvider?.setActivitySelection(
-                              //     model: widget.controller.model,
-                              //     state: AppStrings.SKEPTICAL);
-                            },
-                            child: ActivityStatusWidget(
-                              iconPath: SvgIcons.maybe,
-                              title: AppStrings.maybe,
-                              isSelected: widget.controller.isSelected(
-                                ActivitySelectionStatus.Maybe,
+                            12.17.horizontalSpace,
+                            GestureDetector(
+                              onTap: () async {
+                                widget.controller.setActivitySelection(
+                                    state: AppStrings.SKEPTICAL,
+                                    activityScreenVM: widget.activityProvider);
+                                //
+                                // widget.activityProvider?.setActivitySelection(
+                                //     model: widget.controller.model,
+                                //     state: AppStrings.SKEPTICAL);
+                              },
+                              child: ActivityStatusWidget(
+                                iconPath: SvgIcons.maybe,
+                                title: AppStrings.maybe,
+                                isSelected: widget.controller.isSelected(
+                                  ActivitySelectionStatus.Maybe,
+                                ),
                               ),
                             ),
-                          ),
-                          12.17.horizontalSpace,
-                          GestureDetector(
-                            onTap: () {
-                              widget.controller.setActivitySelection(
-                                  state: AppStrings.NON_ATTENDING,
-                                  activityScreenVM: widget.activityProvider);
+                            12.17.horizontalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                widget.controller.setActivitySelection(
+                                    state: AppStrings.NON_ATTENDING,
+                                    activityScreenVM: widget.activityProvider);
 
-                              // widget.activityProvider?.setActivitySelection(
-                              //     model: widget.controller.model,
-                              //     state: AppStrings.NON_ATTENDING);
-                            },
-                            child: ActivityStatusWidget(
-                              iconPath: SvgIcons.undecided,
-                              title: AppStrings.undecided,
-                              isSelected: widget.controller.isSelected(
-                                ActivitySelectionStatus.Undecided,
+                                // widget.activityProvider?.setActivitySelection(
+                                //     model: widget.controller.model,
+                                //     state: AppStrings.NON_ATTENDING);
+                              },
+                              child: ActivityStatusWidget(
+                                iconPath: SvgIcons.undecided,
+                                title: AppStrings.undecided,
+                                isSelected: widget.controller.isSelected(
+                                  ActivitySelectionStatus.Undecided,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               ),
             ),
           ),

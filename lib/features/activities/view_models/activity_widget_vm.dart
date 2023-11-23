@@ -67,6 +67,7 @@ class ActivityWidgetVM {
     var previousModel = model.copyWith();
     model = model.copyWith(selection: state.toUpperCase());
     model.selection = state.toUpperCase();
+    model.handleAttendingCount();
     selectionStatus.value = model.getSelection;
     activityScreenVM?.setModel(model);
     try {
