@@ -65,7 +65,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     super.dispose();
   }
 
-  int unreadCount = 15;
+  int unreadCount = 0;
 
   @override
   Future<void> refreshList() async {
