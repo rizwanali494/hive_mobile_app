@@ -15,7 +15,7 @@ abstract class NotificationRepository {
   Future<List<NotificationModel>> getNextNotificationList(
       {int? offSet, int? limit});
 
-  Future<void> readNotification();
+  Future<void> readNotification(int id);
 }
 
 class NotificationRepositoryImpl extends NotificationRepository {
@@ -47,5 +47,12 @@ class NotificationRepositoryImpl extends NotificationRepository {
   }
 
   @override
-  Future<void> readNotification() async {}
+  Future<void> readNotification(int id) async {
+    final url = "${ApiEndpoints.notification}${id}/read/";
+    final response = await apiService.post(
+      url: url,
+      body: {},
+    );
+    return;
+  }
 }

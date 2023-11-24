@@ -23,7 +23,7 @@ class NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final titleTextStyle =
-    styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
+        styles.inter14w600.copyWith(fontWeight: FontWeight.w500);
     return ListTile(
       visualDensity: const VisualDensity(vertical: -3, horizontal: 0.0),
       // minVerticalPadding: 20.h,
@@ -46,10 +46,23 @@ class NotificationTile extends StatelessWidget {
         controller.title,
         style: titleTextStyle,
       ),
-      trailing: Text(
-        controller.trailing,
-        style:
-            styles.inter10w400.copyWith(color: styles.black.withOpacity(0.5)),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            controller.trailing,
+            style: styles.inter10w400
+                .copyWith(color: styles.black.withOpacity(0.5)),
+          ),
+          ...[
+            2.verticalSpace,
+            CircleAvatar(
+              radius: 3,
+              backgroundColor: styles.green,
+            ),
+          ]
+        ],
       ),
     );
   }

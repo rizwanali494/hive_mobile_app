@@ -96,7 +96,7 @@ class GradeAddingVM
         scrollController.jumpTo(maxExtend);
       });
     } else {
-      UtilFunctions.showToast(msg: "Subject Already added");
+      UtilFunctions.showToast(msg: "Subject already added");
     }
   }
 

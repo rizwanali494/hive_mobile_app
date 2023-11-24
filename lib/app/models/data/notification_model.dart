@@ -16,9 +16,10 @@ class NotificationModel {
     this.attachedObjectId,
     this.recipient,
     this.attachments,
+    this.localRead = false,
   });
 
-  NotificationModel.fromJson(dynamic json) {
+  NotificationModel.fromJson(dynamic json, {this.localRead = false}) {
     id = json['id'];
     localId = json['id'] ?? 0;
     dateAdded = json['date_added'];
@@ -42,6 +43,7 @@ class NotificationModel {
   String? dateLastModified;
   String? content;
   bool? isRead;
+  final bool localRead;
   String? attachedObjectType;
   int? attachedObjectId;
   int? recipient;
@@ -54,6 +56,7 @@ class NotificationModel {
     String? dateLastModified,
     String? content,
     bool? isRead,
+    bool? localRead,
     String? attachedObjectType,
     int? attachedObjectId,
     int? recipient,
@@ -61,6 +64,7 @@ class NotificationModel {
   }) =>
       NotificationModel(
         id: id ?? this.id,
+        localRead: localRead ?? this.localRead,
         localId: localId ?? this.localId,
         dateAdded: dateAdded ?? this.dateAdded,
         dateLastModified: dateLastModified ?? this.dateLastModified,
