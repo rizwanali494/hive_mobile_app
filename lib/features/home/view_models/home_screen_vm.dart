@@ -117,10 +117,8 @@ class HomeScreenVm extends ChangeNotifier with UserSessionHandler {
   void setBottomNavWidget(int index, BuildContext context) {
     closeDrawer();
     currentDrawerWidget = null;
-    debugPrint("$index");
     _currentIndex = index;
     notifyListeners();
-    debugPrint("$_currentIndex");
     notifyListeners();
   }
 

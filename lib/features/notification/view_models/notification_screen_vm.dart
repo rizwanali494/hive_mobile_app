@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
@@ -16,6 +14,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   Future<List<NotificationModel>> fetchInitialItems() async {
     var list =
         await notificationRepository.getInitialNotificationList(limit: limit);
+    setCount();
     return list;
   }
 
@@ -66,6 +65,8 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     super.dispose();
   }
 
+  int unreadCount = 15;
+
   @override
   Future<void> refreshList() async {
     await super.refreshList();
@@ -74,5 +75,16 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
       scrollController.animateTo(topValue,
           duration: Duration(milliseconds: 600), curve: Curves.linear);
     });
+    setCount();
+  }
+
+  void setCount() {
+    unreadCount = items.where((element) => element.isRead ?? false).length;
+    notifyListeners();
+  }
+
+  void resetCount() {
+    unreadCount = 0;
+    notifyListeners();
   }
 }

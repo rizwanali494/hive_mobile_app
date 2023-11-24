@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/repositories/user_repository.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
@@ -30,6 +32,7 @@ import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.d
 import 'package:hive_mobile/features/university_application/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/previous_application_vm.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomeScreen extends StatefulWidget {
   static const route = '/HomeScreen';
@@ -65,106 +68,163 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Consumer<HomeScreenVm>(
         builder: (providerContext, provider, child) {
-          return Scaffold(
-            key: provider.scaffoldKey,
-            backgroundColor: styles.white,
-            // extendBody: true,
-            drawer: DrawerWidget(
-              bottomRadius: bottomRadius,
-              controller: DrawerWidgetVM(
-                userModel: provider.getUserModel,
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (context) => NewsFeedVM(),
               ),
-            ),
-            body: MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (context) => NewsFeedVM(),
+              ChangeNotifierProvider(
+                create: (context) => InboxScreenVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => NotificationScreenVM(),
+                lazy: false,
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ReportYear1VM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ReportsScreenVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ProfileScreenVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ActivityScreenVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => CalendarVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => ServiceScreenVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => AllServiceRequestVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => ExternalGradeVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => AcceptedApplicationVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => PreviousApplicationVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (BuildContext context) => SessionNoteVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => ACKSessionNoteVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => PendingSessionNoteVM(),
+              ),
+            ],
+            child: Scaffold(
+              key: provider.scaffoldKey,
+              backgroundColor: styles.white,
+              // extendBody: true,
+              drawer: DrawerWidget(
+                bottomRadius: bottomRadius,
+                controller: DrawerWidgetVM(
+                  userModel: provider.getUserModel,
                 ),
-                ChangeNotifierProvider(
-                  create: (context) => InboxScreenVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => NotificationScreenVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => ReportYear1VM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => ReportsScreenVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => ProfileScreenVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => ActivityScreenVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => CalendarVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => ServiceScreenVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => AllServiceRequestVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => ExternalGradeVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => AcceptedApplicationVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => PreviousApplicationVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (BuildContext context) => SessionNoteVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => ACKSessionNoteVM(),
-                ),
-                ChangeNotifierProvider(
-                  create: (context) => PendingSessionNoteVM(),
-                ),
-              ],
-              child: provider.currentPage,
-            ),
-            bottomNavigationBar: DecoratedBox(
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(47),
-                  topLeft: Radius.circular(47),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black38,
-                    spreadRadius: 0,
-                    blurRadius: 10,
+              ),
+              body: provider.currentPage,
+              bottomNavigationBar: DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(47),
+                    topLeft: Radius.circular(47),
                   ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(47.0),
-                  topRight: Radius.circular(47.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black38,
+                      spreadRadius: 0,
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
-                child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  backgroundColor: styles.white,
-                  currentIndex: provider.currentIndex,
-                  onTap: (index) {
-                    provider.setBottomNavWidget(index, context);
-                  },
-                  items: <BottomNavigationBarItem>[
-                    for (var icon in provider.btmNavIcons)
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(47.0),
+                    topRight: Radius.circular(47.0),
+                  ),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: styles.white,
+                    currentIndex: provider.currentIndex,
+                    onTap: (index) {
+                      provider.setBottomNavWidget(index, context);
+                    },
+                    items: <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
                         icon: BottomNavBarWidget(
-                          icon: icon,
-                          isSelected: provider.isSelected(icon),
+                          icon: SvgIcons.homeNav,
+                          isSelected: provider.isSelected(SvgIcons.homeNav),
                         ),
                         label: "",
                       ),
-                  ],
+                      BottomNavigationBarItem(
+                        icon: BottomNavBarWidget(
+                          icon: SvgIcons.messageNav,
+                          isSelected: provider.isSelected(SvgIcons.messageNav),
+                        ),
+                        label: "",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Builder(
+                          builder: (context) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28),
+                              color:
+                                  provider.isSelected(SvgIcons.notificationNav)
+                                      ? styles.lightBlue
+                                      : null,
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.all(8),
+                            child: badges.Badge(
+                              position:
+                                  badges.BadgePosition.topEnd(end: -1, top: -3),
+                              badgeStyle:
+                                  badges.BadgeStyle(badgeColor: styles.green),
+                              showBadge: ((context
+                                          .read<NotificationScreenVM>()
+                                          ?.unreadCount ??
+                                      4) >
+                                  0),
+                              child: SvgPicture.asset(
+                                SvgIcons.notificationNav,
+                                colorFilter: ColorFilter.mode(
+                                  provider.isSelected(SvgIcons.notificationNav)
+                                      ? styles.deepSkyBlue
+                                      : styles.black.withOpacity(0.5),
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        label: "",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: BottomNavBarWidget(
+                          icon: SvgIcons.reportNav,
+                          isSelected: provider.isSelected(SvgIcons.reportNav),
+                        ),
+                        label: "",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: BottomNavBarWidget(
+                          icon: SvgIcons.profileNav,
+                          isSelected: provider.isSelected(SvgIcons.profileNav),
+                        ),
+                        label: "",
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

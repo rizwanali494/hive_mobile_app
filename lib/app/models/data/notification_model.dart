@@ -102,4 +102,7 @@ class NotificationModel {
 
   @override
   int get hashCode => id.hashCode;
+
+// @ignore
+// bool get hasRead => localRead || (isRead ?? false);
 }
