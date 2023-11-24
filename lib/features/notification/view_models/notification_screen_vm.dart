@@ -69,18 +69,21 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
 
   @override
   Future<void> refreshList() async {
-    await super.refreshList();
+    await super.refreshList().then((value) => setCount());
     final topValue = scrollController.position.minScrollExtent;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       scrollController.animateTo(topValue,
           duration: Duration(milliseconds: 600), curve: Curves.linear);
     });
-    setCount();
-    notifyListeners();
+    // setCount();
   }
 
   void setCount() {
-    unreadCount = items.where((element) => !(element.isRead ?? false)).length;
+    unreadCount = items.where((element) {
+      log("ID : ${element.id} ${element.isRead}");
+      return !(element.isRead ?? false);
+    }).length;
+    log("MEssage unread count :: ${unreadCount}");
     notifyListeners();
   }
 
