@@ -53,7 +53,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     notificationListener = webSocketService.dataStream?.listen((event) {
       log("Notification Listener ::::: ${event}");
       if (event != null) {
-        Future.delayed(Duration(seconds: 2)).then((value) => refreshList());
+        Future.delayed(Duration(seconds: 5)).then((value) => refreshList());
       }
     });
   }
@@ -70,11 +70,13 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   @override
   Future<void> refreshList() async {
     await super.refreshList().then((value) => setCount());
-    final topValue = scrollController.position.minScrollExtent;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.animateTo(topValue,
-          duration: Duration(milliseconds: 600), curve: Curves.linear);
-    });
+    if (scrollController.hasClients) {
+      final topValue = scrollController.position.minScrollExtent;
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        scrollController.animateTo(topValue,
+            duration: Duration(milliseconds: 600), curve: Curves.linear);
+      });
+    }
     // setCount();
   }
 
