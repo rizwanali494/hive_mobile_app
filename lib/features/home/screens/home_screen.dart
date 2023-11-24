@@ -175,36 +175,38 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       BottomNavigationBarItem(
                         icon: Builder(
-                          builder: (context) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28),
-                              color:
-                                  provider.isSelected(SvgIcons.notificationNav)
+                          builder: (context) => Consumer<NotificationScreenVM>(
+                            builder: (context, nProvider, child) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(28),
+                                  color: provider
+                                          .isSelected(SvgIcons.notificationNav)
                                       ? styles.lightBlue
                                       : null,
-                            ),
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            padding: const EdgeInsets.all(8),
-                            child: badges.Badge(
-                              position:
-                                  badges.BadgePosition.topEnd(end: -1, top: -3),
-                              badgeStyle:
-                                  badges.BadgeStyle(badgeColor: styles.green),
-                              showBadge: ((context
-                                          .read<NotificationScreenVM>()
-                                          ?.unreadCount ??
-                                      4) >
-                                  0),
-                              child: SvgPicture.asset(
-                                SvgIcons.notificationNav,
-                                colorFilter: ColorFilter.mode(
-                                  provider.isSelected(SvgIcons.notificationNav)
-                                      ? styles.deepSkyBlue
-                                      : styles.black.withOpacity(0.5),
-                                  BlendMode.srcIn,
                                 ),
-                              ),
-                            ),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                padding: const EdgeInsets.all(8),
+                                child: badges.Badge(
+                                  position: badges.BadgePosition.topEnd(
+                                      end: -1, top: -3),
+                                  badgeStyle: badges.BadgeStyle(
+                                      badgeColor: styles.green),
+                                  showBadge: nProvider.unreadCount > 0,
+                                  child: SvgPicture.asset(
+                                    SvgIcons.notificationNav,
+                                    colorFilter: ColorFilter.mode(
+                                      provider.isSelected(
+                                              SvgIcons.notificationNav)
+                                          ? styles.deepSkyBlue
+                                          : styles.black.withOpacity(0.5),
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                         label: "",

@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/notification/view_models/notfication_tile_vm.dart';
 
-class NotificationTile extends StatelessWidget {
+class NotificationTile extends StatefulWidget {
   final NotificationTileVM controller;
 
   const NotificationTile({
@@ -20,6 +22,17 @@ class NotificationTile extends StatelessWidget {
   final Color? iconColor;
 
   @override
+  State<NotificationTile> createState() => _NotificationTileState();
+}
+
+class _NotificationTileState extends State<NotificationTile> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
     final titleTextStyle =
@@ -29,21 +42,21 @@ class NotificationTile extends StatelessWidget {
       // minVerticalPadding: 20.h,
       minLeadingWidth: 0,
       horizontalTitleGap: 29.w,
-      onTap: onTap,
+      onTap: widget.onTap,
       contentPadding: EdgeInsets.only(
         top: 5.h,
         bottom: 5.h,
       ),
       leading: SvgPicture.asset(
-        svgIconPath,
+        widget.svgIconPath,
         height: 17.h,
         width: 17.w,
-        colorFilter: iconColor != null
-            ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+        colorFilter: widget.iconColor != null
+            ? ColorFilter.mode(widget.iconColor!, BlendMode.srcIn)
             : null,
       ),
       title: Text(
-        controller.title,
+        widget.controller.title,
         style: titleTextStyle,
       ),
       trailing: Column(
@@ -51,11 +64,11 @@ class NotificationTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            controller.trailing,
+            widget.controller.trailing,
             style: styles.inter10w400
                 .copyWith(color: styles.black.withOpacity(0.5)),
           ),
-          ...[
+          if (!(widget.controller.model.isRead ?? true)) ...[
             2.verticalSpace,
             CircleAvatar(
               radius: 3,

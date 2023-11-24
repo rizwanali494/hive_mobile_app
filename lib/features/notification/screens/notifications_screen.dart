@@ -40,6 +40,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       body: Consumer<NotificationScreenVM>(
         builder: (context, provider, child) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            if (provider.unreadCount > 0) {
+              provider.resetCount();
+            }
+          });
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -59,6 +64,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     svgIconPath: svgIcons[0],
                     controller: NotificationTileVM(
                       model: item,
+                      mainProvider: provider,
                     ),
                   ),
                 ),

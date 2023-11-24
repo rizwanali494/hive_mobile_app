@@ -76,15 +76,25 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
           duration: Duration(milliseconds: 600), curve: Curves.linear);
     });
     setCount();
+    notifyListeners();
   }
 
   void setCount() {
-    unreadCount = items.where((element) => element.isRead ?? false).length;
+    unreadCount = items.where((element) => !(element.isRead ?? false)).length;
     notifyListeners();
   }
 
   void resetCount() {
     unreadCount = 0;
     notifyListeners();
+  }
+
+  void updateModel(NotificationModel model) {
+    int index = items.indexOf(model);
+    log("Notification model ::: $index");
+    if (index > -1) {
+      items[index] = model;
+    }
+    // notifyListeners();
   }
 }
