@@ -16,7 +16,7 @@ mixin BaseExceptionController {
       List<Widget> actionButtons = const []}) {
     log("Type of error found : ${error.runtimeType}");
     if (error is TimeoutException) {
-      showErrorToast(msg: "Request Timeout");
+      showErrorToast(msg: "Request Timed out. Please try again later.");
     } else if (error is SocketException) {
       showErrorToast(msg: "No Internet Connection");
     } else if (error is HTTPStatusCodeException) {
