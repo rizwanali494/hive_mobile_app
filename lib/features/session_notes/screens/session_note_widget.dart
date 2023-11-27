@@ -76,20 +76,20 @@ class SessionNoteWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    6.verticalSpace,
-                    GestureDetector(
-                      onTap: () {
-                        setSessionNote(context, AppStrings.rejected);
-                      },
-                      child: SvgPicture.asset(
-                        SvgIcons.undecided,
-                        height: 25.h,
-                        colorFilter: ColorFilter.mode(
-                          styles.red,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
+                    // 6.verticalSpace,
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     setSessionNote(context, AppStrings.rejected);
+                    //   },
+                    //   child: SvgPicture.asset(
+                    //     SvgIcons.undecided,
+                    //     height: 25.h,
+                    //     colorFilter: ColorFilter.mode(
+                    //       styles.red,
+                    //       BlendMode.srcIn,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
             ],
