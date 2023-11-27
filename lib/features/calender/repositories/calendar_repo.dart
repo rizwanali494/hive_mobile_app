@@ -17,7 +17,7 @@ abstract class CalendarRepo {
 }
 
 class CalendarRepoImpl extends CalendarRepo {
-  final limit = 365;
+  final limit = 5000;
 
   CalendarRepoImpl({required super.apiService});
 
