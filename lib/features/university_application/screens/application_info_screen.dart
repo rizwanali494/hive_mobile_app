@@ -180,11 +180,9 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   text: provider.model == null
                       ? AppStrings.upload
                       : AppStrings.update,
-                  onTap: provider.documents.isEmpty
-                      ? null
-                      : () {
+                  onTap: () {
                     provider.uploadUniApp(context: context);
-                        },
+                  },
                 )
               ],
             ),

@@ -84,6 +84,8 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     notifyListeners();
     if (_selectedStatus == AppStrings.applied) {
       form.currentState?.reset();
+      scholarShipPercent.clear();
+      scholarShipAmount.clear();
     }
   }
 
@@ -95,10 +97,10 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     // final scholarshipAmount = scholarShipAmount.text.trim();
     // final scholarshipPercent = scholarShipPercent.text.trim();
     // final bool validate = form.currentState?.validate() ?? false;
-    if (documents.isEmpty) {
-      log("empty");
-      return false;
-    }
+    // if (documents.isEmpty) {
+    //   log("empty");
+    //   return false;
+    // }
     return true;
   }
 

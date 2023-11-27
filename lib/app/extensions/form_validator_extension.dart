@@ -20,9 +20,6 @@ extension CustomValidationBuilder on ValidationBuilder {
       });
 
   amountField(double requiredAmount) => add((value) {
-        if (value?.trim().isEmpty ?? false) {
-          return 'The field is required';
-        }
         final amount = double.tryParse(value.toString()) ?? 0;
         if (amount < 0 || amount > requiredAmount) {
           return "Invalid Amount";
