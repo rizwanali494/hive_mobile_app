@@ -27,9 +27,9 @@ class InboxRepositoryImpl extends InboxRepository {
   @override
   Future<List<InboxModel>> getItems({int? limit, int? offset}) async {
     var response = await apiService.get(
-      url: _apiUrl.withLimit(limit).withOffSet(offset),
+      url: _apiUrl.withLimit(limit).withOffSet(offset).withContentNotNull,
     );
-    log(_apiUrl.withLimit(limit).withOffSet(offset));
+    log(_apiUrl.withLimit(limit).withOffSet(offset).withContentNotNull);
     var result = jsonDecode(response.body);
     List items = result["results"] ?? [];
     log("messeage count : ${items.length}");
@@ -39,7 +39,7 @@ class InboxRepositoryImpl extends InboxRepository {
   @override
   Future<List<InboxModel>> getSearchItems(String text,
       {int? limit, int? offset}) async {
-    var url = _apiUrl.withLimit(limit).withOffSet(offset).withSearch(text);
+    var url = _apiUrl.withLimit(limit).withOffSet(offset).withSearch(text).withContentNotNull;
     log(url.toString());
     var response = await apiService.get(
       url: url,
