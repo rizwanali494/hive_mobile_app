@@ -72,54 +72,56 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   ],
                 ),
                 34.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: TitleTextField(
-                        title: AppStrings.scholarshipAmount,
-                        validator: provider.scholarShipAmountValidator,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp(r'^[0-9]+.?[0-9]*'),
-                          ),
-                          FilteringTextInputFormatter.deny(
-                            RegExp(r'\s'),
-                          )
-                        ],
-                        controller: provider.scholarShipAmount,
-                        hintText: "",
+                if (provider.isNotApplying) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: TitleTextField(
+                          title: AppStrings.scholarshipAmount,
+                          validator: provider.scholarShipAmountValidator,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^[0-9]+.?[0-9]*'),
+                            ),
+                            FilteringTextInputFormatter.deny(
+                              RegExp(r'\s'),
+                            )
+                          ],
+                          controller: provider.scholarShipAmount,
+                          hintText: "",
+                        ),
                       ),
-                    ),
-                    18.horizontalSpace,
-                    Expanded(
-                      child: TitleTextField(
-                        title: "${AppStrings.scholarship} %",
-                        keyboardType: TextInputType.number,
-                        maxLength: 6,
-                        buildCounter: (p0,
-                                {required currentLength,
-                                required isFocused,
-                                maxLength}) =>
-                            null,
-                        validator: provider.scholarShipPercentValidator,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp(r'^[0-9]+.?[0-9]*'),
-                          ),
-                          FilteringTextInputFormatter.deny(
-                            RegExp(r'\s'),
-                          )
-                        ],
-                        controller: provider.scholarShipPercent,
-                        hintText: "",
+                      18.horizontalSpace,
+                      Expanded(
+                        child: TitleTextField(
+                          title: "${AppStrings.scholarship} %",
+                          keyboardType: TextInputType.number,
+                          maxLength: 6,
+                          buildCounter: (p0,
+                                  {required currentLength,
+                                  required isFocused,
+                                  maxLength}) =>
+                              null,
+                          validator: provider.scholarShipPercentValidator,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^[0-9]+.?[0-9]*'),
+                            ),
+                            FilteringTextInputFormatter.deny(
+                              RegExp(r'\s'),
+                            )
+                          ],
+                          controller: provider.scholarShipPercent,
+                          hintText: "",
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                29.verticalSpace,
+                    ],
+                  ),
+                  29.verticalSpace,
+                ],
                 if (provider.fileDownloading)
                   Center(
                     child: CircularProgressIndicator(),
@@ -181,7 +183,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                   onTap: provider.documents.isEmpty
                       ? null
                       : () {
-                          provider.uploadFile(context: context);
+                    provider.uploadUniApp(context: context);
                         },
                 )
               ],

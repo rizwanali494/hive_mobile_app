@@ -82,38 +82,27 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   void selectStatus(String value) {
     _selectedStatus = value;
     notifyListeners();
+    if (_selectedStatus == AppStrings.applied) {
+      form.currentState?.reset();
+    }
   }
 
   bool iSelected(String value) {
     return value == _selectedStatus;
   }
 
-  // void removeFile() async {
-  //   documentName = null;
-  //   notifyListeners();
-  // }
-
   bool validate() {
-    final scholarshipAmount = scholarShipAmount.text.trim();
-    final scholarshipPercent = scholarShipPercent.text.trim();
-    final bool validate = form.currentState?.validate() ?? false;
-    if (scholarshipAmount.trim().isEmpty ||
-        documents.isEmpty ||
-        scholarshipPercent.trim().isEmpty ||
-        !validate) {
+    // final scholarshipAmount = scholarShipAmount.text.trim();
+    // final scholarshipPercent = scholarShipPercent.text.trim();
+    // final bool validate = form.currentState?.validate() ?? false;
+    if (documents.isEmpty) {
       log("empty");
       return false;
     }
     return true;
-    // uploadFile(
-    //     scholarshipAmount: scholarshipAmount,
-    //     scholarshipPercent: scholarshipPercent,
-    //     context: context);
   }
 
-  void uploadFile({required BuildContext context}) async {
-    final scholarshipAmount = scholarShipAmount.text.trim();
-    final scholarshipPercent = scholarShipPercent.text.trim();
+  void uploadUniApp({required BuildContext context}) async {
     if (!validate()) {
       return;
     }
@@ -121,30 +110,13 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     showLoaderDialog(context);
     try {
       var documents = await uploadDocuments();
-      var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
-      var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
-      var body = {
-        "university": selectedUniversity?.id,
-        "documents": documents?.map((e) => e.id).toList(),
-        "description": "Lorem Porum",
-        "scholarship_amount": scholarshipAmountDigit,
-        "scholarship_percent": scholarshipPercentDigit,
-        "status": _selectedStatus.toUpperCase(),
-      };
+      Map<String, Object?> body = createTaskBody(documents);
+      log("Uni app Body :: ${body}");
       UniversityApplicationModel? updatedModel;
       if (model == null) {
-        log(body.toString());
-        var createdModel =
-            await repository.uploadUniversityDocument(body: body);
-        updatedModel = createdModel.copyWith(
-          documents: documents,
-          university: selectedUniversity,
-        );
-        UtilFunctions.showToast(msg: "Upload Successful");
+        updatedModel = await createTask(body, updatedModel, documents);
       } else {
-        updatedModel = await updateUniversityDocument(
-            scholarshipAmount: scholarshipAmount,
-            scholarshipPercent: scholarshipPercent);
+        updatedModel = await updateUniversityDocument();
         UtilFunctions.showToast(msg: "Update Successful");
       }
       context.pop();
@@ -160,9 +132,44 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
     }
   }
 
-  Future<UniversityApplicationModel?> updateUniversityDocument(
-      {required String scholarshipAmount,
-      required String scholarshipPercent}) async {
+  Map<String, Object?> createTaskBody(
+    List<Attachments>? documents,
+  ) {
+    final scholarshipAmount = scholarShipAmount.text.trim();
+    final scholarshipPercent = scholarShipPercent.text.trim();
+    var body = {
+      "university": selectedUniversity?.id,
+      "documents": documents?.map((e) => e.id).toList(),
+      "description": "Lorem Porum",
+      "status": _selectedStatus.toUpperCase(),
+    };
+    if (scholarshipAmount.isNotEmpty) {
+      var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
+      body["scholarship_amount"] = scholarshipAmountDigit;
+    }
+    if (scholarshipPercent.isNotEmpty) {
+      var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
+      body["scholarship_percent"] = scholarshipPercentDigit;
+    }
+    return body;
+  }
+
+  Future<UniversityApplicationModel?> createTask(
+      Map<String, Object?> body,
+      UniversityApplicationModel? updatedModel,
+      List<Attachments>? documents) async {
+    var createdModel = await repository.uploadUniversityDocument(body: body);
+    updatedModel = createdModel.copyWith(
+      documents: documents,
+      university: selectedUniversity,
+    );
+    UtilFunctions.showToast(msg: "Upload Successful");
+    return updatedModel;
+  }
+
+  Future<UniversityApplicationModel?> updateUniversityDocument() async {
+    final scholarshipAmount = scholarShipAmount.text.trim();
+    final scholarshipPercent = scholarShipPercent.text.trim();
     var documents = await getUpdatedDocuments();
     var scholarshipAmountDigit = double.tryParse(scholarshipAmount) ?? 0;
     var scholarshipPercentDigit = double.tryParse(scholarshipPercent) ?? 0;
@@ -247,6 +254,8 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   }
 
   bool fileDownloading = false;
+
+  bool get isNotApplying => _selectedStatus != AppStrings.applied;
 
   Future<File?> _downloadFile(String url, String filename) async {
     var httpClient = new HttpClient();
