@@ -18,7 +18,6 @@ import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
 
-
 class InboxScreen extends StatelessWidget {
   const InboxScreen({Key? key}) : super(key: key);
 
@@ -41,7 +40,7 @@ class InboxScreen extends StatelessWidget {
                   onPressed: () {
                     context.pushNamed(NewConversationScreen.route, extra: {
                       "list": provider.newConversation,
-                    });
+                    }).then((value) => provider.refreshList());
                   },
                   icon: SvgPicture.asset(SvgIcons.messageAdd),
                 )
@@ -50,7 +49,9 @@ class InboxScreen extends StatelessWidget {
             19.verticalSpace,
             GestureDetector(
               onTap: () {
-                context.push(InboxSearchScreen.route);
+                context
+                    .push(InboxSearchScreen.route)
+                    .then((value) => provider.refreshList());
               },
               child: Container(
                 margin: EdgeInsets.symmetric(
@@ -75,13 +76,10 @@ class InboxScreen extends StatelessWidget {
             5.verticalSpace,
             BaseListViewWidget<InboxModel>(
               controller: provider.listViewVM,
-              listViewChild: (item) =>
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 19.w
-                    ),
-                    child: InboxListTile(
-                      onTap: () {
+              listViewChild: (item) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: 19.w),
+                child: InboxListTile(
+                  onTap: () {
                     context.push(
                       ChatScreen.route,
                       extra: {"receiverId": item},
@@ -91,7 +89,7 @@ class InboxScreen extends StatelessWidget {
                     model: item,
                   ),
                 ),
-                  ),
+              ),
               listSeparatorChild: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                 child: Divider(
@@ -101,9 +99,7 @@ class InboxScreen extends StatelessWidget {
                 ),
               ),
               shimmerChild: Padding(
-                padding:EdgeInsets.symmetric(
-                  horizontal: 19.w
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 19.w),
                 child: InboxShimmerWidget(),
               ),
             )
