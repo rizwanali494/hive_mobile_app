@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
@@ -49,6 +50,10 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
       return;
     }
     items.add(model);
+    items.sortByRecentOrder(
+      getDateAdded: (item) =>
+          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+    );
     notifyListeners();
     if (items.length < 10) {
       localService.put(model);
