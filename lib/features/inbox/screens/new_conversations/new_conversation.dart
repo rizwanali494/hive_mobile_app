@@ -38,21 +38,19 @@ class NewConversationScreen extends StatelessWidget {
                   DividerAppBar(title: AppStrings.newConversation),
                   BaseListViewWidget<InboxModel>(
                     controller: provider.listViewVM,
-                    listViewChild: (item) =>
-                        InboxListTile(
-                          onTap: () {
-                            context.push(
-                              ChatScreen.route,
-                              extra: {"receiverId": item},
-                            );
-                          },
-                          controller: InboxTileWidgetVM(
-                            model: item,
-                          ),
-                        ),
+                    listViewChild: (item) => InboxListTile(
+                      onTap: () {
+                        context.push(
+                          ChatScreen.route,
+                          extra: {"receiverId": item},
+                        ).then((value) => provider.refreshList());
+                      },
+                      controller: InboxTileWidgetVM(
+                        model: item,
+                      ),
+                    ),
                     shimmerChild: InboxShimmerWidget(),
                   )
-
                 ],
               ),
             );
