@@ -22,6 +22,8 @@ class ActivityWidgetVM {
 
   String? get bannerImageUrl => model.banner?.file;
 
+  String get title => model.name ?? "";
+
   String get description => model.description ?? "";
 
   String get campusName => model.location ?? "";

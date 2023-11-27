@@ -92,6 +92,11 @@ class ActivityWidget extends StatelessWidget {
           ),
           16.verticalSpace,
           Text(
+            controller.name,
+            style: styles.inter16w700.copyWith(color: styles.black),
+          ),
+          10.verticalSpace,
+          Text(
             controller.description,
             style: styles.inter16w400.copyWith(color: styles.black),
           ),
