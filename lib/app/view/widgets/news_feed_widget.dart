@@ -179,10 +179,10 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 ],
               )
             else
-              26.verticalSpace
+              15.verticalSpace
           else
             Padding(
-              padding: EdgeInsets.only(top: 4.h),
+              padding: EdgeInsets.only(top: 6.h, bottom: 6.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
