@@ -40,9 +40,10 @@ class GradeDetailVM extends ChangeNotifier
   bool errorDownloading = false;
 
   void updateVM(SubjectVM updateVM) {
+    SubjectVM previous;
     int indexOf = subjectsVM.indexOf(updateVM);
-    log("index ofaaa $indexOf ${updateVM.id}");
     if (indexOf > -1) {
+      previous = subjectsVM[indexOf];
       subjectsVM[indexOf] = updateVM;
       notifyListeners();
       try {
@@ -50,11 +51,12 @@ class GradeDetailVM extends ChangeNotifier
           "name": updateVM.name,
           "grade": updateVM.grade,
         }).then((value) {
-          log("updated  ");
+          UtilFunctions.showToast(msg: "Subject updated");
         });
       } catch (e) {
         handleException(e);
-        log("message ${e.toString()}");
+        subjectsVM[indexOf] = previous;
+        notifyListeners();
       }
       notifyListeners();
     }
