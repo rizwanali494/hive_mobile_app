@@ -10,9 +10,9 @@ class OpenServiceRequestVM extends BaseServiceWidgetVM {
 
   @override
   Future<List<MyServicesModel>> fetchLocalList() async {
-    final list =
+    var list =
         await localService.query().filter().stateEqualTo("PENDING").findAll();
-    return list;
+    return getSortedList(list);
   }
 
   @override

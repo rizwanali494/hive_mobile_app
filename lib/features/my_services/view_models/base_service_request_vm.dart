@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
@@ -38,5 +39,21 @@ abstract class BaseServiceWidgetVM extends BaseApiVM<MyServicesModel> {
         items: items,
         scrollController: scrollController,
         uiState: uiState);
+  }
+
+  List<MyServicesModel> getSortedList(List<MyServicesModel> list) {
+    list.sortByRecentOrder(
+      getDateAdded: (item) =>
+          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+    );
+    return list;
+  }
+
+  @override
+  void sortByRecentOrder() {
+    items.sortByRecentOrder(
+      getDateAdded: (item) =>
+          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+    );
   }
 }
