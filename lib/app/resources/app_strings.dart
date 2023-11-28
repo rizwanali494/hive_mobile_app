@@ -50,7 +50,7 @@ class AppStrings {
   static String attachment = "Attachment";
   static String maybe = "Maybe";
   static String SKEPTICAL = "SKEPTICAL";
-  static String undecided = "Undecided";
+  static String not_attending = "Not Attending";
   static String NON_ATTENDING = "NON_ATTENDING";
   static String comment = "Comment";
   static String newRequest = "New Request";

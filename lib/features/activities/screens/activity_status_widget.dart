@@ -44,7 +44,7 @@ class ActivityStatusWidget extends StatelessWidget {
             8.horizontalSpace,
             Text(
               title,
-              style: styles.inter12w400.copyWith(color: styles.skyBlue),
+              style: styles.inter9w400.copyWith(color: styles.skyBlue),
             ),
           ],
         ),

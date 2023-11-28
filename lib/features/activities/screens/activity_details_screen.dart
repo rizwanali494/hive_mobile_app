@@ -260,7 +260,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                               },
                               child: ActivityStatusWidget(
                                 iconPath: SvgIcons.undecided,
-                                title: AppStrings.undecided,
+                                title: AppStrings.not_attending,
                                 isSelected: widget.controller.isSelected(
                                   ActivitySelectionStatus.Undecided,
                                 ),
