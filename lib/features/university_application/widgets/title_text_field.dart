@@ -12,6 +12,7 @@ class TitleTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final TextStyle? hintStyle;
+  final TextStyle? errorStyle;
   final bool textFieldOnly;
   final TextEditingController? controller;
   final int? maxLines;
@@ -46,6 +47,7 @@ class TitleTextField extends StatelessWidget {
     this.textFormField,
     this.buildCounter,
     this.validator,
+    this.errorStyle,
   });
 
   @override
@@ -100,6 +102,7 @@ class TitleTextField extends StatelessWidget {
               isDense: true,
               border: InputBorder.none,
               prefixIcon: prefixIcon,
+              errorStyle: errorStyle,
               prefixIconConstraints: prefixIconConstraints,
               contentPadding: EdgeInsets.fromLTRB(22.w, 15, 12, 12),
               enabledBorder: showBorder ? enabledBorder(styles) : null,

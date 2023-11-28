@@ -35,352 +35,361 @@ class AddExternalGradeScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: 19.w,
               ),
-              child: Form(
-                key: provider.form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DividerAppBar(
-                      title: titleText(),
-                      titleStyle: styles.inter20w700,
-                      actionButton: provider.editModel == null
-                          ? null
-                          : GestureDetector(
-                              onTap: () {
-                                context.pop();
-                                context.pop(provider.editModel);
-                              },
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 24.w,
-                                  vertical: 4.h,
-                                ),
-                                decoration: BoxDecoration(
-                                    color: styles.lightPink,
-                                    borderRadius: BorderRadius.circular(36.r)),
-                                child: Text(
-                                  AppStrings.delete,
-                                  style: styles.inter12w400,
-                                ),
-                              ),
-                            ),
-                    ),
-                    26.verticalSpace,
-                    Expanded(
-                      child: SingleChildScrollView(
-                        controller: provider.scrollController,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppStrings.certificate,
-                              style: styles.inter14w600.copyWith(
-                                color: styles.darkSlateGrey,
-                              ),
-                            ),
-                            11.verticalSpace,
-                            Container(
-                              margin: EdgeInsets.only(
-                                right: 10.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DividerAppBar(
+                    title: titleText(),
+                    titleStyle: styles.inter20w700,
+                    actionButton: provider.editModel == null
+                        ? null
+                        : GestureDetector(
+                            onTap: () {
+                              context.pop();
+                              context.pop(provider.editModel);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 4.h,
                               ),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  25,
-                                ),
-                                border: Border.all(
-                                  color: styles.black.withOpacity(
-                                    0.2,
-                                  ),
-                                ),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 19.w,
-                                vertical: 10.h,
-                              ),
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                value: provider.selectedCertificate,
-                                isDense: true,
-                                icon:
-                                const Icon(Icons.keyboard_arrow_down_sharp),
-                                dropdownColor: styles.white,
-                                underline: const SizedBox(),
-                                items: provider.certificates
-                                    .map(
-                                      (item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: styles.inter12w400,
-                                    ),
-                                  ),
-                                )
-                                    .toList(),
-                                onChanged: provider.editModel == null
-                                    ? (value) {
-                                  provider.selectCertificate(value);
-                                }
-                                    : null,
+                                  color: styles.lightPink,
+                                  borderRadius: BorderRadius.circular(36.r)),
+                              child: Text(
+                                AppStrings.delete,
+                                style: styles.inter12w400,
                               ),
                             ),
-                            20.verticalSpace,
-                            TitleTextField(
+                          ),
+                  ),
+                  26.verticalSpace,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: provider.scrollController,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppStrings.certificate,
+                            style: styles.inter14w600.copyWith(
+                              color: styles.darkSlateGrey,
+                            ),
+                          ),
+                          11.verticalSpace,
+                          Container(
+                            margin: EdgeInsets.only(
+                              right: 10.w,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                25,
+                              ),
+                              border: Border.all(
+                                color: styles.black.withOpacity(
+                                  0.2,
+                                ),
+                              ),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 19.w,
+                              vertical: 10.h,
+                            ),
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              value: provider.selectedCertificate,
+                              isDense: true,
+                              icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                              dropdownColor: styles.white,
+                              underline: const SizedBox(),
+                              items: provider.certificates
+                                  .map(
+                                    (item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: styles.inter12w400,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: provider.editModel == null
+                                  ? (value) {
+                                      provider.selectCertificate(value);
+                                    }
+                                  : null,
+                            ),
+                          ),
+                          20.verticalSpace,
+                          Form(
+                            key: provider.form,
+                            child: TitleTextField(
                               title: AppStrings.institute,
                               validator: provider.instituteValidator,
                               controller: provider.institute,
                               maxLength: 50,
                               hintText: "",
                             ),
-                            23.verticalSpace,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
+                          ),
+                          23.verticalSpace,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Form(
+                                key: provider.subjectFormKey,
+                                child: Expanded(
                                   child: TitleTextField(
                                     title: AppStrings.subjects,
+                                    validator: provider.subjectAddingValidation,
                                     maxLength: 50,
+                                    errorStyle: styles.inter9w400
+                                        .copyWith(color: styles.red),
+                                    buildCounter: (p0,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) {
+                                      return Text(
+                                        "${currentLength}/${maxLength}",
+                                        style: styles.inter9w400,
+                                      );
+                                    },
                                     controller: provider.subjectCtrl,
                                     hintText: "",
                                   ),
                                 ),
-                                8.horizontalSpace,
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 4.w),
-                                        child: Text(
-                                          AppStrings.grade,
-                                          style: styles.inter14w600.copyWith(
-                                            color: styles.darkSlateGrey,
+                              ),
+                              8.horizontalSpace,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 4.w),
+                                      child: Text(
+                                        AppStrings.grade,
+                                        style: styles.inter14w600.copyWith(
+                                          color: styles.darkSlateGrey,
+                                        ),
+                                      ),
+                                    ),
+                                    11.verticalSpace,
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          25,
+                                        ),
+                                        border: Border.all(
+                                          color: styles.black.withOpacity(
+                                            0.2,
                                           ),
                                         ),
                                       ),
-                                      11.verticalSpace,
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            25,
-                                          ),
-                                          border: Border.all(
-                                            color: styles.black.withOpacity(
-                                              0.2,
-                                            ),
-                                          ),
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 19.w,
-                                          vertical: 10.h,
-                                        ),
-                                        child: DropdownButton<String>(
-                                          value: provider.selectedGrade,
-                                          isDense: true,
-                                          isExpanded: true,
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down_sharp),
-                                          dropdownColor: styles.white,
-                                          underline: const SizedBox(),
-                                          items: provider.grades
-                                              .map(
-                                                (value) =>
-                                                DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(
-                                                    value,
-                                                    style: styles.inter12w400,
-                                                  ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 19.w,
+                                        vertical: 10.h,
+                                      ),
+                                      child: DropdownButton<String>(
+                                        value: provider.selectedGrade,
+                                        isDense: true,
+                                        isExpanded: true,
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down_sharp),
+                                        dropdownColor: styles.white,
+                                        underline: const SizedBox(),
+                                        items: provider.grades
+                                            .map(
+                                              (value) =>
+                                                  DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style: styles.inter12w400,
                                                 ),
-                                          )
-                                              .toList(),
-                                          onChanged: (value) {
-                                            provider.setGrade(value);
-                                          },
-                                        ),
+                                              ),
+                                            )
+                                            .toList(),
+                                        onChanged: (value) {
+                                          provider.setGrade(value);
+                                        },
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            27.verticalSpace,
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: GestureDetector(
-                                onTap: () {
-                                  provider.addSubject();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5.h, horizontal: 30.w),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(28.r),
-                                      border: Border.all(
-                                        color: styles.skyBlue,
-                                      )),
-                                  child: Text(
-                                    "+ ${buttonText()} ${AppStrings.subjects}",
-                                    style: styles.inter12w400.copyWith(
-                                      color: styles.skyBlue,
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
-                            ),
-                            26.verticalSpace,
-                            if (provider.subjectsVM.isNotEmpty) ...[
-                              Column(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 9.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: styles.azure,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.r),
-                                          topRight: Radius.circular(10.r),
-                                        )),
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 21.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              AppStrings.subjects,
-                                              style: styles.inter10w600
-                                                  .copyWith(
-                                                  color: styles.white),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              AppStrings.grade,
-                                              style: styles.inter10w600
-                                                  .copyWith(
-                                                  color: styles.white),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              for (var subject in provider.subjectsVM)
-                                GradeWidget(
-                                  gradeVM: subject,
-                                  onEdit: () {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => SubjectEditDialog(
-                                        subjectVM: subject,
-                                        onUpdate: provider.updateVM,
-                                        onDelete: provider.removeSubject,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              33.verticalSpace,
                             ],
+                          ),
+                          27.verticalSpace,
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                provider.addSubject();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5.h, horizontal: 30.w),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(28.r),
+                                    border: Border.all(
+                                      color: styles.skyBlue,
+                                    )),
+                                child: Text(
+                                  "+ ${buttonText()} ${AppStrings.subjects}",
+                                  style: styles.inter12w400.copyWith(
+                                    color: styles.skyBlue,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          26.verticalSpace,
+                          if (provider.subjectsVM.isNotEmpty) ...[
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                14.verticalSpace,
-                                if (provider.fileDownloading)
-                                  Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                else if (provider.errorDownloading)
-                                  Center(
+                                Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 9.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: styles.azure,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10.r),
+                                        topRight: Radius.circular(10.r),
+                                      )),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 21.w),
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          AppStrings.errorDocDownloading,
-                                          style: styles.inter12w500,
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              provider.retry();
-                                            },
-                                            child: Text(
-                                              AppStrings.retry,
-                                              style: styles.inter12w400Italic,
-                                            )),
-                                      ],
-                                    ),
-                                  )
-                                else ...[
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 4.w),
+                                        Expanded(
                                           child: Text(
-                                            AppStrings.addDocument,
-                                            style: styles.inter14w600.copyWith(
-                                                color: styles.darkSlateGrey),
+                                            AppStrings.subjects,
+                                            style: styles.inter10w600
+                                                .copyWith(color: styles.white),
                                           ),
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            provider.selectDocuments(context);
-                                          },
-                                          child: Icon(
-                                            Icons.add,
-                                            color: styles.skyBlue,
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            AppStrings.grade,
+                                            style: styles.inter10w600
+                                                .copyWith(color: styles.white),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    24.verticalSpace,
-                                    for (final doc in provider.documents)
-                                      DocumentUploadWidget(
-                                        controller: doc,
-                                      ),
-                                  ],
+                                  ),
+                                ),
                               ],
                             ),
-                            24.verticalSpace,
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: (provider.documents.isEmpty ||
-                                    provider.subjectsVM.isEmpty)
-                                    ? null
-                                    : () {
-                                  // context.pop();
-                                  provider.addUpdate(context);
+                            for (var subject in provider.subjectsVM)
+                              GradeWidget(
+                                gradeVM: subject,
+                                onEdit: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => SubjectEditDialog(
+                                      subjectVM: subject,
+                                      onUpdate: provider.updateVM,
+                                      onDelete: provider.removeSubject,
+                                    ),
+                                  );
                                 },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: styles.skyBlue,
-                                ),
-                                child: Text(
-                                  buttonText(),
-                                  style: styles.inter12w400.copyWith(
-                                    color: styles.white,
+                              ),
+                            33.verticalSpace,
+                          ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              14.verticalSpace,
+                              if (provider.fileDownloading)
+                                Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              else if (provider.errorDownloading)
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        AppStrings.errorDocDownloading,
+                                        style: styles.inter12w500,
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            provider.retry();
+                                          },
+                                          child: Text(
+                                            AppStrings.retry,
+                                            style: styles.inter12w400Italic,
+                                          )),
+                                    ],
                                   ),
+                                )
+                              else ...[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 4.w),
+                                      child: Text(
+                                        AppStrings.addDocument,
+                                        style: styles.inter14w600.copyWith(
+                                            color: styles.darkSlateGrey),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        provider.selectDocuments(context);
+                                      },
+                                      child: Icon(
+                                        Icons.add,
+                                        color: styles.skyBlue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                24.verticalSpace,
+                                for (final doc in provider.documents)
+                                  DocumentUploadWidget(
+                                    controller: doc,
+                                  ),
+                              ],
+                            ],
+                          ),
+                          24.verticalSpace,
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: (provider.documents.isEmpty ||
+                                      provider.subjectsVM.isEmpty)
+                                  ? null
+                                  : () {
+                                      // context.pop();
+                                      provider.addUpdate(context);
+                                    },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: styles.skyBlue,
+                              ),
+                              child: Text(
+                                buttonText(),
+                                style: styles.inter12w400.copyWith(
+                                  color: styles.white,
                                 ),
                               ),
                             ),
-                            10.verticalSpace,
-                          ],
-                        ),
+                          ),
+                          10.verticalSpace,
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );

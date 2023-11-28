@@ -77,7 +77,24 @@ class GradeAddingVM
 
   final scrollController = ScrollController();
 
+  GlobalKey<FormState> subjectFormKey = GlobalKey<FormState>();
+
+  String? subjectAddingValidation(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Required";
+    }
+    bool alReadyAdded = subjectsVM.map((e) => e.name).toList().contains(value);
+    if (alReadyAdded) {
+      return "Already added";
+    }
+    return null;
+  }
+
   void addSubject() {
+    bool validate = subjectFormKey.currentState?.validate() ?? false;
+    if (!validate) {
+      return;
+    }
     final subjectName = subjectCtrl.text.trim();
     final hasSubject = subjectsVM
         .map((e) => e.name.toLowerCase())
