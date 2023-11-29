@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/notification/repositories/notification_repository.dart';
+import 'package:hive_mobile/features/notification/view_models/notification_actions.dart';
 
 class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   @override
@@ -102,4 +103,20 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     }
     // notifyListeners();
   }
+
+  void performAction(BuildContext context, NotificationModel model) {
+    notificationActions["ACTIVITY"]?..performAction(context);
+    // notificationActions[model.attachedObjectType]?..performAction(context);
+  }
+
+  Map<String, NotificationAction> notificationActions = {
+    _NotificationTypes.activity: AnnouncementPostAction(),
+  };
+}
+
+class _NotificationTypes {
+  static String activity = "ACTIVITY";
+  static String external_grade = "EXTERNAL_GRADE";
+  static String university_application = "UNIVERSITY_APPLICATION";
+  static String announcement_post = "ANNOUNCEMENT_POST";
 }

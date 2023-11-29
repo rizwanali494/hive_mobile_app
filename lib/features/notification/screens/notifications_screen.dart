@@ -60,7 +60,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     horizontal: 19.w,
                   ),
                   child: NotificationTile(
-                    onTap: () {},
+                    onTap: () {
+                      provider.performAction(context, item);
+                    },
                     svgIconPath: svgIcons[0],
                     controller: NotificationTileVM(
                       model: item,
