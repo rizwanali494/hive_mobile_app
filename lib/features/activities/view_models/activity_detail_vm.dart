@@ -5,16 +5,23 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
+import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
-class ActivityWidgetVM {
+abstract class ActivityDetailVM {
   ActivityModel model = ActivityModel();
 
-  ActivityWidgetVM({required this.model});
+  ActivityDetailVM() {
+    setUiState();
+  }
+
+  UiState state = UiState.loaded();
+
+  void setUiState() {}
 
   String? get ownerImageUrl => model.owner?.picture?.file;
 

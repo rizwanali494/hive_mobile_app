@@ -19,6 +19,8 @@ abstract class ActivityRepo {
 
   Future<List<ActivityModel>> getAllActivities({int? offSet, int? limit});
 
+  Future<ActivityModel> getActivity({required int id});
+
   Future<void> submitSelection(
       {required int id, required Map body, required String state});
 }
@@ -88,4 +90,7 @@ class ActivityRepositoryImpl extends ActivityRepo {
   String selectionEndpoint(int id) {
     return "${ApiEndpoints.activity}${id}/";
   }
+
+  @override
+  Future<ActivityModel> getActivity({required int id}) {}
 }

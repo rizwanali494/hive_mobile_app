@@ -7,8 +7,10 @@ import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
+import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/notification/repositories/notification_repository.dart';
 import 'package:hive_mobile/features/notification/view_models/notification_actions.dart';
+import 'package:provider/provider.dart';
 
 class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   @override
