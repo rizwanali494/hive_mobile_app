@@ -6,6 +6,7 @@ import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/calender/controllers/days_event_controller.dart';
@@ -128,10 +129,10 @@ class _DaysEventScreenState extends State<DaysEventScreen> {
                                 return GestureDetector(
                                   onTap: () {
                                     context.push(
-                                       ActivityDetailScreen.route,
+                                      ActivityDetailScreen.route,
                                       extra: {
-                                        "controller": ActivityWidgetVM(
-                                          model: provider.items[index],
+                                        "controller": ActivityDetailObjectVM(
+                                          provider.items[index],
                                         ),
                                         "activityController":
                                             ActivityScreenVM(),

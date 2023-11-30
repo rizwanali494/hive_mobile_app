@@ -12,7 +12,7 @@ import 'package:hive_mobile/features/activities/repositories/activity_repo.dart'
 
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
-abstract class ActivityDetailVM {
+abstract class ActivityDetailVM extends ChangeNotifier {
   ActivityModel model = ActivityModel();
 
   ActivityDetailVM() {

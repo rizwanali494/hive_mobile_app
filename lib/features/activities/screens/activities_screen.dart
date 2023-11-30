@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/base_listview_widget.dart';
 import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/activities/widgets/activity_widget.dart';
@@ -44,8 +45,8 @@ class ActivitiesScreen extends StatelessWidget {
                     context.push(
                       ActivityDetailScreen.route,
                       extra: {
-                        "controller": ActivityWidgetVM(
-                          model: item,
+                        "controller": ActivityDetailObjectVM(
+                          item,
                         ),
                         "activityController": provider,
                       },
@@ -54,8 +55,8 @@ class ActivitiesScreen extends StatelessWidget {
                   child: ActivityWidget(
                     type: 1.isEven ? PostType.image : PostType.poll,
                     selected: selected,
-                    controller: ActivityWidgetVM(
-                      model: item,
+                    controller: ActivityDetailObjectVM(
+                      item,
                     ),
                   ),
                 ),

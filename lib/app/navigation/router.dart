@@ -11,6 +11,8 @@ import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view_models/base_status_controller.dart';
 import 'package:hive_mobile/features/activities/screens/activities_screen.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_detail_id_vm.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_detail_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
@@ -84,7 +86,7 @@ final goRouter = GoRouter(
       name: ActivityDetailScreen.route,
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>?;
-        ActivityWidgetVM controller = extra?["controller"];
+        ActivityDetailVM controller = extra?["controller"];
         ActivityScreenVM provider = extra?["activityController"];
         return ActivityDetailScreen(
           controller: controller,

@@ -92,5 +92,11 @@ class ActivityRepositoryImpl extends ActivityRepo {
   }
 
   @override
-  Future<ActivityModel> getActivity({required int id}) {}
+  Future<ActivityModel> getActivity({required int id}) async {
+    final url = ApiEndpoints.activity.withId(id);
+    final response = await apiService.get(url: url);
+    final object = jsonDecode(response.body);
+    final activity = ActivityModel.fromJson(object);
+    return activity;
+  }
 }
