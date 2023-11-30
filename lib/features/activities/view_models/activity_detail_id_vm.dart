@@ -22,7 +22,7 @@ class ActivityDetailIdVM extends ActivityDetailVM {
       this.model = model;
       state = UiState.loaded();
     } catch (e) {
-      log("Message ::: ${e.toString()}");
+      log("Message ::: ${e.toString()} :: $id");
       state = UiState.error();
     }
     notifyListeners();
