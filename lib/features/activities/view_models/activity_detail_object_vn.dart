@@ -12,7 +12,7 @@ class ActivityDetailObjectVM extends ActivityDetailVM {
 
   @override
   void setUiState() {
-    state = UiState.loading();
+    state = UiState.loaded();
   }
 
   Future<void> getObject(int id) async {

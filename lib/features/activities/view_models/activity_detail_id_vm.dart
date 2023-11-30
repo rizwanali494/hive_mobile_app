@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
@@ -20,7 +22,9 @@ class ActivityDetailIdVM extends ActivityDetailVM {
       this.model = model;
       state = UiState.loaded();
     } catch (e) {
+      log("Message ::: ${e.toString()}");
       state = UiState.error();
     }
+    notifyListeners();
   }
 }

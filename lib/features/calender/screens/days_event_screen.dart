@@ -8,7 +8,6 @@ import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
-import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/calender/controllers/days_event_controller.dart';
 import 'package:hive_mobile/features/notification/widgets/notification_shimmer_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';

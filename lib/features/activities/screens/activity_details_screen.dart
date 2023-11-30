@@ -10,7 +10,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
-import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/activities/widgets/activity_detail_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +36,15 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
       child: Scaffold(
         body: Consumer<ActivityDetailVM>(
           builder: (context, provider, child) {
+            if (provider.state.isLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (provider.state.hasError) {
+              return Center(
+                child: Text(AppStrings.somethingWentWrong),
+              );
+            }
+
             return Column(
               children: [
                 Container(
@@ -113,7 +121,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
@@ -145,14 +153,14 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           children: [
                                             10.horizontalSpace,
                                             Text(
                                               widget.controller.dateOnly,
                                               style: styles.inter12w400
                                                   .copyWith(
-                                                      color: styles.white),
+                                                  color: styles.white),
                                             ),
                                             Text(
                                               widget.controller.monthOnly,
@@ -193,12 +201,12 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                     ),
                                     ActivityDetailWidget(
                                       title:
-                                          "${AppStrings.eventBy}: ${widget.controller.eventBy}",
+                                      "${AppStrings.eventBy}: ${widget.controller.eventBy}",
                                       iconPath: SvgIcons.userBlue,
                                     ),
                                     ActivityDetailWidget(
                                       title:
-                                          "${widget.controller.peopleGoing} ${AppStrings.peopleGoing}",
+                                      "${widget.controller.peopleGoing} ${AppStrings.peopleGoing}",
                                       iconPath: SvgIcons.archiveTick,
                                     ),
                                     12.verticalSpace,
@@ -223,7 +231,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                       widget.controller.setActivitySelection(
                                           state: AppStrings.attending,
                                           activityScreenVM:
-                                              widget.activityProvider);
+                                          widget.activityProvider);
                                       // widget.activityProvider?.setActivitySelection(
                                       //     model: widget.controller.model,
                                       //     state: AppStrings.attending);
@@ -242,7 +250,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                       widget.controller.setActivitySelection(
                                           state: AppStrings.SKEPTICAL,
                                           activityScreenVM:
-                                              widget.activityProvider);
+                                          widget.activityProvider);
                                       //
                                       // widget.activityProvider?.setActivitySelection(
                                       //     model: widget.controller.model,
@@ -262,7 +270,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                       widget.controller.setActivitySelection(
                                           state: AppStrings.NON_ATTENDING,
                                           activityScreenVM:
-                                              widget.activityProvider);
+                                          widget.activityProvider);
 
                                       // widget.activityProvider?.setActivitySelection(
                                       //     model: widget.controller.model,

@@ -9,7 +9,6 @@ import 'package:hive_mobile/app/view/widgets/shimmers/post_shimmer_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
-import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/activities/widgets/activity_widget.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:provider/provider.dart';

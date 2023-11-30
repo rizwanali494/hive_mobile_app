@@ -107,12 +107,15 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   }
 
   void performAction(BuildContext context, NotificationModel model) {
-    notificationActions["ACTIVITY"]?..performAction(context);
+    // notificationActions["ACTIVITY"]?..performAction(context, model.id ?? 0);
+    notificationActions[model.attachedObjectType]
+      ?..performAction(context, model.id ?? 0);
     // notificationActions[model.attachedObjectType]?..performAction(context);
   }
 
   Map<String, NotificationAction> notificationActions = {
-    _NotificationTypes.activity: AnnouncementPostAction(),
+    _NotificationTypes.activity: ActivityAction(),
+    _NotificationTypes.announcement_post: AnnouncementPostAction(),
   };
 }
 

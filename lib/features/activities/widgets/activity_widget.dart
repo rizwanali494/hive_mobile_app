@@ -11,7 +11,6 @@ import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
-import 'package:hive_mobile/features/activities/view_models/activity_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/models/mock_news_feed_model.dart';
 import 'package:provider/provider.dart';
 
