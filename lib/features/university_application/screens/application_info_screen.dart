@@ -5,7 +5,7 @@ import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
-import 'package:hive_mobile/features/university_application/view_models/university_app_request_vm.dart';
+import 'package:hive_mobile/features/university_application/view_models/university_app_request_object_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_state_selection_widget.dart';
@@ -25,7 +25,7 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return Consumer<UniversityAppRequestVM>(
+    return Consumer<UniversityAppRequestObjectVM>(
       builder: (context, provider, child) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'dart:developer';
 import 'dart:io';
 import 'package:form_validator/form_validator.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:path/path.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -14,11 +15,10 @@ import 'package:hive_mobile/app/models/data/university_application/university_ap
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
-import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:path_provider/path_provider.dart';
 
-class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
+abstract class RequestVM extends ChangeNotifier with UtilFunctions {
   List<UniversityModel> universities = [];
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();
@@ -28,15 +28,13 @@ class UniversityAppRequestVM extends ChangeNotifier with UtilFunctions {
   final scholarShipPercent = TextEditingController();
 
   // final description = TextEditingController();
+  bool isObjectLoading = true;
 
-  UniversityAppRequestVM({required this.model}) {
-    repository = UniversityApplicationRepoImpl(apiService: apiService);
-    if (model == null) {
-      getUniversities();
-      return;
-    }
-    setModelValues();
+  RequestVM({this.model}) {
+    initValues();
   }
+
+  void initValues();
 
   UniversityModel? selectedUniversity;
 

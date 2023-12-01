@@ -128,6 +128,9 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   void addUniversityApp(model) {
+    if (model == null) {
+      return null;
+    }
     applications.insert(0, model);
     notifyListeners();
   }

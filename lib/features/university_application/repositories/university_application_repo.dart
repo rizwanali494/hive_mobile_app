@@ -18,6 +18,9 @@ abstract class UniversityApplicationRepository {
   Future<List<UniversityApplicationModel>> getAcceptedApplications(
       {int? limit, int? offSet});
 
+  Future<UniversityApplicationModel> getUniversityApplication(
+      {required int id});
+
   Future<List<UniversityApplicationModel>> getPreviousApplications(
       {int? limit, int? offSet});
 
@@ -117,5 +120,15 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
     var responseBody = jsonDecode(response.body);
     log("after updating uni app : ${responseBody.toString()}");
     return UniversityApplicationModel.createJson(responseBody);
+  }
+
+  @override
+  Future<UniversityApplicationModel> getUniversityApplication(
+      {required int id}) async {
+    final url = ApiEndpoints.universityApplication.withDocuments.withUniversity;
+    final response = await apiService.get(url: url);
+    final object = jsonDecode(response.body);
+    final model = UniversityApplicationModel.fromJson(object);
+    return model;
   }
 }
