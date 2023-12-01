@@ -19,7 +19,7 @@ import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:path_provider/path_provider.dart';
 
-class UniversityAppRequestObjectVM extends RequestVM {
+class UniversityAppRequestObjectVM extends UniAppRequestVM {
   // final description = TextEditingController();
 
   UniversityAppRequestObjectVM({UniversityApplicationModel? model})

@@ -5,6 +5,7 @@ import 'package:hive_mobile/app/models/data/university_application/university_mo
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/application_info_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/view_models/request_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_request_object_vm.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class UniversitySelectionScreen extends StatefulWidget {
   static const route = "/UniversitySelection";
-  final UniversityApplicationModel? model;
+  final UniAppRequestVM? model;
 
   const UniversitySelectionScreen({Key? key, this.model}) : super(key: key);
 
@@ -27,9 +28,8 @@ class _UniversitySelectionScreenState extends State<UniversitySelectionScreen> {
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
 
-    return ChangeNotifierProvider(
-      create: (BuildContext context) =>
-          UniversityAppRequestObjectVM(model: widget.model),
+    return ChangeNotifierProvider.value(
+      value: widget.model,
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 18.w),

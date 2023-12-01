@@ -19,7 +19,7 @@ import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:path_provider/path_provider.dart';
 
-class UniversityAppRequestIdVM extends RequestVM {
+class UniversityAppRequestIdVM extends UniAppRequestVM {
   List<UniversityModel> universities = [];
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();

@@ -9,6 +9,7 @@ import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
 import 'package:hive_mobile/features/university_application/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/previous_application_vm.dart';
+import 'package:hive_mobile/features/university_application/view_models/university_app_request_object_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/blue_action_button.dart';
 import 'package:hive_mobile/features/university_application/widgets/university_app_sliver_widget.dart';
 import 'package:provider/provider.dart';
@@ -52,8 +53,13 @@ class _UniversityApplicationScreenState
                     return BlueActionButton(
                       title: AppStrings.addApplication,
                       onTap: () async {
-                        var model =
-                            await context.push(UniversitySelectionScreen.route);
+                        final provider = ChangeNotifierProvider(
+                          create: (context) => UniversityAppRequestObjectVM(),
+                        );
+                        var model = await context
+                            .push(UniversitySelectionScreen.route, extra: {
+                          "provider": provider,
+                        });
                         log(model.runtimeType.toString());
                         context
                             .read<PreviousApplicationVM>()

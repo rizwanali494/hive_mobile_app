@@ -34,6 +34,7 @@ import 'package:hive_mobile/features/session_notes/screens/session_notes_screen.
 import 'package:hive_mobile/features/university_application/screens/application_info_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_application_screen.dart';
+import 'package:hive_mobile/features/university_application/view_models/request_vm.dart';
 import 'package:hive_mobile/splash.dart';
 
 export 'extensions.dart';
@@ -103,9 +104,9 @@ final goRouter = GoRouter(
       name: UniversitySelectionScreen.route,
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>?;
-        UniversityApplicationModel? model;
+        UniAppRequestVM? model;
         if (extra != null) {
-          model = extra["model"];
+          model = extra["provider"];
         }
         return UniversitySelectionScreen(
           model: model,

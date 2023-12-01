@@ -18,7 +18,7 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:path_provider/path_provider.dart';
 
-abstract class RequestVM extends ChangeNotifier with UtilFunctions {
+abstract class UniAppRequestVM extends ChangeNotifier with UtilFunctions {
   List<UniversityModel> universities = [];
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();
@@ -30,7 +30,7 @@ abstract class RequestVM extends ChangeNotifier with UtilFunctions {
   // final description = TextEditingController();
   bool isObjectLoading = true;
 
-  RequestVM({this.model}) {
+  UniAppRequestVM({this.model}) {
     initValues();
   }
 
