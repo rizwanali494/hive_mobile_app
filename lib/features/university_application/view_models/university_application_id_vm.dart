@@ -32,8 +32,7 @@ class UniversityAppRequestIdVM extends UniAppRequestVM {
 
   final objectId;
 
-  UniversityAppRequestIdVM({required this.objectId}) {
-  }
+  UniversityAppRequestIdVM({required this.objectId}) {}
 
   bool isObjectLoading = true;
 
@@ -55,10 +54,16 @@ class UniversityAppRequestIdVM extends UniAppRequestVM {
   Future<void> getData() async {
     isObjectLoading = true;
     notifyListeners();
-    final object = await repository.getUniversityApplication(id: objectId);
-    log("hitting get data");
-    model = object;
+    try {
+      final object = await repository.getUniversityApplication(id: objectId);
+      log("hitting get data");
+      model = object;
+      setModelValues();
+    } catch (e) {
+      log("error : ${e.toString()}");
+      hasError = true;
+    }
     isObjectLoading = false;
-    setModelValues();
+    notifyListeners();
   }
 }
