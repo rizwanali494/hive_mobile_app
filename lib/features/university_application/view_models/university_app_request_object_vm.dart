@@ -20,7 +20,6 @@ import 'package:hive_mobile/features/university_application/repositories/univers
 import 'package:path_provider/path_provider.dart';
 
 class UniversityAppRequestObjectVM extends UniAppRequestVM {
-  // final description = TextEditingController();
 
   UniversityAppRequestObjectVM({UniversityApplicationModel? model})
       : super(model: model) {

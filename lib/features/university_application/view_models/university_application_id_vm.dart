@@ -33,7 +33,6 @@ class UniversityAppRequestIdVM extends UniAppRequestVM {
   final objectId;
 
   UniversityAppRequestIdVM({required this.objectId}) {
-    initValues();
   }
 
   bool isObjectLoading = true;
@@ -57,6 +56,7 @@ class UniversityAppRequestIdVM extends UniAppRequestVM {
     isObjectLoading = true;
     notifyListeners();
     final object = await repository.getUniversityApplication(id: objectId);
+    log("hitting get data");
     model = object;
     isObjectLoading = false;
     setModelValues();

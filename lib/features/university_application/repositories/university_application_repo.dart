@@ -125,9 +125,14 @@ class UniversityApplicationRepoImpl extends UniversityApplicationRepository {
   @override
   Future<UniversityApplicationModel> getUniversityApplication(
       {required int id}) async {
-    final url = ApiEndpoints.universityApplication.withDocuments.withUniversity;
+    final url = ApiEndpoints.universityApplication
+        .withId(id)
+        .withDocuments
+        .withUniversity;
+    log("url : $url");
     final response = await apiService.get(url: url);
     final object = jsonDecode(response.body);
+    log("object :: ${object}");
     final model = UniversityApplicationModel.fromJson(object);
     return model;
   }

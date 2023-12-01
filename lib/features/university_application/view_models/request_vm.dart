@@ -27,7 +27,6 @@ abstract class UniAppRequestVM extends ChangeNotifier with UtilFunctions {
   final scholarShipAmount = TextEditingController();
   final scholarShipPercent = TextEditingController();
 
-  // final description = TextEditingController();
   bool isObjectLoading = true;
 
   UniAppRequestVM({this.model}) {
@@ -225,8 +224,6 @@ abstract class UniAppRequestVM extends ChangeNotifier with UtilFunctions {
     isGettingUniversities = false;
     if (model?.documents?.isNotEmpty ?? false) {
       downloadAllDocs();
-      // _downloadFile(model?.documents?.first.file ?? "",
-      //     model?.documents?.first.label ?? "document");
     } else {
       log("file empty");
       fileDownloading = false;

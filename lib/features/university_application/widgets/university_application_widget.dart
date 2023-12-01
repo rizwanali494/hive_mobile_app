@@ -38,15 +38,11 @@ class UniversityApplicationWidget extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                   onTap: () async {
-                    // final provider =
-                    //     context.read<UniversityApplicationScreenVM>();
-                    final provider = ChangeNotifierProvider(
-                      create: (context) =>
-                          UniversityAppRequestObjectVM(model: controller.model),
-                    );
+                    final provider =
+                        UniversityAppRequestObjectVM(model: controller.model);
                     var model = await context
                         .push(UniversitySelectionScreen.route, extra: {
-                      "model": controller.model,
+                      "provider": provider,
                     });
                     if (model is UniversityApplicationModel) {
                       controller.onUpdate(model);

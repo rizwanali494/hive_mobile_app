@@ -53,9 +53,7 @@ class _UniversityApplicationScreenState
                     return BlueActionButton(
                       title: AppStrings.addApplication,
                       onTap: () async {
-                        final provider = ChangeNotifierProvider(
-                          create: (context) => UniversityAppRequestObjectVM(),
-                        );
+                        final provider = UniversityAppRequestObjectVM();
                         var model = await context
                             .push(UniversitySelectionScreen.route, extra: {
                           "provider": provider,
