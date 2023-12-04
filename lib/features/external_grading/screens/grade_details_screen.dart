@@ -12,6 +12,8 @@ import 'package:hive_mobile/features/external_grading/screens/grade_detail_widge
 import 'package:hive_mobile/features/external_grading/screens/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_id_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_object_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -51,10 +53,12 @@ class GradeDetailsScreen extends StatelessWidget {
                       padding: EdgeInsets.only(left: 5.w),
                       child: GestureDetector(
                         onTap: () async {
+                          final controller =
+                              GradeAddingObjectVM(editModel: this.model);
                           var model = await context.push<ExternalGradeModel>(
                             AddExternalGradeScreen.route,
                             extra: {
-                              "editModel": provider.model,
+                              "controller": controller,
                             },
                           );
                           onChange(model);
