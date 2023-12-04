@@ -6,7 +6,7 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
-import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_object_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
 import 'package:hive_mobile/features/university_application/widgets/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
@@ -27,8 +27,8 @@ class AddExternalGradeScreen extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (BuildContext context) =>
-          GradeAddingVM(certificates: addedGrades, editModel: editModel),
-      child: Consumer<GradeAddingVM>(
+          GradeAddingObjectVM(certificates: addedGrades, editModel: editModel),
+      child: Consumer<GradeAddingObjectVM>(
         builder: (context, provider, child) {
           return Scaffold(
             body: Padding(

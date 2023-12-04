@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:form_validator/form_validator.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -19,21 +20,30 @@ import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
-abstract class GradeAddingVM
-    with UtilFunctions, ChangeNotifier, BaseExceptionController {
+class GradeAddingObjectVM extends GradeAddingVM {
   final grades = ["A*", "A", "B", "C", "D", "E"];
 
   String? selectedGrade = "A*";
 
-  bool isObjectLoading = true;
-  bool hasObjectError = false;
-
-  GradeAddingVM({List<String> certificates = const [], this.editModel}) {
-    inItValues(certificates);
+  GradeAddingObjectVM({List<String> certificates = const [], this.editModel}) {
+    // setCertificate(certificates);
+    // externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
+    // if (editModel != null) {
+    //   setValues(editModel!);
+    // }
   }
 
-  void inItValues(List<String> certificates);
+  @override
+  void inItValues(List<String> certificates) {
+    setCertificate(certificates);
+    externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
+    if (editModel != null) {
+      isObjectLoading = false;
+      setValues(editModel!);
+    }
+  }
 
   void setAvailableCertificates(List<String> list) {
     for (var element in list) {
