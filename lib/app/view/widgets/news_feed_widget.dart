@@ -38,7 +38,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    final newsFeedVM = context.read<NewsFeedVM>();
+    final newsFeedVM = context.read<NewsFeedVM?>();
     print("count --- ${count.value}");
 
     return Container(
@@ -189,15 +189,15 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                   for (var element in widget.controller.polls)
                     GestureDetector(
                       onTap: () async {
-                        await newsFeedVM.selectPoll(element,
+                        await newsFeedVM?.selectPoll(element,
                             model: widget.controller.model);
                       },
                       child: PollWidget(
                         controller: PollWidgetVM(
                           poll: element,
                           totalPolls: widget.controller.totalSelectors ?? 0,
-                          selectedPollId:
-                              newsFeedVM.selectedPollId(widget.controller.model),
+                          selectedPollId: newsFeedVM
+                              ?.selectedPollId(widget.controller.model),
                         ),
                       ),
                     ),
@@ -221,7 +221,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
               BlueBorderContainer(
                 isSelected: widget.controller.isLiked,
                 onTap: () {
-                  newsFeedVM.likePost(widget.controller.model);
+                  newsFeedVM?.likePost(widget.controller.model);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -240,7 +240,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
               BlueBorderContainer(
                 isSelected: widget.controller.isDisliked,
                 onTap: () {
-                  newsFeedVM.dislikePost(widget.controller.model);
+                  newsFeedVM?.dislikePost(widget.controller.model);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
