@@ -31,7 +31,6 @@ class NewsFeedWidget extends StatefulWidget {
 }
 
 class _NewsFeedWidgetState extends State<NewsFeedWidget> {
-  // int count = 0;
   final ValueNotifier<int> count = ValueNotifier<int>(0);
 
   @override
@@ -142,16 +141,6 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                                   },
                                 );
                               }).toList(),
-                              // child: AspectRatio(
-                              //   aspectRatio: 0.89,
-                              //   child: CachedNetworkImage(
-                              //     imageUrl: controller.attachment,
-                              //     fit: BoxFit.cover,
-                              //     placeholder: (context, url) =>
-                              //         Center(child: CircularProgressIndicator()),
-                              //     errorWidget: (context, url, error) => Icon(Icons.error),
-                              //   ),
-                              // ),
                             ),
                           ),
                         ),
@@ -201,17 +190,6 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                               ),
                             ),
                           ),
-                        // if (true) ...[
-                        //   Padding(
-                        //     padding:
-                        //         EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                        //     child: Text(
-                        //       "${AppStrings.pollsClosed} • ${controller.totalSelectors?.toInt()} ${AppStrings.votes}",
-                        //       style: styles.inter12w400Italic,
-                        //     ),
-                        //   ),
-                        //   15.verticalSpace,
-                        // ],
                       ],
                     ),
                   ),

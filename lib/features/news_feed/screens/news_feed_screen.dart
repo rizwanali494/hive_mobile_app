@@ -48,20 +48,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                     showDialog(
                       context: context,
                       builder: (context) => Dialog(
-                        child: ChangeNotifierProvider.value(
-                          value: provider,
-                          child: Consumer<NewsFeedVM>(
-                            builder: (context, value, child) {
-                              return NewsFeedWidget(
-                                type: item.type == "POST"
-                                    ? PostType.image
-                                    : PostType.poll,
-                                horizontalPadding: 0,
-                                controller: NewsFeedWidgetVm(
-                                  model: item,
-                                ),
-                              );
-                            },
+                        child: NewsFeedWidget(
+                          type: item.isPost ? PostType.image : PostType.poll,
+                          horizontalPadding: 0,
+                          controller: NewsFeedWidgetVm(
+                            model: item,
                           ),
                         ),
                       ),
