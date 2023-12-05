@@ -224,8 +224,9 @@ abstract class BaseApiVM<T> extends ChangeNotifier
       if (indexOf > -1) {
         items[indexOf] = item;
         notifyListeners();
+        localService.put(item);
       }
-    }  catch (e) {
+    } catch (e) {
       log("Error updating : ${e.toString()}");
     }
   }

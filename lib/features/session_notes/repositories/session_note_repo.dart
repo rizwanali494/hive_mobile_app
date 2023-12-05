@@ -16,6 +16,8 @@ abstract class SessionNotesRepo {
   Future<List<SessionNoteModel>> getNextSessionNotes({int? offSet, int? limit});
 
   Future<void> ackSessionNode({required int id, required Map body});
+
+  Future<SessionNoteModel> getNextSessionNote(int id);
 }
 
 class SessionNotesRepositoryImpl extends SessionNotesRepo {
@@ -51,5 +53,14 @@ class SessionNotesRepositoryImpl extends SessionNotesRepo {
     var url = ApiEndpoints.sessionNote.withId(id);
     var response = await apiService.patch(url: url, body: body);
     return;
+  }
+
+  @override
+  Future<SessionNoteModel> getNextSessionNote(int id) async {
+    final url = ApiEndpoints.sessionNote.withId(id);
+    final response = await apiService.get(url: url);
+    final object = jsonDecode(response.body);
+    final model = SessionNoteModel.fromJson(object);
+    return model;
   }
 }

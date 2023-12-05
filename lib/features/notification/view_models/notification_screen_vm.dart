@@ -105,9 +105,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   }
 
   void performAction(BuildContext context, NotificationModel model) {
-    // notificationActions["ACTIVITY"]?..performAction(context, model.id ?? 0);
     notificationActions[model.attachedObjectType]?..onTap(context, model);
-    // notificationActions[model.attachedObjectType]?..performAction(context);
   }
 
   Map<String, NotificationAction> notificationActions = {
@@ -115,6 +113,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     _NotificationTypes.announcement_post: AnnouncementPostAction(),
     _NotificationTypes.university_application: UniversityApplicationAction(),
     _NotificationTypes.external_grade: ExternalGradeAction(),
+    _NotificationTypes.session_note: SessionNoteAction(),
   };
 }
 
@@ -123,4 +122,5 @@ class _NotificationTypes {
   static String external_grade = "EXTERNAL_GRADE";
   static String university_application = "UNIVERSITY_APPLICATION";
   static String announcement_post = "ANNOUNCEMENT_POST";
+  static String session_note = "SESSION_NOTE";
 }
