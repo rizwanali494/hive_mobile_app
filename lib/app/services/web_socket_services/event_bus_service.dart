@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:async';
 
 class EventBus {
   final _controller = StreamController<Event>.broadcast();

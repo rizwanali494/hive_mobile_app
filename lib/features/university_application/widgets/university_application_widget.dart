@@ -13,7 +13,6 @@ import 'package:hive_mobile/features/university_application/view_models/universi
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
-import 'package:provider/provider.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {
   final UniversityAppWidgetVM controller;

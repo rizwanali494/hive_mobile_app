@@ -6,7 +6,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 import 'package:hive_mobile/features/university_application/view_models/request_vm.dart';
-import 'package:hive_mobile/features/university_application/view_models/university_app_request_object_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/document_upload_widget.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:hive_mobile/features/university_application/widgets/application_state_selection_widget.dart';

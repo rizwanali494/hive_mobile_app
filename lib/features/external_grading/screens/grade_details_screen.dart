@@ -12,7 +12,6 @@ import 'package:hive_mobile/features/external_grading/screens/grade_detail_widge
 import 'package:hive_mobile/features/external_grading/screens/grade_info_widget.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_edit_dialog.dart';
 import 'package:hive_mobile/features/external_grading/screens/subject_widget.dart';
-import 'package:hive_mobile/features/external_grading/view_models/grade_adding_id_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_object_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_info_vm.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';

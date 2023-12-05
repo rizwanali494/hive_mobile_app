@@ -1,19 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
-import 'package:hive_mobile/app/navigation/router.dart';
-import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_id_vm.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_id_vm.dart';
 import 'package:hive_mobile/features/news_feed/screens/news_feed_dialog.dart';
-import 'package:hive_mobile/features/news_feed/screens/news_feed_screen.dart';
 import 'package:hive_mobile/features/news_feed/view_models/NeedFeedDialogVM.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
-import 'package:hive_mobile/features/university_application/view_models/university_app_request_object_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_application_id_vm.dart';
 
 abstract class NotificationAction {

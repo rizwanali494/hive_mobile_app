@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:isar/isar.dart';
 

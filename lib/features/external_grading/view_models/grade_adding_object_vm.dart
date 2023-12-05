@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:form_validator/form_validator.dart';
-import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
 import 'package:path/path.dart';
@@ -20,7 +19,6 @@ import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
 
 class GradeAddingObjectVM extends GradeAddingVM {
   final grades = ["A*", "A", "B", "C", "D", "E"];

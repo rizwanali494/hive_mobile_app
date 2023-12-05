@@ -8,7 +8,6 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
-import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
 import 'package:cached_network_image/cached_network_image.dart';
