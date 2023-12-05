@@ -17,21 +17,20 @@ const NotificationModelSchema = CollectionSchema(
   name: r'NotificationModel',
   id: 1422516433030028244,
   properties: {
-    r'attachedObjectId': PropertySchema(
+    r'action': PropertySchema(
       id: 0,
+      name: r'action',
+      type: IsarType.string,
+    ),
+    r'attachedObjectId': PropertySchema(
+      id: 1,
       name: r'attachedObjectId',
       type: IsarType.long,
     ),
     r'attachedObjectType': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'attachedObjectType',
       type: IsarType.string,
-    ),
-    r'attachments': PropertySchema(
-      id: 2,
-      name: r'attachments',
-      type: IsarType.objectList,
-      target: r'Attachments',
     ),
     r'content': PropertySchema(
       id: 3,
@@ -48,24 +47,14 @@ const NotificationModelSchema = CollectionSchema(
       name: r'dateLastModified',
       type: IsarType.string,
     ),
-    r'hashCode': PropertySchema(
-      id: 6,
-      name: r'hashCode',
-      type: IsarType.long,
-    ),
-    r'id': PropertySchema(
-      id: 7,
-      name: r'id',
-      type: IsarType.long,
-    ),
     r'isRead': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'isRead',
       type: IsarType.bool,
     ),
-    r'recipient': PropertySchema(
-      id: 9,
-      name: r'recipient',
+    r'owner': PropertySchema(
+      id: 7,
+      name: r'owner',
       type: IsarType.long,
     )
   },
@@ -73,10 +62,10 @@ const NotificationModelSchema = CollectionSchema(
   serialize: _notificationModelSerialize,
   deserialize: _notificationModelDeserialize,
   deserializeProp: _notificationModelDeserializeProp,
-  idName: r'localId',
+  idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {r'Attachments': AttachmentsSchema},
+  embeddedSchemas: {},
   getId: _notificationModelGetId,
   getLinks: _notificationModelGetLinks,
   attach: _notificationModelAttach,
@@ -90,23 +79,15 @@ int _notificationModelEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.attachedObjectType;
+    final value = object.action;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   {
-    final list = object.attachments;
-    if (list != null) {
-      bytesCount += 3 + list.length * 3;
-      {
-        final offsets = allOffsets[Attachments]!;
-        for (var i = 0; i < list.length; i++) {
-          final value = list[i];
-          bytesCount +=
-              AttachmentsSchema.estimateSize(value, offsets, allOffsets);
-        }
-      }
+    final value = object.attachedObjectType;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
     }
   }
   {
@@ -136,21 +117,14 @@ void _notificationModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.attachedObjectId);
-  writer.writeString(offsets[1], object.attachedObjectType);
-  writer.writeObjectList<Attachments>(
-    offsets[2],
-    allOffsets,
-    AttachmentsSchema.serialize,
-    object.attachments,
-  );
+  writer.writeString(offsets[0], object.action);
+  writer.writeLong(offsets[1], object.attachedObjectId);
+  writer.writeString(offsets[2], object.attachedObjectType);
   writer.writeString(offsets[3], object.content);
   writer.writeString(offsets[4], object.dateAdded);
   writer.writeString(offsets[5], object.dateLastModified);
-  writer.writeLong(offsets[6], object.hashCode);
-  writer.writeLong(offsets[7], object.id);
-  writer.writeBool(offsets[8], object.isRead);
-  writer.writeLong(offsets[9], object.recipient);
+  writer.writeBool(offsets[6], object.isRead);
+  writer.writeLong(offsets[7], object.owner);
 }
 
 NotificationModel _notificationModelDeserialize(
@@ -160,21 +134,15 @@ NotificationModel _notificationModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = NotificationModel(
-    attachedObjectId: reader.readLongOrNull(offsets[0]),
-    attachedObjectType: reader.readStringOrNull(offsets[1]),
-    attachments: reader.readObjectList<Attachments>(
-      offsets[2],
-      AttachmentsSchema.deserialize,
-      allOffsets,
-      Attachments(),
-    ),
+    action: reader.readStringOrNull(offsets[0]),
+    attachedObjectId: reader.readLongOrNull(offsets[1]),
+    attachedObjectType: reader.readStringOrNull(offsets[2]),
     content: reader.readStringOrNull(offsets[3]),
     dateAdded: reader.readStringOrNull(offsets[4]),
     dateLastModified: reader.readStringOrNull(offsets[5]),
-    id: reader.readLongOrNull(offsets[7]),
-    isRead: reader.readBoolOrNull(offsets[8]),
-    localId: id,
-    recipient: reader.readLongOrNull(offsets[9]),
+    id: id,
+    isRead: reader.readBoolOrNull(offsets[6]),
+    owner: reader.readLongOrNull(offsets[7]),
   );
   return object;
 }
@@ -187,16 +155,11 @@ P _notificationModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLongOrNull(offset)) as P;
-    case 1:
       return (reader.readStringOrNull(offset)) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
-      return (reader.readObjectList<Attachments>(
-        offset,
-        AttachmentsSchema.deserialize,
-        allOffsets,
-        Attachments(),
-      )) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
@@ -204,12 +167,8 @@ P _notificationModelDeserializeProp<P>(
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
-    case 7:
-      return (reader.readLongOrNull(offset)) as P;
-    case 8:
       return (reader.readBoolOrNull(offset)) as P;
-    case 9:
+    case 7:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -217,7 +176,7 @@ P _notificationModelDeserializeProp<P>(
 }
 
 Id _notificationModelGetId(NotificationModel object) {
-  return object.localId;
+  return object.id;
 }
 
 List<IsarLinkBase<dynamic>> _notificationModelGetLinks(
@@ -227,12 +186,12 @@ List<IsarLinkBase<dynamic>> _notificationModelGetLinks(
 
 void _notificationModelAttach(
     IsarCollection<dynamic> col, Id id, NotificationModel object) {
-  object.localId = id;
+  object.id = id;
 }
 
 extension NotificationModelQueryWhereSort
     on QueryBuilder<NotificationModel, NotificationModel, QWhere> {
-  QueryBuilder<NotificationModel, NotificationModel, QAfterWhere> anyLocalId() {
+  QueryBuilder<NotificationModel, NotificationModel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -242,68 +201,68 @@ extension NotificationModelQueryWhereSort
 extension NotificationModelQueryWhere
     on QueryBuilder<NotificationModel, NotificationModel, QWhereClause> {
   QueryBuilder<NotificationModel, NotificationModel, QAfterWhereClause>
-      localIdEqualTo(Id localId) {
+      idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: localId,
-        upper: localId,
+        lower: id,
+        upper: id,
       ));
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterWhereClause>
-      localIdNotEqualTo(Id localId) {
+      idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: localId, includeUpper: false),
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: localId, includeLower: false),
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: localId, includeLower: false),
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: localId, includeUpper: false),
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
             );
       }
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterWhereClause>
-      localIdGreaterThan(Id localId, {bool include = false}) {
+      idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: localId, includeLower: include),
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterWhereClause>
-      localIdLessThan(Id localId, {bool include = false}) {
+      idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: localId, includeUpper: include),
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterWhereClause>
-      localIdBetween(
-    Id lowerLocalId,
-    Id upperLocalId, {
+      idBetween(
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerLocalId,
+        lower: lowerId,
         includeLower: includeLower,
-        upper: upperLocalId,
+        upper: upperId,
         includeUpper: includeUpper,
       ));
     });
@@ -312,6 +271,160 @@ extension NotificationModelQueryWhere
 
 extension NotificationModelQueryFilter
     on QueryBuilder<NotificationModel, NotificationModel, QFilterCondition> {
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'action',
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'action',
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'action',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'action',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'action',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'action',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
+      actionIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'action',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
       attachedObjectIdIsNull() {
     return QueryBuilder.apply(this, (query) {
@@ -537,113 +650,6 @@ extension NotificationModelQueryFilter
         property: r'attachedObjectType',
         value: '',
       ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'attachments',
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'attachments',
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachments',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachments',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachments',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachments',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachments',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachments',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
     });
   }
 
@@ -1110,81 +1116,7 @@ extension NotificationModelQueryFilter
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      hashCodeEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'hashCode',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      hashCodeGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'hashCode',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      hashCodeLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'hashCode',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      hashCodeBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'hashCode',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      idIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      idIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      idEqualTo(int? value) {
+      idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -1195,7 +1127,7 @@ extension NotificationModelQueryFilter
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
       idGreaterThan(
-    int? value, {
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1209,7 +1141,7 @@ extension NotificationModelQueryFilter
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
       idLessThan(
-    int? value, {
+    Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1223,8 +1155,8 @@ extension NotificationModelQueryFilter
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
       idBetween(
-    int? lower,
-    int? upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1268,119 +1200,63 @@ extension NotificationModelQueryFilter
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      localIdEqualTo(Id value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'localId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      localIdGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'localId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      localIdLessThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'localId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      localIdBetween(
-    Id lower,
-    Id upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'localId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      recipientIsNull() {
+      ownerIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'recipient',
+        property: r'owner',
       ));
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      recipientIsNotNull() {
+      ownerIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'recipient',
+        property: r'owner',
       ));
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      recipientEqualTo(int? value) {
+      ownerEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'recipient',
+        property: r'owner',
         value: value,
       ));
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      recipientGreaterThan(
+      ownerGreaterThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'recipient',
+        property: r'owner',
         value: value,
       ));
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      recipientLessThan(
+      ownerLessThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'recipient',
+        property: r'owner',
         value: value,
       ));
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      recipientBetween(
+      ownerBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -1388,7 +1264,7 @@ extension NotificationModelQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'recipient',
+        property: r'owner',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1399,20 +1275,27 @@ extension NotificationModelQueryFilter
 }
 
 extension NotificationModelQueryObject
-    on QueryBuilder<NotificationModel, NotificationModel, QFilterCondition> {
-  QueryBuilder<NotificationModel, NotificationModel, QAfterFilterCondition>
-      attachmentsElement(FilterQuery<Attachments> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'attachments');
-    });
-  }
-}
+    on QueryBuilder<NotificationModel, NotificationModel, QFilterCondition> {}
 
 extension NotificationModelQueryLinks
     on QueryBuilder<NotificationModel, NotificationModel, QFilterCondition> {}
 
 extension NotificationModelQuerySortBy
     on QueryBuilder<NotificationModel, NotificationModel, QSortBy> {
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      sortByAction() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'action', Sort.asc);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      sortByActionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'action', Sort.desc);
+    });
+  }
+
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
       sortByAttachedObjectId() {
     return QueryBuilder.apply(this, (query) {
@@ -1484,33 +1367,6 @@ extension NotificationModelQuerySortBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      sortByHashCode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.asc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      sortByHashCodeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.desc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy> sortById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.asc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      sortByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
       sortByIsRead() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isRead', Sort.asc);
@@ -1525,22 +1381,36 @@ extension NotificationModelQuerySortBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      sortByRecipient() {
+      sortByOwner() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'recipient', Sort.asc);
+      return query.addSortBy(r'owner', Sort.asc);
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      sortByRecipientDesc() {
+      sortByOwnerDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'recipient', Sort.desc);
+      return query.addSortBy(r'owner', Sort.desc);
     });
   }
 }
 
 extension NotificationModelQuerySortThenBy
     on QueryBuilder<NotificationModel, NotificationModel, QSortThenBy> {
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      thenByAction() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'action', Sort.asc);
+    });
+  }
+
+  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
+      thenByActionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'action', Sort.desc);
+    });
+  }
+
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
       thenByAttachedObjectId() {
     return QueryBuilder.apply(this, (query) {
@@ -1611,20 +1481,6 @@ extension NotificationModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      thenByHashCode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.asc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      thenByHashCodeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hashCode', Sort.desc);
-    });
-  }
-
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1653,36 +1509,29 @@ extension NotificationModelQuerySortThenBy
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      thenByLocalId() {
+      thenByOwner() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'localId', Sort.asc);
+      return query.addSortBy(r'owner', Sort.asc);
     });
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      thenByLocalIdDesc() {
+      thenByOwnerDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'localId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      thenByRecipient() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'recipient', Sort.asc);
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QAfterSortBy>
-      thenByRecipientDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'recipient', Sort.desc);
+      return query.addSortBy(r'owner', Sort.desc);
     });
   }
 }
 
 extension NotificationModelQueryWhereDistinct
     on QueryBuilder<NotificationModel, NotificationModel, QDistinct> {
+  QueryBuilder<NotificationModel, NotificationModel, QDistinct>
+      distinctByAction({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'action', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<NotificationModel, NotificationModel, QDistinct>
       distinctByAttachedObjectId() {
     return QueryBuilder.apply(this, (query) {
@@ -1721,19 +1570,6 @@ extension NotificationModelQueryWhereDistinct
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QDistinct>
-      distinctByHashCode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'hashCode');
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QDistinct> distinctById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'id');
-    });
-  }
-
-  QueryBuilder<NotificationModel, NotificationModel, QDistinct>
       distinctByIsRead() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isRead');
@@ -1741,18 +1577,24 @@ extension NotificationModelQueryWhereDistinct
   }
 
   QueryBuilder<NotificationModel, NotificationModel, QDistinct>
-      distinctByRecipient() {
+      distinctByOwner() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'recipient');
+      return query.addDistinctBy(r'owner');
     });
   }
 }
 
 extension NotificationModelQueryProperty
     on QueryBuilder<NotificationModel, NotificationModel, QQueryProperty> {
-  QueryBuilder<NotificationModel, int, QQueryOperations> localIdProperty() {
+  QueryBuilder<NotificationModel, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'localId');
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<NotificationModel, String?, QQueryOperations> actionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'action');
     });
   }
 
@@ -1767,13 +1609,6 @@ extension NotificationModelQueryProperty
       attachedObjectTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'attachedObjectType');
-    });
-  }
-
-  QueryBuilder<NotificationModel, List<Attachments>?, QQueryOperations>
-      attachmentsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'attachments');
     });
   }
 
@@ -1797,27 +1632,15 @@ extension NotificationModelQueryProperty
     });
   }
 
-  QueryBuilder<NotificationModel, int, QQueryOperations> hashCodeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'hashCode');
-    });
-  }
-
-  QueryBuilder<NotificationModel, int?, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
-    });
-  }
-
   QueryBuilder<NotificationModel, bool?, QQueryOperations> isReadProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isRead');
     });
   }
 
-  QueryBuilder<NotificationModel, int?, QQueryOperations> recipientProperty() {
+  QueryBuilder<NotificationModel, int?, QQueryOperations> ownerProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'recipient');
+      return query.addPropertyName(r'owner');
     });
   }
 }
