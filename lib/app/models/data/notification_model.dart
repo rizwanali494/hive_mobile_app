@@ -5,7 +5,7 @@ part 'notification_model.g.dart';
 @collection
 class NotificationModel {
   NotificationModel({
-    this.id =0,
+    this.id = 0,
     this.dateAdded,
     this.dateLastModified,
     this.content,
@@ -17,7 +17,7 @@ class NotificationModel {
   });
 
   NotificationModel.fromJson(dynamic json) {
-    id = json['id']??0;
+    id = json['id'] ?? 0;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
     content = json['content'];
@@ -28,7 +28,8 @@ class NotificationModel {
     owner = json['owner'];
   }
 
- late Id id ;
+  late Id id;
+
   String? dateAdded;
   String? dateLastModified;
   String? content;
@@ -74,4 +75,7 @@ class NotificationModel {
     map['owner'] = owner;
     return map;
   }
+
+  @ignore
+  bool get isDeleteAction => action == "DELETE";
 }

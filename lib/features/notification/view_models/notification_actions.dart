@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
+import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_id_vm.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
@@ -14,10 +15,19 @@ import 'package:hive_mobile/features/university_application/view_models/universi
 abstract class NotificationAction {
   @nonVirtual
   void onTap(BuildContext context, NotificationModel model) {
+    bool isDeleteAction = model.isDeleteAction;
+
+    if (isDeleteAction) {
+      UtilFunctions.showToast(msg: deleteMessage);
+      return;
+    }
+
     performAction(context, model.attachedObjectId ?? 0);
   }
 
   Future<void> performAction(BuildContext context, int id);
+
+  String get deleteMessage;
 }
 
 class AnnouncementPostAction extends NotificationAction {
@@ -31,10 +41,16 @@ class AnnouncementPostAction extends NotificationAction {
       context: context,
     );
   }
+
+  @override
+  String get deleteMessage => "The Post was deleted";
 }
 
 class ActivityAction extends NotificationAction {
   ActivityAction();
+
+  @override
+  String get deleteMessage => "The Activity was deleted";
 
   @override
   Future<void> performAction(BuildContext context, int id) async {
@@ -51,6 +67,9 @@ class UniversityApplicationAction extends NotificationAction {
   UniversityApplicationAction();
 
   @override
+  String get deleteMessage => "This University Application was deleted";
+
+  @override
   Future<void> performAction(BuildContext context, int id) async {
     final provider = UniversityAppRequestIdVM(objectId: id);
     context.push(
@@ -64,6 +83,9 @@ class UniversityApplicationAction extends NotificationAction {
 
 class ExternalGradeAction extends NotificationAction {
   ExternalGradeAction();
+
+  @override
+  String get deleteMessage => "The external grade was deleted";
 
   @override
   Future<void> performAction(BuildContext context, int id) async {
