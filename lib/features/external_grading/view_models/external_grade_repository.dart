@@ -23,6 +23,8 @@ abstract class ExternalGradesRepo {
 
   Future<ExternalGradeModel> uploadExternalGrade({required Map map});
 
+  Future<ExternalGradeModel> getExternalGrade(int id);
+
   Future<ExternalGradeModel> updateExternalGrade(
       {required Map map, required int id});
 
@@ -138,5 +140,18 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
     var url = ApiEndpoints.externalGrade.withId(id);
     var response = await apiService.delete(url: url);
     return;
+  }
+
+  @override
+  Future<ExternalGradeModel> getExternalGrade(int id) async {
+    final url = ApiEndpoints.externalGrade
+        .withId(id)
+        .withSubjects
+        .withResultFile
+        .withMostRecentOrder;
+    final response = await apiService.get(url: url);
+    final object = jsonDecode(response.body);
+    final model = ExternalGradeModel.fromJson(object);
+    return model;
   }
 }

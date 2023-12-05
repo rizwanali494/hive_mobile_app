@@ -22,6 +22,7 @@ import 'package:hive_mobile/features/email_verification/screens/mail_sent_screen
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/external_grading_screen.dart';
 import 'package:hive_mobile/features/external_grading/screens/grade_details_screen.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/screens/inbox_search_screen.dart';
@@ -159,10 +160,10 @@ final goRouter = GoRouter(
       builder: (_, state) {
         var extra = state.extra as Map<String, dynamic>?;
         List<String> addedGrades = extra?["addedGrades"] ?? [];
-        ExternalGradeModel? model = extra?["editModel"];
+        GradeAddingVM? controller = extra?["controller"];
         return AddExternalGradeScreen(
           addedGrades: addedGrades,
-          editModel: model,
+          controller: controller,
         );
       },
     ),

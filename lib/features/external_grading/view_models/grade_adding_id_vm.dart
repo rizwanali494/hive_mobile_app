@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:form_validator/form_validator.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
+import 'package:hive_mobile/features/external_grading/view_models/grade_adding_vm.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -19,21 +20,51 @@ import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
-abstract class GradeAddingVM
-    with UtilFunctions, ChangeNotifier, BaseExceptionController {
+class GradeAddingIdVM extends GradeAddingVM {
   final grades = ["A*", "A", "B", "C", "D", "E"];
 
   String? selectedGrade = "A*";
 
-  bool isObjectLoading = true;
-  bool hasObjectError = false;
+  final int objectId;
 
-  GradeAddingVM({List<String> certificates = const [], this.editModel}) {
-    inItValues(certificates);
+  GradeAddingIdVM(
+      {List<String> certificates = const [], required this.objectId}) {
+    // setCertificate(certificates);
+    // externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
+    // if (editModel != null) {
+    //   setValues(editModel!);
+    // }
   }
 
-  void inItValues(List<String> certificates);
+  Future<ExternalGradeModel> getExternalGrade() async {
+    isObjectLoading = true;
+    notifyListeners();
+    final model = await externalGradeRepo.getExternalGrade(objectId);
+    return model;
+  }
+
+  @override
+  void inItValues(List<String> certificates) async {
+    try {
+      externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
+      final model = await getExternalGrade();
+      editModel = model;
+      setValues(editModel!);
+    } catch (e) {
+      log("Unable to fetch external grade :: ${e.toString()}");
+      hasObjectError = true;
+    }
+    isObjectLoading = false;
+    notifyListeners();
+    // setCertificate(certificates);
+    // externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
+    // if (editModel != null) {
+    //   isObjectLoading = false;
+    //   setValues(editModel!);
+    // }
+  }
 
   void setAvailableCertificates(List<String> list) {
     for (var element in list) {
