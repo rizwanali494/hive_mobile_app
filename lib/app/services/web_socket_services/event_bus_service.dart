@@ -6,7 +6,7 @@ class EventBus {
 
   Stream<Event> get stream => _controller.stream;
 
-  void publish(Event event) {
+  void publish<T>(Event<T> event) {
     _controller.add(event);
   }
 
@@ -14,22 +14,22 @@ class EventBus {
     _controller.close();
   }
 
-  Stream<Event> on(EventType eventType) {
-    return _controller.stream.where((event) => event.type == eventType);
+  Stream<Event> on<T>() {
+    return _controller.stream.where((event) => event.runtimeType == Event<T>);
   }
 }
 
 enum EventType {
-  announcementOpened,
-  // Add more event types as needed
+  AnnouncementPost,
+  Activity
 }
 
 class Event<T> {
-  final EventType type;
+  final EventType? type;
   final T? data;
   final String? id;
 
-  Event(this.type, {this.data, this.id});
+  Event({this.data, this.id,this.type});
 }
 
 // Sending an object to update the list

@@ -4,15 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
+import 'package:hive_mobile/app/mixin/event_bus_mixin.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
-abstract class ActivityDetailVM extends ChangeNotifier {
+abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
   ActivityModel model = ActivityModel();
 
   ActivityDetailVM() {
@@ -78,24 +80,22 @@ abstract class ActivityDetailVM extends ChangeNotifier {
     model.selection = state.toUpperCase();
     model.handleAttendingCount();
     selectionStatus.value = model.getSelection;
-    activityScreenVM?.setModel(model);
+    // activityScreenVM?.setModel(model);
+    publishEvent(data: model);
     try {
       await activityRepo.submitSelection(
           id: model.id ?? 0, body: {}, state: state);
-      // await localService.put(model);
     } catch (e) {
-      if (e is HTTPStatusCodeException) {
-        log("message : ${e.response.statusCode.toString()}");
-        log("message : ${e.response.body.toString()}");
-      }
       await Future.delayed(Duration(seconds: 1));
       UtilFunctions.showToast();
       model = previousModel;
-      activityScreenVM?.setModel(model);
+      // activityScreenVM?.setModel(model);
       model.selection = previousModel.selection?.toUpperCase();
       selectionStatus.value = model.getSelection;
+      publishEvent<ActivityModel>(data: model);
     }
   }
+
 
   final apiService = GetIt.instance.get<ApiService>();
 

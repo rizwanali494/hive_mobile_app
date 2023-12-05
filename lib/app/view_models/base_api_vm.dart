@@ -1,15 +1,19 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 import 'package:hive_mobile/app/services/base_request_service/base_request_services.dart';
 
-abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseExceptionController {
+abstract class BaseApiVM<T> extends ChangeNotifier
+    with BaseRequestHandler, BaseExceptionController {
   UiState uiState = UiState.loading();
 
   bool get hasError => uiState.hasError;
@@ -33,6 +37,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
   }
 
   BaseApiVM() {
+    _listenToEvents();
     initValues();
   }
 
@@ -79,12 +84,11 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
       return;
     };
 
-
-    final onError = (  error ){
+    final onError = (error) {
       handleException(error);
     };
 
-    await performRequest(request: request,onErrorOccurred: onError);
+    await performRequest(request: request, onErrorOccurred: onError);
     notifyListeners();
   }
 
@@ -173,22 +177,15 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
     notifyListeners();
   }
 
-  Future<void> performRequest({required Function request, Function( dynamic error )? onErrorOccurred}) async {
+  Future<void> performRequest(
+      {required Function request,
+      Function(dynamic error)? onErrorOccurred}) async {
     try {
       await request();
     } catch (e) {
       onError();
       onErrorOccurred?.call(e);
     }
-    //   if (e is HTTPStatusCodeException) {
-    //     log("Error occurred : ${e.response.body}");
-    //     log("Error occurred : ${e.response.statusCode}");
-    //   }
-    //   onError();
-    //   log("Error occurred : $e");
-    //   log("Error occurred : ${e.runtimeType}");
-    //   displayError();
-    // }
   }
 
   BaseListViewVM<T> get listViewVM {
@@ -198,5 +195,44 @@ abstract class BaseApiVM<T> extends ChangeNotifier with BaseRequestHandler,BaseE
         refreshList: refreshList,
         scrollController: scrollController,
         itemCount: listCount);
+  }
+
+  final _eventBus = GetIt.instance.get<EventBus>();
+  StreamSubscription? eventStream;
+
+  void _listenToEvents() {
+    _eventBus.stream.listen((event) {
+      log('Got Event :: ${event.runtimeType}');
+    });
+
+    eventStream = _eventBus.on<T>().listen(
+      (event) {
+        log('Got Event :: ${event.runtimeType}');
+        if (event.data != null) {
+          if (event.data is T) {
+            updateItem(event.data);
+            log("Updating event using eventBus");
+          }
+        }
+      },
+    );
+  }
+
+  void updateItem(T item) {
+    try {
+      int indexOf = items.indexOf(item);
+      if (indexOf > -1) {
+        items[indexOf] = item;
+        notifyListeners();
+      }
+    }  catch (e) {
+      log("Error updating : ${e.toString()}");
+    }
+  }
+
+  @override
+  void dispose() {
+    eventStream?.cancel();
+    super.dispose();
   }
 }
