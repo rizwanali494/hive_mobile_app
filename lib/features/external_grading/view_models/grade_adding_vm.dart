@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:form_validator/form_validator.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/extensions/form_validator_extension.dart';
+import 'package:hive_mobile/app/mixin/event_bus_mixin.dart';
 import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +22,7 @@ import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dar
 import 'package:path_provider/path_provider.dart';
 
 abstract class GradeAddingVM
-    with UtilFunctions, ChangeNotifier, BaseExceptionController {
+    with UtilFunctions, ChangeNotifier, BaseExceptionController, EventBusMixin {
   final grades = ["A*", "A", "B", "C", "D", "E"];
 
   String? selectedGrade = "A*";
@@ -241,6 +242,7 @@ abstract class GradeAddingVM
       log("file : ${model.resultFile.toString()}");
       context.pop();
       context.pop(model);
+      publishEvent<ExternalGradeModel>(data: model);
       UtilFunctions.showToast(
           msg: AppStrings.externalGradeUpdated, context: context);
     } catch (e) {

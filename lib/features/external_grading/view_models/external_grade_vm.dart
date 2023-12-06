@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/external_grade_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 
@@ -52,7 +55,7 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
     items.add(model);
     items.sortByRecentOrder(
       getDateAdded: (item) =>
-          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+      DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
     );
     notifyListeners();
     if (items.length < 10) {
@@ -74,5 +77,23 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
     }
   }
 
+  StreamSubscription? _eventBusListener;
+  final _eventBus = GetIt.instance.get<EventBus>();
 
+  void _listenToEventBus() {
+    _eventBusListener = _eventBus.on<ExternalGradeModel>().listen(
+      (event) {
+        if (event.data is ExternalGradeModel) {
+          updateItem(event.data);
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _eventBusListener?.cancel();
+    super.dispose();
+  }
 }
