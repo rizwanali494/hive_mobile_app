@@ -29,7 +29,7 @@ class AnnouncementPostModel {
     this.text,
     this.type,
     this.expiryDate,
-    this.event,
+    // this.event,
   });
 
   AnnouncementPostModel.fromJson(dynamic json) {
@@ -58,7 +58,7 @@ class AnnouncementPostModel {
     text = json['text'];
     type = json['type'];
     expiryDate = json['expiry_date'];
-    event = json['event'];
+    // event = json['event'];
   }
 
   int? id;
@@ -77,7 +77,8 @@ class AnnouncementPostModel {
   String? expiryDate;
   bool? isLiked;
   bool? isDisliked;
-  Map? event;
+
+  // Map? event;
 
   AnnouncementPostModel copyWith({
     int? id,
@@ -95,7 +96,7 @@ class AnnouncementPostModel {
     String? text,
     String? expiryDate,
     String? type,
-    Map? event,
+    // Map? event,
   }) =>
       AnnouncementPostModel(
           id: id ?? this.id,
@@ -113,7 +114,7 @@ class AnnouncementPostModel {
           branchId: branchId ?? this.branchId,
           text: text ?? this.text,
           type: type ?? this.type,
-          event: event ?? this.event,
+          // event: event ?? this.event,
           expiryDate: expiryDate ?? this.expiryDate);
 
   Map<String, dynamic> toJson() {
@@ -137,7 +138,7 @@ class AnnouncementPostModel {
     map['branch_id'] = branchId;
     map['text'] = text;
     map['type'] = type;
-    map["event"] = event;
+    // map["event"] = event;
     return map;
   }
 

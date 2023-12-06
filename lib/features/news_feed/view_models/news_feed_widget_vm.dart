@@ -191,13 +191,13 @@ class NewsFeedWidgetVm
 
   late NewsFeedRepository newsFeedRepo =
       NewsFeedRepositoryImpl(apiService: _apiService);
-
-  bool get isEvent => model.event != null;
-
-  ActivityModel get event {
-    final eventMap = model.event;
-    eventMap?["owner"] = model.owner?.toJson() ?? null;
-    final event = ActivityModel.fromJson(model.event);
-    return event;
-  }
+//
+// bool get isEvent => model.event != null;
+//
+// ActivityModel get event {
+//   final eventMap = model.event;
+//   eventMap?["owner"] = model.owner?.toJson() ?? null;
+//   final event = ActivityModel.fromJson(model.event);
+//   return event;
+// }
 }
