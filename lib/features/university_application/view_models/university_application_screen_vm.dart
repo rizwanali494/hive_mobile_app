@@ -41,9 +41,11 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
     await getAcceptedApplications();
   }
 
-  Future<List<UniversityApplicationModel>> fetchInitialItems({required int limit});
+  Future<List<UniversityApplicationModel>> fetchInitialItems(
+      {required int limit});
 
-  Future<List<UniversityApplicationModel>> fetchNextItems({required int limit, required int offset});
+  Future<List<UniversityApplicationModel>> fetchNextItems(
+      {required int limit, required int offset});
 
   Future<List<UniversityApplicationModel>> fetchLocalList();
 
@@ -176,7 +178,11 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   void _listenToEventChanges() async {
     eventStream = _eventBus.on<UniversityApplicationModel>().listen(
       (event) {
-        if (event.data != null) {}
+        if (event.data != null) {
+          if (event.data is UniversityApplicationModel) {
+            updateApplication(event.data);
+          }
+        }
       },
     );
   }

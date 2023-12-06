@@ -113,7 +113,9 @@ abstract class UniAppRequestVM extends ChangeNotifier
         updatedModel = await updateUniversityDocument();
         UtilFunctions.showToast(msg: "Update Successful");
       }
-      publishEvent<UniversityApplicationModel>(data: updatedModel);
+      publishEvent<UniversityApplicationModel>(
+        data: updatedModel ?? UniversityApplicationModel(),
+      );
       context.pop();
       context.pop(updatedModel);
     } catch (e) {

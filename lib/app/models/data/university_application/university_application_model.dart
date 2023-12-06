@@ -214,7 +214,6 @@ class UniversityApplicationModel {
         return ApplicationStatus.approved;
     }
   }
-
   @ignore
   String get applicationType {
     switch (state?.toUpperCase()) {
