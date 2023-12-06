@@ -24,16 +24,14 @@ class _NewsFeedIdDialogState extends State<NewsFeedIdDialog> {
         child: Consumer<NewsFeedDialogVM>(
           builder: (context, value, child) {
             if (value.isLoading) {
-              return IntrinsicWidth(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    ),
-                  ],
-                ),
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
               );
             }
             if (value.hasError || value.model == null) {
