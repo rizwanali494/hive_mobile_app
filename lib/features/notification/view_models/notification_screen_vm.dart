@@ -114,6 +114,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     _NotificationTypes.university_application: UniversityApplicationAction(),
     _NotificationTypes.external_grade: ExternalGradeAction(),
     _NotificationTypes.session_note: SessionNoteAction(),
+    _NotificationTypes.service_request: ServiceRequestAction(),
   };
 }
 
@@ -123,4 +124,5 @@ class _NotificationTypes {
   static String university_application = "UNIVERSITY_APPLICATION";
   static String announcement_post = "ANNOUNCEMENT_POST";
   static String session_note = "SESSION_NOTE";
+  static String service_request = "SERVICE_REQUEST";
 }

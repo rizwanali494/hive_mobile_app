@@ -15,6 +15,8 @@ abstract class MyServicesRepository {
   Future<List<MyServicesModel>> getInitialServicesList(
       {int? offSet, int? limit, String? apiUrl});
 
+  Future<MyServicesModel> getServiceRequest({required int id});
+
   Future<Map<String, int>> getServicesStatus();
 }
 
@@ -68,5 +70,14 @@ class MyServicesRepositoryImpl extends MyServicesRepository {
     map[AppStrings.rejected.toLowerCase()] =
         rejectedResponse[AppStrings.count] ?? 0;
     return map;
+  }
+
+  @override
+  Future<MyServicesModel> getServiceRequest({required int id}) async {
+    final url = apiEndPoint.withId(id);
+    final response = await apiService.get(url: url);
+    final object = jsonDecode(response.body);
+    final model = MyServicesModel.fromJson(object);
+    return model;
   }
 }

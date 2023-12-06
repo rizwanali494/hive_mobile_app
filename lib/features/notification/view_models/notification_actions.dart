@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/models/data/notification_model.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
@@ -11,6 +13,9 @@ import 'package:hive_mobile/features/activities/screens/activity_details_screen.
 import 'package:hive_mobile/features/activities/view_models/activity_detail_id_vm.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_id_vm.dart';
+import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
+import 'package:hive_mobile/features/my_services/repositories/new_service_request_repo.dart';
+import 'package:hive_mobile/features/my_services/view_models/service_status_controller.dart';
 import 'package:hive_mobile/features/news_feed/screens/news_feed_dialog.dart';
 import 'package:hive_mobile/features/news_feed/view_models/NeedFeedDialogVM.dart';
 import 'package:hive_mobile/features/session_notes/repositories/session_note_repo.dart';
@@ -142,5 +147,39 @@ class SessionNoteAction extends NotificationAction {
 
   Future<SessionNoteModel> getSessionNote(int id) async {
     return repo.getNextSessionNote(id);
+  }
+}
+
+class ServiceRequestAction extends NotificationAction {
+  ServiceRequestAction();
+
+  final _apiService = GetIt.instance.get<ApiService>();
+
+  late final repo = MyServicesRepositoryImpl(apiService: _apiService);
+
+  @override
+  String get deleteMessage => "The Session note was deleted";
+
+  @override
+  Future<void> performAction(BuildContext context, int id) async {
+    try {
+      showLoaderDialog(context);
+      final styles = Theme.of(context).extension<AppTheme>()!;
+      final model = await getSessionNote(id);
+      context.push(DescriptionScreen.route, extra: {
+        "description": model.description,
+        "title": model.name,
+        "status_controller":
+            ServiceStatusController(model: model, styles: styles)
+      });
+    } catch (e) {
+      UtilFunctions.showToast();
+    } finally {
+      context.pop();
+    }
+  }
+
+  Future<MyServicesModel> getSessionNote(int id) async {
+    return repo.getServiceRequest(id: id);
   }
 }
