@@ -34,7 +34,6 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
     var previousModel = model.copyWith();
     model.selection = state.toUpperCase();
     model.handleAttendingCount();
-    log("message ::: ${model.attendingStudents}");
     var index = items.indexOf(model);
     if (index > -1) {
       items[index] = model;

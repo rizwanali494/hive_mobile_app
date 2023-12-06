@@ -76,6 +76,16 @@ class NotificationModel {
     return map;
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NotificationModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   @ignore
   bool get isDeleteAction => action == "DELETE";
 }

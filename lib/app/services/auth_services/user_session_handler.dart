@@ -94,8 +94,7 @@ mixin UserSessionHandler {
   }
 
   void checkEmailVerification(BuildContext context, UserModel model) {
-    log("message ::: ${model.accountData?.isBackUpEmailVerified}");
-    if ((model.accountData?.isBackUpEmailVerified ?? false)) {
+     if ((model.accountData?.isBackUpEmailVerified ?? false)) {
       context.pushReplacement(HomeScreen.route);
       return;
     }

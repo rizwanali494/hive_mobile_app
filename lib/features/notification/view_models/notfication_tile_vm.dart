@@ -18,7 +18,6 @@ class NotificationTileVM extends ChangeNotifier {
 
   NotificationTileVM({required this.model, required this.mainProvider}) {
     readNotification();
-    log("message :: ${model.id}");
   }
 
   String get title => model.content ?? "";
