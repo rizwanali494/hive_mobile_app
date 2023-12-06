@@ -99,12 +99,6 @@ class ActivityAction extends NotificationAction {
 
   @override
   Future<void> performAction(BuildContext context, int id) async {
-    // context.push(
-    //   ActivityDetailScreen.route,
-    //   extra: {
-    //     "controller": ActivityDetailIdVM(id),
-    //   },
-    // );
     try {
       showLoaderDialog(context);
       final model = await getActivity(id);

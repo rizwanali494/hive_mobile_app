@@ -46,8 +46,14 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
     return announcements;
   }
 
-  String withAttachments() => ApiEndpoints.announcementPost.withOwnerObject
-      .withPolls.withAttachments.withMostRecentOrder.withExpiredAndNUll;
+  String withAttachments() => ApiEndpoints
+      .announcementPost
+      .withOwnerObject
+      .withEvent
+      .withPolls
+      .withAttachments
+      .withMostRecentOrder
+      .withExpiredAndNUll;
 
   @override
   Future<AnnouncementPostModel> fetchNewsFeedModel(int id) async {

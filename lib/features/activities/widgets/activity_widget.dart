@@ -19,13 +19,9 @@ class ActivityWidget extends StatelessWidget {
 
   const ActivityWidget({
     super.key,
-    required this.type,
-    required this.selected,
     required this.controller,
   });
 
-  final PostType type;
-  final String selected;
 
   @override
   Widget build(BuildContext context) {

@@ -42,7 +42,29 @@ class ActivityModel {
     skepticalStudents = json['skeptical_students'];
     selection = json['selection'];
     banner =
-    json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
+        json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
+    owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
+    dateAdded = json['date_added'];
+    dateLastModified = json['date_last_modified'];
+    branchId = json['branch_id'];
+    regionId = json['region_id'];
+    cityId = json['city_id'];
+    name = json['name'];
+    location = json['location'];
+    description = json['description'];
+    date = json['date'];
+    bio = json['bio'];
+  }
+
+  ActivityModel.fromAnnouncement(dynamic json) {
+    id = json['id'];
+    localId = json['id'] ?? 0;
+    attendingStudents = json['attending_students'];
+    nonAttendingStudents = json['non_attending_students'];
+    skepticalStudents = json['skeptical_students'];
+    selection = json['selection'];
+    banner =
+        json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
     owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];

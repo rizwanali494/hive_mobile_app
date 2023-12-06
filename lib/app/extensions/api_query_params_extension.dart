@@ -36,6 +36,10 @@ extension ApiFieldExpandExtension on String {
     return _appendExpandField(ApiExpandField.banner);
   }
 
+  String get withEvent {
+    return _appendExpandField(ApiExpandField.event);
+  }
+
   String get withResultFile {
     return _appendExpandField(ApiExpandField.result_file);
   }

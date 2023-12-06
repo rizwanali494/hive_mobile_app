@@ -1,3 +1,4 @@
+import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
@@ -28,6 +29,7 @@ class AnnouncementPostModel {
     this.text,
     this.type,
     this.expiryDate,
+    this.event,
   });
 
   AnnouncementPostModel.fromJson(dynamic json) {
@@ -56,6 +58,7 @@ class AnnouncementPostModel {
     text = json['text'];
     type = json['type'];
     expiryDate = json['expiry_date'];
+    event = json['event'];
   }
 
   int? id;
@@ -74,6 +77,7 @@ class AnnouncementPostModel {
   String? expiryDate;
   bool? isLiked;
   bool? isDisliked;
+  Map? event;
 
   AnnouncementPostModel copyWith({
     int? id,
@@ -91,6 +95,7 @@ class AnnouncementPostModel {
     String? text,
     String? expiryDate,
     String? type,
+    Map? event,
   }) =>
       AnnouncementPostModel(
           id: id ?? this.id,
@@ -108,6 +113,7 @@ class AnnouncementPostModel {
           branchId: branchId ?? this.branchId,
           text: text ?? this.text,
           type: type ?? this.type,
+          event: event ?? this.event,
           expiryDate: expiryDate ?? this.expiryDate);
 
   Map<String, dynamic> toJson() {
@@ -131,6 +137,7 @@ class AnnouncementPostModel {
     map['branch_id'] = branchId;
     map['text'] = text;
     map['type'] = type;
+    map["event"] = event;
     return map;
   }
 
@@ -140,9 +147,9 @@ class AnnouncementPostModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AnnouncementPostModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+          other is AnnouncementPostModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
 
   @override
   int get hashCode => id.hashCode;

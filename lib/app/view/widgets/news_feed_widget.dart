@@ -2,12 +2,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
+import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
+import 'package:hive_mobile/features/activities/widgets/activity_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -52,6 +56,26 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
         margin: EdgeInsets.symmetric(horizontal: 19.w),
         child: Consumer<NewsFeedWidgetVm>(
           builder: (context, controller, child) {
+            // if( controller.isEvent ){
+            // return  GestureDetector(
+            //     onTap: () {
+            //       context.push(
+            //         ActivityDetailScreen.route,
+            //         extra: {
+            //           "controller": ActivityDetailObjectVM(
+            //             controller.event,
+            //           ),
+            //         },
+            //       );
+            //     },
+            //     child: ActivityWidget(
+            //       controller: ActivityDetailObjectVM(
+            //         controller.event,
+            //       ),
+            //     ),
+            //   );
+            // }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,

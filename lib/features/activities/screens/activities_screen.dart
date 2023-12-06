@@ -52,8 +52,6 @@ class ActivitiesScreen extends StatelessWidget {
                     );
                   },
                   child: ActivityWidget(
-                    type: 1.isEven ? PostType.image : PostType.poll,
-                    selected: selected,
                     controller: ActivityDetailObjectVM(
                       item,
                     ),

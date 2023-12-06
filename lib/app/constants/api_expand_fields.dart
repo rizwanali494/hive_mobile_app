@@ -5,6 +5,7 @@ class ApiExpandField {
   static String attachments = "attachments";
   static String achievement = "achievement";
   static String banner = "banner";
+  static String event = "event";
   static String university = "university";
   static String documents = "documents";
   static String subjects = "subjects";
