@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -5,6 +6,7 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:hive_mobile/features/university_application/view_models/uni_app_sliver_vm.dart';
@@ -32,17 +34,16 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
     universityApplicationRepository =
         UniversityApplicationRepoImpl(apiService: apiService);
     getApplications();
+    _listenToEventChanges();
   }
 
   Future<void> getApplications() async {
     await getAcceptedApplications();
   }
 
-  Future<List<UniversityApplicationModel>> fetchInitialItems(
-      {required int limit});
+  Future<List<UniversityApplicationModel>> fetchInitialItems({required int limit});
 
-  Future<List<UniversityApplicationModel>> fetchNextItems(
-      {required int limit, required int offset});
+  Future<List<UniversityApplicationModel>> fetchNextItems({required int limit, required int offset});
 
   Future<List<UniversityApplicationModel>> fetchLocalList();
 
@@ -168,4 +169,33 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   }
 
   String applicationType();
+
+  StreamSubscription? eventStream;
+  final _eventBus = GetIt.instance.get<EventBus>();
+
+  void _listenToEventChanges() async {
+    eventStream = _eventBus.on<UniversityApplicationModel>().listen(
+      (event) {
+        if (event.data != null) {}
+      },
+    );
+  }
+
+  void updateApplication(UniversityApplicationModel element) {
+    if (element.applicationType != applicationType()) {
+      return;
+    }
+    int indexOf = applications.indexOf(element);
+    if (indexOf > -1) {
+      applications[indexOf] = element;
+      isarService.put(element);
+      notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    eventStream?.cancel();
+    super.dispose();
+  }
 }

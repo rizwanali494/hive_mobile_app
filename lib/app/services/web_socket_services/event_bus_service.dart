@@ -13,8 +13,9 @@ class EventBus {
     _controller.close();
   }
 
-  Stream<Event> on<T>() {
-    return _controller.stream.where((event) => event.runtimeType == Event<T>);
+  Stream<Event<T>> on<T>() {
+    return _controller.stream.where((event) => event.runtimeType == Event<T>)
+        as Stream<Event<T>>;
   }
 }
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:hive_mobile/app/enums/university_application_eums.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_model.dart';
+import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:isar/isar.dart';
 
 part 'university_application_model.g.dart';
@@ -211,6 +212,16 @@ class UniversityApplicationModel {
         return ApplicationStatus.pending;
       default:
         return ApplicationStatus.approved;
+    }
+  }
+
+  @ignore
+  String get applicationType {
+    switch (state?.toUpperCase()) {
+      case 'APPROVED':
+        return AppStrings.acceptedApplication;
+      default:
+        return AppStrings.previousApplication;
     }
   }
 }

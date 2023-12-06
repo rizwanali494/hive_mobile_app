@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive_mobile/app/mixin/event_bus_mixin.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'dart:developer';
 import 'dart:io';
@@ -18,7 +19,8 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:path_provider/path_provider.dart';
 
-abstract class UniAppRequestVM extends ChangeNotifier with UtilFunctions {
+abstract class UniAppRequestVM extends ChangeNotifier
+    with UtilFunctions, EventBusMixin {
   List<UniversityModel> universities = [];
   late UniversityApplicationRepository repository;
   ApiService apiService = GetIt.instance.get<ApiService>();
@@ -91,13 +93,6 @@ abstract class UniAppRequestVM extends ChangeNotifier with UtilFunctions {
   }
 
   bool validate() {
-    // final scholarshipAmount = scholarShipAmount.text.trim();
-    // final scholarshipPercent = scholarShipPercent.text.trim();
-    // final bool validate = form.currentState?.validate() ?? false;
-    // if (documents.isEmpty) {
-    //   log("empty");
-    //   return false;
-    // }
     return true;
   }
 
@@ -118,6 +113,7 @@ abstract class UniAppRequestVM extends ChangeNotifier with UtilFunctions {
         updatedModel = await updateUniversityDocument();
         UtilFunctions.showToast(msg: "Update Successful");
       }
+      publishEvent<UniversityApplicationModel>(data: updatedModel);
       context.pop();
       context.pop(updatedModel);
     } catch (e) {
