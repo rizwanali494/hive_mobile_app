@@ -105,6 +105,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
   }
 
   void performAction(BuildContext context, NotificationModel model) {
+    log("message : ${model.attachedObjectType}");
     notificationActions[model.attachedObjectType]?..onTap(context, model);
   }
 
@@ -121,6 +122,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
 class _NotificationTypes {
   static String activity = "ACTIVITY";
   static String external_grade = "EXTERNAL_GRADE";
+  static String external_grade_subject = "EXTERNAL_GRADE_SUBJECT";
   static String university_application = "UNIVERSITY_APPLICATION";
   static String announcement_post = "ANNOUNCEMENT_POST";
   static String session_note = "SESSION_NOTE";

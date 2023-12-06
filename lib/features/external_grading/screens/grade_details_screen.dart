@@ -53,7 +53,7 @@ class GradeDetailsScreen extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () async {
                           final controller =
-                              GradeAddingObjectVM(editModel: this.model);
+                              GradeAddingObjectVM(model: this.model);
                           var model = await context.push<ExternalGradeModel>(
                             AddExternalGradeScreen.route,
                             extra: {

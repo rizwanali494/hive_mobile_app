@@ -216,14 +216,12 @@ abstract class GradeAddingVM
     if (editModel == null) {
       return;
     }
-    log("updating external grade");
+    log("updating external gradeasdasd");
     showLoaderDialog(context);
     try {
       var file = await getUpdatedDocuments();
-      // if (hasDocumentChanged) {
-      //   file = await uploadDocuments();
-      // }
       await updateSubjects();
+      log("File ::::::::::: 222");
       var institutionName = institute.text.trim();
       var certificate = selectedCertificate ?? "";
       var body = {
@@ -231,7 +229,7 @@ abstract class GradeAddingVM
         "certificate": certificate,
         "result_files": file?.map((e) => e.id).toList(),
       };
-      log(body.toString());
+      log("body :: ${body}");
       var model = await externalGradeRepo.updateExternalGrade(
           map: body, id: editModel?.id ?? 0);
       model = model.copyWith(

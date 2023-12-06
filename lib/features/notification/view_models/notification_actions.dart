@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -164,7 +166,7 @@ class SessionNoteAction extends NotificationAction {
   final _apiService = GetIt.instance.get<ApiService>();
 
   late final repo =
-      SessionNotesRepositoryImpl(apiService: _apiService, endPoint: "");
+  SessionNotesRepositoryImpl(apiService: _apiService, endPoint: "");
 
   @override
   String get deleteMessage => "The Session note was deleted";
@@ -213,7 +215,7 @@ class ServiceRequestAction extends NotificationAction {
         "description": model.description,
         "title": model.name,
         "status_controller":
-            ServiceStatusController(model: model, styles: styles)
+        ServiceStatusController(model: model, styles: styles)
       });
     } catch (e) {
       UtilFunctions.showToast();

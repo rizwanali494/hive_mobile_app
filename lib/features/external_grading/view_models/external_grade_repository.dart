@@ -122,6 +122,7 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
   @override
   Future<void> updateSubject({required Map map, required int id}) async {
     var url = ApiEndpoints.subject.withId(id);
+    log("$id :: ${jsonEncode(map)} ${url}");
     var response = await apiService.patch(url: url, body: map);
     return;
   }
