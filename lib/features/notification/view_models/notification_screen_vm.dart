@@ -114,6 +114,7 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
     _NotificationTypes.announcement_post: AnnouncementPostAction(),
     _NotificationTypes.university_application: UniversityApplicationAction(),
     _NotificationTypes.external_grade: ExternalGradeAction(),
+    _NotificationTypes.external_grade_subject: ExternalGradeSubjectAction(),
     _NotificationTypes.session_note: SessionNoteAction(),
     _NotificationTypes.service_request: ServiceRequestAction(),
   };

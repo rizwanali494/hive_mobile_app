@@ -32,6 +32,8 @@ abstract class ExternalGradesRepo {
 
   Future<void> updateSubject({required Map map, required int id});
 
+  Future<SubjectModel> getSubject({required int id});
+
   Future<List<SubjectModel>> getAllSubjects({required int id});
 
   Future<void> deleteSubject({required int id});
@@ -125,6 +127,15 @@ class ExternalGradeRepositoryImpl extends ExternalGradesRepo {
     log("$id :: ${jsonEncode(map)} ${url}");
     var response = await apiService.patch(url: url, body: map);
     return;
+  }
+
+  @override
+  Future<SubjectModel> getSubject({required int id}) async {
+    var url = ApiEndpoints.subject.withId(id);
+    var response = await apiService.get(url: url);
+    final object = jsonDecode(response.body);
+    final model = SubjectModel.fromJson(object);
+    return model;
   }
 
   @override

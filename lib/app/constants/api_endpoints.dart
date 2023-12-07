@@ -1,6 +1,7 @@
 class ApiEndpoints {
   // static String baseUrl = "https://hive.bcp.net.pk";
   static String baseUrl = "http://34.65.200.85";
+  static String socketUrl = "ws://34.65.200.85/ws/ping/";
   static String pdfUrl = "${baseUrl}/view-reports-pdf";
   static String viewReport = "${baseUrl}/view-reports-pdf";
   static String apiUrl = "${baseUrl}/api/v1/";

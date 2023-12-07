@@ -13,7 +13,7 @@ import 'package:web_socket_client/web_socket_client.dart';
 class WebSocketService with SocketEncryptionService {
   WebSocket? socket;
   final _key = Environment.socketSecretKey;
-  final _socketUrl = "ws://${ApiEndpoints.baseUrl}/ws/ping/";
+  final _socketUrl = ApiEndpoints.socketUrl;
 
   late final sharedPref = GetIt.instance.get<SharedPreferences>();
 

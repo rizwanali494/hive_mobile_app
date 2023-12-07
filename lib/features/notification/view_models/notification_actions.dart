@@ -20,6 +20,7 @@ import 'package:hive_mobile/features/activities/screens/activity_details_screen.
 import 'package:hive_mobile/features/activities/view_models/activity_detail_id_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
+import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_id_vm.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
 import 'package:hive_mobile/features/my_services/repositories/new_service_request_repo.dart';
@@ -160,13 +161,41 @@ class ExternalGradeAction extends NotificationAction {
   }
 }
 
+class ExternalGradeSubjectAction extends NotificationAction {
+  ExternalGradeSubjectAction();
+
+  @override
+  String get deleteMessage => "The subject was deleted";
+  final _apiService = GetIt.instance.get<ApiService>();
+  late final repo = ExternalGradeRepositoryImpl(apiService: _apiService);
+
+  @override
+  Future<void> performAction(BuildContext context, int id) async {
+    try {
+      showLoaderDialog(context);
+      final model = await repo.getSubject(id: id);
+      final externalGradeId = model.externalGrade ?? 0;
+      final provider = GradeAddingIdVM(objectId: externalGradeId);
+      await context.push(
+        AddExternalGradeScreen.route,
+        extra: {
+          "controller": provider,
+        },
+      );
+    } catch (e) {
+      UtilFunctions.showToast();
+    }
+    context.pop();
+  }
+}
+
 class SessionNoteAction extends NotificationAction {
   SessionNoteAction();
 
   final _apiService = GetIt.instance.get<ApiService>();
 
   late final repo =
-  SessionNotesRepositoryImpl(apiService: _apiService, endPoint: "");
+      SessionNotesRepositoryImpl(apiService: _apiService, endPoint: "");
 
   @override
   String get deleteMessage => "The Session note was deleted";
