@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/models/data/user_model/user_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
@@ -46,7 +47,7 @@ class ReportsScreenVM extends ChangeNotifier with UtilFunctions {
       log("token : $token");
       context.pop();
       launchUrl(
-        Uri.parse("https://hive.bcp.net.pk/view-reports-pdf").replace(
+        Uri.parse(ApiEndpoints.pdfUrl).replace(
           queryParameters: {"token": "$token"},
         ),
         mode: LaunchMode.externalApplication,

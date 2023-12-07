@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
+import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/constants/environment.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/services/web_socket_services/socket_ecryption_service.dart';
@@ -12,7 +13,7 @@ import 'package:web_socket_client/web_socket_client.dart';
 class WebSocketService with SocketEncryptionService {
   WebSocket? socket;
   final _key = Environment.socketSecretKey;
-  final _socketUrl = "ws://hive.bcp.net.pk/ws/ping/";
+  final _socketUrl = "ws://${ApiEndpoints.baseUrl}/ws/ping/";
 
   late final sharedPref = GetIt.instance.get<SharedPreferences>();
 

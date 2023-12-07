@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 
 class ReportWebView extends StatefulWidget {
@@ -86,9 +87,7 @@ class _ReportWebViewState extends State<ReportWebView> {
             Expanded(
               child: InAppWebView(
                 initialUrlRequest: URLRequest(
-                  url: Uri.parse(
-                          "https://hive.bcp.net.pk/view-reports-pdf?token=${widget.token}")
-                      .replace(
+                  url: Uri.parse("${ApiEndpoints.pdfUrl}").replace(
                     queryParameters: {"token": "${widget.token}"},
                   ),
                 ),
