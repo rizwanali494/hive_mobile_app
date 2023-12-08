@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_vm.dart';

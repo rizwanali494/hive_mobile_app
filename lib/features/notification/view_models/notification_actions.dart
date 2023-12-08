@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +16,13 @@ import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/app/view/widgets/news_feed_widget.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
-import 'package:hive_mobile/features/activities/view_models/activity_detail_id_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
 import 'package:hive_mobile/features/external_grading/screens/adding_external_grade_screen.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
 import 'package:hive_mobile/features/external_grading/view_models/grade_adding_id_vm.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
-import 'package:hive_mobile/features/my_services/repositories/new_service_request_repo.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_status_controller.dart';
 import 'package:hive_mobile/features/news_feed/repositories/news_feed_repository_impl.dart';
-import 'package:hive_mobile/features/news_feed/screens/news_feed_dialog.dart';
-import 'package:hive_mobile/features/news_feed/view_models/NeedFeedDialogVM.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/session_notes/repositories/session_note_repo.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';

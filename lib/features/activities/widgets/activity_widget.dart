@@ -7,7 +7,6 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
 import 'package:hive_mobile/features/activities/screens/activity_status_widget.dart';
 
-import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_vm.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
