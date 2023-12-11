@@ -10,12 +10,13 @@ class GradeAddingObjectVM extends GradeAddingVM {
   GradeAddingObjectVM(
       {List<String> certificates = const [], ExternalGradeModel? model})
       : super(editModel: model) {
-    setCertificate(certificates);
+    if (editModel == null) {
+      setCertificate(certificates);
+    }
   }
 
   @override
   void inItValues(List<String> certificates) {
-    // setCertificate(certificates);
     externalGradeRepo = ExternalGradeRepositoryImpl(apiService: apiService);
     if (editModel != null) {
       isObjectLoading = false;
