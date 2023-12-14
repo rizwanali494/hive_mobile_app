@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
 import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 import 'package:hive_mobile/app/services/base_request_service/base_request_services.dart';
 
@@ -156,10 +158,6 @@ abstract class BaseApiVM<T> extends ChangeNotifier
     }
   }
 
-  bool errorShown = false;
-
-  void displayError() {}
-
   Future<void> onError() async {
     var localList = await fetchLocalList();
     items.addAll(localList);
@@ -197,15 +195,19 @@ abstract class BaseApiVM<T> extends ChangeNotifier
         itemCount: listCount);
   }
 
-  final _eventBus = GetIt.instance.get<EventBus>();
+  //local events
+  final _localEventBus = GetIt.instance.get<LocalEventBus>();
   StreamSubscription? eventStream;
 
   void _listenToEvents() {
-    _eventBus.stream.listen((event) {
-      log('Got Event :: ${event.runtimeType}');
-    });
+    _listenToLocalEvents();
+    setApiEventListener();
+  }
 
-    eventStream = _eventBus.on<T>().listen(
+  void _listenToLocalEvents() {
+    _localEventBus.stream.listen((event) {});
+
+    eventStream = _localEventBus.on<T>().listen(
       (event) {
         log('Got Event :: ${event.runtimeType}');
         if (event.data != null) {
@@ -216,6 +218,29 @@ abstract class BaseApiVM<T> extends ChangeNotifier
         }
       },
     );
+  }
+
+  //API Events
+  final webSocketService = GetIt.instance.get<WebSocketService>();
+
+  String? get apiEventType => null;
+
+  StreamSubscription? apiEventStream;
+
+  void setApiEventListener() {
+    apiEventStream = webSocketService.dataStream?.where((event) {
+      final data = jsonDecode(event);
+      String eventType = data["type"] ?? "";
+      return apiEventType == eventType;
+    }).listen(
+      (event) {
+        handleApiEvent(event);
+      },
+    );
+  }
+
+  void handleApiEvent(dynamic data) {
+    log("Base API listener API event : ${data}");
   }
 
   void updateItem(T item) {
@@ -234,6 +259,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier
   @override
   void dispose() {
     eventStream?.cancel();
+    apiEventStream?.cancel();
     super.dispose();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -95,9 +96,9 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                             ),
                           ),
                           placeholder: (context, url) =>
-                              const UserPlaceHolderWidget(),
+                          const UserPlaceHolderWidget(),
                           errorWidget: (context, url, error) =>
-                              const UserPlaceHolderWidget(),
+                          const UserPlaceHolderWidget(),
                         )
                       else
                         Container(
@@ -172,7 +173,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                                 alignment: Alignment.topRight,
                                 child: Container(
                                   margin:
-                                      EdgeInsets.only(right: 15.w, top: 30.w),
+                                  EdgeInsets.only(right: 15.w, top: 30.w),
                                   padding: EdgeInsets.all(6),
                                   decoration: BoxDecoration(
                                       color: styles.black.withOpacity(0.6),
@@ -228,11 +229,18 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                           children: [
                             SvgPicture.asset(SvgIcons.like),
                             6.5.horizontalSpace,
-                            Text(
-                              widget.controller.likes,
-                              style: styles.inter12w400
+                            AnimatedFlipCounter(
+                              duration: const Duration(milliseconds: 500),
+                              textStyle: styles.inter12w400
                                   .copyWith(color: styles.skyBlue),
+                              value: widget.controller.model.likes ??
+                                  0, // pass in a value like 2014
                             ),
+                            // Text(
+                            //   widget.controller.likes,
+                            //   style: styles.inter12w400
+                            //       .copyWith(color: styles.skyBlue),
+                            // ),
                           ],
                         ),
                       ),
@@ -246,10 +254,17 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              widget.controller.dislikes,
-                              style: styles.inter12w400
+                            // Text(
+                            //   widget.controller.dislikes,
+                            //   style: styles.inter12w400
+                            //       .copyWith(color: styles.skyBlue),
+                            // ),
+                            AnimatedFlipCounter(
+                              duration: const Duration(milliseconds: 500),
+                              textStyle: styles.inter12w400
                                   .copyWith(color: styles.skyBlue),
+                              value: widget.controller.model.dislikes ??
+                                  0, // pass in a value like 2014
                             ),
                             6.5.horizontalSpace,
                             SvgPicture.asset(SvgIcons.dislike),

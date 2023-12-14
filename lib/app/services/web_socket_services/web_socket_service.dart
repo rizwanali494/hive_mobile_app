@@ -46,14 +46,14 @@ class WebSocketService with SocketEncryptionService {
           _sendAuthData(data);
           _isAuthenticated = true;
         }
-      }
-      else {
+      } else {
         _isAuthenticated = false;
       }
     });
   }
 
   void _sendAuthData(data) {
+    log("Socket auth data : ${data}");
     socket?.send(jsonEncode(data));
   }
 

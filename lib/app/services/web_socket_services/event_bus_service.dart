@@ -1,6 +1,6 @@
 import 'dart:async';
 
-class EventBus {
+class LocalEventBus {
   final _controller = StreamController<Event>.broadcast();
 
   Stream<Event> get stream => _controller.stream;

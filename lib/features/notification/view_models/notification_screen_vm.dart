@@ -48,7 +48,6 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
 
   StreamSubscription? notificationListener;
 
-  final webSocketService = GetIt.instance.get<WebSocketService>();
 
   void setNotificationListener() {
     notificationListener = webSocketService.dataStream?.listen((event) {
@@ -83,10 +82,8 @@ class NotificationScreenVM extends BaseApiVM<NotificationModel> {
 
   void setCount() {
     unreadCount = items.where((element) {
-      log("ID : ${element.id} ${element.isRead}");
       return !(element.isRead ?? false);
     }).length;
-    log("MEssage unread count :: ${unreadCount}");
     notifyListeners();
   }
 

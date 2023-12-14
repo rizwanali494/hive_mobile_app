@@ -78,7 +78,7 @@ class ExternalGradeVM extends BaseApiVM<ExternalGradeModel> {
   }
 
   StreamSubscription? _eventBusListener;
-  final _eventBus = GetIt.instance.get<EventBus>();
+  final _eventBus = GetIt.instance.get<LocalEventBus>();
 
   void _listenToEventBus() {
     _eventBusListener = _eventBus.on<ExternalGradeModel>().listen(

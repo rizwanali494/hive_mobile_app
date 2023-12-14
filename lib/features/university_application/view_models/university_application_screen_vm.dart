@@ -173,7 +173,7 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   String applicationType();
 
   StreamSubscription? eventStream;
-  final _eventBus = GetIt.instance.get<EventBus>();
+  final _eventBus = GetIt.instance.get<LocalEventBus>();
 
   void _listenToEventChanges() async {
     eventStream = _eventBus.on<UniversityApplicationModel>().listen(

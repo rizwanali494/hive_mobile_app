@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
@@ -36,5 +37,11 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
             DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now());
   }
 
+  @override
+  void handleApiEvent(dynamic data) {
+    log("News Feed event is ${data}");
+  }
 
+  @override
+  String? get apiEventType => "ANNOUNCEMENT_POST";
 }
