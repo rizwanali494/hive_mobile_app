@@ -240,7 +240,6 @@ abstract class BaseApiVM<T> extends ChangeNotifier
   }
 
   void handleApiEvent(dynamic data) {
-    log("Base API listener API event : ${data}");
   }
 
   void updateItem(T item) {
