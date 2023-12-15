@@ -48,6 +48,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
 
   @override
   void handleApiEvent(dynamic data) {
+    log("Announcement Post API Event is ${data}");
     final eventData = jsonDecode(data);
     String? action = eventData["action"];
     final extraData = eventData["extra"] ?? {};
@@ -67,6 +68,16 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
       items[index] = items[index].copyWith(likes: likes, dislikes: disLikes);
       notifyListeners();
     }
+  }
+
+  @override
+  Future<AnnouncementPostModel?> fetchItem(int id) async {
+    log("Getting event :: ${id}");
+    AnnouncementPostModel? item;
+    try {
+      item = await newsFeedRepo.fetchNewsFeedModel(id);
+    } catch (e) {}
+    return item;
   }
 
 // void updateDislikes(int id, {required int likes}) {
