@@ -41,7 +41,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
   @override
   String? get apiEventType => "ANNOUNCEMENT_POST";
 
-  late Map<String, Function(int id, {dynamic data})> apiEventActions = {
+  late Map<String, Function(int id, {dynamic data})> apiEventSubActions = {
     "LIKE": updateLikesDislikes,
     "DISLIKE": updateLikesDislikes,
   };
@@ -50,9 +50,13 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
   void handleApiEvent(dynamic data) {
     final eventData = jsonDecode(data);
     String? action = eventData["action"];
-    final extraData = eventData["extra"];
+    final extraData = eventData["extra"] ?? {};
     final objectId = eventData["id"] ?? 0;
-    apiEventActions[action]?..call(objectId, data: extraData);
+    if (apiEventSubActions[action] == null) {
+      apiEventBaseActions[action]?..call(objectId);
+      return;
+    }
+    apiEventSubActions[action]?..call(objectId, data: extraData);
   }
 
   void updateLikesDislikes(int id, {dynamic data}) {

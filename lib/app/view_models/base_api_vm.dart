@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
@@ -239,8 +239,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier
     );
   }
 
-  void handleApiEvent(dynamic data) {
-  }
+  void handleApiEvent(dynamic data) {}
 
   void updateItem(T item) {
     try {
@@ -254,6 +253,36 @@ abstract class BaseApiVM<T> extends ChangeNotifier
       log("Error updating : ${e.toString()}");
     }
   }
+
+  late Map<String, Future Function(int id)> apiEventBaseActions = {
+    "CREATE": addItemFromId,
+    "UPDATE": updateItemFromId,
+  };
+
+  Future<void> addItemFromId(int id) async {
+    final item = await fetchItem(id);
+    if (item != null) {
+      items.insert(0, item);
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateItemFromId(int id) async {
+    final item = await fetchItem(id);
+    if (item != null) {
+      int indexOf = items.indexOf(item);
+      if (indexOf > -1) {
+        items[indexOf] = item;
+        notifyListeners();
+      }
+    }
+  }
+
+  Future<T?> fetchItem(int id) async {
+    return null;
+  }
+
+  void deleteItem() {}
 
   @override
   void dispose() {
