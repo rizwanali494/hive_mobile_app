@@ -223,7 +223,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier
   //API Events
   final webSocketService = GetIt.instance.get<WebSocketService>();
 
-  String? get apiEventType => null;
+  List<String>? get apiEventTypes => null;
 
   StreamSubscription? apiEventStream;
 
@@ -231,7 +231,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier
     apiEventStream = webSocketService.dataStream?.where((event) {
       final data = jsonDecode(event);
       String eventType = data["type"] ?? "";
-      return apiEventType == eventType;
+      return apiEventTypes?.contains(eventType) ?? false;
     }).listen(
       (event) {
         handleApiEvent(event);
