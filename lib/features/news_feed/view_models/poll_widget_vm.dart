@@ -28,6 +28,9 @@ class PollWidgetVM extends ChangeNotifier {
       return 0;
     }
     var percentage = ((poll.selectors ?? 0).toDouble() / totalPolls);
+    if (percentage < 0) {
+      return 0;
+    }
     return percentage;
   }
 
