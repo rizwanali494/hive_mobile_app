@@ -257,6 +257,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier
   late Map<String, Future Function(int id)> apiEventBaseActions = {
     "CREATE": addItemFromId,
     "UPDATE": updateItemFromId,
+    "DELETE": deleteFromId,
   };
 
   Future<void> addItemFromId(int id) async {
@@ -277,6 +278,8 @@ abstract class BaseApiVM<T> extends ChangeNotifier
       }
     }
   }
+
+  Future<void> deleteFromId(int id) async {}
 
   Future<T?> fetchItem(int id) async {
     return null;

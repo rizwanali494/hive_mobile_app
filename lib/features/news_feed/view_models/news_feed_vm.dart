@@ -113,6 +113,16 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
     }
   }
 
+  @override
+  Future<void> deleteFromId(int id) async {
+    final indexWhere = items.indexWhere((element) => element.id == id);
+    if (indexWhere > -1) {
+      items.removeAt(indexWhere);
+      notifyListeners();
+      localService.deleteSingle(id);
+    }
+  }
+
 // void updateDislikes(int id, {required int likes}) {
 //   final index = items.indexWhere((element) => element.id == id);
 //   if (index > -1) {
