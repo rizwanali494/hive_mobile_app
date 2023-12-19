@@ -205,7 +205,6 @@ abstract class BaseApiVM<T> extends ChangeNotifier
   }
 
   void _listenToLocalEvents() {
-    _localEventBus.stream.listen((event) {});
 
     eventStream = _localEventBus.on<T>().listen(
       (event) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -6,6 +8,7 @@ import 'package:hive_mobile/app/mixin/event_bus_mixin.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
+import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
 
@@ -69,9 +72,8 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
     return status == selectionStatus.value;
   }
 
-  Future<void> setActivitySelection(
-      {required String state,
-      required ActivityScreenVM? activityScreenVM}) async {
+  Future<void> setActivitySelection({required String state,
+    required ActivityScreenVM? activityScreenVM}) async {
     var previousModel = model.copyWith();
     model = model.copyWith(selection: state.toUpperCase());
     model.selection = state.toUpperCase();
@@ -93,7 +95,6 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
     }
   }
 
-
   final apiService = GetIt.instance.get<ApiService>();
 
   late final ActivityRepo activityRepo =
@@ -101,4 +102,24 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
 
   late ValueNotifier<ActivitySelectionStatus?> selectionStatus =
       ValueNotifier(model.getSelection);
+
+  StreamSubscription? eventListener;
+
+  final _localEventBus = GetIt.instance.get<LocalEventBus>();
+  StreamSubscription? eventStream;
+
+  void _listenToLocalEvents() {
+    eventStream = _localEventBus.on<ActivityModel>().listen(
+      (event) {
+        log('Got Event :: ${event.runtimeType}');
+        if (event.data != null) {
+          if (event.data is ActivityModel) {
+            if (model.id != null) {
+              model = event.data;
+            }
+          }
+        }
+      },
+    );
+  }
 }
