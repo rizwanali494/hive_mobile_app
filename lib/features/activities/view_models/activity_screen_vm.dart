@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
@@ -28,8 +30,7 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
     activityRepo = ActivityRepositoryImpl(apiService: apiService);
   }
 
-  Future<void> setActivitySelection(
-      {required ActivityModel model, required String state}) async {
+  Future<void> setActivitySelection({required ActivityModel model, required String state}) async {
     var previousModel = model.copyWith();
     model.selection = state.toUpperCase();
     model.handleAttendingCount();
@@ -63,6 +64,65 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
       items[indexOf] = model;
       notifyListeners();
       localService.put(model);
+    }
+  }
+
+  @override
+  List<String>? get apiEventTypes => ["ACTIVITY"];
+
+  @override
+  void handleApiEvent(dynamic data) {
+    log("Activity Post API Event is ${data}");
+    final eventData = jsonDecode(data);
+    String? action = eventData["action"];
+    final extraData = eventData["extra"] ?? {};
+    final objectId = eventData["id"] ?? 0;
+    final type = eventData["type"] ?? "";
+    final subAction = apiSubEvent[action];
+    if (subAction == null) {
+      apiEventBaseActions[action]?..call(objectId);
+      return;
+    }
+    subAction.call(objectId, data: extraData);
+  }
+
+  @override
+  Future<ActivityModel?> fetchItem(int id) async {
+    ActivityModel? item;
+    try {
+      item = await activityRepo.getActivity(id: id);
+    } catch (e) {}
+    return item;
+  }
+
+  @override
+  Future<void> deleteFromId(int id) async {
+    final indexWhere = items.indexWhere((element) => element.id == id);
+    if (indexWhere > -1) {
+      items.removeAt(indexWhere);
+      notifyListeners();
+      localService.deleteSingle(id);
+    }
+  }
+
+  late Map<String, Function(int id, {Map? data})> apiSubEvent = {
+    "SKEPTICAL": updateAttendingCount,
+    "ATTEND": updateAttendingCount,
+    "NOT_ATTEND": updateAttendingCount,
+  };
+
+  void updateAttendingCount(int id, {Map? data}) {
+    final int indexWhere = items.indexWhere((element) => element.id == id);
+    if (indexWhere > -1) {
+      final skepCount = data?["skeptical_students"] ?? 0;
+      final attendingCount = data?["attending_students"] ?? 0;
+      final notAttendingCount = data?["non_attending_students"] ?? 0;
+      items[indexWhere] = items[indexWhere].copyWith(
+        skepticalStudents: skepCount,
+        attendingStudents: attendingCount,
+        nonAttendingStudents: notAttendingCount,
+      );
+      notifyListeners();
     }
   }
 }
