@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
@@ -26,10 +29,9 @@ abstract class BaseSessionNoteVM extends BaseApiVM<SessionNoteModel> {
         limit: limit, offSet: offSet);
   }
 
-  Future<void> setSessionNote(
-      {required SessionNoteModel model,
-      required String state,
-      required ACKSessionNoteVM ackSessionNoteVM}) async {}
+  Future<void> setSessionNote({required SessionNoteModel model,
+    required String state,
+    required ACKSessionNoteVM ackSessionNoteVM}) async {}
 
   final apiService = GetIt.instance.get<ApiService>();
   late SessionNotesRepo sessionNotesRepo;
@@ -47,6 +49,27 @@ abstract class BaseSessionNoteVM extends BaseApiVM<SessionNoteModel> {
           DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
     );
   }
+
+  @override
+  List<String>? get apiEventTypes => ["SESSION_NOTE"];
+
+  @override
+  void handleApiEvent(dynamic data) {
+    log("Session Note API Event is ${data}");
+    final eventData = jsonDecode(data);
+    String? action = eventData["action"];
+    final extraData = eventData["extra"] ?? {};
+    final type = eventData["type"] ?? "";
+    apiEventAction[action]?..call(data: extraData);
+  }
+
+  late Map<String, Function({dynamic data})> apiEventAction = {
+    "UPDATE": refreshLists,
+    "CREATE": refreshLists,
+    "DELETE": refreshLists,
+  };
+
+  void refreshLists({dynamic data}) {
+    refreshList();
+  }
 }
-
-
