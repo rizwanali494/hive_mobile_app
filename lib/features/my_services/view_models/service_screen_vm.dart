@@ -55,18 +55,22 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
 
   final localService = IsarService<MyServicesModel>();
 
-  void setServiceStatusLocally() {
-    totalApproved =
-        localService.query().filter().not().stateEqualTo("PENDING").countSync();
+  Future<void> setServiceStatusLocally() async {
+    totalApproved = await localService
+        .query()
+        .filter()
+        .not()
+        .stateEqualTo("PENDING")
+        .count();
     totalPending =
-        localService.query().filter().stateEqualTo("PENDING").countSync();
+        await localService.query().filter().stateEqualTo("PENDING").count();
     notifyListeners();
   }
 
   final apiService = GetIt.instance.get<ApiService>();
 
   late MyServicesRepository myServicesRepository =
-  MyServicesRepositoryImpl(apiService: apiService);
+      MyServicesRepositoryImpl(apiService: apiService);
 
   final pageController = PageController();
 
