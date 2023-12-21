@@ -8,6 +8,7 @@ import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/api_event_handler.dart';
 import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
 import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
@@ -128,31 +129,3 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
   }
 }
 
-class APIEventHandler {
-  List<String>? apiEventTypes;
-  final Function(dynamic data) handleEvent;
-
-  APIEventHandler({this.apiEventTypes, required this.handleEvent}) {
-    _listenToEvents();
-  }
-
-  StreamSubscription? _apiEventStream;
-  final webSocketService = GetIt.instance.get<WebSocketService>();
-
-  void _listenToEvents() {
-    _apiEventStream = webSocketService.dataStream?.where((event) {
-      final data = jsonDecode(event);
-      String eventType = data["type"] ?? "";
-      return apiEventTypes?.contains(eventType) ?? false;
-    }).listen(
-      (event) {
-        log("handle Event :: ${event}");
-        handleEvent.call(event);
-      },
-    );
-  }
-
-  void dispose() {
-    _apiEventStream?.cancel();
-  }
-}
