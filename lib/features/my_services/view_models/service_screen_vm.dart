@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.dart';
 import 'package:hive_mobile/features/my_services/repositories/my_services_repository.dart';
 import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/close_service_request_vm.dart';
@@ -20,6 +25,7 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
 
   ServiceScreenVM() {
     getServicesStatus();
+    setEventHandler();
   }
 
   int totalApproved = 0;
@@ -40,6 +46,13 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
     }
   }
 
+  void setEventHandler() {
+    apiEventHandler = APIEventHandler(
+      handleEvent: handleApiEvent,
+      apiEventTypes: ["SERVICE_REQUEST"],
+    );
+  }
+
   final localService = IsarService<MyServicesModel>();
 
   void setServiceStatusLocally() {
@@ -53,7 +66,7 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
   final apiService = GetIt.instance.get<ApiService>();
 
   late MyServicesRepository myServicesRepository =
-      MyServicesRepositoryImpl(apiService: apiService);
+  MyServicesRepositoryImpl(apiService: apiService);
 
   final pageController = PageController();
 
@@ -77,11 +90,65 @@ class ServiceScreenVM extends ChangeNotifier with BaseExceptionController {
     await getServicesStatus();
   }
 
+  APIEventHandler? apiEventHandler;
+
+  void handleApiEvent(dynamic data) {
+    log("Service handler count is ::::::::::::::::: ${data}");
+    final eventData = jsonDecode(data);
+    String? action = eventData["action"];
+    final extraData = eventData["extra"] ?? {};
+    eventActions[action]?..call(extraData);
+  }
+
+  late Map<String, Function(dynamic data)> eventActions = {
+    "UPDATE": updateService,
+  };
+
+  void updateService(dynamic data) {
+    refreshStatus();
+  }
+
   Future<void> refreshAllList(BuildContext context) async {
     await Future.delayed(const Duration(milliseconds: 1500));
     context.read<AllServiceRequestVM?>()?.refreshList();
     context.read<OpenServiceRequestVM?>()?.refreshList();
     context.read<CloseServiceRequestVM?>()?.refreshList();
     refreshStatus();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    apiEventHandler?.dispose();
+    super.dispose();
+  }
+}
+
+class APIEventHandler {
+  List<String>? apiEventTypes;
+  final Function(dynamic data) handleEvent;
+
+  APIEventHandler({this.apiEventTypes, required this.handleEvent}) {
+    _listenToEvents();
+  }
+
+  StreamSubscription? _apiEventStream;
+  final webSocketService = GetIt.instance.get<WebSocketService>();
+
+  void _listenToEvents() {
+    _apiEventStream = webSocketService.dataStream?.where((event) {
+      final data = jsonDecode(event);
+      String eventType = data["type"] ?? "";
+      return apiEventTypes?.contains(eventType) ?? false;
+    }).listen(
+      (event) {
+        log("handle Event :: ${event}");
+        handleEvent.call(event);
+      },
+    );
+  }
+
+  void dispose() {
+    _apiEventStream?.cancel();
   }
 }

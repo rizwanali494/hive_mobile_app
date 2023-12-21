@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_mobile/app/constants/api_endpoints.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
@@ -22,12 +24,16 @@ class CloseServiceRequestVM extends BaseServiceWidgetVM {
 
   @override
   Future<void> saveToLocal(List<MyServicesModel> items) async {
-    await localService
-        .query()
-        .filter()
-        .not()
-        .stateEqualTo("PENDING")
-        .deleteAll()
-        .then((value) => localService.saveAll(items));
+    log("Saving close status");
+    localService.writeTransaction(() async {
+      localService.query().filter().not().stateEqualTo("PENDING").deleteAll();
+    }).then((value) => localService.saveAll(items));
+    // await localService
+    //    .query()
+    //    .filter()
+    //    .not()
+    //    .stateEqualTo("PENDING").deleteAll();
+    // .deleteAll();
+    // .then((value) => localService.saveAll(items));
   }
 }

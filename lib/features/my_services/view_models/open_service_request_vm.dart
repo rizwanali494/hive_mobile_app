@@ -17,11 +17,15 @@ class OpenServiceRequestVM extends BaseServiceWidgetVM {
 
   @override
   Future<void> saveToLocal(List<MyServicesModel> items) async {
-    await localService
-        .query()
-        .filter()
-        .stateEqualTo("PENDING")
-        .deleteAll()
-        .then((value) => localService.saveAll(items));
+    localService.writeTransaction(() async {
+      localService.query().filter().stateEqualTo("PENDING").deleteAll();
+    }).then((value) => localService.saveAll(items));
+
+    // await localService
+    //     .query()
+    //     .filter()
+    //     .stateEqualTo("PENDING")
+    //     .deleteAll()
+    //     .then((value) => localService.saveAll(items));
   }
 }

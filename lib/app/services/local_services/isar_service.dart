@@ -35,6 +35,12 @@ class IsarService<T> {
     });
   }
 
+  Future<void> writeTransaction(Future Function() callback) async {
+    await _isar.writeTxn(() async {
+      await callback.call();
+    });
+  }
+
   Future<List<T>> findAll() async {
     final values = await _isar.collection<T>().where().findAll();
     return values;

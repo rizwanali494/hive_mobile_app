@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
 import 'package:hive_mobile/app/models/data/my_services_model.dart';
@@ -44,7 +47,7 @@ abstract class BaseServiceWidgetVM extends BaseApiVM<MyServicesModel> {
   List<MyServicesModel> getSortedList(List<MyServicesModel> list) {
     list.sortByRecentOrder(
       getDateAdded: (item) =>
-          DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
+      DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
     );
     return list;
   }
@@ -55,5 +58,25 @@ abstract class BaseServiceWidgetVM extends BaseApiVM<MyServicesModel> {
       getDateAdded: (item) =>
           DateTime.tryParse(item.dateAdded ?? "") ?? DateTime.now(),
     );
+  }
+
+  @override
+  List<String>? get apiEventTypes => ["SERVICE_REQUEST"];
+
+  late Map<String, Function({dynamic data})> apiAction = {
+    "UPDATE": updateService,
+  };
+
+  @override
+  void handleApiEvent(dynamic data) {
+    log("Service Request list API Event is ${data}");
+    final eventData = jsonDecode(data);
+    String? action = eventData["action"];
+    final extraData = eventData["extra"] ?? {};
+    apiAction[action]?..call(data: extraData);
+  }
+
+  void updateService({dynamic data}) {
+    refreshList();
   }
 }
