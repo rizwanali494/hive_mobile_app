@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -6,6 +7,7 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
+import 'package:hive_mobile/app/services/web_socket_services/api_event_handler.dart';
 import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
@@ -34,7 +36,12 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
     universityApplicationRepository =
         UniversityApplicationRepoImpl(apiService: apiService);
     getApplications();
+    setEventListeners();
+  }
+
+  void setEventListeners() {
     _listenToEventChanges();
+    setApiHandler();
   }
 
   Future<void> getApplications() async {
@@ -199,9 +206,37 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
     }
   }
 
+  APIEventHandler? apiEventHandler;
+
+  setApiHandler() {
+    apiEventHandler = APIEventHandler(
+      handleEvent: handleApiEvent,
+      apiEventTypes: ["UNIVERSITY_APPLICATION"],
+    );
+  }
+
+  void handleApiEvent(dynamic data) {
+    log("University app event : ${data}");
+    final eventData = jsonDecode(data);
+    String? action = eventData["action"];
+    final extraData = eventData["extra"] ?? {};
+    apiAction[action]?..call(extraData);
+  }
+
+  late Map<String, Function(dynamic data)> apiAction = {
+    // "CREATE": handleApiEvent,
+    "UPDATE": refreshList,
+    "DELETE": refreshList,
+  };
+
+  void refreshList(dynamic data) {
+    refresh();
+  }
+
   @override
   void dispose() {
     eventStream?.cancel();
+    apiEventHandler?.dispose();
     super.dispose();
   }
 }
