@@ -55,6 +55,9 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
 
   late Map<String, Function(int id, {dynamic data})> apiEventSubPollActions = {
     "SELECT_POLL": updatePoll,
+    "CREATE": (id, {data}) {},
+    "UPDATE": (id, {data}) {},
+    "DELETE": (id, {data}) {},
   };
 
   @override

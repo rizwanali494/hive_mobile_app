@@ -147,10 +147,15 @@ class AnnouncementPostModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is AnnouncementPostModel &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is AnnouncementPostModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'AnnouncementPostModel{id: $id, localId: $localId, likes: $likes, dislikes: $dislikes, polls: $polls, attachments: $attachments, owner: $owner, dateAdded: $dateAdded, dateLastModified: $dateLastModified, branchId: $branchId, text: $text, type: $type, expiryDate: $expiryDate, isLiked: $isLiked, isDisliked: $isDisliked}';
+  }
 }
