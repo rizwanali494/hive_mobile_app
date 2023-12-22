@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,7 +40,7 @@ class UniversityApplicationWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     final provider =
-                        UniversityAppRequestObjectVM(model: controller.model);
+                    UniversityAppRequestObjectVM(model: controller.model);
                     var model = await context
                         .push(UniversitySelectionScreen.route, extra: {
                       "provider": provider,
@@ -77,9 +79,11 @@ class UniversityApplicationWidget extends StatelessWidget {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
+                    log("clicked :: ${controller.model.comments}");
+                    log("clicked :: ${controller.model.id}");
                     context.push(DescriptionScreen.route, extra: {
                       "title": AppStrings.comment,
-                      "description": controller.model.comments
+                      "description": controller.comments
                     });
                   },
                   child: Column(

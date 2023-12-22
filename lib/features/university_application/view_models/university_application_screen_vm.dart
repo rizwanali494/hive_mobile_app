@@ -57,6 +57,7 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   Future<List<UniversityApplicationModel>> fetchLocalList();
 
   Future<void> getAcceptedApplications() async {
+    applications = [];
     final request = () async {
       var list = await fetchInitialItems(limit: _limit);
       if (list.length < _limit) {
@@ -230,7 +231,10 @@ abstract class BaseUniversityApplicationScreenVM extends ChangeNotifier {
   };
 
   void refreshList(dynamic data) {
-    refresh();
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      refresh();
+      return;
+    });
   }
 
   @override

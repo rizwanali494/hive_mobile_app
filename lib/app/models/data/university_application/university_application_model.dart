@@ -45,6 +45,7 @@ class UniversityApplicationModel {
     description = json['description'];
     scholarshipAmount = json['scholarship_amount'];
     comments = json['comments'];
+    log("app Id :: ${json["id"]} ::::::: ${comments}");
     status = json['status'];
     state = json['state'];
     owner = json['owner'];
