@@ -37,10 +37,10 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias 'upload'
-            keyPassword 'Password'
+            keyAlias 'key0'
+            keyPassword 'BCPh!v31218'
             storeFile file('upload-keystore.jks')
-            storePassword 'Password'
+            storePassword 'BCPh!v31218'
         }
     }
 
