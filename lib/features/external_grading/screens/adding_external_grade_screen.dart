@@ -234,31 +234,35 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 ),
                                 8.horizontalSpace,
                                 Expanded(
-                                  child: TitleTextField(
-                                    title: AppStrings.gPA,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^[0-9]+.?[0-9]*'),
-                                      ),
-                                      FilteringTextInputFormatter.deny(
-                                        RegExp(r'\s'),
-                                      )
-                                    ],
-                                    validator: provider.subjectAddingValidation,
-                                    maxLength: 50,
-                                    errorStyle: styles.inter9w400
-                                        .copyWith(color: styles.red),
-                                    buildCounter: (p0,
-                                        {required currentLength,
-                                        required isFocused,
-                                        maxLength}) {
-                                      return Text(
-                                        "${currentLength}/${maxLength}",
-                                        style: styles.inter9w400,
-                                      );
-                                    },
-                                    controller: provider.gpa,
-                                    hintText: "",
+                                  child: Form(
+                                    key: provider.gpaFormKey,
+                                    child: TitleTextField(
+                                      title: AppStrings.gPA,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                          RegExp(r'^[0-9]+.?[0-9]*'),
+                                        ),
+                                        FilteringTextInputFormatter.deny(
+                                          RegExp(r'\s'),
+                                        )
+                                      ],
+                                      validator: provider.gpaAddingValidation,
+                                      maxLength: 5,
+                                      errorStyle: styles.inter9w400
+                                          .copyWith(color: styles.red),
+                                      buildCounter: (p0,
+                                          {required currentLength,
+                                          required isFocused,
+                                          maxLength}) {
+                                        return Text(
+                                          "${currentLength}/${maxLength}",
+                                          style: styles.inter9w400,
+                                        );
+                                      },
+                                      controller: provider.gpa,
+                                      hintText: "",
+                                    ),
                                   ),
                                 ),
                               ],

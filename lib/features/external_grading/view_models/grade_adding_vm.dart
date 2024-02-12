@@ -80,6 +80,7 @@ abstract class GradeAddingVM
   final scrollController = ScrollController();
 
   GlobalKey<FormState> subjectFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> gpaFormKey = GlobalKey<FormState>();
 
   String? subjectAddingValidation(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -100,14 +101,15 @@ abstract class GradeAddingVM
     if (val == null) {
       return "Invalid";
     }
-    if (val < 1 && val > 4) {
+    if (val < 0 || val > 5) {
       return "Invalid Range";
     }
     return null;
   }
 
   void addSubject() {
-    bool validate = subjectFormKey.currentState?.validate() ?? false;
+    bool validate = (subjectFormKey.currentState?.validate() ?? false) &&
+        (gpaFormKey.currentState?.validate() ?? false);
     if (!validate) {
       return;
     }
