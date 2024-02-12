@@ -45,6 +45,7 @@ abstract class GradeAddingVM
   String? selectedCertificate;
   final subjectCtrl = TextEditingController();
   final institute = TextEditingController();
+  final gpa = TextEditingController();
   late ExternalGradesRepo externalGradeRepo;
   final apiService = GetIt.instance.get<ApiService>();
 
@@ -87,6 +88,20 @@ abstract class GradeAddingVM
     bool alReadyAdded = subjectsVM.map((e) => e.name).toList().contains(value);
     if (alReadyAdded) {
       return "Already added";
+    }
+    return null;
+  }
+
+  String? gpaAddingValidation(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Required";
+    }
+    final val = double.tryParse(value);
+    if (val == null) {
+      return "Invalid";
+    }
+    if (val < 1 && val > 4) {
+      return "Invalid Range";
     }
     return null;
   }

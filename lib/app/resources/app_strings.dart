@@ -69,6 +69,7 @@ class AppStrings {
   static String mockExams = "Mock Exams";
   static String summary = "Summary";
   static String meanGPA = "Mean GPA";
+  static String gPA = "GPA";
   static String topGPA = "Top GPA";
   static String bottomGPA = "Bottom GPA";
   static String applicationInformation = "Application Information";

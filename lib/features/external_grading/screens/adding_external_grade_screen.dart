@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -144,35 +145,35 @@ class AddExternalGradeScreen extends StatelessWidget {
                               ),
                             ),
                             23.verticalSpace,
+                            Form(
+                              key: provider.subjectFormKey,
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: TitleTextField(
+                                  title: AppStrings.subject,
+                                  validator: provider.subjectAddingValidation,
+                                  maxLength: 50,
+                                  errorStyle: styles.inter9w400
+                                      .copyWith(color: styles.red),
+                                  buildCounter: (p0,
+                                      {required currentLength,
+                                      required isFocused,
+                                      maxLength}) {
+                                    return Text(
+                                      "${currentLength}/${maxLength}",
+                                      style: styles.inter9w400,
+                                    );
+                                  },
+                                  controller: provider.subjectCtrl,
+                                  hintText: "",
+                                ),
+                              ),
+                            ),
+                            5.verticalSpace,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Form(
-                                  key: provider.subjectFormKey,
-                                  child: Expanded(
-                                    child: TitleTextField(
-                                      title: AppStrings.subjects,
-                                      validator:
-                                          provider.subjectAddingValidation,
-                                      maxLength: 50,
-                                      errorStyle: styles.inter9w400
-                                          .copyWith(color: styles.red),
-                                      buildCounter: (p0,
-                                          {required currentLength,
-                                          required isFocused,
-                                          maxLength}) {
-                                        return Text(
-                                          "${currentLength}/${maxLength}",
-                                          style: styles.inter9w400,
-                                        );
-                                      },
-                                      controller: provider.subjectCtrl,
-                                      hintText: "",
-                                    ),
-                                  ),
-                                ),
-                                8.horizontalSpace,
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
@@ -229,6 +230,35 @@ class AddExternalGradeScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ],
+                                  ),
+                                ),
+                                8.horizontalSpace,
+                                Expanded(
+                                  child: TitleTextField(
+                                    title: AppStrings.gPA,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r'^[0-9]+.?[0-9]*'),
+                                      ),
+                                      FilteringTextInputFormatter.deny(
+                                        RegExp(r'\s'),
+                                      )
+                                    ],
+                                    validator: provider.subjectAddingValidation,
+                                    maxLength: 50,
+                                    errorStyle: styles.inter9w400
+                                        .copyWith(color: styles.red),
+                                    buildCounter: (p0,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) {
+                                      return Text(
+                                        "${currentLength}/${maxLength}",
+                                        style: styles.inter9w400,
+                                      );
+                                    },
+                                    controller: provider.gpa,
+                                    hintText: "",
                                   ),
                                 ),
                               ],
