@@ -308,28 +308,39 @@ class AddExternalGradeScreen extends StatelessWidget {
                                         )),
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 21.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              AppStrings.subjects,
-                                              style: styles.inter10w600
-                                                  .copyWith(
-                                                      color: styles.white),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Text(
-                                              AppStrings.grade,
-                                              style: styles.inter10w600
-                                                  .copyWith(
-                                                      color: styles.white),
-                                            ),
-                                          ),
-                                        ],
+                                      child: LayoutBuilder(
+                                        builder:
+                                            (BuildContext, BoxConstraints) {
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                AppStrings.subjects,
+                                                style: styles.inter10w600
+                                                    .copyWith(
+                                                        color: styles.white),
+                                              ),
+                                              40.horizontalSpace,
+                                              Text(
+                                                AppStrings.grade,
+                                                style: styles.inter10w600
+                                                    .copyWith(
+                                                        color: styles.white),
+                                              ),
+                                              54.horizontalSpace,
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  AppStrings.gPA,
+                                                  style: styles.inter10w600
+                                                      .copyWith(
+                                                          color: styles.white),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),

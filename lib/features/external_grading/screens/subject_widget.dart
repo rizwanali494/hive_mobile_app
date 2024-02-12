@@ -68,6 +68,28 @@ class GradeWidget extends StatelessWidget {
             ),
             1.horizontalSpace,
             Expanded(
+              child: SizedBox(
+                height: double.infinity,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: styles.alabaster,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 14.w,
+                      bottom: 12.h,
+                      top: 12.h,
+                    ),
+                    child: Text(
+                      "GPA",
+                      style: styles.inter12w400,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            1.horizontalSpace,
+            Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(
                   vertical: 11.h,
