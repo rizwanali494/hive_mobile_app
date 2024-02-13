@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
@@ -127,6 +128,20 @@ class SubjectEditDialog extends StatelessWidget {
                         provider.selectGrade(value ?? '');
                       },
                     ),
+                  ),
+                  15.verticalSpace,
+                  TitleTextField(
+                    hintText: AppStrings.gPA,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^[0-9]+.?[0-9]*'),
+                      ),
+                      FilteringTextInputFormatter.deny(
+                        RegExp(r'\s'),
+                      )
+                    ],
+                    title: AppStrings.gPA,
                   ),
                   21.verticalSpace,
                   SizedBox(
