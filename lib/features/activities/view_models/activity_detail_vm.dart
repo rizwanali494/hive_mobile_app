@@ -15,9 +15,11 @@ import 'package:hive_mobile/features/activities/repositories/activity_repo.dart'
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
 abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
+  Function(ActivityModel model)? onUpDate;
+
   ActivityModel model = ActivityModel();
 
-  ActivityDetailVM() {
+  ActivityDetailVM({this.onUpDate}) {
     setUiState();
   }
 
@@ -72,8 +74,9 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
     return status == selectionStatus.value;
   }
 
-  Future<void> setActivitySelection({required String state,
-    required ActivityScreenVM? activityScreenVM}) async {
+  Future<void> setActivitySelection(
+      {required String state,
+      required ActivityScreenVM? activityScreenVM}) async {
     var previousModel = model.copyWith();
     model = model.copyWith(selection: state.toUpperCase());
     model.selection = state.toUpperCase();
@@ -81,6 +84,9 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
     selectionStatus.value = model.getSelection;
     // activityScreenVM?.setModel(model);
     publishEvent(data: model);
+    notifyListeners();
+    onUpDate?.call(model);
+    log("Here");
     try {
       await activityRepo.submitSelection(
           id: model.id ?? 0, body: {}, state: state);
@@ -92,16 +98,18 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
       model.selection = previousModel.selection?.toUpperCase();
       selectionStatus.value = model.getSelection;
       publishEvent<ActivityModel>(data: model);
+      onUpDate?.call(model);
+      notifyListeners();
     }
   }
 
   final apiService = GetIt.instance.get<ApiService>();
 
   late final ActivityRepo activityRepo =
-      ActivityRepositoryImpl(apiService: apiService);
+  ActivityRepositoryImpl(apiService: apiService);
 
   late ValueNotifier<ActivitySelectionStatus?> selectionStatus =
-      ValueNotifier(model.getSelection);
+  ValueNotifier(model.getSelection);
 
   StreamSubscription? eventListener;
 
@@ -110,7 +118,7 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
 
   void _listenToLocalEvents() {
     eventStream = _localEventBus.on<ActivityModel>().listen(
-      (event) {
+          (event) {
         log('Got Event :: ${event.runtimeType}');
         if (event.data != null) {
           if (event.data is ActivityModel) {

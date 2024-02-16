@@ -30,13 +30,17 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
     activityRepo = ActivityRepositoryImpl(apiService: apiService);
   }
 
-  Future<void> setActivitySelection({required ActivityModel model, required String state}) async {
+  Future<void> setActivitySelection(
+      {required ActivityModel model,
+      required String state,
+      Function(ActivityModel model)? onUpdate}) async {
     var previousModel = model.copyWith();
     model.selection = state.toUpperCase();
     model.handleAttendingCount();
     var index = items.indexOf(model);
     if (index > -1) {
       items[index] = model;
+      onUpdate?.call(model);
     }
     notifyListeners();
     try {
@@ -48,6 +52,7 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
       var index = items.indexOf(previousModel);
       if (index > -1) {
         items[index] = previousModel;
+        onUpdate?.call(previousModel);
         notifyListeners();
         handleException(e);
       }

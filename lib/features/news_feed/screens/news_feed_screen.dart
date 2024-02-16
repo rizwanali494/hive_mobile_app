@@ -43,26 +43,10 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
             builder: (BuildContext context, provider, Widget? child) {
              return BaseListViewWidget<AnnouncementPostModel>(
                 controller: provider.listViewVM,
-                listViewChild: (item) => GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        child: NewsFeedWidget(
-                          type: item.isPost ? PostType.image : PostType.poll,
-                          horizontalPadding: 0,
-                          controller: NewsFeedWidgetVm(
-                            model: item,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  child: NewsFeedWidget(
-                    type: item.isPost ? PostType.image : PostType.poll,
-                    controller: NewsFeedWidgetVm(
-                      model: item,
-                    ),
+                listViewChild: (item) => NewsFeedWidget(
+                  type: item.isPost ? PostType.image : PostType.poll,
+                  controller: NewsFeedWidgetVm(
+                    model: item,
                   ),
                 ),
                 shimmerChild: PostShimmerWidget(type: PostType.image),

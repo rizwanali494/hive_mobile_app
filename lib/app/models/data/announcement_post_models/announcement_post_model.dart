@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
 
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
@@ -28,7 +31,7 @@ class AnnouncementPostModel {
     this.text,
     this.type,
     this.expiryDate,
-    // this.event,
+    this.event,
   });
 
   AnnouncementPostModel.fromJson(dynamic json) {
@@ -57,7 +60,10 @@ class AnnouncementPostModel {
     text = json['text'];
     type = json['type'];
     expiryDate = json['expiry_date'];
-    // event = json['event'];
+    log("EVENt :: ${json['event']}");
+    event = json['event'] != null
+        ? EventAnnouncementModel.fromJson(json['event'])
+        : null;
   }
 
   int? id;
@@ -77,7 +83,7 @@ class AnnouncementPostModel {
   bool? isLiked;
   bool? isDisliked;
 
-  // Map? event;
+  EventAnnouncementModel? event;
 
   AnnouncementPostModel copyWith({
     int? id,
@@ -95,7 +101,7 @@ class AnnouncementPostModel {
     String? text,
     String? expiryDate,
     String? type,
-    // Map? event,
+    EventAnnouncementModel? event,
   }) =>
       AnnouncementPostModel(
           id: id ?? this.id,
@@ -113,7 +119,7 @@ class AnnouncementPostModel {
           branchId: branchId ?? this.branchId,
           text: text ?? this.text,
           type: type ?? this.type,
-          // event: event ?? this.event,
+          event: event ?? this.event,
           expiryDate: expiryDate ?? this.expiryDate);
 
   Map<String, dynamic> toJson() {
@@ -137,7 +143,7 @@ class AnnouncementPostModel {
     map['branch_id'] = branchId;
     map['text'] = text;
     map['type'] = type;
-    // map["event"] = event;
+    map["event"] = event?.toJson();
     return map;
   }
 
@@ -149,10 +155,11 @@ class AnnouncementPostModel {
       identical(this, other) ||
       other is AnnouncementPostModel &&
           runtimeType == other.runtimeType &&
-          id == other.id;
+          id == other.id &&
+          event == other.event;
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => id.hashCode ^ event.hashCode;
 
   @override
   String toString() {

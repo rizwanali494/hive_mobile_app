@@ -61,7 +61,8 @@ class NewsFeedRepositoryImpl extends NewsFeedRepository {
         .withId(id)
         .withPolls
         .withOwnerObject
-        .withAttachments;
+        .withAttachments
+        .withEvent;
     log(url);
     var response = await apiService.get(url: url);
     var body = jsonDecode(response.body);
