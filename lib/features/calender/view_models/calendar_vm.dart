@@ -10,20 +10,24 @@ import 'package:hive_mobile/features/calender/repositories/calendar_repo.dart';
 import 'package:intl/intl.dart';
 
 class CalendarVM extends ChangeNotifier with BaseExceptionController {
-  static const _startYear = 2023;
+  static int _startYear = DateTime.now().year;
   int selectedValue = _startYear;
   static const _totalYears = 5;
   final calendarController = CleanCalendarController(
       minDate: DateTime(_startYear),
-      maxDate: DateTime(_startYear, 12),
+      maxDate: DateTime(_startYear + 5, 12),
       readOnly: true);
 
   List<String> monthNames = DateFormat.MMMM().dateSymbols.MONTHS;
   List<int> years = [
     ...List.generate(
-      _totalYears,
-      (index) => (_startYear + index),
+      _totalYears + 5 + 1,
+      (index) => ((_startYear - _totalYears) + index),
     ),
+    // ...List.generate(
+    //   _totalYears,
+    //       (index) => ((_startYear+5) + index),
+    // ),
   ];
   List<String> shortWeekDays = [
     "Mon",
