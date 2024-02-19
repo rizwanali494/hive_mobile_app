@@ -93,6 +93,23 @@ abstract class GradeAddingVM
     return null;
   }
 
+  Map<String, double> gradeLowerRange = {
+    "A*": 4.3,
+    "A": 4.1,
+    "B": 3.1,
+    "C": 2.1,
+    "D": 1.1,
+    "E": 0.5
+  };
+  Map<String, double> gradeUpperRange = {
+    "A*": 5.0,
+    "A": 4.2,
+    "B": 4.0,
+    "C": 3.0,
+    "D": 2.0,
+    "E": 1.0
+  };
+
   String? gpaAddingValidation(String? value) {
     if (value == null || value.trim().isEmpty) {
       return "Required";
@@ -101,7 +118,13 @@ abstract class GradeAddingVM
     if (val == null) {
       return "Invalid";
     }
-    if (val < 0 || val > 5) {
+    final upperRange = gradeUpperRange[selectedGrade ?? ""] ?? 0;
+    final lowerRange = gradeLowerRange[selectedGrade ?? ""] ?? 0;
+
+    if (val < lowerRange || val > upperRange) {
+      UtilFunctions.showToast(
+          msg:
+              "The range for an ${selectedGrade ?? ""} GPA is $lowerRange to $upperRange.");
       return "Invalid Range";
     }
     return null;
