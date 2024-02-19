@@ -39,7 +39,7 @@ class GradeDetailVM extends ChangeNotifier
   bool gettingSubject = true;
   bool errorDownloading = false;
 
-  void updateVM(SubjectVM updateVM) {
+  Future<void> updateVM(SubjectVM updateVM) async {
     SubjectVM previous;
     int indexOf = subjectsVM.indexOf(updateVM);
     if (indexOf > -1) {
@@ -47,16 +47,15 @@ class GradeDetailVM extends ChangeNotifier
       subjectsVM[indexOf] = updateVM;
       notifyListeners();
       try {
-        externalGradeRepo.updateSubject(id: updateVM.id ?? 0, map: {
+        await externalGradeRepo.updateSubject(id: updateVM.id ?? 0, map: {
           "name": updateVM.name,
           "grade": updateVM.grade,
-        }).then((value) {
-          UtilFunctions.showToast(msg: "Subject updated");
         });
+        UtilFunctions.showToast(msg: "Subject updated");
       } catch (e) {
-        handleException(e);
         subjectsVM[indexOf] = previous;
         notifyListeners();
+        handleException(e);
       }
       notifyListeners();
     }
@@ -94,6 +93,7 @@ class GradeDetailVM extends ChangeNotifier
         (index) => SubjectVM(
           name: list[index].name ?? "",
           grade: list[index].grade ?? '',
+          gpa: list[index].gpa ?? 0.0,
           isLocal: false,
           id: list[index].id,
         ),

@@ -3,9 +3,14 @@ class SubjectVM {
   String name;
   String grade;
   bool isLocal;
+  double gpa;
 
   SubjectVM(
-      {required this.grade, required this.name, int? id, this.isLocal = true}) {
+      {required this.grade,
+      required this.name,
+      int? id,
+      this.isLocal = true,
+      required this.gpa}) {
     this.id = id ?? DateTime.now().millisecondsSinceEpoch;
   }
 
@@ -17,17 +22,19 @@ class SubjectVM {
   @override
   int get hashCode => id.hashCode;
 
-   SubjectVM copyWith({
+  SubjectVM copyWith({
     int? id,
     String? name,
     String? grade,
     bool? isLocal,
+    double? gpa,
   }) {
     return SubjectVM(
       id: id ?? this.id,
       name: name ?? this.name,
       grade: grade ?? this.grade,
       isLocal: isLocal ?? this.isLocal,
+      gpa: gpa ?? this.gpa,
     );
   }
 }

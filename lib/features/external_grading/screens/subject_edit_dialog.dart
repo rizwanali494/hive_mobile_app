@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -133,6 +132,7 @@ class SubjectEditDialog extends StatelessWidget {
                   TitleTextField(
                     hintText: AppStrings.gPA,
                     keyboardType: TextInputType.number,
+                    controller: provider.gpaCtrl,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
                         RegExp(r'^[0-9]+.?[0-9]*'),
@@ -151,11 +151,15 @@ class SubjectEditDialog extends StatelessWidget {
                       onTap: () {
                         context.pop();
                         var enteredName = provider.subjectCtrl.text.trim();
+                        final gpa =
+                            double.tryParse(provider.gpaCtrl.text) ?? 0.0;
                         var name = enteredName.isEmpty
                             ? provider.subjectVM.name
                             : enteredName;
                         onUpdate(provider.subjectVM.copyWith(
-                            grade: provider.selectedGrade ?? "", name: name));
+                            grade: provider.selectedGrade ?? "",
+                            name: name,
+                            gpa: gpa));
                       },
                     ),
                   ),

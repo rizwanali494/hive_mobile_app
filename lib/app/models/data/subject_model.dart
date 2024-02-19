@@ -15,6 +15,7 @@ class SubjectModel {
     this.grade,
     this.owner,
     this.externalGrade,
+    this.gpa,
   });
 
   SubjectModel.fromJson(dynamic json) {
@@ -26,6 +27,7 @@ class SubjectModel {
     cityId = json['city_id'];
     name = json['name'];
     grade = json['grade'];
+    gpa = double.tryParse(json['gpa']) ?? 0.0;
     owner = json['owner'];
     externalGrade = json['external_grade'];
   }
@@ -40,6 +42,7 @@ class SubjectModel {
   String? grade;
   int? owner;
   int? externalGrade;
+  double? gpa;
 
   SubjectModel copyWith({
     int? id,
@@ -52,6 +55,7 @@ class SubjectModel {
     String? grade,
     int? owner,
     int? externalGrade,
+    double? gpa,
   }) =>
       SubjectModel(
         id: id ?? this.id,
@@ -64,6 +68,7 @@ class SubjectModel {
         grade: grade ?? this.grade,
         owner: owner ?? this.owner,
         externalGrade: externalGrade ?? this.externalGrade,
+        gpa: gpa ?? this.gpa,
       );
 
   Map<String, dynamic> toJson() {
@@ -78,6 +83,7 @@ class SubjectModel {
     map['grade'] = grade;
     map['owner'] = owner;
     map['external_grade'] = externalGrade;
+    map['gpa'] = gpa;
     return map;
   }
 }

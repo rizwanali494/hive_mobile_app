@@ -239,17 +239,22 @@ class GradeDetailsScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: Text(
-                                AppStrings.subjects,
-                                style: styles.inter10w600
-                                    .copyWith(color: styles.white),
-                              ),
+                            Text(
+                              AppStrings.subjects,
+                              style: styles.inter10w600
+                                  .copyWith(color: styles.white),
                             ),
+                            40.horizontalSpace,
+                            Text(
+                              AppStrings.grade,
+                              style: styles.inter10w600
+                                  .copyWith(color: styles.white),
+                            ),
+                            54.horizontalSpace,
                             Expanded(
-                              flex: 2,
+                              flex: 1,
                               child: Text(
-                                AppStrings.grade,
+                                AppStrings.gPA,
                                 style: styles.inter10w600
                                     .copyWith(color: styles.white),
                               ),

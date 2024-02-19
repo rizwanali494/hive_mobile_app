@@ -81,7 +81,7 @@ class GradeWidget extends StatelessWidget {
                       top: 12.h,
                     ),
                     child: Text(
-                      "GPA",
+                      gradeVM.gpa.toStringAsPrecision(3),
                       style: styles.inter12w400,
                     ),
                   ),

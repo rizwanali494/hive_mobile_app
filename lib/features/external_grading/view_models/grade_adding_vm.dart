@@ -114,6 +114,8 @@ abstract class GradeAddingVM
       return;
     }
     final subjectName = subjectCtrl.text.trim();
+    final subjectGpa = gpa.text.trim();
+    final gpaNumber = double.tryParse(subjectGpa) ?? 0.0;
     final hasSubject = subjectsVM
         .map((e) => e.name.toLowerCase())
         .toList()
@@ -122,9 +124,11 @@ abstract class GradeAddingVM
       return;
     }
     if (!hasSubject) {
-      final subject = SubjectVM(grade: selectedGrade!, name: subjectName);
+      final subject =
+          SubjectVM(grade: selectedGrade!, name: subjectName, gpa: gpaNumber);
       subjectsVM.add(subject);
       subjectCtrl.clear();
+      gpa.clear();
       notifyListeners();
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         final maxExtend = scrollController.position.maxScrollExtent;
@@ -211,6 +215,7 @@ abstract class GradeAddingVM
       ExternalGradeModel model, List<SubjectVM> list) async {
     var subjectNames = list.map((e) => e.name).toList();
     var subjectGrades = list.map((e) => e.grade).toList();
+    var subjectGPAs = list.map((e) => e.gpa).toList();
     List<Map> bodies = [];
     bodies = List.generate(
       list.length,
@@ -218,6 +223,7 @@ abstract class GradeAddingVM
         "name": "${subjectNames[index]}",
         "grade": "${subjectGrades[index]}",
         "external_grade": "${model.id}",
+        "gpa": subjectGPAs[index]
       },
     );
     var subjects = await Future.wait(
@@ -320,6 +326,7 @@ abstract class GradeAddingVM
         (index) => SubjectVM(
             name: list[index].name ?? "",
             grade: list[index].grade ?? '',
+            gpa: list[index].gpa ?? 0.0,
             isLocal: false,
             id: list[index].id),
       );
