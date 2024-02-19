@@ -1,14 +1,24 @@
+import 'dart:developer';
+
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
+import 'package:hive_mobile/app/models/data/activity_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/blue_border_container.dart';
 import 'package:hive_mobile/app/view/widgets/poll_widget.dart';
 import 'package:hive_mobile/app/view/widgets/user_placeholder_widget.dart';
+import 'package:hive_mobile/features/activities/screens/activity_details_screen.dart';
+import 'package:hive_mobile/features/activities/view_models/activity_detail_object_vn.dart';
+import 'package:hive_mobile/features/activities/widgets/activity_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -37,7 +47,6 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    print("count --- ${count.value}");
 
     return ChangeNotifierProvider.value(
       value: widget.controller,
@@ -53,25 +62,57 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
         margin: EdgeInsets.symmetric(horizontal: 19.w),
         child: Consumer<NewsFeedWidgetVm>(
           builder: (context, controller, child) {
-            // if( controller.isEvent ){
-            // return  GestureDetector(
-            //     onTap: () {
-            //       context.push(
-            //         ActivityDetailScreen.route,
-            //         extra: {
-            //           "controller": ActivityDetailObjectVM(
-            //             controller.event,
-            //           ),
-            //         },
-            //       );
-            //     },
-            //     child: ActivityWidget(
-            //       controller: ActivityDetailObjectVM(
-            //         controller.event,
-            //       ),
-            //     ),
-            //   );
-            // }
+            log("IsEvent :: ${controller.isEvent}");
+            if (controller.isEvent) {
+              return GestureDetector(
+                onTap: () {
+                  context.push(
+                    ActivityDetailScreen.route,
+                    extra: {
+                      "controller": ActivityDetailObjectVM(
+                        controller.model.event?.toActivityModel ??
+                            ActivityModel(),
+                        onUpDate: (model) {
+                          log("Onupdate called");
+                          controller.publishEvent<AnnouncementPostModel>(
+                            data: controller.model.copyWith(
+                              event: EventAnnouncementModel(
+                                selection: model.selection,
+                                skepticalStudents: model.skepticalStudents,
+                                regionId: model.attendingStudents,
+                                attendingStudents: model.attendingStudents,
+                                location: model.location,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    },
+                  );
+                },
+                child: ActivityWidget(
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.zero,
+                  controller: ActivityDetailObjectVM(
+                    controller.model.event?.toActivityModel ?? ActivityModel(),
+                    onUpDate: (model) {
+                      log("Onupdate called");
+                      controller.publishEvent<AnnouncementPostModel>(
+                        data: controller.model.copyWith(
+                          event: EventAnnouncementModel(
+                            selection: model.selection,
+                            skepticalStudents: model.skepticalStudents,
+                            regionId: model.attendingStudents,
+                            attendingStudents: model.attendingStudents,
+                            location: model.location,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            }
 
             return SingleChildScrollView(
               child: Column(
@@ -96,9 +137,9 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                             ),
                           ),
                           placeholder: (context, url) =>
-                          const UserPlaceHolderWidget(),
+                              const UserPlaceHolderWidget(),
                           errorWidget: (context, url, error) =>
-                          const UserPlaceHolderWidget(),
+                              const UserPlaceHolderWidget(),
                         )
                       else
                         Container(
@@ -173,7 +214,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                                 alignment: Alignment.topRight,
                                 child: Container(
                                   margin:
-                                  EdgeInsets.only(right: 15.w, top: 30.w),
+                                      EdgeInsets.only(right: 15.w, top: 30.w),
                                   padding: EdgeInsets.all(6),
                                   decoration: BoxDecoration(
                                       color: styles.black.withOpacity(0.6),

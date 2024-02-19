@@ -44,55 +44,61 @@ const AnnouncementPostModelSchema = CollectionSchema(
       name: r'dislikes',
       type: IsarType.long,
     ),
-    r'expiryDate': PropertySchema(
+    r'event': PropertySchema(
       id: 5,
+      name: r'event',
+      type: IsarType.object,
+      target: r'EventAnnouncementModel',
+    ),
+    r'expiryDate': PropertySchema(
+      id: 6,
       name: r'expiryDate',
       type: IsarType.string,
     ),
     r'hashCode': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'hashCode',
       type: IsarType.long,
     ),
     r'id': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'id',
       type: IsarType.long,
     ),
     r'isDisliked': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'isDisliked',
       type: IsarType.bool,
     ),
     r'isLiked': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'isLiked',
       type: IsarType.bool,
     ),
     r'likes': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'likes',
       type: IsarType.long,
     ),
     r'owner': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'owner',
       type: IsarType.object,
       target: r'OwnerModel',
     ),
     r'polls': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'polls',
       type: IsarType.objectList,
       target: r'Polls',
     ),
     r'text': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'text',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'type',
       type: IsarType.string,
     )
@@ -110,7 +116,8 @@ const AnnouncementPostModelSchema = CollectionSchema(
     r'OwnerModel': OwnerModelSchema,
     r'AccountPicture': AccountPictureSchema,
     r'AccountDataModel': AccountDataModelSchema,
-    r'AccountExtra': AccountExtraSchema
+    r'AccountExtra': AccountExtraSchema,
+    r'EventAnnouncementModel': EventAnnouncementModelSchema
   },
   getId: _announcementPostModelGetId,
   getLinks: _announcementPostModelGetLinks,
@@ -148,6 +155,14 @@ int _announcementPostModelEstimateSize(
     final value = object.dateLastModified;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.event;
+    if (value != null) {
+      bytesCount += 3 +
+          EventAnnouncementModelSchema.estimateSize(
+              value, allOffsets[EventAnnouncementModel]!, allOffsets);
     }
   }
   {
@@ -208,26 +223,32 @@ void _announcementPostModelSerialize(
   writer.writeString(offsets[2], object.dateAdded);
   writer.writeString(offsets[3], object.dateLastModified);
   writer.writeLong(offsets[4], object.dislikes);
-  writer.writeString(offsets[5], object.expiryDate);
-  writer.writeLong(offsets[6], object.hashCode);
-  writer.writeLong(offsets[7], object.id);
-  writer.writeBool(offsets[8], object.isDisliked);
-  writer.writeBool(offsets[9], object.isLiked);
-  writer.writeLong(offsets[10], object.likes);
+  writer.writeObject<EventAnnouncementModel>(
+    offsets[5],
+    allOffsets,
+    EventAnnouncementModelSchema.serialize,
+    object.event,
+  );
+  writer.writeString(offsets[6], object.expiryDate);
+  writer.writeLong(offsets[7], object.hashCode);
+  writer.writeLong(offsets[8], object.id);
+  writer.writeBool(offsets[9], object.isDisliked);
+  writer.writeBool(offsets[10], object.isLiked);
+  writer.writeLong(offsets[11], object.likes);
   writer.writeObject<OwnerModel>(
-    offsets[11],
+    offsets[12],
     allOffsets,
     OwnerModelSchema.serialize,
     object.owner,
   );
   writer.writeObjectList<Polls>(
-    offsets[12],
+    offsets[13],
     allOffsets,
     PollsSchema.serialize,
     object.polls,
   );
-  writer.writeString(offsets[13], object.text);
-  writer.writeString(offsets[14], object.type);
+  writer.writeString(offsets[14], object.text);
+  writer.writeString(offsets[15], object.type);
 }
 
 AnnouncementPostModel _announcementPostModelDeserialize(
@@ -247,25 +268,30 @@ AnnouncementPostModel _announcementPostModelDeserialize(
     dateAdded: reader.readStringOrNull(offsets[2]),
     dateLastModified: reader.readStringOrNull(offsets[3]),
     dislikes: reader.readLongOrNull(offsets[4]),
-    expiryDate: reader.readStringOrNull(offsets[5]),
-    id: reader.readLongOrNull(offsets[7]),
-    isDisliked: reader.readBoolOrNull(offsets[8]),
-    isLiked: reader.readBoolOrNull(offsets[9]),
-    likes: reader.readLongOrNull(offsets[10]),
+    event: reader.readObjectOrNull<EventAnnouncementModel>(
+      offsets[5],
+      EventAnnouncementModelSchema.deserialize,
+      allOffsets,
+    ),
+    expiryDate: reader.readStringOrNull(offsets[6]),
+    id: reader.readLongOrNull(offsets[8]),
+    isDisliked: reader.readBoolOrNull(offsets[9]),
+    isLiked: reader.readBoolOrNull(offsets[10]),
+    likes: reader.readLongOrNull(offsets[11]),
     localId: id,
     owner: reader.readObjectOrNull<OwnerModel>(
-      offsets[11],
+      offsets[12],
       OwnerModelSchema.deserialize,
       allOffsets,
     ),
     polls: reader.readObjectList<Polls>(
-      offsets[12],
+      offsets[13],
       PollsSchema.deserialize,
       allOffsets,
       Polls(),
     ),
-    text: reader.readStringOrNull(offsets[13]),
-    type: reader.readStringOrNull(offsets[14]),
+    text: reader.readStringOrNull(offsets[14]),
+    type: reader.readStringOrNull(offsets[15]),
   );
   return object;
 }
@@ -293,33 +319,39 @@ P _announcementPostModelDeserializeProp<P>(
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readObjectOrNull<EventAnnouncementModel>(
+        offset,
+        EventAnnouncementModelSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 8:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 9:
       return (reader.readBoolOrNull(offset)) as P;
     case 10:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 11:
+      return (reader.readLongOrNull(offset)) as P;
+    case 12:
       return (reader.readObjectOrNull<OwnerModel>(
         offset,
         OwnerModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 12:
+    case 13:
       return (reader.readObjectList<Polls>(
         offset,
         PollsSchema.deserialize,
         allOffsets,
         Polls(),
       )) as P;
-    case 13:
-      return (reader.readStringOrNull(offset)) as P;
     case 14:
+      return (reader.readStringOrNull(offset)) as P;
+    case 15:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -986,6 +1018,24 @@ extension AnnouncementPostModelQueryFilter on QueryBuilder<
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> eventIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'event',
+      ));
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> eventIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'event',
       ));
     });
   }
@@ -1910,6 +1960,13 @@ extension AnnouncementPostModelQueryObject on QueryBuilder<
   }
 
   QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
+      QAfterFilterCondition> event(FilterQuery<EventAnnouncementModel> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'event');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, AnnouncementPostModel,
       QAfterFilterCondition> owner(FilterQuery<OwnerModel> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'owner');
@@ -2411,6 +2468,13 @@ extension AnnouncementPostModelQueryProperty on QueryBuilder<
       dislikesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dislikes');
+    });
+  }
+
+  QueryBuilder<AnnouncementPostModel, EventAnnouncementModel?, QQueryOperations>
+      eventProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'event');
     });
   }
 

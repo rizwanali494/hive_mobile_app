@@ -1,23 +1,15 @@
-import 'dart:developer';
-
-import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:isar/isar.dart';
 
-import 'package:hive_mobile/app/models/data/announcement_post_models/account_data_model.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/account_extra_model.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+part 'event_announcement.g.dart';
 
-part 'activity_model.g.dart';
-
-@collection
-class ActivityModel {
-  ActivityModel({
+@embedded
+class EventAnnouncementModel {
+  EventAnnouncementModel({
     this.id,
-    this.localId = 0,
     this.attendingStudents,
     this.nonAttendingStudents,
     this.skepticalStudents,
@@ -36,16 +28,20 @@ class ActivityModel {
     this.bio,
   });
 
-  ActivityModel.fromJson(dynamic json) {
+  @override
+  String toString() {
+    return 'EventAnnouncementModel{id: $id, attendingStudents: $attendingStudents, nonAttendingStudents: $nonAttendingStudents, skepticalStudents: $skepticalStudents, selection: $selection, banner: $banner, owner: $owner, dateAdded: $dateAdded, dateLastModified: $dateLastModified, branchId: $branchId, regionId: $regionId, cityId: $cityId, name: $name, location: $location, description: $description, date: $date, bio: $bio}';
+  }
+
+  EventAnnouncementModel.fromJson(dynamic json) {
     id = json['id'];
-    localId = json['id'] ?? 0;
     attendingStudents = json['attending_students'];
     nonAttendingStudents = json['non_attending_students'];
     skepticalStudents = json['skeptical_students'];
     selection = json['selection'];
     banner =
         json['banner'] != null ? Attachments.fromJson(json['banner']) : null;
-    owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
+    // owner = json['owner'] != null ? OwnerModel.fromJson(json['owner']) : null;
     dateAdded = json['date_added'];
     dateLastModified = json['date_last_modified'];
     branchId = json['branch_id'];
@@ -58,9 +54,8 @@ class ActivityModel {
     bio = json['bio'];
   }
 
-  ActivityModel.fromAnnouncement(dynamic json) {
+  EventAnnouncementModel.fromAnnouncement(dynamic json) {
     id = json['id'];
-    localId = json['id'] ?? 0;
     attendingStudents = json['attending_students'];
     nonAttendingStudents = json['non_attending_students'];
     skepticalStudents = json['skeptical_students'];
@@ -81,7 +76,6 @@ class ActivityModel {
   }
 
   int? id;
-  late Id localId;
   int? attendingStudents;
   int? nonAttendingStudents;
   int? skepticalStudents;
@@ -99,7 +93,7 @@ class ActivityModel {
   String? date;
   String? bio;
 
-  ActivityModel copyWith({
+  EventAnnouncementModel copyWith({
     int? id,
     int? attendingStudents,
     int? nonAttendingStudents,
@@ -118,7 +112,7 @@ class ActivityModel {
     String? date,
     String? bio,
   }) =>
-      ActivityModel(
+      EventAnnouncementModel(
         id: id ?? this.id,
         attendingStudents: attendingStudents ?? this.attendingStudents,
         nonAttendingStudents: nonAttendingStudents ?? this.nonAttendingStudents,
@@ -167,7 +161,7 @@ class ActivityModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ActivityModel &&
+      other is EventAnnouncementModel &&
           runtimeType == other.runtimeType &&
           id == other.id;
 
@@ -196,28 +190,28 @@ class ActivityModel {
         attendingStudents = (attendingStudents ?? -1) - 1;
       }
     }
-    log("message 111 ::: ${attendingStudents}");
   }
 
   @ignore
-  EventAnnouncementModel get toAnnouncement => EventAnnouncementModel(
+  ActivityModel get toActivityModel => ActivityModel(
+        owner: owner,
         id: id,
-        location: location,
+        name: name,
+        dateAdded: dateAdded,
+        dateLastModified: dateLastModified,
+        nonAttendingStudents: nonAttendingStudents,
         attendingStudents: attendingStudents,
-        regionId: regionId,
         skepticalStudents: skepticalStudents,
         selection: selection,
-        description: description,
-        date: date,
-        cityId: cityId,
-        branchId: branchId,
-        banner: banner,
         bio: bio,
-        nonAttendingStudents: nonAttendingStudents,
-        dateLastModified: dateLastModified,
-        dateAdded: dateAdded,
-        name: name,
-        owner: owner,
+        banner: banner,
+        branchId: branchId,
+        cityId: cityId,
+        date: date,
+        description: description,
+        localId: id ?? 0,
+        location: location,
+        regionId: regionId,
       );
 }
 

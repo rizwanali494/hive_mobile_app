@@ -15,12 +15,15 @@ import 'package:provider/provider.dart';
 
 class ActivityWidget extends StatelessWidget {
   final ActivityDetailVM controller;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
 
   const ActivityWidget({
     super.key,
     required this.controller,
+    this.padding,
+    this.margin,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,13 @@ class ActivityWidget extends StatelessWidget {
     final activityProvider = context.read<ActivityScreenVM>();
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+      padding:
+          padding ?? EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: styles.white,
         borderRadius: BorderRadius.circular(25),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 19.w),
+      margin: margin ?? EdgeInsets.symmetric(horizontal: 19.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -41,24 +45,24 @@ class ActivityWidget extends StatelessWidget {
           5.verticalSpace,
           Row(
             children: [
-              if(controller.ownerImageUrl != null)
-              CachedNetworkImage(
-                imageUrl: controller.ownerImageUrl!,
-                imageBuilder: (context, imageProvider) => Container(
-                  width: 45.h,
-                  height: 45.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+              if (controller.ownerImageUrl != null)
+                CachedNetworkImage(
+                  imageUrl: controller.ownerImageUrl!,
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 45.h,
+                    height: 45.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                placeholder: (context, url) => const UserPlaceHolderWidget(),
-                errorWidget: (context, url, error) =>
-                    const UserPlaceHolderWidget(),
-              )
+                  placeholder: (context, url) => const UserPlaceHolderWidget(),
+                  errorWidget: (context, url, error) =>
+                      const UserPlaceHolderWidget(),
+                )
               else
                 Container(
                   width: 45.h,
@@ -119,7 +123,9 @@ class ActivityWidget extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   activityProvider.setActivitySelection(
-                      model: controller.model, state: AppStrings.attending);
+                    model: controller.model,
+                    state: AppStrings.attending,
+                  );
                 },
                 child: ActivityStatusWidget(
                   iconPath: SvgIcons.tickSquare,

@@ -1,9 +1,12 @@
 import 'package:hive_mobile/app/models/data/activity_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/features/activities/view_models/activity_detail_vm.dart';
 
 class ActivityDetailObjectVM extends ActivityDetailVM {
-  ActivityDetailObjectVM(ActivityModel activityModel) {
+  AnnouncementPostModel? announcementPostModel;
+
+  ActivityDetailObjectVM(ActivityModel activityModel, {super.onUpDate}) {
     this.model = activityModel;
   }
 

@@ -40,7 +40,8 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
   }
 
   @override
-  List<String>? get apiEventTypes => ["ANNOUNCEMENT_POST", "ANNOUNCEMENT_POLL"];
+  List<String>? get apiEventTypes =>
+      ["ANNOUNCEMENT_POST", "ANNOUNCEMENT_POLL", "ACTIVITY"];
 
   late final Map<String, Map<String, Function(int id, {dynamic data})>>
       announcementSubActions = {
@@ -62,7 +63,6 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
 
   @override
   void handleApiEvent(dynamic data) {
-    log("Announcement Post API Event is ${data}");
     final eventData = jsonDecode(data);
     String? action = eventData["action"];
     final extraData = eventData["extra"] ?? {};
@@ -123,6 +123,79 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
       items.removeAt(indexWhere);
       notifyListeners();
       localService.deleteSingle(id);
+    }
+  }
+
+  @override
+  late Map<String, Future Function(int id)> apiEventBaseActions = {
+    "CREATE": addItemFromId,
+    "UPDATE": updateItemFromId,
+    "DELETE": deleteFromId,
+    "ATTEND": updateActivityAnnouncement,
+    "SKEPTICAL": updateActivityAnnouncement,
+    "NOT_ATTEND": updateActivityAnnouncement,
+  };
+
+  Future<void> updateActivityAnnouncement(int id) async {
+    log("Update activity announcement $id");
+
+    final announcementId =
+        items.firstWhereOrNull((element) => element.event?.id == id)?.id;
+    if (announcementId == null) {
+      log("Update activity announcement Idd :: ${announcementId}");
+      return;
+    }
+    log("Update activity announcement Idd :: ${announcementId}");
+    final item = await fetchItem(announcementId);
+    if (item != null) {
+      int indexOf = items.indexOf(item);
+      log("not nulll :: ${indexOf}");
+      if (indexOf > -1) {
+        items[indexOf] = item;
+        notifyListeners();
+      }
+    }
+  }
+
+  @override
+  void updateItem(AnnouncementPostModel item) {
+    try {
+      int indexOf = items.indexOf(item);
+      if (indexOf > -1) {
+        items[indexOf] = item;
+        notifyListeners();
+        localService.put(item);
+        log("Found it");
+      } else {
+        updateEventAnnouncement(item);
+      }
+    } catch (e) {
+      log("Error updating : ${e.toString()}");
+    }
+  }
+
+  void updateEventAnnouncement(AnnouncementPostModel item) {
+    final announcementId = items.firstWhereOrNull((element) {
+      log("ID : ${item.event?.id}");
+      if (element.event?.id == null) {
+        return false;
+      }
+      return element.event?.id == item.event?.id;
+    })?.id;
+    log("local found ::: 1 ${announcementId}");
+
+    if (announcementId == null) {
+      return;
+    }
+    log("local found ::: 1 ${item}");
+    int indexOf = items.indexWhere(
+      (element) => element.id == announcementId,
+    );
+    if (indexOf > -1) {
+      log("local found ::: $indexOf");
+      items[indexOf] = items[indexOf].copyWith(event: item.event);
+      localService.put(items[indexOf]);
+      notifyListeners();
     }
   }
 

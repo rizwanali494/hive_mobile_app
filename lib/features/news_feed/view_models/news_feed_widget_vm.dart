@@ -36,6 +36,10 @@ class NewsFeedWidgetVm
     return model.type == "POST";
   }
 
+  bool get isEvent {
+    return model.event != null;
+  }
+
   List<String?>? get attachments {
     return model.attachments?.map((e) => e.file).toList();
   }
@@ -189,6 +193,11 @@ class NewsFeedWidgetVm
 
   late NewsFeedRepository newsFeedRepo =
       NewsFeedRepositoryImpl(apiService: _apiService);
+
+  void publishEventAnnouncement() {
+    publishEvent<AnnouncementPostModel>(data: model);
+  }
+
 //
 // bool get isEvent => model.event != null;
 //

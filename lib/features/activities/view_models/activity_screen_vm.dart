@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
@@ -30,13 +32,18 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
     activityRepo = ActivityRepositoryImpl(apiService: apiService);
   }
 
-  Future<void> setActivitySelection({required ActivityModel model, required String state}) async {
+  Future<void> setActivitySelection(
+      {required ActivityModel model, required String state}) async {
     var previousModel = model.copyWith();
     model.selection = state.toUpperCase();
     model.handleAttendingCount();
     var index = items.indexOf(model);
     if (index > -1) {
       items[index] = model;
+      publishEvent<AnnouncementPostModel>(
+          data: AnnouncementPostModel().copyWith(
+        event: model.toAnnouncement,
+      ));
     }
     notifyListeners();
     try {
@@ -48,9 +55,14 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
       var index = items.indexOf(previousModel);
       if (index > -1) {
         items[index] = previousModel;
+        publishEvent<AnnouncementPostModel>(
+            data: AnnouncementPostModel().copyWith(
+          event: previousModel.toAnnouncement,
+        ));
         notifyListeners();
-        handleException(e);
+        // handleException(e);
       }
+      handleException(e);
     }
   }
 
