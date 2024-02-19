@@ -175,6 +175,9 @@ abstract class GradeAddingVM
   }
 
   void updateVM(SubjectVM updateVM) {
+    if (!updateVM.validate()) {
+      return;
+    }
     int indexOf = subjectsVM.indexOf(updateVM);
     log("index of $indexOf ${updateVM.id}");
     if (indexOf > -1) {

@@ -40,6 +40,10 @@ class GradeDetailVM extends ChangeNotifier
   bool errorDownloading = false;
 
   Future<void> updateVM(SubjectVM updateVM) async {
+    if (!updateVM.validate()) {
+      return;
+    }
+
     SubjectVM previous;
     int indexOf = subjectsVM.indexOf(updateVM);
     if (indexOf > -1) {
