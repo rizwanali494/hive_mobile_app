@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:isar/isar.dart';
@@ -165,9 +167,9 @@ class ActivityModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ActivityModel &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is ActivityModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
 
   @override
   int get hashCode => id.hashCode;
@@ -196,6 +198,27 @@ class ActivityModel {
     }
     log("message 111 ::: ${attendingStudents}");
   }
+
+  @ignore
+  EventAnnouncementModel get toAnnouncement => EventAnnouncementModel(
+        id: id,
+        location: location,
+        attendingStudents: attendingStudents,
+        regionId: regionId,
+        skepticalStudents: skepticalStudents,
+        selection: selection,
+        description: description,
+        date: date,
+        cityId: cityId,
+        branchId: branchId,
+        banner: banner,
+        bio: bio,
+        nonAttendingStudents: nonAttendingStudents,
+        dateLastModified: dateLastModified,
+        dateAdded: dateAdded,
+        name: name,
+        owner: owner,
+      );
 }
 
 enum ActivitySelectionStatus { Attending, Maybe, Undecided }

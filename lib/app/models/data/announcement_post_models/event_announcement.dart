@@ -28,6 +28,11 @@ class EventAnnouncementModel {
     this.bio,
   });
 
+  @override
+  String toString() {
+    return 'EventAnnouncementModel{id: $id, attendingStudents: $attendingStudents, nonAttendingStudents: $nonAttendingStudents, skepticalStudents: $skepticalStudents, selection: $selection, banner: $banner, owner: $owner, dateAdded: $dateAdded, dateLastModified: $dateLastModified, branchId: $branchId, regionId: $regionId, cityId: $cityId, name: $name, location: $location, description: $description, date: $date, bio: $bio}';
+  }
+
   EventAnnouncementModel.fromJson(dynamic json) {
     id = json['id'];
     attendingStudents = json['attending_students'];

@@ -157,6 +157,48 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
     }
   }
 
+  @override
+  void updateItem(AnnouncementPostModel item) {
+    try {
+      int indexOf = items.indexOf(item);
+      if (indexOf > -1) {
+        items[indexOf] = item;
+        notifyListeners();
+        localService.put(item);
+        log("Found it");
+      } else {
+        updateEventAnnouncement(item);
+      }
+    } catch (e) {
+      log("Error updating : ${e.toString()}");
+    }
+  }
+
+  void updateEventAnnouncement(AnnouncementPostModel item) {
+    final announcementId = items.firstWhereOrNull((element) {
+      log("ID : ${item.event?.id}");
+      if (element.event?.id == null) {
+        return false;
+      }
+      return element.event?.id == item.event?.id;
+    })?.id;
+    log("local found ::: 1 ${announcementId}");
+
+    if (announcementId == null) {
+      return;
+    }
+    log("local found ::: 1 ${item}");
+    int indexOf = items.indexWhere(
+      (element) => element.id == announcementId,
+    );
+    if (indexOf > -1) {
+      log("local found ::: $indexOf");
+      items[indexOf] = items[indexOf].copyWith(event: item.event);
+      localService.put(items[indexOf]);
+      notifyListeners();
+    }
+  }
+
 // void updateDislikes(int id, {required int likes}) {
 //   final index = items.indexWhere((element) => element.id == id);
 //   if (index > -1) {

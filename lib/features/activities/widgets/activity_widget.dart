@@ -123,7 +123,9 @@ class ActivityWidget extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   activityProvider.setActivitySelection(
-                      model: controller.model, state: AppStrings.attending);
+                    model: controller.model,
+                    state: AppStrings.attending,
+                  );
                 },
                 child: ActivityStatusWidget(
                   iconPath: SvgIcons.tickSquare,

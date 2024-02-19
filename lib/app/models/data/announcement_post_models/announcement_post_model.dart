@@ -62,7 +62,7 @@ class AnnouncementPostModel {
     expiryDate = json['expiry_date'];
     log("EVENt :: ${json['event']}");
     event = json['event'] != null
-        ? EventAnnouncementModel.fromJson(json['event'])
+        ? EventAnnouncementModel.fromJson(json['event']).copyWith(owner: owner)
         : null;
   }
 
@@ -163,6 +163,6 @@ class AnnouncementPostModel {
 
   @override
   String toString() {
-    return 'AnnouncementPostModel{id: $id, localId: $localId, likes: $likes, dislikes: $dislikes, polls: $polls, attachments: $attachments, owner: $owner, dateAdded: $dateAdded, dateLastModified: $dateLastModified, branchId: $branchId, text: $text, type: $type, expiryDate: $expiryDate, isLiked: $isLiked, isDisliked: $isDisliked}';
+    return 'AnnouncementPostModel{id: $id, localId: $localId, likes: $likes, dislikes: $dislikes, polls: $polls, attachments: $attachments, owner: $owner, dateAdded: $dateAdded, dateLastModified: $dateLastModified, branchId: $branchId, text: $text, type: $type, expiryDate: $expiryDate, isLiked: $isLiked, isDisliked: $isDisliked, event: $event}';
   }
 }

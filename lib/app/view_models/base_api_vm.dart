@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
+import 'package:hive_mobile/app/mixin/event_bus_mixin.dart';
 import 'package:hive_mobile/app/models/pagination_controller.dart';
 import 'package:hive_mobile/app/models/pagination_state_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
@@ -15,7 +16,7 @@ import 'package:hive_mobile/app/view_models/base_listview_vm.dart';
 import 'package:hive_mobile/app/services/base_request_service/base_request_services.dart';
 
 abstract class BaseApiVM<T> extends ChangeNotifier
-    with BaseRequestHandler, BaseExceptionController {
+    with BaseRequestHandler, BaseExceptionController, EventBusMixin {
   UiState uiState = UiState.loading();
 
   bool get hasError => uiState.hasError;
@@ -208,7 +209,6 @@ abstract class BaseApiVM<T> extends ChangeNotifier
 
     eventStream = _localEventBus.on<T>().listen(
       (event) {
-        log('Got Event :: ${event.runtimeType}');
         if (event.data != null) {
           if (event.data is T) {
             updateItem(event.data);
