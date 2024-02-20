@@ -24,10 +24,6 @@ class CalendarVM extends ChangeNotifier with BaseExceptionController {
       _totalYears + 5 + 1,
       (index) => ((_startYear - _totalYears) + index),
     ),
-    // ...List.generate(
-    //   _totalYears,
-    //       (index) => ((_startYear+5) + index),
-    // ),
   ];
   List<String> shortWeekDays = [
     "Mon",
