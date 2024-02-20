@@ -23,7 +23,9 @@ import 'package:hive_mobile/features/my_services/view_models/all_service_request
 import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_vm.dart';
 import 'package:hive_mobile/features/notification/view_models/notification_screen_vm.dart';
+import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
+import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
@@ -118,6 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ChangeNotifierProvider(
                 create: (context) => PendingSessionNoteVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => UserAcceptedApplicationVM(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) => UserAwardsVM(),
               ),
             ],
             child: Scaffold(

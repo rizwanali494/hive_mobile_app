@@ -13,6 +13,7 @@ import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/profile/screens/account_setting_screen.dart';
 import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
+import 'package:hive_mobile/features/profile/view_models/profile_section_wrapper_controller.dart';
 import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
@@ -215,32 +216,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //   heading: AppStrings.subjects,
                       // ),
                       // 17.verticalSpace,
-                      ChangeNotifierProvider<UserAcceptedApplicationVM>(
+                      ChangeNotifierProxyProvider2<
+                          UserAwardsVM,
+                          UserAcceptedApplicationVM,
+                          ProfileSectionWrapperProvider>(
                         create: (BuildContext context) =>
-                            UserAcceptedApplicationVM(),
-                        child: Consumer<UserAcceptedApplicationVM>(
+                            ProfileSectionWrapperProvider(),
+                        update: (context, awardProvider,
+                            acceptedApplicationProvider, previous) {
+                          return previous!
+                            ..updateAwardUiState(awardProvider.uiState)
+                            ..updateAcceptedApplicationState(
+                                acceptedApplicationProvider.uiState);
+                        },
+                        child: Consumer<ProfileSectionWrapperProvider>(
                           builder: (context, provider, child) {
-                            return ProfileSectionWidget(
-                              wrapChildren: provider.items,
-                              // onTap: provider.fetchNextItems,
-                              heading: AppStrings.acceptedUniversities,
-                              uiState: provider.uiState,
-                            );
-                          },
-                        ),
-                      ),
-                      17.verticalSpace,
-                      ChangeNotifierProvider<UserAwardsVM>(
-                        create: (BuildContext context) => UserAwardsVM(),
-                        child: Consumer<UserAwardsVM>(
-                          builder: (context, provider, child) {
-                            return ProfileSectionWidget(
-                              // wrapChildren: _user.achievementsAwards,
-                              wrapChildren: provider.items,
-                              icon: SvgPicture.asset(SvgIcons.star),
-                              heading: AppStrings.achievementsAwards,
-                              onTap: provider.fetchNextItems,
-                              uiState: provider.uiState,
+                            if (provider.isLoading) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+
+                            return Column(
+                              children: [
+                                Consumer<UserAwardsVM>(
+                                  builder: (context, provider, child) {
+                                    return ProfileSectionWidget(
+                                      wrapChildren: provider.items,
+                                      // onTap: provider.fetchNextItems,
+                                      heading: AppStrings.acceptedUniversities,
+                                      uiState: provider.uiState,
+                                    );
+                                  },
+                                ),
+                                17.verticalSpace,
+                                Consumer<UserAcceptedApplicationVM>(
+                                  builder: (context, provider, child) {
+                                    return ProfileSectionWidget(
+                                      wrapChildren: provider.items,
+                                      // onTap: provider.fetchNextItems,
+                                      heading: AppStrings.acceptedUniversities,
+                                      uiState: provider.uiState,
+                                    );
+                                  },
+                                ),
+                              ],
                             );
                           },
                         ),
