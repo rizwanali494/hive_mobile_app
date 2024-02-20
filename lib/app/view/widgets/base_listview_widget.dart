@@ -13,6 +13,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
   final EdgeInsets? listViewPadding;
   final double? listSeparatorValue;
   final double? shimmerSeparatorValue;
+  final String emptyText;
 
   const BaseListViewWidget({
     super.key,
@@ -24,6 +25,7 @@ class BaseListViewWidget<T> extends StatelessWidget {
     this.shimmerSeparatorValue,
     this.listSeparatorValue,
     this.listSeparatorChild,
+    required this.emptyText,
   });
 
   @override
@@ -58,9 +60,10 @@ class BaseListViewWidget<T> extends StatelessWidget {
     if (controller.isLoading) {
       return Expanded(
         child: ListView.separated(
-          padding: shimmerListPadding??EdgeInsets.symmetric(
-            vertical:  12.h,
-          ),
+          padding: shimmerListPadding ??
+              EdgeInsets.symmetric(
+                vertical: 12.h,
+              ),
           itemBuilder: (context, index) {
             return shimmerChild;
           },
@@ -71,6 +74,32 @@ class BaseListViewWidget<T> extends StatelessWidget {
         ),
       );
     }
+    if (controller.items.isEmpty) {
+      return Expanded(
+        child: LayoutBuilder(
+          builder: (context, constraints) => RefreshIndicator(
+            onRefresh: controller.refreshList,
+            backgroundColor: styles.white,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: Text(
+                      emptyText,
+                      style: styles.inter20w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Expanded(
       child: RefreshIndicator(
         // onRefresh: provider.refreshNewsFeed,

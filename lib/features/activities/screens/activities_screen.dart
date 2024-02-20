@@ -39,6 +39,7 @@ class ActivitiesScreen extends StatelessWidget {
               ),
               BaseListViewWidget<ActivityModel>(
                 controller: provider.listViewVM,
+                emptyText: AppStrings.noDataFound,
                 listViewChild: (item) => GestureDetector(
                   onTap: () {
                     context.push(

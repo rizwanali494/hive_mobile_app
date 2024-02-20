@@ -38,6 +38,7 @@ class NewConversationScreen extends StatelessWidget {
                   DividerAppBar(title: AppStrings.newConversation),
                   BaseListViewWidget<InboxModel>(
                     controller: provider.listViewVM,
+                    emptyText: AppStrings.noDataFound,
                     listViewChild: (item) => InboxListTile(
                       onTap: () {
                         context.push(

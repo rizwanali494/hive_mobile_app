@@ -76,6 +76,7 @@ class InboxScreen extends StatelessWidget {
             5.verticalSpace,
             BaseListViewWidget<InboxModel>(
               controller: provider.listViewVM,
+              emptyText: AppStrings.noDataFound,
               listViewChild: (item) => Padding(
                 padding: EdgeInsets.symmetric(horizontal: 19.w),
                 child: InboxListTile(

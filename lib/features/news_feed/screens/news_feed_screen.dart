@@ -43,6 +43,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
             builder: (BuildContext context, provider, Widget? child) {
              return BaseListViewWidget<AnnouncementPostModel>(
                 controller: provider.listViewVM,
+                emptyText: AppStrings.noDataFound,
                 listViewChild: (item) => NewsFeedWidget(
                   type: item.isPost ? PostType.image : PostType.poll,
                   controller: NewsFeedWidgetVm(

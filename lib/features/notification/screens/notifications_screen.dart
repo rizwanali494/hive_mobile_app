@@ -55,6 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               BaseListViewWidget<NotificationModel>(
                 controller: provider.listViewVM,
+                emptyText: AppStrings.noDataFound,
                 listViewChild: (item) => Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 19.w,
