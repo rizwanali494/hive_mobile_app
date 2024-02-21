@@ -81,27 +81,27 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
           ],
         ),
         15.verticalSpace,
-        if (controller.assessments.isEmpty)
-          Expanded(
-            child: Center(
-              child: ErrorTextWidget(
-                onRefresh: controller.onRefresh,
-                errorText: AppStrings.noDataFound,
-              ),
-            ),
-          )
-        else
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: controller.onRefresh,
-              backgroundColor: styles.white,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    ReportSubjectsTable(
-                      reportTableVM: ReportTableVM(
-                        termDetails: controller.assessments,
+        // if (controller.assessments.isEmpty)
+        //   Expanded(
+        //     child: Center(
+        //       child: ErrorTextWidget(
+        //         onRefresh: controller.onRefresh,
+        //         errorText: AppStrings.noDataFound,
+        //       ),
+        //     ),
+        //   )
+        // else
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: controller.onRefresh,
+            backgroundColor: styles.white,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  ReportSubjectsTable(
+                    reportTableVM: ReportTableVM(
+                      termDetails: controller.assessments,
                         model: controller.assessmentSummary,
                       ),
                     ),

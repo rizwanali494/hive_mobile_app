@@ -36,13 +36,15 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
               ),
               child: Row(
                 children: [
-                  textWidget(con.maxWidth * 0.25, text: "Subject & Teacher"),
-                  textWidget(con.maxWidth * 0.16, text: "Attendance"),
+                  10.horizontalSpace,
+                  textWidget(con.maxWidth * 0.22, text: "Subject"),
+                  textWidget(con.maxWidth * 0.22, text: "Teacher ID"),
+                  textWidget(con.maxWidth * 0.20, text: "Teacher Name"),
                   Expanded(
                     child: Align(
                       child: Text(
-                        "Mid Year Assessment",
-                        style: styles.inter7w600.copyWith(
+                        "Attendance",
+                        style: styles.inter8w600.copyWith(
                           color: styles.white,
                         ),
                       ),
@@ -50,26 +52,6 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
                     // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
                   ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        "Mid Year Exam",
-                        style: styles.inter7w600.copyWith(
-                          color: styles.white,
-                        ),
-                      ),
-                    ),
-                    // textWidget(con.maxWidth*0.10,text: "Mid Term Accessment"),
-                    // textWidget(con.maxWidth*0.10,text: "Mid Year Exam"),
-                  ),
-                  // Center(
-                  //   child: Text(
-                  //     "CGPA",
-                  //     style: styles.inter7w600.copyWith(
-                  //       color: styles.white,
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             );
@@ -106,7 +88,10 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        for (int i = 0; i < 2; i++) ...[
+                        headingWidget(""),
+                        headingWidget(""),
+                        headingWidget(""),
+                        for (int i = 0; i < 1; i++) ...[
                           headingWidget("%Age"),
                           headingWidget("Grade"),
                           headingWidget("GPA"),
@@ -368,7 +353,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
       width: width,
       child: Text(
         text,
-        style: styles.inter7w600.copyWith(color: styles.white),
+        style: styles.inter8w600.copyWith(color: styles.white),
       ),
     );
   }
