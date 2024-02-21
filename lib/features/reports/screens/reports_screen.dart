@@ -7,6 +7,7 @@ import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_header_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_term_screen.dart';
+import 'package:hive_mobile/features/reports/widgets/term_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/year_toggle_widget.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year2_vm.dart';
@@ -107,225 +108,229 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   thickness: 0.2,
                 ),
                 10.verticalSpace,
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      AppStrings.comingSoon.toUpperCase(),
-                      style: styles.inter16w600,
+                // Expanded(
+                //   child: Center(
+                //     child: Text(
+                //       AppStrings.comingSoon.toUpperCase(),
+                //       style: styles.inter16w600,
+                //     ),
+                //   ),
+                // ),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          provider.selectYear(0);
+                        },
+                        child: YearToggleWidget(
+                          borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(50.r),
+                          ),
+                          isSelected: provider.selectedYear == 0,
+                          text: 'Year 1',
+                        ),
+                      ),
                     ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          provider.selectYear(1);
+                        },
+                        child: YearToggleWidget(
+                          borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(50.r),
+                          ),
+                          isSelected: provider.selectedYear == 1,
+                          text: 'Year 2',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                15.verticalSpace,
+                Expanded(
+                  child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: provider.pageController,
+                    children: [
+                      // Consumer<ReportYearVM>(
+                      //   builder: (context, provider, child) {
+                      //     if (provider.isLoading) {
+                      //       return Center(
+                      //         child: CircularProgressIndicator(),
+                      //       );
+                      //     }
+                      //     return RefreshIndicator(
+                      //       onRefresh: provider.onRefresh,
+                      //       backgroundColor: styles.white,
+                      //       child: SingleChildScrollView(
+                      //         physics: AlwaysScrollableScrollPhysics(),
+                      //         child: Column(
+                      //           children: [
+                      //             21.verticalSpace,
+                      //             ReportLineChart(
+                      //               controller: LineChartVM(
+                      //                   lineBarsDataTerm1:
+                      //                       provider.lineBarsDataTerm1,
+                      //                   lineBarsDataTerm2:
+                      //                       provider.lineBarsDataTerm2),
+                      //             ),
+                      //             33.verticalSpace,
+                      //             Row(
+                      //               children: [
+                      //                 Padding(
+                      //                   padding: EdgeInsets.only(
+                      //                     left: 5.w,
+                      //                   ),
+                      //                   child: Text(
+                      //                     "CGPA",
+                      //                     style: styles.inter8w400,
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                   child: Row(
+                      //                     mainAxisAlignment:
+                      //                         MainAxisAlignment.spaceAround,
+                      //                     children: [
+                      //                       YearRowWidget(
+                      //                           context: context,
+                      //                           color: styles.skyBlue,
+                      //                           text: "${provider.examType1}"),
+                      //                       YearRowWidget(
+                      //                           context: context,
+                      //                           color: styles.darkOrange,
+                      //                           text: "${provider.examType2}"),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             20.verticalSpace,
+                      //             Divider(
+                      //               thickness: 0.5,
+                      //               color: styles.black.withOpacity(0.5),
+                      //             ),
+                      //             32.verticalSpace,
+                      //             Align(
+                      //               alignment: Alignment.centerLeft,
+                      //               child: Text(
+                      //                 "Year 1",
+                      //                 style: styles.inter10w600,
+                      //               ),
+                      //             ),
+                      //             24.verticalSpace,
+                      //             ReportYear(
+                      //               yearReports: provider.allReports
+                      //                   .where((element) => element.isYear1)
+                      //                   .toList(),
+                      //             ),
+                      //             Align(
+                      //               alignment: Alignment.topRight,
+                      //               child: Wrap(
+                      //                 runSpacing: 10,
+                      //                 spacing: 10,
+                      //                 children: [
+                      //                   for (int index = 0;
+                      //                       index <
+                      //                           provider.year1Subjects.length;
+                      //                       index++)
+                      //                     BarChartLegendWidget(
+                      //                         text:
+                      //                             provider.year1Subjects[index],
+                      //                         color: colors[index] ??
+                      //                             Colors.blueAccent),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             20.verticalSpace,
+                      //             Divider(
+                      //               thickness: 0.5,
+                      //               color: styles.black.withOpacity(0.5),
+                      //             ),
+                      //             20.verticalSpace,
+                      //             Align(
+                      //               alignment: Alignment.centerLeft,
+                      //               child: Text(
+                      //                 "Year 2",
+                      //                 style: styles.inter10w600,
+                      //               ),
+                      //             ),
+                      //             24.verticalSpace,
+                      //             ReportYear(
+                      //               yearReports: provider.allReports
+                      //                   .where((element) => element.isYear2)
+                      //                   .toList(),
+                      //             ),
+                      //             Align(
+                      //               alignment: Alignment.topRight,
+                      //               child: Wrap(
+                      //                 runSpacing: 10,
+                      //                 spacing: 10,
+                      //                 children: [
+                      //                   for (int index = 0;
+                      //                       index <
+                      //                           provider.year2Subjects.length;
+                      //                       index++)
+                      //                     BarChartLegendWidget(
+                      //                         text:
+                      //                             provider.year2Subjects[index],
+                      //                         color: colors[index] ??
+                      //                             Colors.blueAccent),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      Consumer<ReportYear1VM>(
+                        builder: (context, provider, child) {
+                          if (provider.isLoading) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          return ReportTermScreen(
+                            provider: TermDetailsVM(
+                                selectedTerm: provider.selectedTerm,
+                                selectedExam: provider.selectedExam,
+                                selectExam: provider.setExamType,
+                                assessmentSummary: provider.summaryByTerm,
+                                selectTerm: provider.setSelectedTerm,
+                                assessments: provider.termAssessments,
+                                reportIdModel: provider.reportIdModel,
+                                onRefresh: provider.onRefresh),
+                          );
+                        },
+                      ),
+                      Consumer<ReportYear2VM>(
+                        builder: (context, provider, child) {
+                          if (provider.isLoading) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          return ReportTermScreen(
+                            provider: TermDetailsVM(
+                                selectedTerm: provider.selectedTerm,
+                                assessmentSummary: provider.summaryByTerm,
+                                selectedExam: provider.selectedExam,
+                                selectExam: provider.setExamType,
+                                selectTerm: provider.setSelectedTerm,
+                                onRefresh: provider.onRefresh,
+                                assessments: provider.termAssessments,
+                                reportIdModel: provider.reportIdModel),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 )
-
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: GestureDetector(
-                //         onTap: () {
-                //           provider.selectYear(0);
-                //         },
-                //         child: YearToggleWidget(
-                //           borderRadius: BorderRadius.horizontal(
-                //             left: Radius.circular(50.r),
-                //           ),
-                //           isSelected: provider.selectedYear == 0,
-                //           text: 'Year 1',
-                //         ),
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: GestureDetector(
-                //         onTap: () {
-                //           provider.selectYear(1);
-                //         },
-                //         child: YearToggleWidget(
-                //           borderRadius: BorderRadius.horizontal(
-                //             right: Radius.circular(50.r),
-                //           ),
-                //           isSelected: provider.selectedYear == 1,
-                //           text: 'Year 2',
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // 15.verticalSpace,
-                // Expanded(
-                //   child: PageView(
-                //     physics: NeverScrollableScrollPhysics(),
-                //     controller: provider.pageController,
-                //     children: [
-                //       // Consumer<ReportYearVM>(
-                //       //   builder: (context, provider, child) {
-                //       //     if (provider.isLoading) {
-                //       //       return Center(
-                //       //         child: CircularProgressIndicator(),
-                //       //       );
-                //       //     }
-                //       //     return RefreshIndicator(
-                //       //       onRefresh: provider.onRefresh,
-                //       //       backgroundColor: styles.white,
-                //       //       child: SingleChildScrollView(
-                //       //         physics: AlwaysScrollableScrollPhysics(),
-                //       //         child: Column(
-                //       //           children: [
-                //       //             21.verticalSpace,
-                //       //             ReportLineChart(
-                //       //               controller: LineChartVM(
-                //       //                   lineBarsDataTerm1:
-                //       //                       provider.lineBarsDataTerm1,
-                //       //                   lineBarsDataTerm2:
-                //       //                       provider.lineBarsDataTerm2),
-                //       //             ),
-                //       //             33.verticalSpace,
-                //       //             Row(
-                //       //               children: [
-                //       //                 Padding(
-                //       //                   padding: EdgeInsets.only(
-                //       //                     left: 5.w,
-                //       //                   ),
-                //       //                   child: Text(
-                //       //                     "CGPA",
-                //       //                     style: styles.inter8w400,
-                //       //                   ),
-                //       //                 ),
-                //       //                 Expanded(
-                //       //                   child: Row(
-                //       //                     mainAxisAlignment:
-                //       //                         MainAxisAlignment.spaceAround,
-                //       //                     children: [
-                //       //                       YearRowWidget(
-                //       //                           context: context,
-                //       //                           color: styles.skyBlue,
-                //       //                           text: "${provider.examType1}"),
-                //       //                       YearRowWidget(
-                //       //                           context: context,
-                //       //                           color: styles.darkOrange,
-                //       //                           text: "${provider.examType2}"),
-                //       //                     ],
-                //       //                   ),
-                //       //                 ),
-                //       //               ],
-                //       //             ),
-                //       //             20.verticalSpace,
-                //       //             Divider(
-                //       //               thickness: 0.5,
-                //       //               color: styles.black.withOpacity(0.5),
-                //       //             ),
-                //       //             32.verticalSpace,
-                //       //             Align(
-                //       //               alignment: Alignment.centerLeft,
-                //       //               child: Text(
-                //       //                 "Year 1",
-                //       //                 style: styles.inter10w600,
-                //       //               ),
-                //       //             ),
-                //       //             24.verticalSpace,
-                //       //             ReportYear(
-                //       //               yearReports: provider.allReports
-                //       //                   .where((element) => element.isYear1)
-                //       //                   .toList(),
-                //       //             ),
-                //       //             Align(
-                //       //               alignment: Alignment.topRight,
-                //       //               child: Wrap(
-                //       //                 runSpacing: 10,
-                //       //                 spacing: 10,
-                //       //                 children: [
-                //       //                   for (int index = 0;
-                //       //                       index <
-                //       //                           provider.year1Subjects.length;
-                //       //                       index++)
-                //       //                     BarChartLegendWidget(
-                //       //                         text:
-                //       //                             provider.year1Subjects[index],
-                //       //                         color: colors[index] ??
-                //       //                             Colors.blueAccent),
-                //       //                 ],
-                //       //               ),
-                //       //             ),
-                //       //             20.verticalSpace,
-                //       //             Divider(
-                //       //               thickness: 0.5,
-                //       //               color: styles.black.withOpacity(0.5),
-                //       //             ),
-                //       //             20.verticalSpace,
-                //       //             Align(
-                //       //               alignment: Alignment.centerLeft,
-                //       //               child: Text(
-                //       //                 "Year 2",
-                //       //                 style: styles.inter10w600,
-                //       //               ),
-                //       //             ),
-                //       //             24.verticalSpace,
-                //       //             ReportYear(
-                //       //               yearReports: provider.allReports
-                //       //                   .where((element) => element.isYear2)
-                //       //                   .toList(),
-                //       //             ),
-                //       //             Align(
-                //       //               alignment: Alignment.topRight,
-                //       //               child: Wrap(
-                //       //                 runSpacing: 10,
-                //       //                 spacing: 10,
-                //       //                 children: [
-                //       //                   for (int index = 0;
-                //       //                       index <
-                //       //                           provider.year2Subjects.length;
-                //       //                       index++)
-                //       //                     BarChartLegendWidget(
-                //       //                         text:
-                //       //                             provider.year2Subjects[index],
-                //       //                         color: colors[index] ??
-                //       //                             Colors.blueAccent),
-                //       //                 ],
-                //       //               ),
-                //       //             ),
-                //       //           ],
-                //       //         ),
-                //       //       ),
-                //       //     );
-                //       //   },
-                //       // ),
-                //       Consumer<ReportYear1VM>(
-                //         builder: (context, provider, child) {
-                //           if (provider.isLoading) {
-                //             return Center(
-                //               child: CircularProgressIndicator(),
-                //             );
-                //           }
-                //           return ReportTermScreen(
-                //             provider: TermDetailsVM(
-                //                 selectedTerm: provider.selectedTerm,
-                //                 assessmentSummary: provider.summaryByTerm,
-                //                 selectTerm: provider.setSelectedTerm,
-                //                 assessments: provider.termAssessments,
-                //                 reportIdModel: provider.reportIdModel,
-                //                 onRefresh: provider.onRefresh),
-                //           );
-                //         },
-                //       ),
-                //       Consumer<ReportYear2VM>(
-                //         builder: (context, provider, child) {
-                //           if (provider.isLoading) {
-                //             return Center(
-                //               child: CircularProgressIndicator(),
-                //             );
-                //           }
-                //
-                //           return ReportTermScreen(
-                //             provider: TermDetailsVM(
-                //                 selectedTerm: provider.selectedTerm,
-                //                 assessmentSummary: provider.summaryByTerm,
-                //                 selectTerm: provider.setSelectedTerm,
-                //                 onRefresh: provider.onRefresh,
-                //                 assessments: provider.termAssessments,
-                //                 reportIdModel: provider.reportIdModel),
-                //           );
-                //         },
-                //       ),
-                //     ],
-                //   ),
-                // )
               ],
             ),
           );

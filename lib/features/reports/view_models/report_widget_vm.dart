@@ -57,6 +57,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
   }
 
   int selectedTerm = 0;
+  int selectedExam = 0;
 
   List<AssessmentInfoVM> get termAssessments {
     if (selectedTerm == 0) {
@@ -67,6 +68,11 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   void setSelectedTerm(int index) {
     selectedTerm = index;
+    notifyListeners();
+  }
+
+  void setExamType(int index) {
+    selectedExam = index;
     notifyListeners();
   }
 
@@ -154,4 +160,17 @@ abstract class ReportWidgetVM extends ChangeNotifier
   }
 
   void onError(dynamic error);
+
+  Map<int, String> termExam1 = {
+    0: "Mid Term Assessment",
+    1: "Mid Year Exam",
+  };
+  Map<int, String> termExam2 = {
+    0: "Mock Term Assessment",
+    1: "Mid Exam",
+  };
+
+  String get termAssessment1 => termExam1[selectedTerm] ?? "";
+
+  String get termAssessment2 => termExam2[selectedTerm] ?? "";
 }

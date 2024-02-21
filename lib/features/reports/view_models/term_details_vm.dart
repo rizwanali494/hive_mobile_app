@@ -9,7 +9,9 @@ import "package:hive_mobile/features/reports/view_models/summary_model.dart";
 class TermDetailsVM {
   final Future<void> Function() onRefresh;
   Function(int index) selectTerm;
+  Function(int index) selectExam;
   final int selectedTerm;
+  final int selectedExam;
   final ReportIdModel reportIdModel;
   List<AssessmentInfoVM> assessments = [];
 
@@ -17,6 +19,8 @@ class TermDetailsVM {
 
   TermDetailsVM({
     required this.selectTerm,
+    required this.selectedExam,
+    required this.selectExam,
     required this.reportIdModel,
     required this.assessmentSummary,
     required this.selectedTerm,

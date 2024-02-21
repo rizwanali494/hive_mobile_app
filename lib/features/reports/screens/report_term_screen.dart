@@ -53,6 +53,34 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
           ],
         ),
         16.verticalSpace,
+        Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  controller.selectExam(0);
+                },
+                child: TermToggleWidget(
+                  isSelected: controller.selectedExam == 0,
+                  text: controller.examType1,
+                ),
+              ),
+            ),
+            14.horizontalSpace,
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  controller.selectExam(1);
+                },
+                child: TermToggleWidget(
+                  isSelected: controller.selectedExam == 1,
+                  text: controller.examType2,
+                ),
+              ),
+            ),
+          ],
+        ),
+        15.verticalSpace,
         if (controller.assessments.isEmpty)
           Expanded(
             child: Center(
