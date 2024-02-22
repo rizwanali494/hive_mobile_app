@@ -161,12 +161,12 @@ class ReportsModelNew {
   String? midtrmYr1Trm2Gpa;
   String? midtrmYr1Trm2Gd;
   dynamic midtrmYr2Trm1;
-  String? midtrmYr2Trm1TchrId;
+  int? midtrmYr2Trm1TchrId;
   String? midtrmYr2Trm1TchrNm;
   String? midtrmYr2Trm1Gpa;
   String? midtrmYr2Trm1Gd;
   String? midtrmYr2Trm2;
-  String? midtrmYr2Trm2TchrId;
+  int? midtrmYr2Trm2TchrId;
   String? midtrmYr2Trm2TchrNm;
   dynamic midtrmYr2Trm2Gpa;
   String? midtrmYr2Trm2Gd;
@@ -178,7 +178,7 @@ class ReportsModelNew {
   dynamic midyrYr2Tr1;
   num? midyrYr2Tr1TchrId;
   String? midyrYr2Tr1TchrNm;
-  num? midyrYr2Tr1Gpa;
+  String? midyrYr2Tr1Gpa;
   String? midyrYr2Tr1Gd;
   num? mockexYr1Tr2;
   num? mockexYr1Tr2TchrId;
@@ -188,7 +188,7 @@ class ReportsModelNew {
   String? mockexYr2Tr2;
   num? mockexYr2Tr2TchrId;
   String? mockexYr2Tr2TchrNm;
-  num? mockexYr2Tr2Gpa;
+  String? mockexYr2Tr2Gpa;
   String? mockexYr2Tr2Gd;
   String? prdMidtrmYr1Trm1;
   dynamic prdMidtrmYr1Trm1TchrId;
@@ -198,7 +198,7 @@ class ReportsModelNew {
   String? prdMidtrmYr2Trm1;
   num? prdMidtrmYr2Trm1TchrId;
   String? prdMidtrmYr2Trm1TchrNm;
-  num? prdMidtrmYr2Trm1Gpa;
+  String? prdMidtrmYr2Trm1Gpa;
   String? prdMidtrmYr2Trm1Gd;
   String? presentPercentageYr1Trm1;
   String? presentPercentageYr1Tr2;
@@ -232,12 +232,12 @@ class ReportsModelNew {
     String? midtrmYr1Trm2Gpa,
     String? midtrmYr1Trm2Gd,
     dynamic midtrmYr2Trm1,
-    String? midtrmYr2Trm1TchrId,
+    int? midtrmYr2Trm1TchrId,
     String? midtrmYr2Trm1TchrNm,
     String? midtrmYr2Trm1Gpa,
     String? midtrmYr2Trm1Gd,
     String? midtrmYr2Trm2,
-    String? midtrmYr2Trm2TchrId,
+    int? midtrmYr2Trm2TchrId,
     String? midtrmYr2Trm2TchrNm,
     dynamic midtrmYr2Trm2Gpa,
     String? midtrmYr2Trm2Gd,
@@ -249,7 +249,7 @@ class ReportsModelNew {
     dynamic midyrYr2Tr1,
     num? midyrYr2Tr1TchrId,
     String? midyrYr2Tr1TchrNm,
-    num? midyrYr2Tr1Gpa,
+    String? midyrYr2Tr1Gpa,
     String? midyrYr2Tr1Gd,
     num? mockexYr1Tr2,
     num? mockexYr1Tr2TchrId,
@@ -259,7 +259,7 @@ class ReportsModelNew {
     String? mockexYr2Tr2,
     num? mockexYr2Tr2TchrId,
     String? mockexYr2Tr2TchrNm,
-    num? mockexYr2Tr2Gpa,
+    String? mockexYr2Tr2Gpa,
     String? mockexYr2Tr2Gd,
     String? prdMidtrmYr1Trm1,
     dynamic prdMidtrmYr1Trm1TchrId,
@@ -269,7 +269,7 @@ class ReportsModelNew {
     String? prdMidtrmYr2Trm1,
     num? prdMidtrmYr2Trm1TchrId,
     String? prdMidtrmYr2Trm1TchrNm,
-    num? prdMidtrmYr2Trm1Gpa,
+    String? prdMidtrmYr2Trm1Gpa,
     String? prdMidtrmYr2Trm1Gd,
     String? presentPercentageYr1Trm1,
     String? presentPercentageYr1Tr2,

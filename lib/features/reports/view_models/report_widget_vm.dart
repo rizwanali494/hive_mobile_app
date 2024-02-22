@@ -11,6 +11,7 @@ import 'package:hive_mobile/features/reports/repository/report_repository.dart';
 import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_id_model.dart';
 import 'package:hive_mobile/features/reports/view_models/summary_model.dart';
+import 'package:hive_mobile/features/reports/view_models/term_details_model.dart';
 
 abstract class ReportWidgetVM extends ChangeNotifier
     with BaseExceptionController {
@@ -186,9 +187,13 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   List<ReportsModelNew> newReports = [];
 
-  List<ReportsModelNew> get examList1 => [];
+  List<TermDetailsModel> get term1List1;
 
-  List<ReportsModelNew> get examList2 => [];
+  List<TermDetailsModel> get term1List2;
+
+  List<TermDetailsModel> get term2List1;
+
+  List<TermDetailsModel> get term2List2;
 
   late Map<int, examListType> getExamType = {
     0: getExamList1,
@@ -196,13 +201,13 @@ abstract class ReportWidgetVM extends ChangeNotifier
   };
 
   late examListType getExamList1 = {
-    0: examList1,
-    1: examList2,
+    0: term1List1,
+    1: term1List2,
   };
   late examListType getExamList2 = {
-    0: examList1,
-    1: examList2,
+    0: term2List1,
+    1: term2List2,
   };
 }
 
-typedef examListType = Map<int, List<ReportsModelNew>>;
+typedef examListType = Map<int, List<TermDetailsModel>>;
