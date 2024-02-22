@@ -24,7 +24,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   List<ReportModel> reports = [];
 
-  ReportWidgetVM({required this.reportIdModel,required this.newReports}) {
+  ReportWidgetVM({required this.reportIdModel, required this.newReports}) {
     // getReports();
   }
 
@@ -70,10 +70,14 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   void setSelectedTerm(int index) {
     selectedTerm = index;
+    selectedExam = 0;
     notifyListeners();
   }
 
   void setExamType(int index) {
+    log("Term ${selectedTerm}");
+    log("Exam $index");
+    log("Selected ${selectedExamType}");
     selectedExam = index;
     notifyListeners();
   }
@@ -165,11 +169,11 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   Map<int, String> termExam1 = {
     0: "Mid Term Assessment",
-    1: "Mid Year Exam",
+    1: "Mid Term Exams",
   };
   Map<int, String> termExam2 = {
     0: "Mock Term Assessment",
-    1: "Mid Year Exam",
+    1: "Mock Exams",
   };
 
   String get termAssessment1 => termExam1[selectedTerm] ?? "";
@@ -177,7 +181,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
   String get termAssessment2 => termExam2[selectedTerm] ?? "";
 
   String get selectedExamType {
-    if (selectedExam == 0) {
+    if (selectedTerm == 0) {
       return termExam1[selectedExam] ?? "";
     }
     return termExam2[selectedExam] ?? "";
@@ -185,7 +189,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   // New
 
-  List<ReportsModelNew> newReports ;
+  List<ReportsModelNew> newReports;
 
   List<TermDetailsModel> get term1List1;
 
@@ -215,11 +219,10 @@ abstract class ReportWidgetVM extends ChangeNotifier
     return list;
   }
 
-  void updateReport( List<ReportsModelNew> list ){
+  void updateReport(List<ReportsModelNew> list) {
     this.newReports = list;
     notifyListeners();
   }
-
 }
 
 typedef examListType = Map<int, List<TermDetailsModel>>;
