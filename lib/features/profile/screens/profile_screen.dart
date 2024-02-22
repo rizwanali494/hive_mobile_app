@@ -236,13 +236,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             }
 
                             return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Consumer<UserAwardsVM>(
                                   builder: (context, provider, child) {
                                     return ProfileSectionWidget(
                                       wrapChildren: provider.items,
                                       // onTap: provider.fetchNextItems,
-                                      heading: AppStrings.acceptedUniversities,
+                                      heading: AppStrings.achievementsAndAwards,
                                       uiState: provider.uiState,
                                     );
                                   },
@@ -252,7 +253,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   builder: (context, provider, child) {
                                     return ProfileSectionWidget(
                                       wrapChildren: provider.items,
-                                      // onTap: provider.fetchNextItems,
                                       heading: AppStrings.acceptedUniversities,
                                       uiState: provider.uiState,
                                     );

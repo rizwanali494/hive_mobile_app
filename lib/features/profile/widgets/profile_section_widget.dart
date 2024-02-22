@@ -36,40 +36,43 @@ class ProfileSectionWidget extends StatelessWidget {
           ),
         ),
         12.verticalSpace,
-        Wrap(
-          runSpacing: 8.w,
-          spacing: 5.h,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            ...List.generate(
-              wrapChildren.length,
-              (index) => BlueTextWidget(
-                title: wrapChildren[index],
-                icon: icon,
-              ),
-            ),
-            if (uiState.isFetchingMore || uiState.isLoading)
-              const Center(
-                child: const CircularProgressIndicator(
-                  strokeWidth: 3,
-                ),
-              )
-            else if (!uiState.hasAll)
-              TextButton(
-                onPressed: onTap,
-                child: Text(
-                  AppStrings.showMore,
-                  style: styles.inter12w400.copyWith(color: styles.skyBlue),
-                ),
-              )
-            else if (wrapChildren.isEmpty)
-              Center(
-                child: Text(
-                  AppStrings.noItemsFound,
-                  style: styles.inter12w400Italic,
+        Align(
+          alignment: Alignment.topLeft,
+          child: Wrap(
+            runSpacing: 8.w,
+            spacing: 5.h,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              ...List.generate(
+                wrapChildren.length,
+                (index) => BlueTextWidget(
+                  title: wrapChildren[index],
+                  icon: icon,
                 ),
               ),
-          ],
+              if (uiState.isFetchingMore || uiState.isLoading)
+                const Center(
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 3,
+                  ),
+                )
+              else if (!uiState.hasAll)
+                TextButton(
+                  onPressed: onTap,
+                  child: Text(
+                    AppStrings.showMore,
+                    style: styles.inter12w400.copyWith(color: styles.skyBlue),
+                  ),
+                )
+              else if (wrapChildren.isEmpty)
+                Center(
+                  child: Text(
+                    AppStrings.noItemsFound,
+                    style: styles.inter12w400Italic,
+                  ),
+                ),
+            ],
+          ),
         ),
         16.verticalSpace,
       ],

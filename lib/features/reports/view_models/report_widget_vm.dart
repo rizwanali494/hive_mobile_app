@@ -169,10 +169,10 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   Map<int, String> termExam1 = {
     0: "Mid Term Assessment",
-    1: "Mid Term Exams",
+    1: "Mid Year Exams",
   };
   Map<int, String> termExam2 = {
-    0: "Mock Term Assessment",
+    0: "Mid Term Assessment",
     1: "Mock Exams",
   };
 
@@ -215,7 +215,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   List<TermDetailsModel> get getCurrentExamList {
     final termType = getExamType[selectedTerm];
-    final list = termType?[selectedTerm] ?? [];
+    final list = termType?[selectedExam] ?? [];
     return list;
   }
 

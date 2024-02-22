@@ -48,8 +48,8 @@ class ReportYear1VM extends ReportWidgetVM {
         teacherName: element.midyrYr1Trm1TchrNm,
         attendance: element.presentPercentageYr1Trm1,
         subjectPercentage: element.midyrYr1Trm1?.toString(),
-        gpa: element.midtrmYr1Trm1Gpa,
-        subjectGrade: element.midyrYr1Trm1Gpa,
+        gpa: element.midyrYr2Tr1Gpa,
+        subjectGrade: element.midyrYr1Trm1Gd,
       );
       return model;
     }).toList();

@@ -24,124 +24,95 @@ class ReportsScreen extends StatefulWidget {
 }
 
 class _ReportsScreenState extends State<ReportsScreen> {
-  late List<ChartData> data;
-  late List<ChartData> data2;
+
 
   @override
   void initState() {
-    data = [
-      ChartData('CHN', 5.5),
-      ChartData('GER', 2.5),
-      ChartData('BRZ', 3),
-    ];
-    data2 = [
-      ChartData('CHN', -1.5),
-      ChartData('RUS', -2),
-    ];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final styles = Theme.of(context).extension<AppTheme>()!;
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ReportDataController(),
-        ),
-        // ChangeNotifierProvider(
-        //   create: (context) => ReportYearVM(),
-        // ),
-      ],
-      child: Consumer<ReportDataController>(
-        builder: (context, reportDataController, child) {
-          if (reportDataController.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return MultiProvider(
-            providers: [
-              ChangeNotifierProxyProvider<ReportDataController, ReportYear1VM>(
-                create: (context) =>
-                    ReportYear1VM(newReports: reportDataController.reports),
-                update: (BuildContext context, value, ReportYear1VM? previous) {
-                  return previous!..updateReport(value.reports);
-                },
-              ),
-              ChangeNotifierProxyProvider<ReportDataController, ReportYear2VM>(
-                create: (context) => ReportYear2VM(),
-                update: (BuildContext context, value, ReportYear2VM? previous) {
-                  return previous!..updateReport(value.reports);
-                },
-              ),
-            ],
-            child: Consumer<ReportsScreenVM>(
-              builder: (context, provider, child) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 19.w,
-                  ),
-                  child: Column(
-                    children: [
-                      AppBarWidget(
-                        color: styles.black,
-                        horizontalPadding: 0,
-                        title: AppStrings.reports,
-                        titleStyle: styles.inter28w700,
-                        actions: [
-                          IntrinsicHeight(
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(SvgIcons.verifiedIcon),
-                                7.horizontalSpace,
-                                Text(
-                                  "Password\nProtected",
-                                  style: styles.inter10w400,
-                                ),
-                                9.horizontalSpace,
-                                VerticalDivider(
-                                  thickness: 0.5,
-                                ),
-                                9.horizontalSpace,
-                                GestureDetector(
-                                    onTap: () {
-                                      provider.generateReportToken(context);
-                                      // context.push(ReportWebView.route);
-                                      // launchUrl(
-                                      //   Uri.parse(
-                                      //           "https://hive.bcp.net.pk/view-reports-pdf")
-                                      //       .replace(
-                                      //     queryParameters: {
-                                      //       "token":
-                                      //           "gAAAAABlOLgTYVoODpWzuIPaqitum77Z450jHK1JwzZy9ODMFXsmXdOPZ_PWIX6U4TzgZEku_JD70YScY6FyzU3C3Nyd2oSIdQ=="
-                                      //     },
-                                      //   ),
-                                      //   mode: LaunchMode.inAppWebView,
-                                      // );
-                                    },
-                                    child: SvgPicture.asset(
-                                        SvgIcons.downloadIcon)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      15.verticalSpace,
-                      ReportHeaderWidget(styles: styles),
-                      Divider(
-                        thickness: 0.2,
-                      ),
-                      10.verticalSpace,
-                      // Expanded(
-                      //   child: Center(
-                      //     child: Text(
-                      //       AppStrings.comingSoon.toUpperCase(),
-                      //       style: styles.inter16w600,
-                      //     ),
-                      //   ),
-                      // ),
+    return Consumer<ReportDataController>(
+      builder: (context, reportDataController, child) {
 
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProxyProvider<ReportDataController, ReportYear1VM>(
+              create: (context) =>
+                  ReportYear1VM(newReports: reportDataController.reports),
+              update: (BuildContext context, value, ReportYear1VM? previous) {
+                return previous!..updateReport(value.reports);
+              },
+            ),
+            ChangeNotifierProxyProvider<ReportDataController, ReportYear2VM>(
+              create: (context) => ReportYear2VM(),
+              update: (BuildContext context, value, ReportYear2VM? previous) {
+                return previous!..updateReport(value.reports);
+              },
+            ),
+          ],
+          child: Consumer<ReportsScreenVM>(
+            builder: (context, provider, child) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 19.w,
+                ),
+                child: Column(
+                  children: [
+                    AppBarWidget(
+                      color: styles.black,
+                      horizontalPadding: 0,
+                      title: AppStrings.reports,
+                      titleStyle: styles.inter28w700,
+                      actions: [
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(SvgIcons.verifiedIcon),
+                              7.horizontalSpace,
+                              Text(
+                                "Password\nProtected",
+                                style: styles.inter10w400,
+                              ),
+                              9.horizontalSpace,
+                              VerticalDivider(
+                                thickness: 0.5,
+                              ),
+                              9.horizontalSpace,
+                              GestureDetector(
+                                  onTap: () {
+                                    provider.generateReportToken(context);
+                                    // context.push(ReportWebView.route);
+                                    // launchUrl(
+                                    //   Uri.parse(
+                                    //           "https://hive.bcp.net.pk/view-reports-pdf")
+                                    //       .replace(
+                                    //     queryParameters: {
+                                    //       "token":
+                                    //           "gAAAAABlOLgTYVoODpWzuIPaqitum77Z450jHK1JwzZy9ODMFXsmXdOPZ_PWIX6U4TzgZEku_JD70YScY6FyzU3C3Nyd2oSIdQ=="
+                                    //     },
+                                    //   ),
+                                    //   mode: LaunchMode.inAppWebView,
+                                    // );
+                                  },
+                                  child: SvgPicture.asset(
+                                      SvgIcons.downloadIcon)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    15.verticalSpace,
+                    ReportHeaderWidget(styles: styles),
+                    Divider(
+                      thickness: 0.2,
+                    ),
+                    10.verticalSpace,
+                    if( reportDataController.isLoading )
+                      Expanded(child: Center(child: CircularProgressIndicator(),))
+                    else...[
                       Row(
                         children: [
                           Expanded(
@@ -231,13 +202,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         ),
                       )
                     ],
-                  ),
-                );
-              },
-            ),
-          );
-        },
-      ),
+
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -284,9 +256,3 @@ class _ReportsScreenState extends State<ReportsScreen> {
   };
 }
 
-class ChartData {
-  ChartData(this.x, this.y);
-
-  final String x;
-  final double y;
-}

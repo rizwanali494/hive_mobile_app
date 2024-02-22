@@ -27,6 +27,7 @@ import 'package:hive_mobile/features/profile/view_models/accepted_application_vm
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
+import 'package:hive_mobile/features/reports/view_models/reports_data_controller.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
@@ -94,6 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ChangeNotifierProvider(
                 create: (context) => CalendarVM(),
               ),
+              ChangeNotifierProvider(
+                create: (context) => ReportDataController(),
+              ),
+
               ChangeNotifierProvider(
                 create: (BuildContext context) => ServiceScreenVM(),
               ),

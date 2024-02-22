@@ -38,12 +38,12 @@ class TermDetailsVM {
     if (selectedTerm == 0) {
       return "Mid Term Assessment";
     }
-    return "Mock Term Assessment";
+    return "Mid Term Assessment";
   }
 
   String get examType2 {
     if (selectedTerm == 0) {
-      return "Mid year exam";
+      return "Mid Year Exams";
     }
     return "Mock Exams";
   }
