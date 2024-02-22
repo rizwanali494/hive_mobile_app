@@ -168,7 +168,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     selectTerm: provider.setSelectedTerm,
                                     assessments: provider.termAssessments,
                                     reportIdModel: provider.reportIdModel,
-                                    onRefresh: provider.onRefresh,
+                                    onRefresh: reportDataController.onRefresh,
                                     termDetails: provider.getCurrentExamList,
                                   ),
                                 );
@@ -189,7 +189,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     selectedExam: provider.selectedExam,
                                     selectExam: provider.setExamType,
                                     selectTerm: provider.setSelectedTerm,
-                                    onRefresh: provider.onRefresh,
+                                    onRefresh: reportDataController.onRefresh,
                                     assessments: provider.termAssessments,
                                     reportIdModel: provider.reportIdModel,
                                     selectedExamType: provider.selectedExamType,
