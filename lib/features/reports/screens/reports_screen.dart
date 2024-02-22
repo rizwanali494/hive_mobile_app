@@ -298,6 +298,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             provider: TermDetailsVM(
                                 selectedTerm: provider.selectedTerm,
                                 selectedExam: provider.selectedExam,
+                                selectedExamType: provider.selectedExamType,
                                 selectExam: provider.setExamType,
                                 assessmentSummary: provider.summaryByTerm,
                                 selectTerm: provider.setSelectedTerm,
@@ -317,14 +318,16 @@ class _ReportsScreenState extends State<ReportsScreen> {
 
                           return ReportTermScreen(
                             provider: TermDetailsVM(
-                                selectedTerm: provider.selectedTerm,
-                                assessmentSummary: provider.summaryByTerm,
-                                selectedExam: provider.selectedExam,
-                                selectExam: provider.setExamType,
-                                selectTerm: provider.setSelectedTerm,
-                                onRefresh: provider.onRefresh,
-                                assessments: provider.termAssessments,
-                                reportIdModel: provider.reportIdModel),
+                              selectedTerm: provider.selectedTerm,
+                              assessmentSummary: provider.summaryByTerm,
+                              selectedExam: provider.selectedExam,
+                              selectExam: provider.setExamType,
+                              selectTerm: provider.setSelectedTerm,
+                              onRefresh: provider.onRefresh,
+                              assessments: provider.termAssessments,
+                              reportIdModel: provider.reportIdModel,
+                              selectedExamType: provider.selectedExamType,
+                            ),
                           );
                         },
                       ),

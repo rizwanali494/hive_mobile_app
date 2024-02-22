@@ -5,8 +5,10 @@ import 'package:collection/collection.dart';
 class ReportTableVM {
   List<AssessmentInfoVM> termDetails = [];
   ReportSummaryModel? model;
+  final String examType;
 
-  ReportTableVM({required this.termDetails, required this.model});
+  ReportTableVM(
+      {required this.termDetails, required this.model,required this.examType,});
 
   String get teachersName {
     return termDetails.firstOrNull?.assessment1?.sectionName ?? "-";

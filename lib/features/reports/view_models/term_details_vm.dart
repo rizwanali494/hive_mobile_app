@@ -14,7 +14,7 @@ class TermDetailsVM {
   final int selectedExam;
   final ReportIdModel reportIdModel;
   List<AssessmentInfoVM> assessments = [];
-
+  String selectedExamType;
   ReportSummaryModel? assessmentSummary;
 
   TermDetailsVM({
@@ -25,6 +25,7 @@ class TermDetailsVM {
     required this.assessmentSummary,
     required this.selectedTerm,
     required this.onRefresh,
+    required this.selectedExamType,
     this.assessments = const [],
   }) {
     setSubjectName();

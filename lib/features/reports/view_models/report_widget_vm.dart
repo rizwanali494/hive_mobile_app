@@ -167,10 +167,17 @@ abstract class ReportWidgetVM extends ChangeNotifier
   };
   Map<int, String> termExam2 = {
     0: "Mock Term Assessment",
-    1: "Mid Exam",
+    1: "Mid Year Exam",
   };
 
   String get termAssessment1 => termExam1[selectedTerm] ?? "";
 
   String get termAssessment2 => termExam2[selectedTerm] ?? "";
+
+  String get selectedExamType {
+    if (selectedExam == 0) {
+      return termExam1[selectedExam] ?? "";
+    }
+    return termExam2[selectedExam] ?? "";
+  }
 }

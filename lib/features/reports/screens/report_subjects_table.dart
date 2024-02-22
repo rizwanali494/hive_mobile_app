@@ -37,14 +37,15 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
               child: Row(
                 children: [
                   10.horizontalSpace,
-                  textWidget(con.maxWidth * 0.22, text: "Subject"),
-                  textWidget(con.maxWidth * 0.22, text: "Teacher ID"),
-                  textWidget(con.maxWidth * 0.20, text: "Teacher Name"),
+                  textWidget(con.maxWidth * 0.19, text: "Subject"),
+                  textWidget(con.maxWidth * 0.15, text: "Attendance"),
+                  textWidget(con.maxWidth * 0.15, text: "Teacher-ID"),
+                  textWidget(con.maxWidth * 0.18, text: "Teacher Name"),
                   Expanded(
                     child: Align(
                       child: Text(
-                        "Attendance",
-                        style: styles.inter8w600.copyWith(
+                        controller.examType,
+                        style: styles.inter7w600.copyWith(
                           color: styles.white,
                         ),
                       ),
@@ -353,7 +354,7 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
       width: width,
       child: Text(
         text,
-        style: styles.inter8w600.copyWith(color: styles.white),
+        style: styles.inter7w600.copyWith(color: styles.white),
       ),
     );
   }
