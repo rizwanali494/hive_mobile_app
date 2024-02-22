@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
 import 'package:hive_mobile/app/models/data/report_model.dart';
+import 'package:hive_mobile/app/models/data/reports_model_new.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/features/reports/repository/report_repository.dart';
@@ -23,7 +24,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
   List<ReportModel> reports = [];
 
   ReportWidgetVM({required this.reportIdModel}) {
-    getReports();
+    // getReports();
   }
 
   UiState uiState = UiState.loading();
@@ -180,4 +181,28 @@ abstract class ReportWidgetVM extends ChangeNotifier
     }
     return termExam2[selectedExam] ?? "";
   }
+
+  // New
+
+  List<ReportsModelNew> newReports = [];
+
+  List<ReportsModelNew> get examList1 => [];
+
+  List<ReportsModelNew> get examList2 => [];
+
+  late Map<int, examListType> getExamType = {
+    0: getExamList1,
+    1: getExamList2,
+  };
+
+  late examListType getExamList1 = {
+    0: examList1,
+    1: examList2,
+  };
+  late examListType getExamList2 = {
+    0: examList1,
+    1: examList2,
+  };
 }
+
+typedef examListType = Map<int, List<ReportsModelNew>>;
