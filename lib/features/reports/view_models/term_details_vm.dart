@@ -5,6 +5,7 @@ import "package:hive_mobile/app/models/data/report_model.dart";
 import "package:hive_mobile/features/reports/view_models/assessment_info_vm.dart";
 import "package:hive_mobile/features/reports/view_models/report_id_model.dart";
 import "package:hive_mobile/features/reports/view_models/summary_model.dart";
+import "package:hive_mobile/features/reports/view_models/term_details_model.dart";
 
 class TermDetailsVM {
   final Future<void> Function() onRefresh;
@@ -14,6 +15,7 @@ class TermDetailsVM {
   final int selectedExam;
   final ReportIdModel reportIdModel;
   List<AssessmentInfoVM> assessments = [];
+  List<TermDetailsModel> termDetails = [];
   String selectedExamType;
   ReportSummaryModel? assessmentSummary;
 
@@ -27,6 +29,7 @@ class TermDetailsVM {
     required this.onRefresh,
     required this.selectedExamType,
     this.assessments = const [],
+    required this.termDetails,
   }) {
     setSubjectName();
   }

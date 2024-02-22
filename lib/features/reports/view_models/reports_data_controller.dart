@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/reports_model_new.dart';
@@ -25,8 +27,10 @@ class ReportDataController extends ChangeNotifier {
     try {
       final list = await reportRepository.getNewReports();
       reports = list;
+      log("Got Reports :: ${list.length}");
     } catch (e) {
       // onError(e);
+      log("The error in reports is ${e}");
       uiState = UiState.error();
     }
     uiState = UiState.loaded();

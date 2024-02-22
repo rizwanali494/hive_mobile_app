@@ -102,8 +102,10 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
                   ReportSubjectsTable(
                     reportTableVM: ReportTableVM(
                       termDetails: controller.assessments,
+                      terms: controller.termDetails,
                       model: controller.assessmentSummary,
                       examType: controller.selectedExamType,
+                      termList: controller.termDetails,
                     ),
                   ),
                   32.verticalSpace,

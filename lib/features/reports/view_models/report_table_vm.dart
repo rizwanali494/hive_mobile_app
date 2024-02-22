@@ -1,14 +1,21 @@
 import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/summary_model.dart';
 import 'package:collection/collection.dart';
+import 'package:hive_mobile/features/reports/view_models/term_details_model.dart';
 
 class ReportTableVM {
   List<AssessmentInfoVM> termDetails = [];
+  List<TermDetailsModel> terms = [];
   ReportSummaryModel? model;
   final String examType;
 
-  ReportTableVM(
-      {required this.termDetails, required this.model,required this.examType,});
+  ReportTableVM({
+    required this.termDetails,
+    required this.terms,
+    required this.model,
+    required this.examType,
+    required this.termList
+  });
 
   String get teachersName {
     return termDetails.firstOrNull?.assessment1?.sectionName ?? "-";
@@ -64,4 +71,6 @@ class ReportTableVM {
   String get bottomGPA {
     return model?.bottomGPA.toString() ?? "";
   }
+
+  List<TermDetailsModel> termList = [];
 }

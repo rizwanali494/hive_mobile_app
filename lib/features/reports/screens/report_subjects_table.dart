@@ -114,13 +114,13 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
             );
           },
         ),
-        for (int index = 0; index < controller.termDetails.length; index++)
+        for (int index = 0; index < controller.terms.length; index++)
           LayoutBuilder(
             builder: (context, boxConstraints) {
               final con = boxConstraints;
               return IntrinsicHeight(
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 1.h),
+                  padding: EdgeInsets.only(bottom: 1.h,top: 1.h),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -133,30 +133,18 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                           color: styles.alabaster,
                         ),
                         child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                controller.termDetails[index].assessment2
-                                        ?.teacherName ??
-                                    "",
-                                style: styles.inter12w600,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                controller.termDetails[index].assessment2
-                                        ?.subjectName ??
-                                    "",
-                                style: styles.inter12w400,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                          child: Text(
+                            controller.terms[index].subjectName ?? "-",
+                            style: styles.inter12w600,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
                           ),
                         ),
                       ),
                       1.horizontalSpace,
                       Container(
-                        width: con.maxWidth * 0.17,
+                        width: con.maxWidth * 0.13,
                         padding: EdgeInsets.symmetric(
                           vertical: 5.h,
                         ),
@@ -165,32 +153,66 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
                         ),
                         child: Center(
                             child: Text(
-                          "90%",
+                          "${controller.terms[index].attendance ?? "-"}%",
                           style: styles.inter12w400,
                         )),
+                      ),
+                      1.horizontalSpace,
+                      Container(
+                        width: con.maxWidth * 0.10,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 5.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: styles.alabaster,
+                        ),
+                        child: Center(
+                            child: Text(
+                              "${controller.terms[index].teacherId ?? "-"}",
+                              textAlign: TextAlign.center,
+                              style: styles.inter12w400,
+                            )),
+                      ),
+                      1.horizontalSpace,
+                      Container(
+                        width: con.maxWidth * 0.22,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 5.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: styles.alabaster,
+                        ),
+                        child: Center(
+                            child: Text(
+                              "${controller.terms[index].teacherName ?? "-"}",
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: styles.inter12w400,
+                            )),
                       ),
                       1.horizontalSpace,
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            // headingWidget(
+                            //     "${controller.terms[index].teacherId}",
+                            //     getColor(index)),
+                            // headingWidget(
+                            //     "${controller.terms[index].teacherName}",
+                            //     getColor(index)),
+                            // headingWidget(
+                            //     "${controller.terms[index].subjectName}",
+                            //     getColor(index)),
                             headingWidget(
-                                "${controller.termDetails[index].assessment1?.percentage}",
+                                "${(controller.terms[index].subjectPercentage ?? "-")}",
                                 getColor(index)),
                             headingWidget(
-                                "${controller.termDetails[index].assessment1?.grade}",
+                                "${controller.terms[index].subjectGrade ?? "-"}",
                                 getColor(index)),
                             headingWidget(
-                                "${controller.termDetails[index].assessment1?.gpa}",
-                                getColor(index)),
-                            headingWidget(
-                                "${(controller.termDetails[index].assessment2?.percentage ?? "-")}",
-                                getColor(index)),
-                            headingWidget(
-                                "${controller.termDetails[index].assessment2?.grade ?? "-"}",
-                                getColor(index)),
-                            headingWidget(
-                                "${controller.termDetails[index].assessment2?.gpa ?? "-"}",
+                                "${controller.terms[index].gpa ?? "-"}",
                                 getColor(index)),
                           ],
                         ),
@@ -337,7 +359,8 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
           right: 1.w,
         ),
         padding: EdgeInsets.symmetric(vertical: 10.h),
-        decoration: BoxDecoration(color: color ?? styles.alabaster),
+        // decoration: BoxDecoration(color: color ?? styles.alabaster),
+        decoration: BoxDecoration(color:styles.alabaster),
         child: Center(
           child: Text(
             heading,

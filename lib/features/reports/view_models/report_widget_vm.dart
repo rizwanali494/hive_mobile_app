@@ -24,7 +24,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   List<ReportModel> reports = [];
 
-  ReportWidgetVM({required this.reportIdModel}) {
+  ReportWidgetVM({required this.reportIdModel,required this.newReports}) {
     // getReports();
   }
 
@@ -185,7 +185,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   // New
 
-  List<ReportsModelNew> newReports = [];
+  List<ReportsModelNew> newReports ;
 
   List<TermDetailsModel> get term1List1;
 
@@ -208,6 +208,18 @@ abstract class ReportWidgetVM extends ChangeNotifier
     0: term2List1,
     1: term2List2,
   };
+
+  List<TermDetailsModel> get getCurrentExamList {
+    final termType = getExamType[selectedTerm];
+    final list = termType?[selectedTerm] ?? [];
+    return list;
+  }
+
+  void updateReport( List<ReportsModelNew> list ){
+    this.newReports = list;
+    notifyListeners();
+  }
+
 }
 
 typedef examListType = Map<int, List<TermDetailsModel>>;

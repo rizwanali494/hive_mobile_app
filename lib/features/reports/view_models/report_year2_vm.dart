@@ -3,7 +3,7 @@ import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_model.dart';
 
 class ReportYear2VM extends ReportWidgetVM {
-  ReportYear2VM()
+  ReportYear2VM({super.newReports = const []})
       : super(
             reportIdModel: ReportIdModel(
           midTermAssessmentId: 9,
@@ -14,7 +14,6 @@ class ReportYear2VM extends ReportWidgetVM {
 
   @override
   void onError(error) {}
-
 
   @override
   // TODO: implement examList1
@@ -76,7 +75,7 @@ class ReportYear2VM extends ReportWidgetVM {
     final list = newReports.map((element) {
       final model = TermDetailsModel(
         subjectName: element.subjectName,
-        teacherId: element.mockexYr2Tr2TchrId ?.toInt(),
+        teacherId: element.mockexYr2Tr2TchrId?.toInt(),
         teacherName: element.mockexYr2Tr2TchrNm,
         attendance: element.presentPercentageYr2Tr2,
         subjectPercentage: element.mockexYr2Tr2?.toString(),
@@ -87,5 +86,4 @@ class ReportYear2VM extends ReportWidgetVM {
     }).toList();
     return list;
   }
-
 }
