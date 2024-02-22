@@ -22,6 +22,14 @@ class _ReportTermScreenState extends State<ReportTermScreen> {
   Widget build(BuildContext context) {
     final controller = widget.provider;
     final styles = Theme.of(context).extension<AppTheme>()!;
+  if( controller.termDetails.isEmpty ) {
+    return Center(
+      child: Text(
+        AppStrings.noDataFound,
+        style: styles.inter12w600,
+      ),
+    );
+  }
 
     return Column(
       children: [
