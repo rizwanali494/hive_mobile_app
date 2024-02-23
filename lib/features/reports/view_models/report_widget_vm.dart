@@ -199,19 +199,20 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   List<TermDetailsModel> get term2List2;
 
-  late Map<int, examListType> getExamType = {
-    0: getExamList1,
-    1: getExamList2,
-  };
+   Map<int, examListType> get getExamType => {
+        0: getExamList1,
+        1: getExamList2,
+      };
 
-  late examListType getExamList1 = {
-    0: term1List1,
-    1: term1List2,
-  };
-  late examListType getExamList2 = {
-    0: term2List1,
-    1: term2List2,
-  };
+  examListType get getExamList1 => {
+        0: term1List1,
+        1: term1List2,
+      };
+
+  examListType get getExamList2 => {
+        0: term2List1,
+        1: term2List2,
+      };
 
   List<TermDetailsModel> get getCurrentExamList {
     final termType = getExamType[selectedTerm];
@@ -221,6 +222,7 @@ abstract class ReportWidgetVM extends ChangeNotifier
 
   void updateReport(List<ReportsModelNew> list) {
     this.newReports = list;
+    log("Updating UI");
     notifyListeners();
   }
 }

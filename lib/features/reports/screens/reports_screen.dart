@@ -40,8 +40,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
         return MultiProvider(
           providers: [
             ChangeNotifierProxyProvider<ReportDataController, ReportYear1VM>(
-              create: (context) =>
-                  ReportYear1VM(newReports: reportDataController.reports),
+              create: (context) => ReportYear1VM(),
               update: (BuildContext context, value, ReportYear1VM? previous) {
                 return previous!..updateReport(value.reports);
               },

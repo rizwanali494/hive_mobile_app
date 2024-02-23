@@ -5,7 +5,7 @@ import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart
 import 'package:hive_mobile/features/reports/view_models/term_details_model.dart';
 
 class ReportYear1VM extends ReportWidgetVM {
-  ReportYear1VM( {required super.newReports})
+  ReportYear1VM({super.newReports = const []})
       : super(
             reportIdModel: ReportIdModel(
                 midTermAssessmentId: 1,
