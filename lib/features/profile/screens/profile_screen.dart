@@ -17,6 +17,7 @@ import 'package:hive_mobile/features/profile/view_models/profile_section_wrapper
 import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
 import 'package:hive_mobile/features/profile/widgets/basic_info_widget.dart';
 import 'package:hive_mobile/features/profile/widgets/profile_section_widget.dart';
+import 'package:hive_mobile/features/reports/view_models/reports_data_controller.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -175,6 +176,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return RefreshIndicator(
                             backgroundColor: styles.white,
                             onRefresh: () async {
+                              await context
+                                  .read<ReportDataController?>()
+                                  ?.onRefresh();
                               await Future.wait([
                                 awardVM.fetchInitialElements(),
                                 applicationVM.fetchInitialElements(),
@@ -226,6 +230,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: styles.black.withOpacity(0.2),
                                   ),
                                   15.verticalSpace,
+                                  Consumer<ReportDataController>(
+                                    builder: (context, provider, child) {
+                                      return ProfileSectionWidget(
+                                        wrapChildren: provider.reports
+                                            .map((e) => e.subjectName ?? "")
+                                            .toList(),
+                                        uiState: UiState.hasAll(),
+                                        heading: AppStrings.subjects,
+                                      );
+                                    },
+                                  ),
+                                  17.verticalSpace,
                                   ProfileSectionWidget(
                                     wrapChildren: controller
                                             .userModel.accountData?.hobbies
@@ -235,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     uiState: UiState.hasAll(),
                                     heading: AppStrings.hobbies,
                                   ),
-                                  17.verticalSpace,
+                                  15.verticalSpace,
                                   Consumer<ProfileSectionWrapperProvider>(
                                     builder: (context, provider, child) {
                                       if (provider.isLoading) {

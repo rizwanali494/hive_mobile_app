@@ -147,28 +147,29 @@ class _ApplicationInfoScreenState extends State<ApplicationInfoScreen> {
                     ),
                   )
                 else ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 4.w),
-                        child: Text(
-                          AppStrings.addDocument,
-                          style: styles.inter14w600
-                              .copyWith(color: styles.darkSlateGrey),
+                    if (provider.documents.length < 9)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 4.w),
+                          child: Text(
+                            AppStrings.addDocument,
+                            style: styles.inter14w600
+                                .copyWith(color: styles.darkSlateGrey),
+                          ),
                         ),
+                          GestureDetector(
+                            onTap: () {
+                              provider.selectDocuments(context);
+                            },
+                            child: Icon(
+                              Icons.add,
+                              color: styles.skyBlue,
+                            ),
+                          ),
+                        ],
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          provider.selectDocuments(context);
-                        },
-                        child: Icon(
-                          Icons.add,
-                          color: styles.skyBlue,
-                        ),
-                      ),
-                    ],
-                  ),
                   14.verticalSpace,
                   for (final doc in provider.documents)
                     DocumentUploadWidget(

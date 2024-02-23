@@ -48,7 +48,7 @@ class ReportsScreenVM extends ChangeNotifier with UtilFunctions {
       context.pop();
       launchUrl(
         Uri.parse(ApiEndpoints.pdfUrl).replace(
-          queryParameters: {"token": "$token"},
+          queryParameters: {"q": "$token"},
         ),
         mode: LaunchMode.externalApplication,
       );

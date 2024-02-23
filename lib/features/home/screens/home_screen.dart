@@ -94,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ChangeNotifierProvider(
                 create: (context) => ReportDataController(),
+                lazy: false,
               ),
 
               ChangeNotifierProvider(
