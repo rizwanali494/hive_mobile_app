@@ -48,6 +48,10 @@ class ActivityWidget extends StatelessWidget {
               if (controller.ownerImageUrl != null)
                 CachedNetworkImage(
                   imageUrl: controller.ownerImageUrl!,
+                  maxHeightDiskCache: 300,
+                  maxWidthDiskCache: 300,
+                  memCacheHeight: 300,
+                  memCacheWidth: 300,
                   imageBuilder: (context, imageProvider) => Container(
                     width: 45.h,
                     height: 45.w,

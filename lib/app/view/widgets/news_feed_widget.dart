@@ -129,6 +129,10 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                         if (controller.userImage != null)
                           CachedNetworkImage(
                             imageUrl: controller.userImage!,
+                            maxHeightDiskCache: 300,
+                            maxWidthDiskCache: 300,
+                            memCacheHeight: 300,
+                            memCacheWidth: 300,
                             imageBuilder: (context, imageProvider) => Container(
                               width: 45.h,
                               height: 45.w,

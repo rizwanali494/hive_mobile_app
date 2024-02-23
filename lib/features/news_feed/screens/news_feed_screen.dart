@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive_mobile/app/enums/post_type_enum.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
@@ -41,7 +43,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
           ),
           Consumer<NewsFeedVM>(
             builder: (BuildContext context, provider, Widget? child) {
-             return BaseListViewWidget<AnnouncementPostModel>(
+              return BaseListViewWidget<AnnouncementPostModel>(
                 controller: provider.listViewVM,
                 emptyText: AppStrings.noDataFound,
                 listViewChild: (item) => NewsFeedWidget(
@@ -75,7 +77,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 ),
                 shimmerChild: PostShimmerWidget(type: PostType.image),
               );
-
             },
           ),
         ],

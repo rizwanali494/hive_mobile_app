@@ -26,18 +26,17 @@ class ReportYear1VM extends ReportWidgetVM {
     final list = newReports.map((element) {
           final model = TermDetailsModel(
             subjectName: element.subjectName,
-            teacherId: element.midtrmYr1Trm1TchrId?.toInt(),
-            teacherName: element.midtrmYr1Trm1TchrNm,
-            attendance: element.presentPercentageYr1Trm1,
-            subjectPercentage: element.midtrmYr1Trm1?.toString(),
-            gpa: element.midtrmYr1Trm1Gpa,
-            subjectGrade: element.midtrmYr1Trm1Gd,
-          );
-          return model;
-        })
-        .toList()
-        .where((element) => element.isValid)
-        .toList();
+        teacherId: element.midtrmYr1Trm1TchrId?.toInt(),
+        teacherName: element.midtrmYr1Trm1TchrNm,
+        attendance: element.presentPercentageYr1Trm1,
+        subjectPercentage: element.midtrmYr1Trm1?.toString(),
+        gpa: element.midtrmYr1Trm1Gpa,
+        subjectGrade: element.midtrmYr1Trm1Gd,
+      );
+      return model;
+    }).toList();
+    // .where((element) => element.isValid)
+    // .toList();
 
     return list;
   }
@@ -48,18 +47,17 @@ class ReportYear1VM extends ReportWidgetVM {
     final list = newReports.map((element) {
           final model = TermDetailsModel(
             subjectName: element.subjectName,
-            teacherId: element.midyrYr1Trm1TchrId?.toInt(),
-            teacherName: element.midyrYr1Trm1TchrNm,
-            attendance: element.presentPercentageYr1Trm1,
-            subjectPercentage: element.midyrYr1Trm1?.toString(),
-            gpa: element.midyrYr1Trm1Gpa,
-            subjectGrade: element.midyrYr1Trm1Gd,
-          );
-          return model;
-        })
-        .toList()
-        .where((element) => element.isValid)
-        .toList();
+        teacherId: element.midyrYr1Trm1TchrId?.toInt(),
+        teacherName: element.midyrYr1Trm1TchrNm,
+        attendance: element.presentPercentageYr1Trm1,
+        subjectPercentage: element.midyrYr1Trm1?.toString(),
+        gpa: element.midyrYr1Trm1Gpa,
+        subjectGrade: element.midyrYr1Trm1Gd,
+      );
+      return model;
+    }).toList();
+    // .where((element) => element.isValid)
+    // .toList();
     ;
     return list;
   }
@@ -70,18 +68,17 @@ class ReportYear1VM extends ReportWidgetVM {
     final list = newReports.map((element) {
           final model = TermDetailsModel(
             subjectName: element.subjectName,
-            teacherId: element.midtrmYr1Trm2TchrId?.toInt(),
-            teacherName: element.midtrmYr1Trm2TchrNm,
-            attendance: element.presentPercentageYr1Tr2,
-            subjectPercentage: element.midtrmYr1Trm2?.toString(),
-            gpa: element.midtrmYr1Trm2Gpa,
-            subjectGrade: element.midtrmYr1Trm2Gd,
-          );
-          return model;
-        })
-        .toList()
-        .where((element) => element.isValid)
-        .toList();
+        teacherId: element.midtrmYr1Trm2TchrId?.toInt(),
+        teacherName: element.midtrmYr1Trm2TchrNm,
+        attendance: element.presentPercentageYr1Tr2,
+        subjectPercentage: element.midtrmYr1Trm2?.toString(),
+        gpa: element.midtrmYr1Trm2Gpa,
+        subjectGrade: element.midtrmYr1Trm2Gd,
+      );
+      return model;
+    }).toList();
+    // .where((element) => element.isValid)
+    // .toList();
 
     return list;
   }
@@ -92,18 +89,17 @@ class ReportYear1VM extends ReportWidgetVM {
     final list = newReports.map((element) {
           final model = TermDetailsModel(
             subjectName: element.subjectName,
-            teacherId: element.mockexYr1Tr2TchrId?.toInt(),
-            teacherName: element.mockexYr1Tr2TchrNm,
-            attendance: element.presentPercentageYr1Tr2,
-            subjectPercentage: element.mockexYr1Tr2?.toString(),
-            gpa: element.mockexYr1Tr2Gpa,
-            subjectGrade: element.mockexYr1Tr2Gd,
-          );
-          return model;
-        })
-        .toList()
-        .where((element) => element.isValid)
-        .toList();
+        teacherId: element.mockexYr1Tr2TchrId?.toInt(),
+        teacherName: element.mockexYr1Tr2TchrNm,
+        attendance: element.presentPercentageYr1Tr2,
+        subjectPercentage: element.mockexYr1Tr2?.toString(),
+        gpa: element.mockexYr1Tr2Gpa,
+        subjectGrade: element.mockexYr1Tr2Gd,
+      );
+      return model;
+    }).toList();
+    // .where((element) => element.isValid)
+    // .toList();
 
     return list;
   }
