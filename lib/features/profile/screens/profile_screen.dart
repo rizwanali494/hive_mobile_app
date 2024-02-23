@@ -155,115 +155,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      18.verticalSpace,
-                      Text(
-                        AppStrings.basicInfo,
-                        style: styles.inter16w600,
-                      ),
-                      13.verticalSpace,
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BasicInfoWidget(
-                            title: AppStrings.gender,
-                            iconPath: SvgIcons.profile,
-                            info: controller.gender,
-                          ),
-                          30.horizontalSpace,
-                          BasicInfoWidget(
-                            title: AppStrings.birthDate,
-                            iconPath: SvgIcons.cake,
-                            info: controller.dateOfBirth,
-                          ),
-                        ],
-                      ),
-                      15.verticalSpace,
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 0.w,
-                        ),
-                        child: BasicInfoWidget(
-                          title: AppStrings.campus,
-                          iconPath: SvgIcons.building,
-                          info: controller.branchName,
-                        ),
-                      ),
-                      10.verticalSpace,
-                      Divider(
-                        color: styles.black.withOpacity(0.2),
-                      ),
-                      15.verticalSpace,
-                      ProfileSectionWidget(
-                        wrapChildren: controller.userModel.accountData?.hobbies
-                                ?.map((e) => e.name ?? "")
-                                .toList() ??
-                            [],
-                        uiState: UiState.hasAll(),
-                        heading: AppStrings.hobbies,
-                      ),
-                      17.verticalSpace,
-                      // ProfileSectionWidget(
-                      //   wrapChildren: [],
-                      //   uiState: UiState.hasAll(),
-                      //   heading: AppStrings.subjects,
-                      // ),
-                      // 17.verticalSpace,
-                      ChangeNotifierProxyProvider2<
-                          UserAwardsVM,
-                          UserAcceptedApplicationVM,
-                          ProfileSectionWrapperProvider>(
-                        create: (BuildContext context) =>
-                            ProfileSectionWrapperProvider(),
-                        update: (context, awardProvider,
-                            acceptedApplicationProvider, previous) {
-                          return previous!
-                            ..updateAwardUiState(awardProvider.uiState)
-                            ..updateAcceptedApplicationState(
-                                acceptedApplicationProvider.uiState);
+            ChangeNotifierProxyProvider2<UserAwardsVM,
+                UserAcceptedApplicationVM, ProfileSectionWrapperProvider>(
+              create: (BuildContext context) => ProfileSectionWrapperProvider(),
+              update: (context, awardProvider, acceptedApplicationProvider,
+                  previous) {
+                return previous!
+                  ..updateAwardUiState(awardProvider.uiState)
+                  ..updateAcceptedApplicationState(
+                      acceptedApplicationProvider.uiState);
+              },
+              child: Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Consumer<UserAcceptedApplicationVM>(
+                    builder: (context, applicationVM, child) {
+                      return Consumer<UserAwardsVM>(
+                        builder: (context, awardVM, child) {
+                          return RefreshIndicator(
+                            backgroundColor: styles.white,
+                            onRefresh: () async {
+                              await Future.wait([
+                                awardVM.fetchInitialElements(),
+                                applicationVM.fetchInitialElements(),
+                              ]);
+                              return;
+                            },
+                            child: SingleChildScrollView(
+                              physics: AlwaysScrollableScrollPhysics(),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  18.verticalSpace,
+                                  Text(
+                                    AppStrings.basicInfo,
+                                    style: styles.inter16w600,
+                                  ),
+                                  13.verticalSpace,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      BasicInfoWidget(
+                                        title: AppStrings.gender,
+                                        iconPath: SvgIcons.profile,
+                                        info: controller.gender,
+                                      ),
+                                      30.horizontalSpace,
+                                      BasicInfoWidget(
+                                        title: AppStrings.birthDate,
+                                        iconPath: SvgIcons.cake,
+                                        info: controller.dateOfBirth,
+                                      ),
+                                    ],
+                                  ),
+                                  15.verticalSpace,
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 0.w,
+                                    ),
+                                    child: BasicInfoWidget(
+                                      title: AppStrings.campus,
+                                      iconPath: SvgIcons.building,
+                                      info: controller.branchName,
+                                    ),
+                                  ),
+                                  10.verticalSpace,
+                                  Divider(
+                                    color: styles.black.withOpacity(0.2),
+                                  ),
+                                  15.verticalSpace,
+                                  ProfileSectionWidget(
+                                    wrapChildren: controller
+                                            .userModel.accountData?.hobbies
+                                            ?.map((e) => e.name ?? "")
+                                            .toList() ??
+                                        [],
+                                    uiState: UiState.hasAll(),
+                                    heading: AppStrings.hobbies,
+                                  ),
+                                  17.verticalSpace,
+                                  Consumer<ProfileSectionWrapperProvider>(
+                                    builder: (context, provider, child) {
+                                      if (provider.isLoading) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          ProfileSectionWidget(
+                                            wrapChildren: awardVM.items,
+                                            heading: AppStrings
+                                                .achievementsAndAwards,
+                                            uiState: awardVM.uiState,
+                                          ),
+                                          17.verticalSpace,
+                                          ProfileSectionWidget(
+                                            wrapChildren: applicationVM.items,
+                                            heading:
+                                                AppStrings.acceptedUniversities,
+                                            uiState: applicationVM.uiState,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
                         },
-                        child: Consumer<ProfileSectionWrapperProvider>(
-                          builder: (context, provider, child) {
-                            if (provider.isLoading) {
-                              return Center(child: CircularProgressIndicator());
-                            }
-
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Consumer<UserAwardsVM>(
-                                  builder: (context, provider, child) {
-                                    return ProfileSectionWidget(
-                                      wrapChildren: provider.items,
-                                      // onTap: provider.fetchNextItems,
-                                      heading: AppStrings.achievementsAndAwards,
-                                      uiState: provider.uiState,
-                                    );
-                                  },
-                                ),
-                                17.verticalSpace,
-                                Consumer<UserAcceptedApplicationVM>(
-                                  builder: (context, provider, child) {
-                                    return ProfileSectionWidget(
-                                      wrapChildren: provider.items,
-                                      heading: AppStrings.acceptedUniversities,
-                                      uiState: provider.uiState,
-                                    );
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
               ),
