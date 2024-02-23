@@ -14,7 +14,13 @@ class DaysEventController extends BaseApiVM<ActivityModel> {
 
   DateTime get endDate => time.add(Duration(days: 1));
 
-  DateTime get startDate => time.subtract(Duration(days: 1));
+  DateTime get startDate => time
+      .copyWith(
+        hour: 23,
+        minute: 59,
+        second: 59,
+      )
+      .subtract(Duration(days: 1));
 
   @override
   Future<List<ActivityModel>> fetchInitialItems() async {
@@ -26,7 +32,7 @@ class DaysEventController extends BaseApiVM<ActivityModel> {
   @override
   Future<List<ActivityModel>> fetchNextItems() async {
     var list = await repo.getAllEvents(
-        startDate: time, endDate: time, offset: offSet, limit: limit);
+        startDate: startDate, endDate: endDate, offset: offSet, limit: limit);
     return list;
   }
 

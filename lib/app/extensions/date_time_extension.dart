@@ -85,7 +85,7 @@ extension DateTimeExtension on DateTime {
 }
 
 var _dayOnlyFormat = DateFormat.EEEE();
-var _yearMonthDateFormat = DateFormat("yyyy-MM-dd");
+var _yearMonthDateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 var _timeOnlyFormat = DateFormat('h:mm a');
 var _dateOnlyFormat = DateFormat('d');
 var _monthShortOnlyFormat = DateFormat('MMM');
