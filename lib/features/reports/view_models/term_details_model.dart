@@ -17,6 +17,7 @@ class TermDetailsModel {
     this.gpa,
   });
 
-
-
+  bool get isValid =>
+      (subjectPercentage != null) &&
+      (subjectPercentage?.trim().isNotEmpty ?? false);
 }

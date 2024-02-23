@@ -61,10 +61,6 @@ abstract class BaseSliverListVM<T>
       await request();
     } catch (e) {
       uiState = UiState.error();
-      // if (e is HTTPStatusCodeException) {
-      //   log("Error occurred : ${e.response.body}");
-      //   log("Error occurred : ${e.response.statusCode}");
-      // }
       onInitialListError.call(e);
       log("Error occurred : $e");
     }

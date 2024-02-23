@@ -103,13 +103,23 @@ class _ReportSubjectsTableState extends State<ReportSubjectsTable> {
             );
           },
         ),
+        if (controller.termList.isEmpty)
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "No Record Found",
+                style: styles.inter12w600,
+              ),
+            ),
+          ),
         for (int index = 0; index < controller.terms.length; index++)
           LayoutBuilder(
             builder: (context, boxConstraints) {
               final con = boxConstraints;
               return IntrinsicHeight(
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 1.h,top: 1.h),
+                  padding: EdgeInsets.only(bottom: 1.h, top: 1.h),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

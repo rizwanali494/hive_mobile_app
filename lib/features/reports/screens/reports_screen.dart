@@ -52,6 +52,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 return previous!..updateReport(value.reports);
               },
             ),
+            ChangeNotifierProvider(
+              create: (context) => ReportsScreenVM(),
+            ),
           ],
           child: Consumer<ReportsScreenVM>(
             builder: (context, provider, child) {

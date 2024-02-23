@@ -84,9 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 lazy: false,
               ),
               ChangeNotifierProvider(
-                create: (context) => ReportsScreenVM(),
-              ),
-              ChangeNotifierProvider(
                 create: (context) => ProfileScreenVM(),
               ),
               ChangeNotifierProvider(
