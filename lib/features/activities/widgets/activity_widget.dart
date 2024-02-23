@@ -118,51 +118,52 @@ class ActivityWidget extends StatelessWidget {
             )
           else
             33.verticalSpace,
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  activityProvider.setActivitySelection(
-                    model: controller.model,
-                    state: AppStrings.attending,
-                  );
-                },
-                child: ActivityStatusWidget(
-                  iconPath: SvgIcons.tickSquare,
-                  title: AppStrings.attending,
-                  isSelected: controller.isSelected(
-                    ActivitySelectionStatus.Attending,
+          if (!controller.model.hasExpired)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    activityProvider.setActivitySelection(
+                      model: controller.model,
+                      state: AppStrings.attending,
+                    );
+                  },
+                  child: ActivityStatusWidget(
+                    iconPath: SvgIcons.tickSquare,
+                    title: AppStrings.attending,
+                    isSelected: controller.isSelected(
+                      ActivitySelectionStatus.Attending,
+                    ),
                   ),
                 ),
-              ),
-              6.17.horizontalSpace,
-              GestureDetector(
-                onTap: () {
-                  activityProvider.setActivitySelection(
-                      model: controller.model, state: AppStrings.SKEPTICAL);
-                },
-                child: ActivityStatusWidget(
-                  iconPath: SvgIcons.maybe,
-                  title: AppStrings.maybe,
-                  isSelected:
-                      controller.isSelected(ActivitySelectionStatus.Maybe),
+                6.17.horizontalSpace,
+                GestureDetector(
+                  onTap: () {
+                    activityProvider.setActivitySelection(
+                        model: controller.model, state: AppStrings.SKEPTICAL);
+                  },
+                  child: ActivityStatusWidget(
+                    iconPath: SvgIcons.maybe,
+                    title: AppStrings.maybe,
+                    isSelected:
+                    controller.isSelected(ActivitySelectionStatus.Maybe),
+                  ),
                 ),
-              ),
-              6.17.horizontalSpace,
-              GestureDetector(
-                onTap: () {
-                  activityProvider.setActivitySelection(
-                      model: controller.model, state: AppStrings.NON_ATTENDING);
-                },
-                child: ActivityStatusWidget(
-                  iconPath: SvgIcons.undecided,
-                  title: AppStrings.not_attending,
-                  isSelected:
-                      controller.isSelected(ActivitySelectionStatus.Undecided),
+                6.17.horizontalSpace,
+                GestureDetector(
+                  onTap: () {
+                    activityProvider.setActivitySelection(
+                        model: controller.model, state: AppStrings.NON_ATTENDING);
+                  },
+                  child: ActivityStatusWidget(
+                    iconPath: SvgIcons.undecided,
+                    title: AppStrings.not_attending,
+                    isSelected:
+                    controller.isSelected(ActivitySelectionStatus.Undecided),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
     );

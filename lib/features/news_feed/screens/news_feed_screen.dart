@@ -46,6 +46,29 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 emptyText: AppStrings.noDataFound,
                 listViewChild: (item) => NewsFeedWidget(
                   type: item.isPost ? PostType.image : PostType.poll,
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        child: ChangeNotifierProvider.value(
+                          value: provider,
+                          child: Consumer<NewsFeedVM>(
+                            builder: (context, value, child) {
+                              return NewsFeedWidget(
+                                type: item.type == "POST"
+                                    ? PostType.image
+                                    : PostType.poll,
+                                horizontalPadding: 0,
+                                controller: NewsFeedWidgetVm(
+                                  model: item,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                   controller: NewsFeedWidgetVm(
                     model: item,
                   ),

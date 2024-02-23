@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
+import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
@@ -219,6 +219,14 @@ class ActivityModel {
         name: name,
         owner: owner,
       );
+
+  bool get hasExpired {
+    final now = DateTime.now();
+    if (date?.toDatetime.isBefore(now) ?? false) {
+      return true;
+    }
+    return false;
+  }
 }
 
 enum ActivitySelectionStatus { Attending, Maybe, Undecided }
