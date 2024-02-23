@@ -76,7 +76,7 @@ class UtilFunctions {
         selectCount: imageCount,
         showGif: false,
         showCamera: false,
-        compressSize: 500,
+        compressSize: 100,
         cropConfig: CropConfig(
           enableCrop: true,
         ));
@@ -99,7 +99,7 @@ class UtilFunctions {
 
   static Future<List<File>?> imageFromCamera() async {
     var mediaFiles = await ImagePickers.openCamera(
-        compressSize: 500, cropConfig: CropConfig(enableCrop: true));
+        compressSize: 100, cropConfig: CropConfig(enableCrop: true));
     List<File>? imageFiles;
     if (mediaFiles != null) {
       final imageMedia = mediaFiles;

@@ -272,6 +272,8 @@ abstract class UniAppRequestVM extends ChangeNotifier
         await UtilFunctions.openImageTypeDialog(context, imageCount: 8);
     if (docs != null) {
       for (final doc in docs) {
+        final l = await doc.length();
+        log("The size is $l");
         final fileName = basename(doc.path);
         DocumentWidgetController controller = DocumentWidgetController(
             onRemove: (String? id) {
