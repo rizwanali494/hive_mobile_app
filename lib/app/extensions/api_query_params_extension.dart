@@ -16,6 +16,10 @@ extension ApiFieldExpandExtension on String {
     return _appendExpandField(ApiExpandField.attachments);
   }
 
+  String get withAttachment {
+    return _appendExpandField(ApiExpandField.attachment);
+  }
+
   String get withAchievement {
     return _appendExpandField(ApiExpandField.achievement);
   }

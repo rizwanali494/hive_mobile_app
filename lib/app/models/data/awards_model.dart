@@ -26,9 +26,9 @@ class AwardsModel {
     description = json['description'];
     owner = json['owner'];
     student = json['student'];
-    // attachment = json['attachment'] != null
-    //     ? Attachments.fromJson(json['attachment'])
-    //     : null;
+    attachment = json['attachment'] != null
+        ? Attachments.fromJson(json['attachment'])
+        : null;
   }
 
   int? id;
