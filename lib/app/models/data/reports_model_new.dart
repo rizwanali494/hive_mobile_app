@@ -2,10 +2,6 @@ class ReportsModelNew {
   ReportsModelNew({
     this.systemId,
     this.subjectName,
-    this.regionId,
-    this.cityId,
-    this.branchId,
-    this.sectionId,
     this.stdName,
     this.midtrmYr1Trm1,
     this.midtrmYr1Trm1TchrId,
@@ -47,16 +43,6 @@ class ReportsModelNew {
     this.mockexYr2Tr2TchrNm,
     this.mockexYr2Tr2Gpa,
     this.mockexYr2Tr2Gd,
-    this.prdMidtrmYr1Trm1,
-    this.prdMidtrmYr1Trm1TchrId,
-    this.prdMidtrmYr1Trm1TchrNm,
-    this.prdMidtrmYr1Trm1Gpa,
-    this.prdMidtrmYr1Trm1Gd,
-    this.prdMidtrmYr2Trm1,
-    this.prdMidtrmYr2Trm1TchrId,
-    this.prdMidtrmYr2Trm1TchrNm,
-    this.prdMidtrmYr2Trm1Gpa,
-    this.prdMidtrmYr2Trm1Gd,
     this.presentPercentageYr1Trm1,
     this.presentPercentageYr1Tr2,
     this.presentPercentageYr2Tr1,
@@ -74,10 +60,6 @@ class ReportsModelNew {
   ReportsModelNew.fromJson(dynamic json) {
     systemId = json['system_id'];
     subjectName = json['subject_name'];
-    regionId = json['region_id'];
-    cityId = json['city_id'];
-    branchId = json['branch_id'];
-    sectionId = json['section_id'];
     stdName = json['std_name'];
     midtrmYr1Trm1 = json['midtrm_yr1_trm1'];
     midtrmYr1Trm1TchrId = json['midtrm_yr1_trm1_tchr_id'];
@@ -119,16 +101,6 @@ class ReportsModelNew {
     mockexYr2Tr2TchrNm = json['mockex_yr2_tr2_tchr_nm'];
     mockexYr2Tr2Gpa = json['mockex_yr2_tr2_gpa'];
     mockexYr2Tr2Gd = json['mockex_yr2_tr2_gd'];
-    prdMidtrmYr1Trm1 = json['prd_midtrm_yr1_trm1'];
-    prdMidtrmYr1Trm1TchrId = json['prd_midtrm_yr1_trm1_tchr_id'];
-    prdMidtrmYr1Trm1TchrNm = json['prd_midtrm_yr1_trm1_tchr_nm'];
-    prdMidtrmYr1Trm1Gpa = json['prd_midtrm_yr1_trm1_gpa'];
-    prdMidtrmYr1Trm1Gd = json['prd_midtrm_yr1_trm1_gd'];
-    prdMidtrmYr2Trm1 = json['prd_midtrm_yr2_trm1'];
-    prdMidtrmYr2Trm1TchrId = json['prd_midtrm_yr2_trm1_tchr_id'];
-    prdMidtrmYr2Trm1TchrNm = json['prd_midtrm_yr2_trm1_tchr_nm'];
-    prdMidtrmYr2Trm1Gpa = json['prd_midtrm_yr2_trm1_gpa'];
-    prdMidtrmYr2Trm1Gd = json['prd_midtrm_yr2_trm1_gd'];
     presentPercentageYr1Trm1 = json['present_percentage_yr1_trm1'];
     presentPercentageYr1Tr2 = json['present_percentage_yr1_tr2'];
     presentPercentageYr2Tr1 = json['present_percentage_yr2_tr1'];
@@ -145,10 +117,6 @@ class ReportsModelNew {
 
   num? systemId;
   String? subjectName;
-  num? regionId;
-  num? cityId;
-  num? branchId;
-  num? sectionId;
   String? stdName;
   num? midtrmYr1Trm1;
   num? midtrmYr1Trm1TchrId;
@@ -190,16 +158,6 @@ class ReportsModelNew {
   String? mockexYr2Tr2TchrNm;
   String? mockexYr2Tr2Gpa;
   String? mockexYr2Tr2Gd;
-  String? prdMidtrmYr1Trm1;
-  dynamic prdMidtrmYr1Trm1TchrId;
-  String? prdMidtrmYr1Trm1TchrNm;
-  dynamic prdMidtrmYr1Trm1Gpa;
-  String? prdMidtrmYr1Trm1Gd;
-  int? prdMidtrmYr2Trm1;
-  num? prdMidtrmYr2Trm1TchrId;
-  String? prdMidtrmYr2Trm1TchrNm;
-  String? prdMidtrmYr2Trm1Gpa;
-  String? prdMidtrmYr2Trm1Gd;
   String? presentPercentageYr1Trm1;
   String? presentPercentageYr1Tr2;
   String? presentPercentageYr2Tr1;
@@ -287,10 +245,6 @@ class ReportsModelNew {
       ReportsModelNew(
         systemId: systemId ?? this.systemId,
         subjectName: subjectName ?? this.subjectName,
-        regionId: regionId ?? this.regionId,
-        cityId: cityId ?? this.cityId,
-        branchId: branchId ?? this.branchId,
-        sectionId: sectionId ?? this.sectionId,
         stdName: stdName ?? this.stdName,
         midtrmYr1Trm1: midtrmYr1Trm1 ?? this.midtrmYr1Trm1,
         midtrmYr1Trm1TchrId: midtrmYr1Trm1TchrId ?? this.midtrmYr1Trm1TchrId,
@@ -332,20 +286,6 @@ class ReportsModelNew {
         mockexYr2Tr2TchrNm: mockexYr2Tr2TchrNm ?? this.mockexYr2Tr2TchrNm,
         mockexYr2Tr2Gpa: mockexYr2Tr2Gpa ?? this.mockexYr2Tr2Gpa,
         mockexYr2Tr2Gd: mockexYr2Tr2Gd ?? this.mockexYr2Tr2Gd,
-        prdMidtrmYr1Trm1: prdMidtrmYr1Trm1 ?? this.prdMidtrmYr1Trm1,
-        prdMidtrmYr1Trm1TchrId:
-            prdMidtrmYr1Trm1TchrId ?? this.prdMidtrmYr1Trm1TchrId,
-        prdMidtrmYr1Trm1TchrNm:
-            prdMidtrmYr1Trm1TchrNm ?? this.prdMidtrmYr1Trm1TchrNm,
-        prdMidtrmYr1Trm1Gpa: prdMidtrmYr1Trm1Gpa ?? this.prdMidtrmYr1Trm1Gpa,
-        prdMidtrmYr1Trm1Gd: prdMidtrmYr1Trm1Gd ?? this.prdMidtrmYr1Trm1Gd,
-        prdMidtrmYr2Trm1: prdMidtrmYr2Trm1 ?? this.prdMidtrmYr2Trm1,
-        prdMidtrmYr2Trm1TchrId:
-            prdMidtrmYr2Trm1TchrId ?? this.prdMidtrmYr2Trm1TchrId,
-        prdMidtrmYr2Trm1TchrNm:
-            prdMidtrmYr2Trm1TchrNm ?? this.prdMidtrmYr2Trm1TchrNm,
-        prdMidtrmYr2Trm1Gpa: prdMidtrmYr2Trm1Gpa ?? this.prdMidtrmYr2Trm1Gpa,
-        prdMidtrmYr2Trm1Gd: prdMidtrmYr2Trm1Gd ?? this.prdMidtrmYr2Trm1Gd,
         presentPercentageYr1Trm1:
             presentPercentageYr1Trm1 ?? this.presentPercentageYr1Trm1,
         presentPercentageYr1Tr2:
@@ -368,10 +308,6 @@ class ReportsModelNew {
     final map = <String, dynamic>{};
     map['system_id'] = systemId;
     map['subject_name'] = subjectName;
-    map['region_id'] = regionId;
-    map['city_id'] = cityId;
-    map['branch_id'] = branchId;
-    map['section_id'] = sectionId;
     map['std_name'] = stdName;
     map['midtrm_yr1_trm1'] = midtrmYr1Trm1;
     map['midtrm_yr1_trm1_tchr_id'] = midtrmYr1Trm1TchrId;
@@ -413,16 +349,6 @@ class ReportsModelNew {
     map['mockex_yr2_tr2_tchr_nm'] = mockexYr2Tr2TchrNm;
     map['mockex_yr2_tr2_gpa'] = mockexYr2Tr2Gpa;
     map['mockex_yr2_tr2_gd'] = mockexYr2Tr2Gd;
-    map['prd_midtrm_yr1_trm1'] = prdMidtrmYr1Trm1;
-    map['prd_midtrm_yr1_trm1_tchr_id'] = prdMidtrmYr1Trm1TchrId;
-    map['prd_midtrm_yr1_trm1_tchr_nm'] = prdMidtrmYr1Trm1TchrNm;
-    map['prd_midtrm_yr1_trm1_gpa'] = prdMidtrmYr1Trm1Gpa;
-    map['prd_midtrm_yr1_trm1_gd'] = prdMidtrmYr1Trm1Gd;
-    map['prd_midtrm_yr2_trm1'] = prdMidtrmYr2Trm1;
-    map['prd_midtrm_yr2_trm1_tchr_id'] = prdMidtrmYr2Trm1TchrId;
-    map['prd_midtrm_yr2_trm1_tchr_nm'] = prdMidtrmYr2Trm1TchrNm;
-    map['prd_midtrm_yr2_trm1_gpa'] = prdMidtrmYr2Trm1Gpa;
-    map['prd_midtrm_yr2_trm1_gd'] = prdMidtrmYr2Trm1Gd;
     map['present_percentage_yr1_trm1'] = presentPercentageYr1Trm1;
     map['present_percentage_yr1_tr2'] = presentPercentageYr1Tr2;
     map['present_percentage_yr2_tr1'] = presentPercentageYr2Tr1;
