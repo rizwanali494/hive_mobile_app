@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/mixin/event_bus_mixin.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
@@ -84,6 +85,10 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
     selectionStatus.value = model.getSelection;
     // activityScreenVM?.setModel(model);
     publishEvent(data: model);
+    publishEvent<AnnouncementPostModel>(
+        data: AnnouncementPostModel().copyWith(
+      event: model.toAnnouncement,
+    ));
     notifyListeners();
     onUpDate?.call(model);
     log("Here");
@@ -99,6 +104,10 @@ abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {
       selectionStatus.value = model.getSelection;
       publishEvent<ActivityModel>(data: model);
       onUpDate?.call(model);
+      publishEvent<AnnouncementPostModel>(
+          data: AnnouncementPostModel().copyWith(
+        event: model.toAnnouncement,
+      ));
       notifyListeners();
     }
   }

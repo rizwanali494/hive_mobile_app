@@ -40,8 +40,7 @@ class NewsFeedVM extends BaseApiVM<AnnouncementPostModel> {
   }
 
   @override
-  List<String>? get apiEventTypes =>
-      ["ANNOUNCEMENT_POST", "ANNOUNCEMENT_POLL", "ACTIVITY"];
+  List<String>? get apiEventTypes => ["ANNOUNCEMENT_POST", "ANNOUNCEMENT_POLL"];
 
   late final Map<String, Map<String, Function(int id, {dynamic data})>>
       announcementSubActions = {

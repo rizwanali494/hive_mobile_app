@@ -233,6 +233,7 @@ abstract class BaseApiVM<T> extends ChangeNotifier
       return apiEventTypes?.contains(eventType) ?? false;
     }).listen(
       (event) {
+        log("GOt hit ${T.runtimeType}");
         handleApiEvent(event);
       },
     );
