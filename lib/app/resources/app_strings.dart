@@ -155,4 +155,5 @@ class AppStrings {
   static String closed = "Closed";
   static String open = "Open";
   static String comingSoon = "Coming Soon";
+  static String status = "Status";
 }

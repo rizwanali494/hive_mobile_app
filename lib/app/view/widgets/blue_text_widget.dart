@@ -20,7 +20,7 @@ class BlueTextWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 6.h,
-        horizontal: 7.w,
+        horizontal: 10.w,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),

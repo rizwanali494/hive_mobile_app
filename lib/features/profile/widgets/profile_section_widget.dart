@@ -74,7 +74,10 @@ class ProfileSectionWidget extends StatelessWidget {
             ],
           ),
         ),
-        16.verticalSpace,
+        14.verticalSpace,
+        Divider(
+          color: styles.black.withOpacity(0.2),
+        ),
       ],
     );
   }

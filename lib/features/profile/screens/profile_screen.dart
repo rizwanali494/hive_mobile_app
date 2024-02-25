@@ -122,29 +122,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                controller.userName,
-                                style: styles.inter20w600
-                                    .copyWith(color: styles.white),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 9.w),
+                                child: Text(
+                                  controller.userName,
+                                  style: styles.inter20w600
+                                      .copyWith(color: styles.white),
+                                ),
                               ),
-                              8.verticalSpace,
+                              4.verticalSpace,
                               if (controller.userBio.isNotEmpty)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: styles.white.withOpacity(0.5),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                                  children: [
+                                   Padding(
+                                     padding: EdgeInsets.symmetric(
+                                       horizontal: 9.w,
+                                     ),
+                                     child: Text(
+                                        AppStrings.status,
+                                        style: styles.inter10w600
+                                            .copyWith(color: styles.white),
+                                      ),
+                                   ),
+                                    Container(
+                                      constraints: BoxConstraints(
+                                        minWidth: 237.w,
+                                        minHeight: 59.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: styles.white.withOpacity(0.5),
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          15.r,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 9.w,
+                                        vertical: 5.h,
+                                      ),
+                                      child: Text(
+                                        controller.userBio,
+                                        style: styles.inter12w400
+                                            .copyWith(color: styles.white),
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(
-                                      15.r,
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 9.w, vertical: 10.h),
-                                  child: Text(
-                                    controller.userBio,
-                                    style: styles.inter12w400
-                                        .copyWith(color: styles.white),
-                                  ),
+                                  ],
                                 ),
                             ],
                           ),
@@ -230,6 +255,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: styles.black.withOpacity(0.2),
                                   ),
                                   15.verticalSpace,
+                                  ProfileSectionWidget(
+                                    wrapChildren: controller
+                                            .userModel.accountData?.hobbies
+                                            ?.map((e) => e.name ?? "")
+                                            .toList() ??
+                                        [],
+                                    uiState: UiState.hasAll(),
+                                    heading: AppStrings.hobbies,
+                                  ),
+                                  15.verticalSpace,
                                   Consumer<ReportDataController>(
                                     builder: (context, provider, child) {
                                       return ProfileSectionWidget(
@@ -242,16 +277,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   ),
                                   17.verticalSpace,
-                                  ProfileSectionWidget(
-                                    wrapChildren: controller
-                                            .userModel.accountData?.hobbies
-                                            ?.map((e) => e.name ?? "")
-                                            .toList() ??
-                                        [],
-                                    uiState: UiState.hasAll(),
-                                    heading: AppStrings.hobbies,
-                                  ),
-                                  15.verticalSpace,
                                   Consumer<ProfileSectionWrapperProvider>(
                                     builder: (context, provider, child) {
                                       if (provider.isLoading) {
@@ -263,17 +288,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             MainAxisAlignment.start,
                                         children: [
                                           ProfileSectionWidget(
-                                            wrapChildren: awardVM.items,
-                                            heading: AppStrings
-                                                .achievementsAndAwards,
-                                            uiState: awardVM.uiState,
-                                          ),
-                                          17.verticalSpace,
-                                          ProfileSectionWidget(
                                             wrapChildren: applicationVM.items,
                                             heading:
                                                 AppStrings.acceptedUniversities,
                                             uiState: applicationVM.uiState,
+                                          ),
+                                          17.verticalSpace,
+                                          ProfileSectionWidget(
+                                            wrapChildren: awardVM.items,
+                                            heading: AppStrings
+                                                .achievementsAndAwards,
+                                            uiState: awardVM.uiState,
                                           ),
                                         ],
                                       );
@@ -290,6 +315,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+            10.verticalSpace,
           ],
         );
       },
