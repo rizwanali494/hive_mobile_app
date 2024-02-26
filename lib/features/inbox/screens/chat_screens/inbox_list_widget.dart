@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
+import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_list_vm.dart';
 import 'package:hive_mobile/features/inbox/view_models/inboxtile_widget_vm.dart';
 import 'package:hive_mobile/features/inbox/widgets/inboxListTile.dart';
 import 'package:hive_mobile/features/inbox/widgets/inbox_shimmer_widget.dart';
-import 'package:hive_mobile/features/inbox/screens/chat_screens/chat_screen.dart';
 
 class InboxListWidget extends StatelessWidget {
   final InboxListVM provider;

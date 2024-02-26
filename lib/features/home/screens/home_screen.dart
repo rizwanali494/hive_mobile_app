@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -15,9 +16,9 @@ import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.d
 import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_vm.dart';
 import 'package:hive_mobile/features/home/view_models/drawer_widget_vm.dart';
-import 'package:hive_mobile/features/home/widgets/drawer_widget.dart';
 import 'package:hive_mobile/features/home/view_models/home_screen_vm.dart';
 import 'package:hive_mobile/features/home/widgets/bottom_nav_bar_widget.dart';
+import 'package:hive_mobile/features/home/widgets/drawer_widget.dart';
 import 'package:hive_mobile/features/inbox/view_models/inbox_screen_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/all_service_request_vm.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_screen_vm.dart';
@@ -26,16 +27,13 @@ import 'package:hive_mobile/features/notification/view_models/notification_scree
 import 'package:hive_mobile/features/profile/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/profile_screen_vm.dart';
 import 'package:hive_mobile/features/profile/view_models/user_awards_vm.dart';
-import 'package:hive_mobile/features/reports/view_models/report_year1_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/reports_data_controller.dart';
-import 'package:hive_mobile/features/reports/view_models/reports_screen_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/accepted_application_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/previous_application_vm.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badges;
 
 class HomeScreen extends StatefulWidget {
   static const route = '/HomeScreen';

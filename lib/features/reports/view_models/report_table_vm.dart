@@ -1,6 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/summary_model.dart';
-import 'package:collection/collection.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_model.dart';
 
 class ReportTableVM {

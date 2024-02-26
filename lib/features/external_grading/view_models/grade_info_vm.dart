@@ -9,8 +9,8 @@ import 'package:hive_mobile/app/services/download_service/download_service.dart'
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/app/view_models/base_document_controller.dart';
 import 'package:hive_mobile/app/view_models/document_widget_controller.dart';
-import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/external_grade_repository.dart';
+import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 
 class GradeDetailVM extends ChangeNotifier
     with DocumentController, BaseExceptionController {

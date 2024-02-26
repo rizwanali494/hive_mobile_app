@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
-import 'package:hive_mobile/app/view/widgets/blue_text_widget.dart';
-
 import 'package:hive_mobile/app/resources/app_theme.dart';
+import 'package:hive_mobile/app/view/widgets/blue_text_widget.dart';
 
 class ProfileSectionWidget extends StatelessWidget {
   final Widget? icon;

@@ -1,15 +1,13 @@
 import 'dart:developer';
 
-import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
-
-import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
-import 'package:isar/isar.dart';
-
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_data_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_extra_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/account_picture_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/attachments_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/owner_model.dart';
+import 'package:hive_mobile/app/models/data/announcement_post_models/polls_model.dart';
+import 'package:isar/isar.dart';
 
 part 'announcement_post_model.g.dart';
 

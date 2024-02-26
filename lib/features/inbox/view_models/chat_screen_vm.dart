@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
 import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/base_exception_controller.dart';
+import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/extensions/list_extension.dart';
+import 'package:hive_mobile/app/extensions/string_extension.dart';
 import 'package:hive_mobile/app/models/data/message_model.dart';
 import 'package:hive_mobile/app/models/rev_pagination_controller.dart';
 import 'package:hive_mobile/app/models/ui_state_model.dart';
@@ -13,8 +16,6 @@ import 'package:hive_mobile/features/calender/utils/extensions.dart';
 import 'package:hive_mobile/features/inbox/repositories/message_repository.dart';
 import 'package:hive_mobile/features/inbox/view_models/date_message_class.dart';
 import 'package:isar/isar.dart';
-import 'package:hive_mobile/app/extensions/string_extension.dart';
-import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 
 
 class ChatScreenVM extends ChangeNotifier with BaseExceptionController {

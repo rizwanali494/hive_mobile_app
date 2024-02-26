@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
-import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/reports/screens/report_subjects_table.dart';
 import 'package:hive_mobile/features/reports/view_models/report_table_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_vm.dart';

@@ -4,8 +4,8 @@ import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
 import 'package:hive_mobile/features/my_services/view_models/service_request_vm.dart';
-import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:hive_mobile/features/university_application/screens/divider_app_bar.dart';
+import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
 
 class NewRequestScreen extends StatefulWidget {

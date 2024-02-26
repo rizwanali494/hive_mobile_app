@@ -8,9 +8,9 @@ import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
 import 'package:hive_mobile/app/view/widgets/error_text_widget.dart';
 import 'package:hive_mobile/features/reports/widgets/tab_bar_widget.dart';
 import 'package:hive_mobile/features/session_notes/screens/session_note_widget.dart';
+import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/pending_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_vm.dart';
-import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
 import 'package:hive_mobile/features/session_notes/view_models/session_note_widget_vm.dart';
 import 'package:provider/provider.dart';
 

@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/dialogs/blue_elevated_button.dart';
-import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:hive_mobile/features/external_grading/view_models/subject_edit_vm.dart';
+import 'package:hive_mobile/features/external_grading/view_models/subject_vm.dart';
 import 'package:hive_mobile/features/university_application/widgets/title_text_field.dart';
 import 'package:provider/provider.dart';
 

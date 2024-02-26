@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -21,8 +21,6 @@ import 'package:hive_mobile/features/activities/view_models/activity_detail_obje
 import 'package:hive_mobile/features/activities/widgets/activity_widget.dart';
 import 'package:hive_mobile/features/news_feed/view_models/news_feed_widget_vm.dart';
 import 'package:hive_mobile/features/news_feed/view_models/poll_widget_vm.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:provider/provider.dart';
 
 class NewsFeedWidget extends StatefulWidget {

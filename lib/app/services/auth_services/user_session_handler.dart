@@ -17,8 +17,8 @@ import 'package:hive_mobile/app/services/web_socket_services/web_socket_service.
 import 'package:hive_mobile/features/authentication/screens/sign_in_screen.dart';
 import 'package:hive_mobile/features/email_verification/screens/email_verification_screen.dart';
 import 'package:hive_mobile/features/home/screens/home_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 mixin UserSessionHandler {
   final _sharedPref = GetIt.instance.get<SharedPreferences>();

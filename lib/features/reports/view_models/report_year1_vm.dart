@@ -1,7 +1,6 @@
-import 'package:hive_mobile/app/models/data/reports_model_new.dart';
+import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/report_id_model.dart';
 import 'package:hive_mobile/features/reports/view_models/report_widget_vm.dart';
-import 'package:hive_mobile/features/reports/view_models/assessment_info_vm.dart';
 import 'package:hive_mobile/features/reports/view_models/term_details_model.dart';
 
 class ReportYear1VM extends ReportWidgetVM {

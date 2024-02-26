@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/activity_model.dart';
 import 'package:hive_mobile/app/models/data/announcement_post_models/announcement_post_model.dart';
-import 'package:hive_mobile/app/models/data/announcement_post_models/event_announcement.dart';
 import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/view_models/base_api_vm.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';

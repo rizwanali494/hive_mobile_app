@@ -7,13 +7,12 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
 import 'package:hive_mobile/app/models/data/university_application/university_application_model.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
+import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/description_screen.dart';
 import 'package:hive_mobile/features/university_application/screens/university_app_request_screen.dart';
 import 'package:hive_mobile/features/university_application/view_models/uni_app_status_controller.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_request_object_vm.dart';
 import 'package:hive_mobile/features/university_application/view_models/university_app_widget_vm.dart';
-import 'package:hive_mobile/app/resources/app_theme.dart';
-
 import 'package:hive_mobile/features/university_application/widgets/application_status_widget.dart';
 
 class UniversityApplicationWidget extends StatelessWidget {

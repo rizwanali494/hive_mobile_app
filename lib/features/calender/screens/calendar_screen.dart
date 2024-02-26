@@ -4,10 +4,9 @@ import 'package:hive_mobile/app/extensions/date_time_extension.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/resources/app_theme.dart';
 import 'package:hive_mobile/app/view/widgets/app_bar_widget.dart';
+import 'package:hive_mobile/features/calender/screens/day_builder_new.dart';
 import 'package:hive_mobile/features/calender/view_models/calendar_vm.dart';
 import 'package:provider/provider.dart';
-
-import 'package:hive_mobile/features/calender/screens/day_builder_new.dart';
 
 class CalendarScreen extends StatefulWidget {
   static const route = "/Calendar";

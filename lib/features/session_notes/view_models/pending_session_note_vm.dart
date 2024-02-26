@@ -5,7 +5,6 @@ import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
 import 'package:hive_mobile/app/extensions/api_query_params_extension.dart';
 import 'package:hive_mobile/app/models/data/session_note_model.dart';
 import 'package:hive_mobile/features/session_notes/view_models/ack_session_note_vm.dart';
-
 import 'package:hive_mobile/features/session_notes/view_models/base_session_note_controller.dart';
 
 class PendingSessionNoteVM extends BaseSessionNoteVM {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/exceptions/http_status_code_exception.dart';
@@ -9,7 +10,6 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/local_services/isar_service.dart';
 import 'package:hive_mobile/app/services/web_socket_services/api_event_handler.dart';
 import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
-
 import 'package:hive_mobile/features/university_application/repositories/university_application_repo.dart';
 import 'package:hive_mobile/features/university_application/view_models/uni_app_sliver_vm.dart';
 

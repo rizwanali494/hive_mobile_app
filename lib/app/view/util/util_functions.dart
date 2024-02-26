@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:image_pickers/image_pickers.dart';
-import 'package:uuid/uuid.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_mobile/app/resources/app_strings.dart';
 import 'package:hive_mobile/app/view/dialogs/image_type_dialog.dart';
+import 'package:image_pickers/image_pickers.dart';
+import 'package:uuid/uuid.dart';
 
 class UtilFunctions {
   showLoaderDialog(BuildContext context, {String text = 'Loading'}) {

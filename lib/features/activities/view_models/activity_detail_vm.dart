@@ -12,7 +12,6 @@ import 'package:hive_mobile/app/services/api_services/api_services.dart';
 import 'package:hive_mobile/app/services/web_socket_services/event_bus_service.dart';
 import 'package:hive_mobile/app/view/util/util_functions.dart';
 import 'package:hive_mobile/features/activities/repositories/activity_repo.dart';
-
 import 'package:hive_mobile/features/activities/view_models/activity_screen_vm.dart';
 
 abstract class ActivityDetailVM extends ChangeNotifier with EventBusMixin {

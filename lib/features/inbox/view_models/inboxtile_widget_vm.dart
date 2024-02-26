@@ -1,5 +1,5 @@
-import 'package:hive_mobile/app/models/data/inbox_model.dart';
 import 'package:hive_mobile/app/extensions/string_extension.dart';
+import 'package:hive_mobile/app/models/data/inbox_model.dart';
 
 class InboxTileWidgetVM {
   final InboxModel model;
