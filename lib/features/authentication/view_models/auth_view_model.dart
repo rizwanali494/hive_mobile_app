@@ -81,10 +81,7 @@ class AuthVM extends ChangeNotifier
         var refreshToken = responseBody["token"]["refresh"];
         log(token.toString());
         createUserSession(
-            token: token,
-            userModel: model,
-            refreshToken: refreshToken,
-            context: context);
+            token: token, userModel: model, refreshToken: refreshToken, context: context);
         return;
       } catch (error) {
         log(error.toString());
