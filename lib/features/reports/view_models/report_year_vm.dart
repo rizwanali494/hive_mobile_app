@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_mobile/app/models/data/report_model.dart';
@@ -91,36 +90,6 @@ class ReportYearVM extends ChangeNotifier {
         .toList();
   }
 
-  LineChartBarData get lineBarsDataTerm1 {
-    final list = setData(year1Reports);
-    return list;
-  }
-
-  LineChartBarData get lineBarsDataTerm2 {
-    final list = setData(year2Reports);
-    return list;
-  }
-
-  LineChartBarData setData(List<ReportModel?> list) {
-    List<FlSpot> spots = [];
-    for (int index = 0; index < list.length; index++) {
-      final value = list[index];
-      final spot = FlSpot(index.toDouble(), value?.gpa ?? 0.0);
-      spots.add(spot);
-    }
-    final lineBarsDataTerm = LineChartBarData(
-      isCurved: true,
-      barWidth: 8,
-      isStrokeCapRound: true,
-      dotData: FlDotData(show: false),
-      belowBarData: BarAreaData(show: false),
-      spots: spots,
-    );
-    lineBarsDataTerm.spots.forEach((element) {
-      log("line char ${element.x} ${element.y}");
-    });
-    return lineBarsDataTerm;
-  }
 
   String get examType1 {
     return "Mid Term Assessment";

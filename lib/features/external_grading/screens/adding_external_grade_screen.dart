@@ -34,6 +34,7 @@ class AddExternalGradeScreen extends StatelessWidget {
           ),
           child: Consumer<GradeAddingVM>(
             builder: (context, provider, child) {
+              print(provider.certificates);
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -94,13 +95,9 @@ class AddExternalGradeScreen extends StatelessWidget {
                                 right: 10.w,
                               ),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                  25,
-                                ),
+                                borderRadius: BorderRadius.circular(25),
                                 border: Border.all(
-                                  color: styles.black.withOpacity(
-                                    0.2,
-                                  ),
+                                  color: styles.black.withOpacity(0.2),
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
@@ -387,7 +384,7 @@ class AddExternalGradeScreen extends StatelessWidget {
                                     ),
                                   )
                                 else ...[
-                                    if (provider.documents.length < 9)
+                                  if (provider.documents.length < 9)
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -399,18 +396,18 @@ class AddExternalGradeScreen extends StatelessWidget {
                                             style: styles.inter14w600.copyWith(
                                                 color: styles.darkSlateGrey),
                                           ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            provider.selectDocuments(context);
+                                          },
+                                          child: Icon(
+                                            Icons.add,
+                                            color: styles.skyBlue,
                                           ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              provider.selectDocuments(context);
-                                            },
-                                            child: Icon(
-                                              Icons.add,
-                                              color: styles.skyBlue,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
+                                    ),
                                   24.verticalSpace,
                                   for (final doc in provider.documents)
                                     DocumentUploadWidget(

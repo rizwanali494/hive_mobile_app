@@ -19,14 +19,14 @@ class DownloadService {
     _port.listen((dynamic data) {
       log("here 222");
       String id = data[0];
-      DownloadTaskStatus status = DownloadTaskStatus(data[1]);
-      int progress = data[2];
-      log("message :: file download completed ${progress}");
-      if (status.value == DownloadTaskStatus.complete) {
-        UtilFunctions.showToast(msg: "File Downloaded");
-        log("message :: file download completed");
-        // IsolateNameServer.removePortNameMapping('downloader_send_port');
-      }
+      // DownloadTaskStatus status = DownloadTaskStatus(data[1]);
+      // int progress = data[2];
+      // log("message :: file download completed ${progress}");
+      // if (status.value == DownloadTaskStatus.complete) {
+      //   UtilFunctions.showToast(msg: "File Downloaded");
+      //   log("message :: file download completed");
+      //   // IsolateNameServer.removePortNameMapping('downloader_send_port');
+      // }
     });
   }
 

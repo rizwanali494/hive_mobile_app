@@ -36,20 +36,20 @@ class DrawerWidget extends StatelessWidget {
               left: 19.h,
               right: 36.h,
             ),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  styles.linearBlueGradientTopLeft,
-                  styles.linearBlueGradientBottomRight,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: bottomRadius,
-                bottomRight: bottomRadius,
-              ),
-            ),
+            decoration: BoxDecoration(color: Colors.white
+                // gradient: LinearGradient(
+                //   colors: [
+                //     styles.linearBlueGradientTopLeft,
+                //     styles.linearBlueGradientBottomRight,
+                //   ],
+                //   begin: Alignment.topLeft,
+                //   end: Alignment.bottomRight,
+                // ),
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: bottomRadius,
+                //   bottomRight: bottomRadius,
+                // ),
+                ),
             child: GestureDetector(
               onTap: () {
                 homeScreenVM.setBottomNavWidget(4, context);
@@ -101,84 +101,94 @@ class DrawerWidget extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: styles.inter16w600.copyWith(
-                            color: styles.white,
+                            color: styles.black,
                           ),
                         ),
                         Text(
                           AppStrings.clickToView,
                           style: styles.inter12w400Underline
-                              .copyWith(color: styles.white),
+                              .copyWith(color: styles.black),
                         ),
                       ],
                     ),
                   ),
                   Align(
                     alignment: Alignment.topRight,
-                    child: SvgPicture.asset(SvgIcons.arrowRight),
+                    child: SvgPicture.asset(
+                      SvgIcons.arrowRight,
+                      color: styles.deepSkyBlue,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          41.verticalSpace,
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 36.h,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ...List.generate(
-                      homeScreenVM.drawerIcons.length,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          homeScreenVM.setDrawerWidget(index);
-                        },
-                        child: DrawerActionWidget(
-                          icon: homeScreenVM.drawerIcons[index],
-                          actionName: homeScreenVM.drawerActionNames[index],
+            child: ColoredBox(
+              color: Colors.grey.withOpacity(0.2),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 36.h,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      41.verticalSpace,
+                      ...List.generate(
+                        homeScreenVM.drawerIcons.length,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            homeScreenVM.setDrawerWidget(index);
+                          },
+                          child: DrawerActionWidget(
+                            icon: homeScreenVM.drawerIcons[index],
+                            actionName: homeScreenVM.drawerActionNames[index],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 30.w,
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Divider(
-                    color: styles.black.withOpacity(0.2),
-                  ),
-                  10.verticalSpace,
-                  GestureDetector(
-                    onTap: () {
-                      homeScreenVM.logout();
-                    },
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(SvgIcons.logout),
-                        20.horizontalSpace,
-                        Text(
-                          AppStrings.logout,
-                          style: styles.inter15w400,
-                        ),
-                      ],
+          ColoredBox(
+            color: styles.deepSkyBlue,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 30.w,
+              ),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    20.verticalSpace,
+                    GestureDetector(
+                      onTap: () {
+                        homeScreenVM.logout();
+                      },
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            SvgIcons.logout,
+                            color: styles.white,
+                          ),
+                          20.horizontalSpace,
+                          Text(
+                            AppStrings.logout,
+                            style: styles.inter15w400
+                                .copyWith(color: styles.white),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  50.verticalSpace
-                ],
+                    50.verticalSpace
+                  ],
+                ),
               ),
             ),
           ),

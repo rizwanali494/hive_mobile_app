@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_mobile/app/constants/svg_icons.dart';
@@ -33,25 +32,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // SvgPicture.asset(SvgIcons.hiveLogo,width: 193.w,height: 98.h,),
-                  Expanded(
-                    child: Image.asset(
-                      SvgIcons.hiveLogo,
-                      width: 193.w,
-                      height: 98.h,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
+
                   Expanded(
                     flex: 2,
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: containerRadius,
-                          topRight: containerRadius,
-                        ),
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -73,23 +59,34 @@ class _SignInScreenState extends State<SignInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Container(
+                            width: 253.w,
+                            height: 298.h,
+
+                            color: Colors.white,
+                            child: Image.asset(
+                              SvgIcons.hiveLogo,
+
+                            ),
+                          ),
+                          SizedBox(height: 15.h),
+                          SizedBox(height: 15.h),
                           Text(
                             AppStrings.welcome,
-                            style: styles.inter50w700.copyWith(color: styles.white),
+                            style: styles.inter50w700
+                                .copyWith(color: styles.white),
                           ),
-                          SizedBox(
-                            height: 17.h,
-                          ),
+                          SizedBox(height: 17.h),
                           Text(
                             AppStrings.signInWithBeaconiteId,
-                            style: styles.inter12w400.copyWith(color: styles.white),
+                            style: styles.inter12w400
+                                .copyWith(color: styles.white),
                           ),
-                          SizedBox(
-                            height: 60.h,
-                          ),
+                          SizedBox(height: 60.h),
                           AuthButtonWidget(
                             onTap: () async {
-                              await provider.signIN(GoogleAuthService(), context);
+                              await provider.signIN(
+                                  GoogleAuthService(), context);
                             },
                             svgIcon: SvgIcons.googleIcon,
                             text: AppStrings.continueWithGoogle,

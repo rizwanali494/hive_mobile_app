@@ -265,7 +265,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
       fontWeight: FontWeight.w400,
       color: Colors.black,
       decoration: TextDecoration.underline,
-      decorationColor: Colors.white,
+      decorationColor: Colors.black,
     ),
     inter14w400: TextStyle(
       fontFamily: 'Inter',
