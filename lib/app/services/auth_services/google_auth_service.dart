@@ -19,10 +19,10 @@ class GoogleAuthService extends AuthService {
         if (error.code == "network_error") {
           UtilFunctions.showToast(msg: "No Internet Connection");
         } else {
-          UtilFunctions.showToast(msg: "Something went wrong");
+          UtilFunctions.showToast(msg: error.toString());
         }
       } else {
-        UtilFunctions.showToast(msg: "Something went wrong");
+        UtilFunctions.showToast(msg: error.toString());
       }
     }
 

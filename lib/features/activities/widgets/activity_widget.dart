@@ -126,10 +126,14 @@ class ActivityWidget extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    activityProvider.setActivitySelection(
-                      model: controller.model,
-                      state: AppStrings.attending,
-                    );
+                    controller.isSelected(
+                      ActivitySelectionStatus.Attending,
+                    )
+                        ? null
+                        : activityProvider.setActivitySelection(
+                            model: controller.model,
+                            state: AppStrings.attending,
+                          );
                   },
                   child: ActivityStatusWidget(
                     iconPath: SvgIcons.tickSquare,
@@ -142,27 +146,33 @@ class ActivityWidget extends StatelessWidget {
                 6.17.horizontalSpace,
                 GestureDetector(
                   onTap: () {
-                    activityProvider.setActivitySelection(
-                        model: controller.model, state: AppStrings.SKEPTICAL);
+                    controller.isSelected(ActivitySelectionStatus.Maybe)
+                        ? null
+                        : activityProvider.setActivitySelection(
+                            model: controller.model,
+                            state: AppStrings.SKEPTICAL);
                   },
                   child: ActivityStatusWidget(
                     iconPath: SvgIcons.maybe,
                     title: AppStrings.maybe,
                     isSelected:
-                    controller.isSelected(ActivitySelectionStatus.Maybe),
+                        controller.isSelected(ActivitySelectionStatus.Maybe),
                   ),
                 ),
                 6.17.horizontalSpace,
                 GestureDetector(
                   onTap: () {
-                    activityProvider.setActivitySelection(
-                        model: controller.model, state: AppStrings.NON_ATTENDING);
+                    controller.isSelected(ActivitySelectionStatus.Undecided)
+                        ? null
+                        : activityProvider.setActivitySelection(
+                            model: controller.model,
+                            state: AppStrings.NON_ATTENDING);
                   },
                   child: ActivityStatusWidget(
                     iconPath: SvgIcons.undecided,
                     title: AppStrings.not_attending,
-                    isSelected:
-                    controller.isSelected(ActivitySelectionStatus.Undecided),
+                    isSelected: controller
+                        .isSelected(ActivitySelectionStatus.Undecided),
                   ),
                 ),
               ],

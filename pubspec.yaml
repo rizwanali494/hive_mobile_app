@@ -2,7 +2,7 @@ name: hive_mobile
 description: A new Flutter project.
 
 
-version: 1.0.1+1
+version: 1.0.1+5
 
 environment:
   sdk: '>=2.19.6 <3.7.12'

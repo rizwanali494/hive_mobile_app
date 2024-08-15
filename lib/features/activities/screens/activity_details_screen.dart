@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -120,7 +121,7 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
@@ -152,14 +153,14 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                           children: [
                                             10.horizontalSpace,
                                             Text(
                                               widget.controller.dateOnly,
                                               style: styles.inter12w400
                                                   .copyWith(
-                                                  color: styles.white),
+                                                      color: styles.white),
                                             ),
                                             Text(
                                               widget.controller.monthOnly,
@@ -200,12 +201,12 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                     ),
                                     ActivityDetailWidget(
                                       title:
-                                      "${AppStrings.eventBy}: ${widget.controller.eventBy}",
+                                          "${AppStrings.eventBy}: ${widget.controller.eventBy}",
                                       iconPath: SvgIcons.userBlue,
                                     ),
                                     ActivityDetailWidget(
                                       title:
-                                      "${widget.controller.peopleGoing} ${AppStrings.peopleGoing}",
+                                          "${widget.controller.peopleGoing} ${AppStrings.peopleGoing}",
                                       iconPath: SvgIcons.archiveTick,
                                     ),
                                     12.verticalSpace,
@@ -228,10 +229,15 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        widget.controller.setActivitySelection(
-                                            state: AppStrings.attending,
-                                            activityScreenVM:
-                                                widget.activityProvider);
+                                        widget.controller.isSelected(
+                                                ActivitySelectionStatus
+                                                    .Attending)
+                                            ? null
+                                            : widget.controller
+                                                .setActivitySelection(
+                                                    state: AppStrings.attending,
+                                                    activityScreenVM: widget
+                                                        .activityProvider);
                                         // widget.activityProvider?.setActivitySelection(
                                         //     model: widget.controller.model,
                                         //     state: AppStrings.attending);
@@ -239,7 +245,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                       child: ActivityStatusWidget(
                                         iconPath: SvgIcons.tickSquare,
                                         title: AppStrings.attending,
-                                        isSelected: widget.controller.isSelected(
+                                        isSelected:
+                                            widget.controller.isSelected(
                                           ActivitySelectionStatus.Attending,
                                         ),
                                       ),
@@ -247,10 +254,15 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                     12.17.horizontalSpace,
                                     GestureDetector(
                                       onTap: () async {
-                                        widget.controller.setActivitySelection(
-                                            state: AppStrings.SKEPTICAL,
-                                            activityScreenVM:
-                                            widget.activityProvider);
+                                        widget.controller.isSelected(
+                                          ActivitySelectionStatus.Maybe,
+                                        )
+                                            ? null
+                                            : widget.controller
+                                                .setActivitySelection(
+                                                    state: AppStrings.SKEPTICAL,
+                                                    activityScreenVM: widget
+                                                        .activityProvider);
                                         //
                                         // widget.activityProvider?.setActivitySelection(
                                         //     model: widget.controller.model,
@@ -259,7 +271,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                       child: ActivityStatusWidget(
                                         iconPath: SvgIcons.maybe,
                                         title: AppStrings.maybe,
-                                        isSelected: widget.controller.isSelected(
+                                        isSelected:
+                                            widget.controller.isSelected(
                                           ActivitySelectionStatus.Maybe,
                                         ),
                                       ),
@@ -267,10 +280,16 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                     12.17.horizontalSpace,
                                     GestureDetector(
                                       onTap: () {
-                                        widget.controller.setActivitySelection(
-                                            state: AppStrings.NON_ATTENDING,
-                                            activityScreenVM:
-                                            widget.activityProvider);
+                                        widget.controller.isSelected(
+                                          ActivitySelectionStatus.Undecided,
+                                        )
+                                            ? null
+                                            : widget.controller
+                                                .setActivitySelection(
+                                                    state: AppStrings
+                                                        .NON_ATTENDING,
+                                                    activityScreenVM: widget
+                                                        .activityProvider);
 
                                         // widget.activityProvider?.setActivitySelection(
                                         //     model: widget.controller.model,
@@ -279,7 +298,8 @@ class _ActivityDetailScreenState extends State<ActivityDetailScreen> {
                                       child: ActivityStatusWidget(
                                         iconPath: SvgIcons.undecided,
                                         title: AppStrings.not_attending,
-                                        isSelected: widget.controller.isSelected(
+                                        isSelected:
+                                            widget.controller.isSelected(
                                           ActivitySelectionStatus.Undecided,
                                         ),
                                       ),

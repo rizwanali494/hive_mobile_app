@@ -42,6 +42,12 @@ android {
             storeFile file('upload-keystore.jks')
             storePassword '1q2w3e4r'
         }
+        release {
+            keyAlias 'key0'
+            keyPassword '1q2w3e4r'
+            storeFile file('upload-keystore.jks')
+            storePassword '1q2w3e4r'
+        }
     }
 
     defaultConfig {
@@ -61,7 +67,7 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
