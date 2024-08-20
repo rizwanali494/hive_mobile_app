@@ -13,103 +13,108 @@ const StudentExtraSchema = Schema(
   name: r'StudentExtra',
   id: -7953491776432167342,
   properties: {
-    r'admissionDate': PropertySchema(
+    r'academicYearTitle': PropertySchema(
       id: 0,
+      name: r'academicYearTitle',
+      type: IsarType.string,
+    ),
+    r'admissionDate': PropertySchema(
+      id: 1,
       name: r'admissionDate',
       type: IsarType.string,
     ),
     r'bloodGroup': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'bloodGroup',
       type: IsarType.string,
     ),
     r'branchId': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'branchId',
       type: IsarType.long,
     ),
     r'branchName': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'branchName',
       type: IsarType.string,
     ),
     r'classId': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'classId',
       type: IsarType.long,
     ),
     r'className': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'className',
       type: IsarType.string,
     ),
     r'classOrder': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'classOrder',
       type: IsarType.long,
     ),
     r'dateOfBirth': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'dateOfBirth',
       type: IsarType.string,
     ),
     r'gender': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'gender',
       type: IsarType.string,
     ),
     r'lastPresentDate': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'lastPresentDate',
       type: IsarType.string,
     ),
     r'leftDate': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'leftDate',
       type: IsarType.string,
     ),
     r'linkNumber': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'linkNumber',
       type: IsarType.long,
     ),
     r'sectionId': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'sectionId',
       type: IsarType.long,
     ),
     r'sectionName': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'sectionName',
       type: IsarType.string,
     ),
     r'smsNumber': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'smsNumber',
       type: IsarType.string,
     ),
     r'studentAddress': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'studentAddress',
       type: IsarType.string,
     ),
     r'studentEmail': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'studentEmail',
       type: IsarType.string,
     ),
     r'studentId': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'studentId',
       type: IsarType.long,
     ),
     r'studentMobile': PropertySchema(
-      id: 18,
+      id: 19,
       name: r'studentMobile',
       type: IsarType.string,
     ),
     r'studentName': PropertySchema(
-      id: 19,
+      id: 20,
       name: r'studentName',
       type: IsarType.string,
     )
@@ -126,6 +131,12 @@ int _studentExtraEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.academicYearTitle;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   {
     final value = object.admissionDate;
     if (value != null) {
@@ -219,26 +230,27 @@ void _studentExtraSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.admissionDate);
-  writer.writeString(offsets[1], object.bloodGroup);
-  writer.writeLong(offsets[2], object.branchId);
-  writer.writeString(offsets[3], object.branchName);
-  writer.writeLong(offsets[4], object.classId);
-  writer.writeString(offsets[5], object.className);
-  writer.writeLong(offsets[6], object.classOrder);
-  writer.writeString(offsets[7], object.dateOfBirth);
-  writer.writeString(offsets[8], object.gender);
-  writer.writeString(offsets[9], object.lastPresentDate);
-  writer.writeString(offsets[10], object.leftDate);
-  writer.writeLong(offsets[11], object.linkNumber);
-  writer.writeLong(offsets[12], object.sectionId);
-  writer.writeString(offsets[13], object.sectionName);
-  writer.writeString(offsets[14], object.smsNumber);
-  writer.writeString(offsets[15], object.studentAddress);
-  writer.writeString(offsets[16], object.studentEmail);
-  writer.writeLong(offsets[17], object.studentId);
-  writer.writeString(offsets[18], object.studentMobile);
-  writer.writeString(offsets[19], object.studentName);
+  writer.writeString(offsets[0], object.academicYearTitle);
+  writer.writeString(offsets[1], object.admissionDate);
+  writer.writeString(offsets[2], object.bloodGroup);
+  writer.writeLong(offsets[3], object.branchId);
+  writer.writeString(offsets[4], object.branchName);
+  writer.writeLong(offsets[5], object.classId);
+  writer.writeString(offsets[6], object.className);
+  writer.writeLong(offsets[7], object.classOrder);
+  writer.writeString(offsets[8], object.dateOfBirth);
+  writer.writeString(offsets[9], object.gender);
+  writer.writeString(offsets[10], object.lastPresentDate);
+  writer.writeString(offsets[11], object.leftDate);
+  writer.writeLong(offsets[12], object.linkNumber);
+  writer.writeLong(offsets[13], object.sectionId);
+  writer.writeString(offsets[14], object.sectionName);
+  writer.writeString(offsets[15], object.smsNumber);
+  writer.writeString(offsets[16], object.studentAddress);
+  writer.writeString(offsets[17], object.studentEmail);
+  writer.writeLong(offsets[18], object.studentId);
+  writer.writeString(offsets[19], object.studentMobile);
+  writer.writeString(offsets[20], object.studentName);
 }
 
 StudentExtra _studentExtraDeserialize(
@@ -248,26 +260,27 @@ StudentExtra _studentExtraDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = StudentExtra(
-    admissionDate: reader.readStringOrNull(offsets[0]),
-    bloodGroup: reader.readStringOrNull(offsets[1]),
-    branchId: reader.readLongOrNull(offsets[2]),
-    branchName: reader.readStringOrNull(offsets[3]),
-    classId: reader.readLongOrNull(offsets[4]),
-    className: reader.readStringOrNull(offsets[5]),
-    classOrder: reader.readLongOrNull(offsets[6]),
-    dateOfBirth: reader.readStringOrNull(offsets[7]),
-    gender: reader.readStringOrNull(offsets[8]),
-    lastPresentDate: reader.readStringOrNull(offsets[9]),
-    leftDate: reader.readStringOrNull(offsets[10]),
-    linkNumber: reader.readLongOrNull(offsets[11]),
-    sectionId: reader.readLongOrNull(offsets[12]),
-    sectionName: reader.readStringOrNull(offsets[13]),
-    smsNumber: reader.readStringOrNull(offsets[14]),
-    studentAddress: reader.readStringOrNull(offsets[15]),
-    studentEmail: reader.readStringOrNull(offsets[16]),
-    studentId: reader.readLongOrNull(offsets[17]),
-    studentMobile: reader.readStringOrNull(offsets[18]),
-    studentName: reader.readStringOrNull(offsets[19]),
+    academicYearTitle: reader.readStringOrNull(offsets[0]),
+    admissionDate: reader.readStringOrNull(offsets[1]),
+    bloodGroup: reader.readStringOrNull(offsets[2]),
+    branchId: reader.readLongOrNull(offsets[3]),
+    branchName: reader.readStringOrNull(offsets[4]),
+    classId: reader.readLongOrNull(offsets[5]),
+    className: reader.readStringOrNull(offsets[6]),
+    classOrder: reader.readLongOrNull(offsets[7]),
+    dateOfBirth: reader.readStringOrNull(offsets[8]),
+    gender: reader.readStringOrNull(offsets[9]),
+    lastPresentDate: reader.readStringOrNull(offsets[10]),
+    leftDate: reader.readStringOrNull(offsets[11]),
+    linkNumber: reader.readLongOrNull(offsets[12]),
+    sectionId: reader.readLongOrNull(offsets[13]),
+    sectionName: reader.readStringOrNull(offsets[14]),
+    smsNumber: reader.readStringOrNull(offsets[15]),
+    studentAddress: reader.readStringOrNull(offsets[16]),
+    studentEmail: reader.readStringOrNull(offsets[17]),
+    studentId: reader.readLongOrNull(offsets[18]),
+    studentMobile: reader.readStringOrNull(offsets[19]),
+    studentName: reader.readStringOrNull(offsets[20]),
   );
   return object;
 }
@@ -284,17 +297,17 @@ P _studentExtraDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 4:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
       return (reader.readLongOrNull(offset)) as P;
-    case 7:
+    case 6:
       return (reader.readStringOrNull(offset)) as P;
+    case 7:
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
       return (reader.readStringOrNull(offset)) as P;
     case 9:
@@ -302,11 +315,11 @@ P _studentExtraDeserializeProp<P>(
     case 10:
       return (reader.readStringOrNull(offset)) as P;
     case 11:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 12:
       return (reader.readLongOrNull(offset)) as P;
     case 13:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 14:
       return (reader.readStringOrNull(offset)) as P;
     case 15:
@@ -314,10 +327,12 @@ P _studentExtraDeserializeProp<P>(
     case 16:
       return (reader.readStringOrNull(offset)) as P;
     case 17:
-      return (reader.readLongOrNull(offset)) as P;
-    case 18:
       return (reader.readStringOrNull(offset)) as P;
+    case 18:
+      return (reader.readLongOrNull(offset)) as P;
     case 19:
+      return (reader.readStringOrNull(offset)) as P;
+    case 20:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -326,6 +341,160 @@ P _studentExtraDeserializeProp<P>(
 
 extension StudentExtraQueryFilter
     on QueryBuilder<StudentExtra, StudentExtra, QFilterCondition> {
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'academicYearTitle',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'academicYearTitle',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'academicYearTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'academicYearTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'academicYearTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'academicYearTitle',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'academicYearTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'academicYearTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'academicYearTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'academicYearTitle',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'academicYearTitle',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
+      academicYearTitleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'academicYearTitle',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<StudentExtra, StudentExtra, QAfterFilterCondition>
       admissionDateIsNull() {
     return QueryBuilder.apply(this, (query) {

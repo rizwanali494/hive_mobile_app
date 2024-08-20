@@ -63,49 +63,54 @@ const ActivityModelSchema = CollectionSchema(
       name: r'description',
       type: IsarType.string,
     ),
-    r'hashCode': PropertySchema(
+    r'hasExpired': PropertySchema(
       id: 9,
+      name: r'hasExpired',
+      type: IsarType.bool,
+    ),
+    r'hashCode': PropertySchema(
+      id: 10,
       name: r'hashCode',
       type: IsarType.long,
     ),
     r'id': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'id',
       type: IsarType.long,
     ),
     r'location': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'location',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'name',
       type: IsarType.string,
     ),
     r'nonAttendingStudents': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'nonAttendingStudents',
       type: IsarType.long,
     ),
     r'owner': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'owner',
       type: IsarType.object,
       target: r'OwnerModel',
     ),
     r'regionId': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'regionId',
       type: IsarType.long,
     ),
     r'selection': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'selection',
       type: IsarType.string,
     ),
     r'skepticalStudents': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'skepticalStudents',
       type: IsarType.long,
     )
@@ -223,20 +228,21 @@ void _activityModelSerialize(
   writer.writeString(offsets[6], object.dateAdded);
   writer.writeString(offsets[7], object.dateLastModified);
   writer.writeString(offsets[8], object.description);
-  writer.writeLong(offsets[9], object.hashCode);
-  writer.writeLong(offsets[10], object.id);
-  writer.writeString(offsets[11], object.location);
-  writer.writeString(offsets[12], object.name);
-  writer.writeLong(offsets[13], object.nonAttendingStudents);
+  writer.writeBool(offsets[9], object.hasExpired);
+  writer.writeLong(offsets[10], object.hashCode);
+  writer.writeLong(offsets[11], object.id);
+  writer.writeString(offsets[12], object.location);
+  writer.writeString(offsets[13], object.name);
+  writer.writeLong(offsets[14], object.nonAttendingStudents);
   writer.writeObject<OwnerModel>(
-    offsets[14],
+    offsets[15],
     allOffsets,
     OwnerModelSchema.serialize,
     object.owner,
   );
-  writer.writeLong(offsets[15], object.regionId);
-  writer.writeString(offsets[16], object.selection);
-  writer.writeLong(offsets[17], object.skepticalStudents);
+  writer.writeLong(offsets[16], object.regionId);
+  writer.writeString(offsets[17], object.selection);
+  writer.writeLong(offsets[18], object.skepticalStudents);
 }
 
 ActivityModel _activityModelDeserialize(
@@ -259,19 +265,19 @@ ActivityModel _activityModelDeserialize(
     dateAdded: reader.readStringOrNull(offsets[6]),
     dateLastModified: reader.readStringOrNull(offsets[7]),
     description: reader.readStringOrNull(offsets[8]),
-    id: reader.readLongOrNull(offsets[10]),
+    id: reader.readLongOrNull(offsets[11]),
     localId: id,
-    location: reader.readStringOrNull(offsets[11]),
-    name: reader.readStringOrNull(offsets[12]),
-    nonAttendingStudents: reader.readLongOrNull(offsets[13]),
+    location: reader.readStringOrNull(offsets[12]),
+    name: reader.readStringOrNull(offsets[13]),
+    nonAttendingStudents: reader.readLongOrNull(offsets[14]),
     owner: reader.readObjectOrNull<OwnerModel>(
-      offsets[14],
+      offsets[15],
       OwnerModelSchema.deserialize,
       allOffsets,
     ),
-    regionId: reader.readLongOrNull(offsets[15]),
-    selection: reader.readStringOrNull(offsets[16]),
-    skepticalStudents: reader.readLongOrNull(offsets[17]),
+    regionId: reader.readLongOrNull(offsets[16]),
+    selection: reader.readStringOrNull(offsets[17]),
+    skepticalStudents: reader.readLongOrNull(offsets[18]),
   );
   return object;
 }
@@ -306,26 +312,28 @@ P _activityModelDeserializeProp<P>(
     case 8:
       return (reader.readStringOrNull(offset)) as P;
     case 9:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 10:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 11:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 12:
       return (reader.readStringOrNull(offset)) as P;
     case 13:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 14:
+      return (reader.readLongOrNull(offset)) as P;
+    case 15:
       return (reader.readObjectOrNull<OwnerModel>(
         offset,
         OwnerModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 15:
-      return (reader.readLongOrNull(offset)) as P;
     case 16:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 17:
+      return (reader.readStringOrNull(offset)) as P;
+    case 18:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1435,6 +1443,16 @@ extension ActivityModelQueryFilter
   }
 
   QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
+      hasExpiredEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hasExpired',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityModel, ActivityModel, QAfterFilterCondition>
       hashCodeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -2444,6 +2462,19 @@ extension ActivityModelQuerySortBy
     });
   }
 
+  QueryBuilder<ActivityModel, ActivityModel, QAfterSortBy> sortByHasExpired() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasExpired', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ActivityModel, ActivityModel, QAfterSortBy>
+      sortByHasExpiredDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasExpired', Sort.desc);
+    });
+  }
+
   QueryBuilder<ActivityModel, ActivityModel, QAfterSortBy> sortByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.asc);
@@ -2654,6 +2685,19 @@ extension ActivityModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<ActivityModel, ActivityModel, QAfterSortBy> thenByHasExpired() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasExpired', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ActivityModel, ActivityModel, QAfterSortBy>
+      thenByHasExpiredDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasExpired', Sort.desc);
+    });
+  }
+
   QueryBuilder<ActivityModel, ActivityModel, QAfterSortBy> thenByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.asc);
@@ -2828,6 +2872,12 @@ extension ActivityModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ActivityModel, ActivityModel, QDistinct> distinctByHasExpired() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hasExpired');
+    });
+  }
+
   QueryBuilder<ActivityModel, ActivityModel, QDistinct> distinctByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hashCode');
@@ -2943,6 +2993,12 @@ extension ActivityModelQueryProperty
   QueryBuilder<ActivityModel, String?, QQueryOperations> descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
+    });
+  }
+
+  QueryBuilder<ActivityModel, bool, QQueryOperations> hasExpiredProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hasExpired');
     });
   }
 

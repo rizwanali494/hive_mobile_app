@@ -38,28 +38,33 @@ const SubjectModelSchema = Schema(
       name: r'externalGrade',
       type: IsarType.long,
     ),
-    r'grade': PropertySchema(
+    r'gpa': PropertySchema(
       id: 5,
+      name: r'gpa',
+      type: IsarType.double,
+    ),
+    r'grade': PropertySchema(
+      id: 6,
       name: r'grade',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'id',
       type: IsarType.long,
     ),
     r'name': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'name',
       type: IsarType.string,
     ),
     r'owner': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'owner',
       type: IsarType.long,
     ),
     r'regionId': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'regionId',
       type: IsarType.long,
     )
@@ -114,11 +119,12 @@ void _subjectModelSerialize(
   writer.writeString(offsets[2], object.dateAdded);
   writer.writeString(offsets[3], object.dateLastModified);
   writer.writeLong(offsets[4], object.externalGrade);
-  writer.writeString(offsets[5], object.grade);
-  writer.writeLong(offsets[6], object.id);
-  writer.writeString(offsets[7], object.name);
-  writer.writeLong(offsets[8], object.owner);
-  writer.writeLong(offsets[9], object.regionId);
+  writer.writeDouble(offsets[5], object.gpa);
+  writer.writeString(offsets[6], object.grade);
+  writer.writeLong(offsets[7], object.id);
+  writer.writeString(offsets[8], object.name);
+  writer.writeLong(offsets[9], object.owner);
+  writer.writeLong(offsets[10], object.regionId);
 }
 
 SubjectModel _subjectModelDeserialize(
@@ -133,11 +139,12 @@ SubjectModel _subjectModelDeserialize(
     dateAdded: reader.readStringOrNull(offsets[2]),
     dateLastModified: reader.readStringOrNull(offsets[3]),
     externalGrade: reader.readLongOrNull(offsets[4]),
-    grade: reader.readStringOrNull(offsets[5]),
-    id: reader.readLongOrNull(offsets[6]),
-    name: reader.readStringOrNull(offsets[7]),
-    owner: reader.readLongOrNull(offsets[8]),
-    regionId: reader.readLongOrNull(offsets[9]),
+    gpa: reader.readDoubleOrNull(offsets[5]),
+    grade: reader.readStringOrNull(offsets[6]),
+    id: reader.readLongOrNull(offsets[7]),
+    name: reader.readStringOrNull(offsets[8]),
+    owner: reader.readLongOrNull(offsets[9]),
+    regionId: reader.readLongOrNull(offsets[10]),
   );
   return object;
 }
@@ -160,14 +167,16 @@ P _subjectModelDeserializeProp<P>(
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 6:
-      return (reader.readLongOrNull(offset)) as P;
-    case 7:
       return (reader.readStringOrNull(offset)) as P;
-    case 8:
+    case 7:
       return (reader.readLongOrNull(offset)) as P;
+    case 8:
+      return (reader.readStringOrNull(offset)) as P;
     case 9:
+      return (reader.readLongOrNull(offset)) as P;
+    case 10:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -701,6 +710,86 @@ extension SubjectModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> gpaIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'gpa',
+      ));
+    });
+  }
+
+  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
+      gpaIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'gpa',
+      ));
+    });
+  }
+
+  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> gpaEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'gpa',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition>
+      gpaGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'gpa',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> gpaLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'gpa',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<SubjectModel, SubjectModel, QAfterFilterCondition> gpaBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'gpa',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
       ));
     });
   }

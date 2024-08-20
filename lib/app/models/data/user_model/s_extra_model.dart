@@ -25,6 +25,7 @@ class StudentExtra {
     this.admissionDate,
     this.leftDate,
     this.lastPresentDate,
+    this.academicYearTitle,
   });
 
   StudentExtra.fromJson(dynamic json) {
@@ -48,6 +49,7 @@ class StudentExtra {
     admissionDate = json['admission_date'];
     leftDate = json['left_date'];
     lastPresentDate = json['last_present_date'];
+    academicYearTitle = json['acad_year_title'];
   }
 
   int? studentId;
@@ -70,6 +72,7 @@ class StudentExtra {
   String? admissionDate;
   String? leftDate;
   String? lastPresentDate;
+  String? academicYearTitle;
 
   StudentExtra copyWith({
     int? studentId,
@@ -92,6 +95,7 @@ class StudentExtra {
     String? admissionDate,
     String? leftDate,
     String? lastPresentDate,
+    String? academicYearTitle,
   }) =>
       StudentExtra(
         studentId: studentId ?? this.studentId,
@@ -114,6 +118,7 @@ class StudentExtra {
         admissionDate: admissionDate ?? this.admissionDate,
         leftDate: leftDate ?? this.leftDate,
         lastPresentDate: lastPresentDate ?? this.lastPresentDate,
+        academicYearTitle: academicYearTitle ?? this.academicYearTitle,
       );
 
   Map<String, dynamic> toJson() {
@@ -138,6 +143,7 @@ class StudentExtra {
     map['admission_date'] = admissionDate;
     map['left_date'] = leftDate;
     map['last_present_date'] = lastPresentDate;
+    map['acad_year_title'] = academicYearTitle;
     return map;
   }
 }

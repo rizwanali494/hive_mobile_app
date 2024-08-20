@@ -50,7 +50,7 @@ class ReportHeaderWidget extends StatelessWidget {
                         ReportTextColumn(
                             context: context,
                             heading: AppStrings.academicYear,
-                            description: "Aug,2020 - July,2021"),
+                            description: "${provider.userModel.accountData?.extra?.academicYearTitle}"),
                       ],
                     ),
                     29.horizontalSpace,

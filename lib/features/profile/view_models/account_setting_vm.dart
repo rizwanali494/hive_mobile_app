@@ -86,18 +86,20 @@ class AccountSettingVM extends ChangeNotifier with BaseExceptionController {
           map: bioBody, id: userModel.accountData?.id ?? 0);
       var updateHobbies =
           await userProfileRepo.updateHobbies(map: {"hobbies": hobbies});
-      log("message : ${updateHobbies.length}");
       var imageBody = {"picture": fileModel.id};
-      var model = await userProfileRepo.updateUserProfile(map: imageBody);
-      log("profile updated ${model.picture?.id} Hobbies : ${model.accountData?.hobbies?.length}");
-      final hobby = [...updateHobbies, ...?userModel.accountData?.hobbies];
+      await userProfileRepo.updateUserProfile(map: imageBody);
+      var accountHobbies = userModel.accountData?.hobbies
+          ?.where((element) => hobbies.contains(element.name))
+          .toList();
+      accountHobbies?.addAll([...updateHobbies]);
       final updatedUserModel = userModel.copyWith(
         picture: AccountPicture.fromJson(fileModel.toJson()),
-        accountData: model.accountData?.copyWith(
-          hobbies: hobby,
+        accountData: userModel.accountData?.copyWith(
+          hobbies: accountHobbies,
           bio: bioText,
         ),
       );
+
       registerUserModel(updatedUserModel);
       localService.deleteAndPut(updatedUserModel, updatedUserModel.id ?? 0);
       UtilFunctions.showToast(msg: AppStrings.profileUpdated);
@@ -107,7 +109,6 @@ class AccountSettingVM extends ChangeNotifier with BaseExceptionController {
         log("error : ${e.response.body}");
       }
       handleException(e);
-      // UtilFunctions.showToast();
       log("${e.toString()}");
     }
 

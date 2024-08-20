@@ -41,7 +41,13 @@ class StudentAccountData {
     backupEmail = json['backup_email'];
     owner = json['owner'];
     if (json['hobbies'] != null) {
-      hobbies = [];
+      List list = json["hobbies"]??[];
+      hobbies = List.generate(
+        list.length,
+            (index) => HobbiesModel.fromJson(
+          list[index],
+        ),
+      );
     }
   }
 
@@ -89,7 +95,7 @@ class StudentAccountData {
         status: bio ?? this.status,
         backupEmail: backupEmail ?? this.backupEmail,
         isBackUpEmailVerified:
-            isBackUpEmailVerified ?? this.isBackUpEmailVerified,
+        isBackUpEmailVerified ?? this.isBackUpEmailVerified,
         owner: owner ?? this.owner,
         hobbies: hobbies?.map((e) => e.copyWith()).toList() ??
             this.hobbies?.map((e) => e.copyWith()).toList(),

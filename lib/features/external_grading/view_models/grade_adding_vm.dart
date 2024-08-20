@@ -126,7 +126,7 @@ abstract class GradeAddingVM
       UtilFunctions.showToast(
           msg:
               "The range for an ${selectedGrade ?? ""} GPA is $lowerRange to $upperRange.");
-      return "Invalid Range";
+      return "Invalid Range select GPA\n in between $lowerRange to $upperRange.";
     }
     return null;
   }

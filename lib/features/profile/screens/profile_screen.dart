@@ -65,8 +65,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .push(AccountSettingScreen.route)
                               .then((value) {
                             final homeScreenProvider =
-                                context.read<HomeScreenVm?>();
+                            context.read<HomeScreenVm?>();
                             homeScreenProvider?.notify();
+                            controller.notifyChanges();
                           });
                         },
                         child: SvgPicture.asset(SvgIcons.edit),
@@ -107,14 +108,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             placeholder: (context, url) =>
                                 UserPlaceHolderWidget(
-                              width: 90.w,
-                              height: 90.h,
-                            ),
+                                  width: 90.w,
+                                  height: 90.h,
+                                ),
                             errorWidget: (context, url, error) =>
                                 UserPlaceHolderWidget(
-                              width: 90.w,
-                              height: 90.h,
-                            ),
+                                  width: 90.w,
+                                  height: 90.h,
+                                ),
                           ),
                         21.horizontalSpace,
                         Expanded(
@@ -134,18 +135,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               if (controller.userBio.isNotEmpty)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-
                                   children: [
-                                   Padding(
-                                     padding: EdgeInsets.symmetric(
-                                       horizontal: 9.w,
-                                     ),
-                                     child: Text(
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 9.w,
+                                      ),
+                                      child: Text(
                                         AppStrings.status,
-                                        style: styles.inter10w600
+                                        style: styles.inter14w600
                                             .copyWith(color: styles.white),
                                       ),
-                                   ),
+                                    ),
+                                    5.verticalSpace,
                                     Container(
                                       constraints: BoxConstraints(
                                         minWidth: 237.w,
@@ -224,7 +225,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       BasicInfoWidget(
                                         title: AppStrings.gender,
@@ -257,9 +258,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   15.verticalSpace,
                                   ProfileSectionWidget(
                                     wrapChildren: controller
-                                            .userModel.accountData?.hobbies
-                                            ?.map((e) => e.name ?? "")
-                                            .toList() ??
+                                        .userModel.accountData?.hobbies
+                                        ?.map((e) => e.name ?? "")
+                                        .toList() ??
                                         [],
                                     uiState: UiState.hasAll(),
                                     heading: AppStrings.hobbies,
@@ -285,12 +286,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       }
                                       return Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.start,
                                         children: [
                                           ProfileSectionWidget(
                                             wrapChildren: applicationVM.items,
                                             heading:
-                                                AppStrings.acceptedUniversities,
+                                            AppStrings.acceptedUniversities,
                                             uiState: applicationVM.uiState,
                                           ),
                                           17.verticalSpace,
@@ -323,4 +324,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-// const _user = UserProfileModel.user;
