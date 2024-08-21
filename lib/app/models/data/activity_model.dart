@@ -187,15 +187,47 @@ class ActivityModel {
     return null;
   }
 
-  void handleAttendingCount() {
-    if (getSelection == ActivitySelectionStatus.Attending) {
-      attendingStudents = (attendingStudents ?? 0) + 1;
+  void handleAttendingCount(String selectedOption) {
+    // if (selectedOption.toLowerCase() == selection?.toLowerCase()) {
+    //   return;
+    // }
+    print("selectedOption ::: ${selectedOption.toLowerCase()}");
+    print(
+        "selection ::: ${selection?.toLowerCase() == selectedOption.toLowerCase()}");
+    if ("attending" == selectedOption.toLowerCase()) {
+      // attendingStudents = (attendingStudents ?? 0) + 1;
+      setCountByAttending(selectedOption);
     } else {
-      if ((attendingStudents ?? 0) > 0) {
-        attendingStudents = (attendingStudents ?? -1) - 1;
-      }
+      handleAttendingCountByOther(selectedOption);
+      // if ((attendingStudents ?? 0) > 0) {
+      //   attendingStudents = (attendingStudents ?? -1) - 1;
+      // }
     }
-    log("message 111 ::: ${attendingStudents}");
+    if (selectedOption.toLowerCase() == selection?.toLowerCase()) {
+      selection = null;
+      return;
+    }
+    selection = selectedOption.toUpperCase();
+  }
+
+  void setCountByAttending(String choice) {
+    if (choice.toLowerCase() == selection?.toLowerCase()) {
+      attendingStudents = (attendingStudents ?? -1) - 1;
+      return;
+    }
+    attendingStudents = (attendingStudents ?? 0) + 1;
+  }
+
+  void handleAttendingCountByOther(String choice) {
+    if (getSelection == ActivitySelectionStatus.Attending) {
+      attendingStudents = (attendingStudents ?? -1) - 1;
+    }
+
+    // if (choice.toLowerCase() == selection?.toLowerCase()) {
+    //   attendingStudents = (attendingStudents ?? -1) - 1;
+    //   return;
+    // }
+    // attendingStudents = (attendingStudents ?? 0) + 1;
   }
 
   @ignore

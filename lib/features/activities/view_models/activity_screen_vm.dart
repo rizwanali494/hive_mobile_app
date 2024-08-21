@@ -33,9 +33,12 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
 
   Future<void> setActivitySelection(
       {required ActivityModel model, required String state}) async {
+    // if( model.selection?.toLowerCase() == state.toLowerCase() ){
+    //   return;
+    // }
     var previousModel = model.copyWith();
-    model.selection = state.toUpperCase();
-    model.handleAttendingCount();
+    // model.selection = state.toUpperCase();
+    model.handleAttendingCount(state);
     var index = items.indexOf(model);
     if (index > -1) {
       items[index] = model;
@@ -59,7 +62,6 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
           event: previousModel.toAnnouncement,
         ));
         notifyListeners();
-        // handleException(e);
       }
       handleException(e);
     }
@@ -88,7 +90,6 @@ class ActivityScreenVM extends BaseApiVM<ActivityModel> {
     String? action = eventData["action"];
     final extraData = eventData["extra"] ?? {};
     final objectId = eventData["id"] ?? 0;
-    final type = eventData["type"] ?? "";
     final subAction = apiSubEvent[action];
     if (subAction == null) {
       apiEventBaseActions[action]?..call(objectId);
