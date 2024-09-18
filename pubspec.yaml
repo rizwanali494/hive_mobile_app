@@ -2,7 +2,7 @@ name: hive_mobile
 description: A new Flutter project.
 
 
-version: 1.0.1+6
+version: 1.0.1+8
 
 environment:
   sdk: '>=2.19.6 <3.7.12'
@@ -29,7 +29,7 @@ dependencies:
   path_provider: ^2.0.15
   image_pickers: ^2.0.4+5
   fluttertoast: ^8.2.2
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   shared_preferences: ^2.2.1
   uuid: ^4.1.0
   sliver_tools: ^0.2.12
@@ -59,8 +59,7 @@ flutter_launcher_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/icons/launcher_icon.png"
-  adaptive_icon_foreground: "assets/icons/ic_launcher_foreground.png"
-  adaptive_icon_background: "assets/icons/ic_launcher_foreground.png"
+
 
 
 flutter:

@@ -32,12 +32,23 @@ class _SignInScreenState extends State<SignInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // SvgPicture.asset(SvgIcons.hiveLogo,width: 193.w,height: 98.h,),
-
+                  Expanded(
+                    child: Image.asset(
+                      SvgIcons.hiveLogo,
+                      width: 193.w,
+                      height: 98.h,
+                    ),
+                  ),
+                  SizedBox(height: 15.h),
                   Expanded(
                     flex: 2,
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: containerRadius,
+                          topRight: containerRadius,
+                        ),
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -59,18 +70,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 253.w,
-                            height: 298.h,
-
-                            color: Colors.white,
-                            child: Image.asset(
-                              SvgIcons.hiveLogo,
-
-                            ),
-                          ),
-                          SizedBox(height: 15.h),
-                          SizedBox(height: 15.h),
                           Text(
                             AppStrings.welcome,
                             style: styles.inter50w700

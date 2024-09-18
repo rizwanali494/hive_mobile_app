@@ -36,20 +36,20 @@ class DrawerWidget extends StatelessWidget {
               left: 19.h,
               right: 36.h,
             ),
-            decoration: BoxDecoration(color: Colors.white
-                // gradient: LinearGradient(
-                //   colors: [
-                //     styles.linearBlueGradientTopLeft,
-                //     styles.linearBlueGradientBottomRight,
-                //   ],
-                //   begin: Alignment.topLeft,
-                //   end: Alignment.bottomRight,
-                // ),
-                // borderRadius: BorderRadius.only(
-                //   bottomLeft: bottomRadius,
-                //   bottomRight: bottomRadius,
-                // ),
-                ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  styles.linearBlueGradientTopLeft,
+                  styles.linearBlueGradientBottomRight,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: bottomRadius,
+                bottomRight: bottomRadius,
+              ),
+            ),
             child: GestureDetector(
               onTap: () {
                 homeScreenVM.setBottomNavWidget(4, context);
@@ -101,31 +101,31 @@ class DrawerWidget extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: styles.inter16w600.copyWith(
-                            color: styles.black,
+                            color: styles.white,
                           ),
                         ),
                         Text(
                           AppStrings.clickToView,
-                          style: styles.inter12w400Underline
-                              .copyWith(color: styles.black),
+                          style: styles.inter12w400Underline.copyWith(
+                            color: styles.white,
+                          ),
                         ),
                       ],
                     ),
                   ),
+
                   Align(
                     alignment: Alignment.topRight,
-                    child: SvgPicture.asset(
-                      SvgIcons.arrowRight,
-                      color: styles.deepSkyBlue,
-                    ),
+                    child: SvgPicture.asset(SvgIcons.arrowRight),
                   ),
                 ],
               ),
             ),
           ),
+          // 41.verticalSpace,
           Expanded(
             child: ColoredBox(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.white,
               child: Padding(
                 padding: EdgeInsets.only(
                   left: 36.h,
@@ -154,44 +154,78 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          ColoredBox(
-            color: styles.deepSkyBlue,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 30.w,
-              ),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    20.verticalSpace,
-                    GestureDetector(
-                      onTap: () {
-                        homeScreenVM.logout();
-                      },
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            SvgIcons.logout,
-                            color: styles.white,
-                          ),
-                          20.horizontalSpace,
-                          Text(
-                            AppStrings.logout,
-                            style: styles.inter15w400
-                                .copyWith(color: styles.white),
-                          ),
-                        ],
-                      ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 30.w,
+            ),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Divider(
+                    color: styles.black.withOpacity(0.2),
+                  ),
+                  10.verticalSpace,
+                  GestureDetector(
+                    onTap: () {
+                      homeScreenVM.logout();
+                    },
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(SvgIcons.logout),
+                        20.horizontalSpace,
+                        Text(
+                          AppStrings.logout,
+                          style: styles.inter15w400,
+                        ),
+                      ],
                     ),
-                    50.verticalSpace
-                  ],
-                ),
+                  ),
+                  50.verticalSpace
+                ],
               ),
             ),
           ),
+          // ColoredBox(
+          //   color: styles.deepSkyBlue,
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(
+          //       horizontal: 30.w,
+          //     ),
+          //     child: Align(
+          //       alignment: Alignment.bottomCenter,
+          //       child: Column(
+          //         mainAxisSize: MainAxisSize.min,
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           20.verticalSpace,
+          //           GestureDetector(
+          //             onTap: () {
+          //               homeScreenVM.logout();
+          //             },
+          //             child: Row(
+          //               children: [
+          //                 SvgPicture.asset(
+          //                   SvgIcons.logout,
+          //                   color: styles.white,
+          //                 ),
+          //                 20.horizontalSpace,
+          //                 Text(
+          //                   AppStrings.logout,
+          //                   style: styles.inter15w400
+          //                       .copyWith(color: styles.white),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //           50.verticalSpace
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
